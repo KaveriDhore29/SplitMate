@@ -1,0 +1,29 @@
+interceptor , UI , Service 
+
+
+
+
+
+suppose i have left my ofice id at home and I cant get into my office, i will ask my colleague to go to my home, get the id from my friend who is at home. i will give a secret key to my colleague, and the same key to my friend which will confirm that the colleague coming to home asking for the id is someone authentic. 
+
+Me---User
+Colleague --- Third party app
+friend --resource server
+Secret key -- authorization code
+Office id- user data
+
+mostly google auth server and resource server are same, but in a more secured environment, the two are different, so that the google auth server will give the auth code and resource server will give you the data upon matching the auth code.
+
+
+
+jaise hi third party app ko authorization token milega, it will go back to google auth server and get the access token
+
+authorization token and access token are different
+
+auth token authorizes the app as a valid applicant but until and unless the app has an access token, it will not be able to have the resources.
+
+
+
+after getting the access token the app can finally go to the resource server to get the data, but the resource server would not trust the app even with the security code. so it will again go to the google auth server and ask if the access token is valid or not. this step is called introspection. 
+
+after confirmation from auth server, the resources are given to the third party app. 
