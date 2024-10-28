@@ -1,20 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { NgModel } from '@angular/forms';
+import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent{
-  email: string = '';
+  username: string = '';
   password: string = '';
 
-  onSubmit() {
-  
-    if (this.email && this.password) {
-      console.log('Login successful:', this.email);
+  constructor(private router: Router, private authService: AuthService) {}
+
+  onSubmit(): void {
+    if (this.authService.login(this.username, this.password)) {
+      this.router.navigate(['dashboard']);
     } else {
-      console.log('Please enter email and password.');
+      console.log('User not found');
     }
   }
 

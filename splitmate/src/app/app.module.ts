@@ -7,13 +7,15 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginComponent } from './login/login.component';
 import { ErrorComponent } from './error/error.component';
 import { FormsModule } from '@angular/forms'; // Import this
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
     LoginComponent,
-    ErrorComponent
+    ErrorComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,
