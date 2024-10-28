@@ -43,7 +43,7 @@ input {
 button {
   width: 100%;
   padding: 12px;
-  background-color: #007bff;
+  background-color: #000000;
   color: white;
   border: none;
   border-radius: 4px;
@@ -53,7 +53,7 @@ button {
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #000000;
 }
 
 .g_id_signin {
