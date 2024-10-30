@@ -1,4 +1,97 @@
-ul {
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  background-color: #393939;
+  color: #ffffff;
+  height:70px;
+
+  .navbar-logo {
+    .logo {
+      width: 180px;
+      height: 50px;
+    }
+  }
+
+  .profile-container {
+    position: relative;
+    cursor: pointer;
+    
+    .profile-pic {
+      width: 50px;
+      height: 40px;
+      background-color: #f8f2f2;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content:center;
+      color: #fff;
+      font-weight: bold;
+      font-size: 18px;
+      text-transform: uppercase;
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: 50px;
+      right: 0;
+      background-color: #444;
+      border-radius: 5px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+      .dropdown-item {
+        padding: 8px 12px;
+        color: #fff;
+        background: none;
+        border: none;
+        text-align: left;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #555;
+        }
+      }
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -29,4 +122,4 @@ ul {
 
   .active:hover{
     background-color: #333;
-  }
+  } */

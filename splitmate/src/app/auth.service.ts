@@ -21,10 +21,7 @@ export class AuthService {
     return false;
   }
 
-  logout(): void {
-    sessionStorage.removeItem('isLoggedIn');
-    sessionStorage.removeItem('username');
-  }
+
 
   getLocalStorageData(): any[] | null {
     const personalDataString = localStorage.getItem('personalData');

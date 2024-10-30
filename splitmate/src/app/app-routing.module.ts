@@ -15,13 +15,13 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    component: LoginComponent,
-    canActivate: [AlreadyLoggedinGuard],
+    component: LoginComponent
+    // canActivate: [AlreadyLoggedinGuard],
   },
   {
     path: 'dashboard',
     component: DashboardComponent,
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path:'error',component:ErrorComponent},
