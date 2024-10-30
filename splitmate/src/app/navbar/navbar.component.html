@@ -1,0 +1,19 @@
+<!-- <ul>
+  <li style="float:right"><a [routerLink]="'logout'" routerLinkActive="active">Logout</a></li>
+</ul> -->
+
+<nav class="navbar">
+  <div class="navbar-logo">
+    <!-- <img src="assets/logo.png" alt="Logo" class="logo" /> -->
+     SplitMate
+  </div>
+  
+  <div class="profile-container" (click)="toggleDropdown()">
+    <img src="assets/profile.jpg" alt="Profile" class="profile-pic" />
+
+    <div class="dropdown-menu" *ngIf="isDropdownOpen">
+      <button class="dropdown-item">View Profile</button>
+      <button class="dropdown-item" (click)="logout()">Sign Out</button>
+    </div>
+  </div>
+</nav>

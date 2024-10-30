@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="main">
 
     <div class="login-container">
@@ -22,6 +23,22 @@
 
     
   </div>
+=======
+<div class="login-container">
+  <form (ngSubmit)="onSubmit()">
+    <div>
+      <label for="username">Username:</label>
+      <input id="username" [(ngModel)]="username" name="username" type="text" required>
+    </div>
+    <div>
+      <label for="password">Password:</label>
+      <input id="password" [(ngModel)]="password" name="password" type="password" required>
+    </div>
+    <div class="button-login"><button type="submit">Login</button></div>
+
+  </form>
+</div>
+>>>>>>> 262592e2fd87c26a745497f5b4a988aafd7d7002
 
   <div id="g_id_onload"
   data-client_id="1040146212904-7b45nt102lbvv34dsd4f2cg980plc1ob.apps.googleusercontent.com"
