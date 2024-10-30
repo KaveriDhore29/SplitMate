@@ -9,8 +9,8 @@
   </div>
   
   <div class="profile-container" (click)="toggleDropdown()">
-    <img src="assets/profile.jpg" alt="Profile" class="profile-pic" />
-
+    <!-- <img src="assets/profile.jpg" alt="Profile" class="profile-pic" /> -->
+    <div class="profile-circle">S</div>
     <div class="dropdown-menu" *ngIf="isDropdownOpen">
       <button class="dropdown-item">View Profile</button>
       <button class="dropdown-item" (click)="logout()">Sign Out</button>
