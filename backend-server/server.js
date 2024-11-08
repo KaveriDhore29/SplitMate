@@ -5,6 +5,8 @@ const cors = require('cors');
 const { loginControl } = require('./controllers/users');
 const { isAuthenticated } = require('./middlewares/auth');
 const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+
 
 const app = express();
 
@@ -16,6 +18,8 @@ app.use(express.json()); //to use express
 dotenv.config(); //to use .env file
 connectDatabase(); //connect to DB
 app.use(cookieParser());
+// Middleware to parse urlencoded data
+app.use(bodyParser.urlencoded({ extended: true }));
 
 //CORS compatibility
 app.use(cors({
