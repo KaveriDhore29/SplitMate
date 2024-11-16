@@ -1,0 +1,32 @@
+
+<div class="container text-center">
+    <div class="row align-items-center">
+       <h2> Dashboard</h2>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-4">  <button (click)="navigateToForm()">Create Group</button></div>
+        <div class="col-4"> <button>Settle Up</button></div>
+        <div class="col-4"> <button>Add Expense</button></div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-12"> Currently, you're not part of any group. Join a group to start managing and splitting expenses with friends!</div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-4 balances">
+          <h4>Total balance</h4>  
+          <p>$0.00*</p>
+        </div>
+        <div class="col-4 balances">
+            <h4>You owe</h4>  
+            <p>$0.00*</p>   
+        </div>
+        <div class="col-4 balances">
+            <h4>You are owed</h4>  
+          <p>$0.00*</p>
+        </div>
+    </div>
+    <button class="dropdown-item" (click)="this.authService.handleSignOut()">Sign Out</button>
+</div>

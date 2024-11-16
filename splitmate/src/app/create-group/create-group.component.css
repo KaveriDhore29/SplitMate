@@ -1,0 +1,160 @@
+.form-container{
+  width:500px;
+  border: 1px solid black;
+  margin: 10%;
+  text-align: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 
+form {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fafafa;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+
+.search-bar {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 10px;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+
+.search-results {
+  position: absolute;
+  background-color: #e0e7ff; 
+  border: 1px solid #ddd;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  border-radius: 4px;
+  z-index: 1000;
+}
+
+.search-results .outer-div {
+  padding: 10px;
+  background-color: #f0f0f0;
+}
+
+.search-results .inner-div {
+  padding: 5px;
+  border-bottom: 1px solid #e0e0e0;
+  cursor: pointer;
+}
+
+.search-results .inner-div:last-child {
+  border-bottom: none;
+}
+
+.dropdown {
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-item {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background-color: #f0f0f0;
+}
+
+
+.add-person-button {
+  display: inline-block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.add-person-button:hover {
+  background-color: #45a049;
+}
+.search-results {
+  margin-top: 10px;
+}
+
+.search-results .dropdown-item {
+  cursor: pointer;
+  padding: 5px;
+  background-color: #f1f1f1;
+  border: 1px solid #ccc;
+  margin-bottom: 5px;
+}
+
+.selected-members table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.selected-members table th, .selected-members table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
+.no-results {
+  color: red;
+  margin-top: 10px;
+}
+
+.no-results button {
+  margin-top: 10px;
+} */

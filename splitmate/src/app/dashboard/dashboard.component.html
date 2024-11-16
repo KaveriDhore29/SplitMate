@@ -1,11 +1,78 @@
 <app-navbar></app-navbar>
+<div class="container text-center">
+  <div class="row align-items-center">
+    <!-- Sidebar Links -->
+    <div class="col-3 friends-container">
+      <div class="section">
+        <div class="header">
+          <i class="fas fa-home"></i> Dashboard
+        </div>
+        <div class="links">
+          <a [routerLink]="['/dashboard/main-dashboard']" class="side-link">
+            <i class="fas fa-tachometer-alt"></i> Dashboard
+          </a>
+          <input type="search" placeholder="Search your friend" class="search-input">
+          <a [routerLink]="['/dashboard/all-expenses']" class="side-link">
+            <i class="fa-solid fa-money-bill-trend-up"></i> All Expenses
+          </a>
+        </div>
+      </div>
 
-<!-- <p>dashboard works!</p>
-    <h1>User logged in successfully!!</h1>
+      <!-- Groups Section -->
+      <div class="section">
+        <div class="header">
+          <i class="fas fa-users"></i> GROUPS
+          <a href="javascript:void(0)" class="add-link">+ add</a>
+        </div>
+        <div class="links">
+          <a [routerLink]="['/dashboard/group-detail']" class="side-link">
+            <i class="fas fa-user-friends"></i> BTS Army
+          </a>
+          <a [routerLink]="['/dashboard/group-detail']" class="side-link">
+            <i class="fas fa-user-friends"></i> Another Group
+          </a>
+        </div>
+      </div>
 
-    
+      <!-- Friends Section -->
+      <div class="section">
+        <div class="header">
+          <i class="fas fa-user-friends"></i> FRIENDS
+          <a href="javascript:void(0)" class="add-link">+ add</a>
+        </div>
+        <div class="links">
+          <a [routerLink]="['/dashboard/friend-detail']" class="side-link">
+            <i class="fas fa-user"></i> Friend 1
+          </a>
+          <a [routerLink]="['/dashboard/friend-detail']" class="side-link">
+            <i class="fas fa-user"></i> Friend 2
+          </a>
+        </div>
+      </div>
 
-    <div class="row">
-      <div class="col-6"><router-outlet></router-outlet></div>
+      <div class="invite-friends">
+        <div class="invite-friends-heading">
+          Invite Friends
+        </div>
+        <div class="invite-friends-detail">
+          <input type="text" placeholder="Enter an email address" class="invite-friend-email">
+          <button>Send invite</button>
+        </div>
+        <div class="share-links">
+          <button><i class="fa-brands fa-facebook-f"></i> Share</button>
+          <button><i class="fa-brands fa-x-twitter"></i> Tweet</button>
+        </div>
+      </div>
     </div>
-     -->
+
+    <!-- Main Dashboard Section -->
+    <div class="col-6 main-dashboard">
+      <router-outlet></router-outlet> 
+    </div>
+
+    <!-- Group Balances Section -->
+    <div class="col-3 group-balances">
+      <p>Load the group and friend details here!</p>
+    </div>
+  </div>
+</div>

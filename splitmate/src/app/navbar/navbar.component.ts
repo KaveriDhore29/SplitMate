@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
+import { log } from 'console';
 
 @Component({
   selector: 'app-navbar',
@@ -8,21 +10,25 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
 
-  isDropdownOpen = false;
+  
+  constructor(private router: Router,public authService : AuthService) { }
 
-  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
 
+  isDropdownVisible = false; 
+
   toggleDropdown() {
-    this.isDropdownOpen = !this.isDropdownOpen;
+    this.isDropdownVisible = !this.isDropdownVisible;
+    console.log(this.isDropdownVisible)
   }
 
-  logout(): void {
-    sessionStorage.removeItem('isLoggedIn');
-    sessionStorage.removeItem('username');
-    this.router.navigate(['/login']);
+  // Placeholder for the sign-in logic
+  signIn() {
+ 
+   this.router.navigate(['login']);
+ 
   }
 
 
