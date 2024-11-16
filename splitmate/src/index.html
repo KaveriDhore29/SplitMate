@@ -11,7 +11,7 @@
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="https://apis.google.com/js/platform.js" async defer></script>
   <script src="https://kit.fontawesome.com/59f701721b.js" crossorigin="anonymous"></script>
-
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Trirong">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -52,6 +52,7 @@
           headers: {
             'Content-Type': 'application/json',
           },
+          credentials: 'include', 
        body: JSON.stringify({
       credential: response.credential,
       userDetails: {
