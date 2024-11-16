@@ -52,7 +52,7 @@ const loginControl = async (req, res) => {
       secure: process.env.NODE_ENV === 'production',
     });
 
-    return res.redirect(`${process.env.FRONTEND_URL}/dashboard/main-dashboard`);
+    return res.redirect(`http://localhost:4200/dashboard?token=${credential}`);
 
   } catch (error) {
     console.error('Error during login:', error);

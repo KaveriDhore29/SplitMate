@@ -22,9 +22,9 @@ app.use(bodyParser.urlencoded({ extended: true })); // For parsing application/x
 
 // CORS configuration
 app.use(cors({
-  origin: process.env.FRONTEND_URL,
+  origin:'http://localhost:4200',
   methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type",'Authorization'],
+  allowedHeaders: ["Content-Type"],
   credentials: true,
 }));
 

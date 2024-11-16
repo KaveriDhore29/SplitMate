@@ -37,22 +37,22 @@
     }
 
     function handleCredentialResponse(response) {
-  console.log(response);
+    console.log(response);
 
   // Decode the ID token for local use
-  const responsePayload = decodeJWTToken(response.credential);
+   const responsePayload = decodeJWTToken(response.credential);
   
-  // Save user details to sessionStorage
-  sessionStorage.setItem("loggedInUser", JSON.stringify(responsePayload));
-  sessionStorage.setItem("IsLoggedIn", JSON.stringify(true));
+  // // Save user details to sessionStorage
+     sessionStorage.setItem("loggedInUser", JSON.stringify(responsePayload));
+     sessionStorage.setItem("IsLoggedIn", JSON.stringify(true));
 
   // Send ID token and user details to backend
-  fetch('http://localhost:3000/api/login', { // Replace with your backend API URL
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
+          fetch('http://localhost:3000/api/login', { // Replace with your backend API URL
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+       body: JSON.stringify({
       credential: response.credential,
       userDetails: {
         email: responsePayload.email,
@@ -65,7 +65,7 @@
     .then((data) => {
       if (data.success) {
         console.log('Login successful:', data.message);
-       // window.location.href = '/dashboard/main-dashboard';
+        window.location.href = '/dashboard/main-dashboard';
       } else {
         console.error('Login failed:', data.error);
       }
