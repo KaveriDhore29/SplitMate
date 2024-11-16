@@ -1,0 +1,11 @@
+.balances{
+    border: 1px solid black
+}
+
+.balances h4{
+    border-bottom: 1px solid black;
+}
+
+hr{
+    width: 100%;
+}

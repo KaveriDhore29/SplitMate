@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -6,10 +7,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+  
+  currentSection: string = 'dashboard/main-dashboard'; 
 
-  constructor() { }
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
   }
 
+  setSection(section: string) {
+    console.log("Switching to section:", section);
+    this.router.navigate([`/dashboard/${section}`]);
+  }
+
+ 
 }

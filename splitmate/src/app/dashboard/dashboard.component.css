@@ -1,0 +1,94 @@
+.container {
+    width: 100%;
+    margin: auto;
+  }
+  
+  .friends-container {
+    background-color: #eff0f1;
+    padding: 20px;
+    border: 1px solid #070707;
+    height: 700px;
+  }
+  
+  .section {
+    margin-bottom: 20px;
+  }
+  
+  .header {
+    font-size: 1em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: darkgrey;
+  }
+  
+  .header i {
+    margin-right: 8px;
+  }
+  
+  .add-link {
+    font-size: 0.9em;
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .add-link:hover {
+    text-decoration: underline;
+  }
+  
+  .links {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .side-link {
+    color: #333;
+    text-decoration: none;
+    font-size: 1em;
+    padding: 8px 0;
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .side-link i {
+    margin-right: 10px;
+    color: #666;
+  }
+  
+  .side-link:hover {
+    color: #007bff;
+  }
+  
+  .search-input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+ 
+
+  .invite-friends{
+     border: 1px solid black;
+  }
+
+  .invite-friends-heading{
+    background-color: aquamarine; 
+  }
+
+  .invite-friends-detail input,button{
+    margin: 3%
+  }
+  
+   
+  .main-dashboard, .group-balances {
+    padding: 20px;
+    background-color: #ebedef;
+    border: 1px solid black;
+    height: 700px;
+    
+  }

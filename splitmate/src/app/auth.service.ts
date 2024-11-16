@@ -1,34 +1,34 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+declare var handleSignOut: any;
 
 @Injectable({
   providedIn: 'root',
 })
 
 export class AuthService {
-  login(username: string, password: string): boolean {
-    const personalData = this.getLocalStorageData();
-    console.log(personalData);
+  isUserLoggedIn: string = '';
 
-    const user = personalData?.find(
-      (user) => user.name === username && user.password === password
-    );
-
-    if (username == 'abc' && password == 'pass') {
-      sessionStorage.setItem('isLoggedIn', 'true');
-      sessionStorage.setItem('username', username);
-      return true;
+  constructor(private router: Router) {}
+  
+  checkUserLogin(): boolean {
+    this.isUserLoggedIn = sessionStorage.getItem('IsLoggedIn') || ''; 
+    
+    if (this.isUserLoggedIn === 'true') {
+      return true; 
+    } else {
+      return false; 
     }
-    return false;
   }
+  
 
 
-
-  getLocalStorageData(): any[] | null {
-    const personalDataString = localStorage.getItem('personalData');
-    return personalDataString ? JSON.parse(personalDataString) : null;
-  }
-
-  isAuthenticated(): boolean {
-    return sessionStorage.getItem('isLoggedIn') === 'true';
+  handleSignOut(){
+    handleSignOut();
+    sessionStorage.removeItem("loggedInUser");
+    sessionStorage.removeItem("IsLoggedIn");
+    this.router.navigate(['/login']).then(()=>{
+       window.location.reload();
+    })
   }
 }

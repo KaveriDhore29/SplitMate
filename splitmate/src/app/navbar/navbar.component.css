@@ -1,57 +1,63 @@
+/* Navbar container styling */
 .navbar {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 0 20px;
-  background-color: #c82586;
-  color: #fff;
-  height: 50px;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+}
 
-  .navbar-logo {
-    .logo {
-      width: 40px;
-      height: 40px;
-    }
-  }
+/* Branding area styling */
+.navbar-brand {
+  font-size: 20px;
+  font-weight: bold;
+}
 
-  .profile-container {
-    position: relative;
-    cursor: pointer;
-    
-    .profile-circle {
-      width: 40px;
-      height: 40px;
-      background-color: #ffffff;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #040404;
-      font-weight: bold;
-      font-size: 18px;
-    }
+/* Profile area styling */
+.navbar-profile {
+  position: relative;
+  cursor: pointer;
+}
 
-    .dropdown-menu {
-      position: absolute;
-      top: 50px;
-      right: 0;
-      background-color: #ffffff;
-      border-radius: 5px;
-      padding: 30px;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-     
-      .dropdown-item {
-        padding: 8px 12px;
-        color: grey;
-        background: none;
-        border: none;
-        cursor: pointer;
-        &:hover {
-        color: #555555;
-        }
-      }
-    }
-  }
+/* Profile icon (circle) styling */
+.profile-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: white;
+  color: #007bff;
+  font-size: 24px; /* Adjust icon size */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Font Awesome icon styling */
+.fa {
+  font-size: 24px; /* Adjust font size */
+}
+
+/* Dropdown menu styling */
+.dropdown-menu {
+  position: absolute;
+  top: 50px;
+  right: 0px;
+  list-style: none;
+  background-color: white;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: block;
+}
+
+/* Dropdown menu item styling */
+.dropdown-menu li {
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+/* Dropdown hover effect */
+.dropdown-menu li:hover {
+  background-color: #000000;
 }

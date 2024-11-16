@@ -12,14 +12,14 @@ import { AuthService } from './auth.service';
 @Injectable({
   providedIn: 'root',
 })
-export class AlreadyLoggedinGuard implements CanActivate {
+export class AlreadyLoggedinGuard  {
   constructor(private authService: AuthService, private router: Router) {}
 
-  canActivate(): boolean {
-    if (this.authService.isAuthenticated()) {
-      this.router.navigate(['/dashboard']);
-      return false;
-    }
-    return true;
-  }
+  // canActivate(): boolean {
+  //   if (this.authService.isAuthenticated()) {
+  //     this.router.navigate(['/dashboard']);
+  //     return false;
+  //   }
+  //   return true;
+  // }
 }
