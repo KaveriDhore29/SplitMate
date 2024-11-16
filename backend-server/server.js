@@ -11,8 +11,8 @@ const { getSuggestions } = require('./controllers/suggestions');
 const { User } = require('./model/users');
 
 const path = require('path');
-const { User } = require('./model/users'); // Import User model
 const { Group } = require('./model/group'); // Import Group model for group creation
+const { sendEmailToNewUser } = require('./features/send-email');
 
 const app = express();
 
@@ -27,13 +27,25 @@ app.use(bodyParser.urlencoded({ extended: true })); // For parsing application/x
 
 //CORS compatibility
 // CORS configuration
-app.use(cors({
-  origin:'http://localhost:4200',
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type"],
-  credentials: true,
-}));
+// app.use(cors({
+//   origin: 'http://localhost:4200', // Allow the frontend URL
+//   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+//   allowedHeaders: ['Content-Type', 'Authorization'], // Add Content-Type
+//   credentials: true, // If using cookies or credentials
+// }));
+// CORS configuration
+const corsOptions = {
+  origin: 'http://localhost:4200',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],
+  credentials: true // Important for cookies
+};
 
+// Apply CORS middleware
+app.use(cors(corsOptions));
+
+// Handle preflight requests
+app.options('*', cors());
 // const redis = require('redis');
 
 // Create the Redis client
@@ -54,9 +66,6 @@ client.on('error', (err) => {
 (async () => {
   try {
     await client.connect();
-    await client.set('key', 'ytryuryutiui');
-const value = await client.get('key');
-console.log(value);
   } catch (err) {
     console.error('Error connecting to Redis:', err);
   }
@@ -76,39 +85,6 @@ app.get('/', (req, res) => {
 // Login route
 app.post('/api/login', loginControl);
 
-app.get('/api/suggestions', async (req, res) => {
-  const { query } = req.query;
-
-  if (!query) {
-    return res.status(400).json({ message: 'Query parameter is required' });
-  }
-
-  try {
-    const redisKey = `${query}`;
-    console.log('Redis Key:', redisKey);
-
-    // Use modern Redis methods
-    const cachedResult = await client.get('redisKey'); // Await Promise-based `get`
-    console.log('cachedResult',cachedResult);
-    if (cachedResult) {
-      console.log('Cache hit');
-      return res.json(JSON.parse(cachedResult));
-    }
-
-    console.log('Cache miss');
-    const regex = new RegExp(`^${query}`, 'i');
-    const users = await User.find({ name: regex }).limit(10);
-    const names = users.map(user => user.name);
-    console.log(regex, users, names);
-
-    await client.setEx(redisKey, 3600, JSON.stringify(names)); // Use `setEx`
-    console.log(names);
-    return res.json(names);
-  } catch (error) {
-    console.error('Error fetching suggestions:', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-});
 // Example protected route (authentication middleware)
 app.get('/api/protected', isAuthenticated, (req, res) => {
   res.json({ message: 'You are authenticated!' });
@@ -119,6 +95,14 @@ app.get('/api/search-users-by-username', async (req, res) => {
   const { query } = req.query;
 
   try {
+    const redisKey = `${query}`;
+    // Use modern Redis methods
+    const cachedResult = await client.get(redisKey); // Await Promise-based `get`
+    // console.log('cachedResult',cachedResult);
+    if (cachedResult) {
+      console.log('Cache hit');
+      return res.json(JSON.parse(cachedResult));
+    }
     // Search users by username (case-insensitive search)
     const users = await User.find({
       name: { $regex: `^${query}`, $options: 'i' }  // Search usernames starting with the query
@@ -130,6 +114,7 @@ app.get('/api/search-users-by-username', async (req, res) => {
       email: user.email,
       userid: user._id
     }));
+    await client.setEx(redisKey, 3600, JSON.stringify(results)); // Use `setEx`
     res.json(results);
   } catch (error) {
     console.error('Error fetching users:', error);
@@ -139,8 +124,11 @@ app.get('/api/search-users-by-username', async (req, res) => {
 
 
 // **Create Group Route** - Handle group creation with selected members
-app.post('/api/create-group', isAuthenticated, async (req, res) => {
-  const { groupName, members, groupType } = req.body;
+app.post('/api/create-group', async (req, res) => {
+  console.log('create grp');
+  const { groupName, groupType } = req.body;
+  let {members} = req.body
+  console.log('members',members);
 
   // Validate the group name, members, and group type
   if (!groupName || !members || members.length === 0 || !groupType) {
@@ -148,19 +136,37 @@ app.post('/api/create-group', isAuthenticated, async (req, res) => {
   }
 
   try {
-    const users = await User.find({ '_id': { $in: members } });
-    if (users.length !== members.length) {
-      return res.status(404).json({ error: 'Some members not found' });
-    }
+    // Extract emails from members array
+    const memberEmails = members.map(member => member.email);
   
-    const newGroup = new Group({
+    // Find users that exist in the database
+    const existingUsers = await User.find({ email: { $in: memberEmails } });
+    const existingUserEmails = existingUsers.map(user => user.email);
+  
+    console.log('Existing users:', existingUsers);
+
+     // Filter out members that do not exist in the database
+  members = members.filter(member => {
+    const isExisting = existingUserEmails.includes(member.email);
+    if (!isExisting) {
+      console.log('User not found, sending email to:', member.email);
+      // sendEmailToNewUser(member.email);
+    }
+    return isExisting;
+  });
+  console.log('members  ',members);
+
+    // if (users.length !== members.length) {
+    //   return res.status(404).json({ error: 'Some members not found' });
+    // }
+
+    const newGroup = await Group.create({
       name: groupName,
       members: members,
-      createdBy: req.user.id,
       type: groupType
     });
-  
-    await newGroup.save();
+
+    // await newGroup.save();
     res.status(201).json({ message: 'Group created successfully!', group: newGroup });
   } catch (error) {
     console.error('Error creating group:', error);  // Check for detailed error
@@ -177,5 +183,5 @@ app.use((err, req, res, next) => {
 // Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  // console.log(`Server running on port ${PORT}`);
 })

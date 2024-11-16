@@ -17,6 +17,7 @@
     "express": "^4.21.1",
     "google-auth-library": "^9.14.2",
     "mongoose": "^8.7.3",
-    "nodemon": "^3.1.7"
+    "nodemon": "^3.1.7",
+    "redis": "^4.7.0"
   }
 }
