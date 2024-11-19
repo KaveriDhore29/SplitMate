@@ -1,37 +1,41 @@
-.container {
-    width: 100%;
-    margin: auto;
-  }
-  
+
   .friends-container {
-    background-color: #eff0f1;
-    padding: 20px;
-    border: 1px solid #070707;
-    height: 700px;
+     background-color: #001E2B;;
+    border: 1px solid #ffffff;
+    height: 780px;
+    padding: 0%;
+    border-top: none;
+    border-left: none;
+    font-family: 'Trirong',serif;
   }
   
   .section {
-    margin-bottom: 20px;
+    margin: 8% 0%;
   }
-  
+
+  h3{
+    margin: 0px 12px 0px
+  }
+  .btn{
+    width:120px;
+  }
   .header {
-    font-size: 1em;
-    font-weight: bold;
-    margin-bottom: 10px;
+    width: 100%;
+    height:30px;
+    background-color: black;;
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    background-color: darkgrey;
+    color: white;
+    
   }
   
-  .header i {
-    margin-right: 8px;
-  }
-  
+ 
   .add-link {
-    font-size: 0.9em;
-    color: #007bff;
+    font-size: 1em;
+    color: white;
     text-decoration: none;
+    margin-right: 10px;
+    margin-top:5px;
   }
   
   .add-link:hover {
@@ -41,54 +45,111 @@
   .links {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    margin: 3% 15%;
   }
   
   .side-link {
-    color: #333;
+    color : #e8e0e0;
     text-decoration: none;
     font-size: 1em;
-    padding: 8px 0;
+    /* padding: 8px 0; */
     display: flex;
     align-items: center;
     width: 100%;
+    margin-bottom: 7%;
+    font-size: 15px;
   }
   
   .side-link i {
-    margin-right: 10px;
-    color: #666;
+   /* // margin-right: 10px; */
+   color : #e8e0e0;
+    padding-right: 10px;
   }
   
   .side-link:hover {
-    color: #007bff;
+    color: #F6FCDF;
   }
   
   .search-input {
     width: 100%;
     padding: 8px;
     margin-top: 10px;
-    border: 1px solid #ccc;
     border-radius: 4px;
+    margin-bottom: 7%;
+    background-color: #001E2B;
+    border: 1px solid #F6FCDF;
+    color: #F6FCDF;
+  }
+  .search-input:focus{
+    outline: none;
   }
  
 
   .invite-friends{
-     border: 1px solid black;
+     border: 1px solid rgb(234, 225, 225);
+     margin: 5%;
   }
 
   .invite-friends-heading{
-    background-color: aquamarine; 
+    background-color: #04AA6D; 
+    padding: 2%;
+    font-size: large;
+    color: white
   }
 
   .invite-friends-detail input,button{
-    margin: 3%
+    margin: 3%;
+    padding: 10px;
+    border-radius: 4px;
   }
   
    
   .main-dashboard, .group-balances {
     padding: 20px;
-    background-color: #ebedef;
-    border: 1px solid black;
-    height: 700px;
-    
+    background-color: #001E2B;;
+    border: 1px solid #ffffff; border-top: none;
+    height: 780px;
+    font-family: 'Trirong',serif;
   }
+
+  .share-links{
+    .fa {
+      padding: 10px;
+      font-size: 30px;
+      width: 20%;
+      text-align: center;
+      text-decoration: none;
+      margin: 5px 2px;
+    }
+    
+    .fa:hover {
+        opacity: 0.7;
+    }
+    
+    .fa-facebook {
+      background: #3B5998;
+      color: white;
+    }
+    
+    .fa-twitter {
+      background: #55ACEE;
+      color: white;
+    }
+  }
+
+  .invite-btn{
+    background-color: #F6FCDF;
+  }
+
+
+  .group-balances{
+    color: white;
+  }
+
+  .invite-friend-email{
+     background-color: #001E2B;
+     border: 1px solid #F6FCDF;
+     color: #F6FCDF;
+  }
+
+  

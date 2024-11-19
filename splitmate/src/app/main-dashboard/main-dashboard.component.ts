@@ -9,11 +9,17 @@ import { AuthService } from '../auth.service';
 })
 export class MainDashboardComponent implements OnInit {
 
-  constructor(private router: Router,public authService :AuthService) { }
+  userProfile:any;
+
+
 
   ngOnInit(): void {
+    this.userProfile = JSON.parse(sessionStorage.getItem("loggedInUser") || "");
   }
 
+  constructor(private router: Router,public authService :AuthService) { }
+
+ 
   navigateToForm() {
     this.router.navigate(['/create-group/new']);
   }
