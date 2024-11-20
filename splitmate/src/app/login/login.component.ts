@@ -15,6 +15,8 @@ export class LoginComponent {
   username: any ;
   password: any ;
 
+  
+
   constructor(private router: Router,private route: ActivatedRoute, private authService: AuthService, private http: HttpClient) {}
 
   ngOnInit() {

@@ -1,12 +1,61 @@
-.container{
-  border: 1px solid rgb(255, 255, 255);
-  width:500px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 10%;
-  text-align:center;
-  height : 300px;
-  background-color: #4CAF50;
-  font-family: "Trirong", serif;
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  text-align: center;
+  color: black;
+  width: 80%;
+  background-color: white;
+  margin-top: 5%;
+  border-radius: 20px;
+}
 
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+
+
+.video-container video {
+  width: 100%; 
+  height: auto;
+  border-radius: 10px;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  text-align: left;
+}
+
+.main-heading {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  margin-left: 50px;
+}
+
+.sub-heading {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  margin-right: 10px;
+}
+
+.google-btn {
+  padding: 10px 20px;
+  color: white;
+  font-size: 1rem;
+  text-align: center;
+  border-radius: 5px;
+  cursor: pointer;
+  
 }
