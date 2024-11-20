@@ -49,7 +49,7 @@ app.options('*', cors());
 connectDatabase();
 
 // Connect Redis
-redisDb();
+// redisDb();
 
 // Routes
 app.get('/', (req, res) => {
@@ -93,7 +93,7 @@ app.post('/api/create-group', async (req, res) => {
      // Filter out members that do not exist in the database
   members = members.filter(member => {
     const isExisting = existingUserEmails.includes(member.email);
-    if (!isExisting) {
+    if (!isExisting && member.email != '') {
       console.log('User not found, sending email to:', member.email);
       sendEmailToNewUser(req, res, member.email);
     }

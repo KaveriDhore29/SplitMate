@@ -1,5 +1,7 @@
-const User = require('../model/users');
-const client = require('../server'); // Correctly import the Redis client
+const { client } = require('../data/redis-database');
+const { User } = require('../model/users');
+// const User = require('../model/users');
+// const client = require('../server'); // Correctly import the Redis client
 
 const getSuggestions = async (req, res) => {
   const { query } = req.query;
