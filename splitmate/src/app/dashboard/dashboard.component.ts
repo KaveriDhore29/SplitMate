@@ -10,7 +10,7 @@ export class DashboardComponent implements OnInit {
   
   currentSection: string = 'dashboard/main-dashboard'; 
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -18,6 +18,10 @@ export class DashboardComponent implements OnInit {
   setSection(section: string) {
     console.log("Switching to section:", section);
     this.router.navigate([`/dashboard/${section}`]);
+  }
+
+  navigateToForm() {
+    this.router.navigate(['/create-group/new']);
   }
 
  

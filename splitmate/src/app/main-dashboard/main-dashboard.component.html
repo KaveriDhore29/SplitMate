@@ -1,32 +1,41 @@
 
 <div class="container text-center">
     <div class="row align-items-center">
-       <h2> Dashboard</h2>
+        <div class="section section1">
+            <h1 class="heading">DASHBOARD</h1>  
+            <p *ngIf="userProfile" class="welcome-text">Welcome, {{userProfile.name}}! Take control of your finances today.</p>
     </div>
-    <hr>
+  
+ 
     <div class="row">
-        <div class="col-4">  <button (click)="navigateToForm()">Create Group</button></div>
-        <div class="col-4"> <button>Settle Up</button></div>
-        <div class="col-4"> <button>Add Expense</button></div>
+        <div class="section">
+            <table class="table table-secondary table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">You Owe</th>
+                    <th scope="col">You Owed</th>
+                    <th scope="col">Total Balances</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><b>$</b> 0.00</td>
+                    <td><b>$</b> 0.00</td>
+                    <td><b>$</b> 0.00</td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+      
     </div>
-    <hr>
+  
     <div class="row">
-        <div class="col-12"> Currently, you're not part of any group. Join a group to start managing and splitting expenses with friends!</div>
+        <div class="section">
+            <div class="col-12"> Currently, you're not part of any group. Join a group to start managing and splitting expenses with friends!</div>
+        </div>
+     
     </div>
-    <hr>
-    <div class="row">
-        <div class="col-4 balances">
-          <h4>Total balance</h4>  
-          <p>$0.00*</p>
-        </div>
-        <div class="col-4 balances">
-            <h4>You owe</h4>  
-            <p>$0.00*</p>   
-        </div>
-        <div class="col-4 balances">
-            <h4>You are owed</h4>  
-          <p>$0.00*</p>
-        </div>
-    </div>
-    <button class="dropdown-item" (click)="this.authService.handleSignOut()">Sign Out</button>
+  
+   
+    <button class="dropdown-item" (click)="this.authService.handleSignOut()" class="success-button">Sign Out</button>
 </div>

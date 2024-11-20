@@ -10,25 +10,32 @@ import { log } from 'console';
 })
 export class NavbarComponent implements OnInit {
 
-  
+  isDropdownVisible = false; 
+  isLoggedIn = false; 
+
   constructor(private router: Router,public authService : AuthService) { }
 
-
-  ngOnInit(): void {
+  ngOnInit() {
+    this.isLoggedIn = this.authService.checkUserLogin();
+    console.log(this.isLoggedIn);
   }
 
-  isDropdownVisible = false; 
 
   toggleDropdown() {
     this.isDropdownVisible = !this.isDropdownVisible;
-    console.log(this.isDropdownVisible)
   }
 
-  // Placeholder for the sign-in logic
   signIn() {
- 
-   this.router.navigate(['login']);
- 
+    this.router.navigate(['login']);
+  }
+
+  signOut() {
+    console.log('Sign-Out Clicked in navbar');
+    this.authService.handleSignOut();
+  }
+
+  viewProfile() { 
+   alert('View Profile Clicked');
   }
 
 

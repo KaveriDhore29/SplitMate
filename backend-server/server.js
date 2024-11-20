@@ -26,6 +26,7 @@ app.use(cors({
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type"],
   credentials: true,
+  
 }));
 
 // Connect to the database

@@ -1,33 +1,17 @@
 
-
-<!-- <nav class="navbar">
-  <div class="navbar-logo">
-   
-     SplitMate
-  </div>
-  
-  <div class="profile-container" (click)="toggleDropdown()">
-  
-    <div class="profile-circle">S</div>
-    <div class="dropdown-menu" >
-      <button class="dropdown-item">View Profile</button>
-      <button class="dropdown-item" (click)="this.authService.handleSignOut()">Sign Out</button>
-    </div>
-  </div>
-</nav> -->
-
 <nav class="navbar">
-  <div class="navbar-brand">Logo</div>
+  <div class="navbar-brand">SplitMATE</div>
   <div class="navbar-profile">
     <div 
       class="profile-icon"
       (click)="toggleDropdown()"
     >
-      <i class="fa fa-user"></i> <!-- Font Awesome Person Icon -->
+      <i class="fa fa-user"></i>
     </div>
-    <!-- Dropdown menu will only appear when isDropdownVisible is true -->
     <ul class="dropdown-menu" *ngIf="isDropdownVisible">
-      <li (click)="signIn()">Sign In</li>
+      <li *ngIf="!isLoggedIn" (click)="signIn()">Sign In</li>
+      <li *ngIf="isLoggedIn" (click)="viewProfile()">View Profile</li>
+      <li *ngIf="isLoggedIn" (click)="signOut()">Sign Out</li>
     </ul>
   </div>
 </nav>

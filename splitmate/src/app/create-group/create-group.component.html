@@ -1,78 +1,89 @@
 <app-navbar></app-navbar>
-<div class="form-container">
-  <div class="form-heading">
-    <h2>START A NEW GROUP</h2>  
-  </div>  
-
-  <!-- Group Name -->
-  <div class="group-name">
-    <label for="group-name">My group shall be called…</label><br/>
-    <input type="text" id="group-name" [(ngModel)]="groupName" (input)="onGroupNameInput()" class="group-name" placeholder="Group Name" />
-  </div>
-
-  <hr>
-  
-  <!-- Group Members -->
-  <div class="group-members" *ngIf="groupName">
-    <div class="group-members-heading"><h2>GROUP MEMBERS</h2></div>
-
-    <!-- Add Members -->
-    <div class="add-members">
-      <div *ngFor="let member of members; let i = index" class="member-inputs">
+<div class="container-fluid">
+  <div class="row">
+    <!-- Left Column (Image) -->
+    <div class="col-md-5 img-col">
+    </div>
+    
+    <!-- Right Column (Form) -->
+    <div class="col-md-7">
+      <div class="form-container">
+        <div class="form-heading">
+          <h2>CREATE A NEW GROUP</h2>  
+        </div>  
+      
+        <!-- Group Name -->
+        <div class="group-name">
+          <!-- <label for="group-name">My group shall be called…</label><br/> -->
+          <input type="text" id="group-name" [(ngModel)]="groupName" (input)="onGroupNameInput()" class="group-name" placeholder="Type your group name here" />
+        </div>
+      
+        <hr>
         
-        <!-- Autocomplete for Username -->
-        <mat-form-field appearance="fill">
-          <mat-label>Username</mat-label>
-          <input 
-            type="text" 
-            matInput 
-            [(ngModel)]="member.username" 
-            [matAutocomplete]="auto" 
-            (input)="onSearchUsername($event, i)" 
-            placeholder="Username" 
-            class="username"
-          />
-          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectMember($event.option.value, i)">
-            <mat-option *ngFor="let result of searchResults" [value]="result">
-              {{ result.username }} ({{ result.email }})
-            </mat-option>
-          </mat-autocomplete>          
-        </mat-form-field>
-
-        <!-- Email input (auto-filled based on selected username) -->
-        <input type="email" [(ngModel)]="member.email" placeholder="Email" class="email" readonly />
-
-        <span class="remove-member" (click)="removeInputBox(i)">&times;</span>
+        <!-- Group Members -->
+        <div class="group-members" *ngIf="groupName">
+          <div class="group-members-heading"><h2>GROUP MEMBERS</h2></div>
+      
+          <!-- Add Members -->
+          <div class="add-members">
+            <div *ngFor="let member of members; let i = index" class="member-inputs">
+              
+              <!-- Autocomplete for Username -->
+              <mat-form-field appearance="fill">
+                <mat-label>Username</mat-label>
+                <input 
+                  type="text" 
+                  matInput 
+                  [(ngModel)]="member.username" 
+                  [matAutocomplete]="auto" 
+                  (input)="onSearchUsername($event, i)" 
+                  placeholder="Username" 
+                  class="username"
+                />
+                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectMember($event.option.value, i)">
+                  <mat-option *ngFor="let result of searchResults" [value]="result">
+                    {{ result.username }} ({{ result.email }})
+                  </mat-option>
+                </mat-autocomplete>          
+              </mat-form-field>
+      
+              <!-- Email input (auto-filled based on selected username) -->
+              <input type="email" [(ngModel)]="member.email" placeholder="Email" class="email" />
+      
+              <span class="remove-member" (click)="removeInputBox(i)">&times;</span>
+            </div>
+          </div>
+      
+          <!-- Link to Add More Members -->
+          <div class="link-to-add-members">  
+            <a (click)="addInputBox()">+ Add a person</a>
+          </div>
+        </div>
+      
+        <hr *ngIf="groupName">
+        
+        <!-- Group Type -->
+        <div class="group-type" *ngIf="groupName">
+          <div class="group-type-heading">
+            <h2>GROUP TYPE</h2> 
+          </div>
+          <div class="group-type-dropdown">
+            <select  [(ngModel)]= "groupType">
+              <option>Home</option>
+              <option>Office</option>
+              <option>Trip</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+        
+        <hr *ngIf="groupName">
+        
+        <!-- Save Button -->
+        <div class="save-button">
+          <button type="button" class="save-group-details"  (click)="saveGroup()">Save</button>
+        </div>
       </div>
     </div>
-
-    <!-- Link to Add More Members -->
-    <div class="link-to-add-members">  
-      <a (click)="addInputBox()">+ Add a person</a>
-    </div>
-  </div>
-
-  <hr *ngIf="groupName">
-  
-  <!-- Group Type -->
-  <div class="group-type" *ngIf="groupName">
-    <div class="group-type-heading">
-      <h2>GROUP TYPE</h2> 
-    </div>
-    <div class="group-type-dropdown">
-      <select  [(ngModel)]= "groupType">
-        <option>Home</option>
-        <option>Office</option>
-        <option>Trip</option>
-        <option>Other</option>
-      </select>
-    </div>
-  </div>
-  
-  <hr *ngIf="groupName">
-  
-  <!-- Save Button -->
-  <div class="save-button">
-    <button type="button" class="save-group-details"  (click)="saveGroup()">Save</button>
   </div>
 </div>

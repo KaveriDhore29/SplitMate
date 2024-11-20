@@ -4,14 +4,16 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  background-color: #007bff;
+  background-color: #04AA6D;
   color: white;
+  font-family: 'Trirong',serif;
 }
 
 /* Branding area styling */
 .navbar-brand {
   font-size: 20px;
   font-weight: bold;
+  color:white
 }
 
 /* Profile area styling */
@@ -29,7 +31,7 @@
   height: 40px;
   border-radius: 50%;
   background-color: white;
-  color: #007bff;
+  color: #00684A;
   font-size: 24px; /* Adjust icon size */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
@@ -59,5 +61,5 @@
 
 /* Dropdown hover effect */
 .dropdown-menu li:hover {
-  background-color: #000000;
+  color: #eb3b3b;
 }

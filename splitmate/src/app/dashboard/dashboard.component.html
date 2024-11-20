@@ -1,12 +1,9 @@
 <app-navbar></app-navbar>
-<div class="container text-center">
+<div class="container-fluid text-center">
   <div class="row align-items-center">
     <!-- Sidebar Links -->
     <div class="col-3 friends-container">
       <div class="section">
-        <div class="header">
-          <i class="fas fa-home"></i> Dashboard
-        </div>
         <div class="links">
           <a [routerLink]="['/dashboard/main-dashboard']" class="side-link">
             <i class="fas fa-tachometer-alt"></i> Dashboard
@@ -21,8 +18,9 @@
       <!-- Groups Section -->
       <div class="section">
         <div class="header">
-          <i class="fas fa-users"></i> GROUPS
-          <a href="javascript:void(0)" class="add-link">+ add</a>
+          <div> <h3>GROUPS</h3>  </div>
+        
+          <a href="javascript:void(0)" class="add-link">+ Add</a>
         </div>
         <div class="links">
           <a [routerLink]="['/dashboard/group-detail']" class="side-link">
@@ -37,8 +35,8 @@
       <!-- Friends Section -->
       <div class="section">
         <div class="header">
-          <i class="fas fa-user-friends"></i> FRIENDS
-          <a href="javascript:void(0)" class="add-link">+ add</a>
+       <div><h3>FRIENDS</h3> </div>
+          <a href="javascript:void(0)" class="add-link">+ Add</a>
         </div>
         <div class="links">
           <a [routerLink]="['/dashboard/friend-detail']" class="side-link">
@@ -56,11 +54,11 @@
         </div>
         <div class="invite-friends-detail">
           <input type="text" placeholder="Enter an email address" class="invite-friend-email">
-          <button>Send invite</button>
+          <button class="invite-btn">Send invite</button>
         </div>
         <div class="share-links">
-          <button><i class="fa-brands fa-facebook-f"></i> Share</button>
-          <button><i class="fa-brands fa-x-twitter"></i> Tweet</button>
+          <a href=" " class="fa fa-facebook"> </a>
+          <a href=" " class="fa fa-twitter"></a>
         </div>
       </div>
     </div>
@@ -72,7 +70,26 @@
 
     <!-- Group Balances Section -->
     <div class="col-3 group-balances">
-      <p>Load the group and friend details here!</p>
+      <div class="row">
+            <div class="col">
+                <button class="btn btn-warning" title="Create Group" (click)="navigateToForm()">
+                  Create Group
+                </button>
+              </div>
+              <div class="col">
+                <button class="btn btn-info" title="Settle Up">
+                 Settle Up
+                </button>
+              </div>
+              <div class="col">
+                <button class="btn btn-danger" title="Add Expense">
+                 Add Expense
+                </button>
+        </div>
+       
+    </div>
+
+      <p>Load the group and friends details here!</p>
     </div>
   </div>
 </div>
