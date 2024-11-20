@@ -7,9 +7,7 @@ mongoose.set('strictQuery', false);
 const connectDatabase = async () => {
   try {
     const connection = await mongoose.connect(process.env.MONGODB_URI, {
-      dbName: 'splitmate', // Specify the database name
-      useNewUrlParser: true, // Use the new URL parser (for older versions of Mongoose)
-      useUnifiedTopology: true, // Use the new topology engine (for older versions of Mongoose)
+      dbName: 'splitmate',
     });
     console.log(`Database connected successfully with host: ${connection.connection.host}`);
   } catch (error) {
