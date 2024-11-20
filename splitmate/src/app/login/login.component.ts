@@ -20,18 +20,18 @@ export class LoginComponent {
   constructor(private router: Router,private route: ActivatedRoute, private authService: AuthService, private http: HttpClient) {}
 
   ngOnInit() {
-    initializeGoogleSignIn();
-    this.route.queryParams.subscribe(params => {
-      const token = params['token'];
-      if (token) {
-        localStorage.setItem('authToken', token);
-        // Redirect if needed
-        this.router.navigate(['/dashboard']);
-      } else {
-        // If no token, handle as unauthenticated access
-        this.router.navigate(['/login']);
-      }
-    });
+    // initializeGoogleSignIn();
+    // this.route.queryParams.subscribe(params => {
+    //   const token = params['token'];
+    //   if (token) {
+    //     localStorage.setItem('authToken', token);
+    //     // Redirect if needed
+    //     this.router.navigate(['/dashboard']);
+    //   } else {
+    //     // If no token, handle as unauthenticated access
+    //     this.router.navigate(['/login']);
+    //   }
+    // });
 
    
  
