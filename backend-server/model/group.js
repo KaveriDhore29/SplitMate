@@ -15,7 +15,8 @@ const mongoose = require('mongoose');
 const groupSchema = new mongoose.Schema({
   name: String,
   members: Array,
-  type: String  // This should match groupType
+  type: String,  // This should match groupType
+  groupId: String,
 });
 const Group = mongoose.model('Group', groupSchema);
 

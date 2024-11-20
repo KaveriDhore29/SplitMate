@@ -15,6 +15,8 @@ const path = require('path');
 const { Group } = require('./model/group'); // Import Group model for group creation
 const { sendEmailToNewUser } = require('./features/send-email');
 const { redisDb } = require('./data/redis-database');
+const { v4: uuidv4 } = require('uuid'); // For generating a unique group ID
+const { createGroup } = require('./controllers/group');
 
 const app = express();
 
@@ -69,55 +71,7 @@ app.get('/api/search-users-by-username', getSuggestions);
 
 
 // **Create Group Route** - Handle group creation with selected members
-app.post('/api/create-group', async (req, res) => {
-  console.log('create grp');
-  const { groupName, groupType } = req.body;
-  let {members} = req.body
-  console.log('members',members);
-
-  // Validate the group name, members, and group type
-  if (!groupName || !members || members.length === 0 || !groupType) {
-    return res.status(400).json({ error: 'Group name, members, and group type are required' });
-  }
-
-  try {
-    // Extract emails from members array
-    const memberEmails = members.map(member => member.email);
-  
-    // Find users that exist in the database
-    const existingUsers = await User.find({ email: { $in: memberEmails } });
-    const existingUserEmails = existingUsers.map(user => user.email);
-  
-    console.log('Existing users:', existingUsers);
-
-     // Filter out members that do not exist in the database
-  members = members.filter(member => {
-    const isExisting = existingUserEmails.includes(member.email);
-    if (!isExisting && member.email != '') {
-      console.log('User not found, sending email to:', member.email);
-      sendEmailToNewUser(req, res, member.email);
-    }
-    return isExisting;
-  });
-  console.log('members  ',members);
-
-    // if (users.length !== members.length) {
-    //   return res.status(404).json({ error: 'Some members not found' });
-    // }
-
-    const newGroup = await Group.create({
-      name: groupName,
-      members: members,
-      type: groupType
-    });
-
-    // await newGroup.save();
-    res.status(201).json({ message: 'Group created successfully!', group: newGroup });
-  } catch (error) {
-    console.error('Error creating group:', error);  // Check for detailed error
-    res.status(500).json({ error: 'Server error while creating group' });
-  }
-});
+app.post('/api/create-group', createGroup);
 
 // Global error handler
 app.use((err, req, res, next) => {

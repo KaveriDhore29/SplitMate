@@ -15,6 +15,10 @@ const schema = new mongoose.Schema({
     unique: true, // Ensures that email addresses are unique
     match: [/^\S+@\S+\.\S+$/, 'Please enter a valid email address'], // Basic email validation
   },
+  groupIds: {
+    type: Array,
+    required: false,
+  }
 }, { timestamps: true }); // Automatically add createdAt and updatedAt fields
 
 const User = mongoose.model('userData', schema);
