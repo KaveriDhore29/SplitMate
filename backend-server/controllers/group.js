@@ -1,7 +1,7 @@
 const { sendEmailToNewUser } = require('../features/send-email');
 const { Group } = require('../model/group');
-const { User } = require('../model/users');
 const { v4: uuidv4 } = require('uuid'); // For generating a unique group ID
+const { User } = require('../model/users');
 
 // Controller to create a new group
 const createGroup = 
@@ -35,51 +35,58 @@ const createGroup =
   async (req, res) => {
     console.log('create grp');
     const { groupName, groupType } = req.body;
-    let {members} = req.body
-    console.log('members',members);
+    let { members } = req.body;
+    const username = req.body.createdBy.username;
+    const email = req.body.createdBy.email;
+  
+    console.log('members:', members);
   
     // Validate the group name, members, and group type
-    if (!groupName || !members || members.length === 0 || !groupType) {
+    if (!groupName || !Array.isArray(members) || members.length === 0 || !groupType) {
       return res.status(400).json({ error: 'Group name, members, and group type are required' });
     }
   
     try {
+      let obj ={
+        username,
+        email
+      }
+            members.push(obj);
       // Extract emails from members array
-      const memberEmails = members.map(member => member.email);
+      let memberEmails = members.map(member => member.email);
+  
       // Generate a unique groupId
       const groupId = uuidv4();
-    
+  
       // Find users that exist in the database
       const existingUsers = await User.find({ email: { $in: memberEmails } });
       const existingUserEmails = existingUsers.map(user => user.email);
-    
+  
       console.log('Existing users:', existingUsers);
   
-       // Filter out members that do not exist in the database
-    members = members.filter(member => {
-      const isExisting = existingUserEmails.includes(member.email);
-      if (!isExisting && member.email != '') {
-        console.log('User not found, sending email to:', member.email);
-        sendEmailToNewUser(req, res, member.email, groupId);
-      }
-      return isExisting;
-    });
-    console.log('members  ',members);
+      // Filter out members that do not exist in the database
+      members = members.filter(member => {
+        const isExisting = existingUserEmails.includes(member.email);
+        if (!isExisting && member.email !== '') {
+          console.log('User not found, sending email to:', member.email);
+          try {
+            sendEmailToNewUser(req, res, member.email, groupId);
+          } catch (error) {
+            console.error('Error sending email to new user:', error);
+          }
+        }
+        return isExisting;
+      });
   
+      console.log('Filtered members:', members);
   
-    // add the groupId to userdatas
-    for(let member of members) {
-      const memberEmail = member.email;
-      await User.updateOne(
-        { email: memberEmail }, // Query: Find user by email
-        { $push: { groupIds: groupId } } // Update: Add someGroupId to the groupIds array
+      // Add the groupId to userdatas concurrently
+      const updatePromises = members.map(member =>
+        User.updateOne({ email: member.email }, { $push: { groupIds: groupId } })
       );
-    }
+      await Promise.all(updatePromises); // Execute all updates concurrently
   
-      // if (users.length !== members.length) {
-      //   return res.status(404).json({ error: 'Some members not found' });
-      // }
-  
+      // Create the new group
       const newGroup = await Group.create({
         name: groupName,
         members: members,
@@ -87,13 +94,22 @@ const createGroup =
         groupId: groupId,
       });
   
-      // await newGroup.save();
-      res.status(201).json({ message: 'Group created successfully!', group: newGroup });
+      const groupIdHash = groupId;
+      const link = `http://localhost:4200/dashboard/group-detail/${groupIdHash}`;
+      res.status(201).json({
+        success: true,
+        message: 'Group created successfully!',
+        group: newGroup,
+        groupIdHash,
+        link,
+      });
+  
     } catch (error) {
-      console.error('Error creating group:', error);  // Check for detailed error
-      res.status(500).json({ error: 'Server error while creating group' });
+      console.error('Error creating group:', error.message || error);  // Check for detailed error
+      res.status(500).json({ error: error.message || 'Server error while creating group' });
     }
-  }
+  };
+  
 // };
 
 // Controller to add members to an existing group
@@ -129,9 +145,11 @@ const addMembersToGroup = async (req, res) => {
 const getGroupDetails = async (req, res) => {
   try {
     const groupId = req.params.groupId;
+    console.log(groupId);
 
     // Fetch the group details along with its members (populate member details)
     const group = await Group.findById(groupId).populate('members', 'name email');
+    console.log(group);
     if (!group) {
       return res.status(404).json({ error: 'Group not found' });
     }
@@ -144,4 +162,18 @@ const getGroupDetails = async (req, res) => {
   }
 };
 
-module.exports = { createGroup, addMembersToGroup, getGroupDetails };
+
+
+const getOneGroupDetail = async (req, res) => {
+  const {email, groupId} = req.body;
+
+  try {
+    const group = await Group.find({groupId});
+    if(!group) res.status(404).json({error: 'Group not found here'});
+    res.status(200).json(group);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+module.exports = { createGroup, addMembersToGroup, getGroupDetails, getOneGroupDetail };
