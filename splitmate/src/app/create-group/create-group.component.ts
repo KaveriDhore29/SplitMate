@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-group',
@@ -15,9 +16,10 @@ export class CreateGroupComponent implements OnInit {
   createdBy = { username: '', email: '' };
   searchResults: any[] = [];         // To store search results
   searchQuery: string = '';          // Current search query
+
   
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,public router:Router) {}
 
   ngOnInit(): void {
     const loggedInUser = sessionStorage.getItem('loggedInUser');
@@ -81,13 +83,13 @@ selectMember(selectedUser: { userId: string, username: string, email: string }, 
     console.log('Group Name Input Changed:', this.groupName);
   }
 
-  // Remove member from selected list
-  removeMember(index: number): void {
-    this.members.splice(index, 1);
-  }
-
+ 
   saveGroup(): void {
-  
+   
+    if(this.groupName.trim() == '' && this.members[0].username.trim() == '' && this.members[0].email.trim() == '' ){
+      alert("Please fill the details");
+    }
+    else{
     const groupData = {
       groupName: this.groupName,
       groupType: this.groupType,
@@ -98,19 +100,24 @@ selectMember(selectedUser: { userId: string, username: string, email: string }, 
       createdBy: this.createdBy
     };
 
+   
      console.log(groupData,"groupData");
     // Send the POST request
     this.http.post('http://localhost:3000/api/create-group', groupData, { withCredentials: true }).subscribe(
       response => {
         console.log('Group created successfully:', response);
-        alert("Group created successfully!");
-        // Optional: clear form or show success message
+        alert('Group created successfully!');
+        this.router.navigate(['dashboard/group-detail'])
       },
       error => {
         console.error('Error creating group from frontend:', error);
+     
       }
     );
   }
+  }
+
+ 
 
   
 
