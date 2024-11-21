@@ -35,7 +35,7 @@ const createGroup =
   async (req, res) => {
     console.log('create grp');
     const { groupName, groupType } = req.body;
-    let { members } = req.body;
+    let { members, joinedByLink } = req.body;
     const username = req.body.createdBy.username;
     const email = req.body.createdBy.email;
   
@@ -63,20 +63,36 @@ const createGroup =
       const existingUserEmails = existingUsers.map(user => user.email);
   
       console.log('Existing users:', existingUsers);
-  
+
+       // Mark members who join by link
+    members = members.map((member) => ({
+      ...member,
+      joinedByLink: !existingUserEmails.includes(member.email) && member.email !== "",
+    }));
+
+  // let isJoinByLink = false;
       // Filter out members that do not exist in the database
-      members = members.filter(member => {
+      members.filter(member => {
         const isExisting = existingUserEmails.includes(member.email);
         if (!isExisting && member.email !== '') {
           console.log('User not found, sending email to:', member.email);
           try {
-            sendEmailToNewUser(req, res, member.email, groupId);
+            console.log('sendEmailToNewUser');
+            // isJoinByLink = true;
+            // sendEmailToNewUser(req, res, member.email, groupId);
           } catch (error) {
             console.error('Error sending email to new user:', error);
           }
         }
         return isExisting;
       });
+
+      // if(isJoinByLink) {
+      //   members.joinedByLink = true;
+      // }
+      // else {
+      //   members.joinedByLink = false;
+      // }
   
       console.log('Filtered members:', members);
   

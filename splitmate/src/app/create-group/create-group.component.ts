@@ -16,7 +16,7 @@ export class CreateGroupComponent implements OnInit {
   createdBy = { username: '', email: '' };
   searchResults: any[] = [];         // To store search results
   searchQuery: string = '';          // Current search query
-
+  joinedByLink = false;
   
 
   constructor(private http: HttpClient,public router:Router) {}
@@ -95,7 +95,8 @@ selectMember(selectedUser: { userId: string, username: string, email: string }, 
       groupType: this.groupType,
       members: this.members.map(member => ({
         username: member.username,
-        email: member.email
+        email: member.email,
+        joinedByLink: this.joinedByLink
       })),
       createdBy: this.createdBy
     };
