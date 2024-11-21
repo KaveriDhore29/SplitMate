@@ -1,6 +1,6 @@
 const nodemailer = require("nodemailer");
 
-const sendEmailToNewUser = async (req, res, email, groupId) => {
+const sendEmailToNewUser = async (req, res, email, groupId, groupName) => {
     // Guard against multiple calls
     if (res.headersSent) {
         console.warn('Headers already sent, skipping email send response');
@@ -20,6 +20,7 @@ const sendEmailToNewUser = async (req, res, email, groupId) => {
 
         const groupIdHash = groupId;
         const link = `http://localhost:4200/dashboard/group-detail/${groupIdHash}`;
+        const newLink = 'http://localhost:4200/login'
 
         const transporter = nodemailer.createTransport({
             service: "Gmail",
@@ -33,7 +34,10 @@ const sendEmailToNewUser = async (req, res, email, groupId) => {
             to: email,
             from: "rahul5555br@gmail.com",
             subject: "Join this Splitwise group",
-            text: `${link}`,
+            text: `You have been added to the Splitmate Group ${groupName}.
+            Kindly register on below link to join the Group.
+            ${newLink}
+            `,
         };
 
         const info = await transporter.sendMail(mailOptions);

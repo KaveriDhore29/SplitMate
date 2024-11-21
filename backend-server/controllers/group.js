@@ -78,21 +78,13 @@ const createGroup =
           console.log('User not found, sending email to:', member.email);
           try {
             console.log('sendEmailToNewUser');
-            // isJoinByLink = true;
-            // sendEmailToNewUser(req, res, member.email, groupId);
+            sendEmailToNewUser(req, res, member.email, groupId, groupName);
           } catch (error) {
             console.error('Error sending email to new user:', error);
           }
         }
         return isExisting;
       });
-
-      // if(isJoinByLink) {
-      //   members.joinedByLink = true;
-      // }
-      // else {
-      //   members.joinedByLink = false;
-      // }
   
       console.log('Filtered members:', members);
   
@@ -177,9 +169,27 @@ const getGroupDetails = async (req, res) => {
     let allGroups = [];
     console.log(allIds);
     // go group ids
-    for(let gId of allIds) {
-      let oneGroup = await Group.find({groupId: gId});
-      allGroups.push(oneGroup);
+    // for(let gId of allIds) {
+    //   let oneGroup = await Group.find({groupId: gId});
+    //   allGroups.push(oneGroup);
+    // }
+
+    for (let gId of allIds) {
+      // Check Redis cache for group details
+      const cachedGroup = await getAsync(`group:${gId}`);
+      if (cachedGroup) {
+        console.log(`Cache hit for groupId: ${gId}`);
+        allGroups.push(JSON.parse(cachedGroup));
+      } else {
+        console.log(`Cache miss for groupId: ${gId}`);
+        // Fetch group details from the database
+        const oneGroup = await Group.findOne({ groupId: gId });
+        if (oneGroup) {
+          allGroups.push(oneGroup);
+          // Store group details in Redis cache with an expiration time
+          await setAsync(`group:${gId}`, JSON.stringify(oneGroup), "EX", 3600); // Cache for 1 hour
+        }
+      }
     }
 
     // Fetch the group details along with its members (populate member details)
