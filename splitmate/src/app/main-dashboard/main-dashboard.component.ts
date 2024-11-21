@@ -10,8 +10,7 @@ import { AuthService } from '../auth.service';
 export class MainDashboardComponent implements OnInit {
 
   userProfile:any;
-
-
+  groupMessage = '';
 
   ngOnInit(): void {
     this.userProfile = JSON.parse(sessionStorage.getItem("loggedInUser") || "");
