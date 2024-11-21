@@ -1,26 +1,30 @@
 .container-fluid {
   padding: 0;
   text-align: center;
+  background-color: white;
+  width: 85%;
+  margin-top: 2%;
 }
 
 .img-col {
-  background-image: url('src/assets/frineds.webp');
+  /* background-image: url('src/assets/two-friends.jgp');
   background-repeat: no-repeat;
   background-size: contain;
-  background-position: center;
+  background-position: center; */
   height: 60vh;
   margin-top:2%
 }
 
 .form-container {
   width: 70%;
-  margin: 10% auto;
+  margin: 5% auto;
   padding: 20px;
   border: 1px solid #4CAF50;
   background-color: transparent;
-  color: white;
+  color: black;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  margin-left: 25%
 }
 
 .form-heading h2 {
@@ -45,10 +49,14 @@ select {
   border: none;
   border-radius: 4px;
   font-size: 16px;
-  background-color: #000000;
-  color: white;
-  border-bottom: 1px solid white;
+  background-color: white;
+  color: rgb(0, 0, 0);
+  border-bottom: 2px solid rgb(0, 0, 0);
   border-radius: 0;
+}
+
+input::placeholder{
+  color: #000000;
 }
 .mat-autocomplete-panel {
   background-color: #fff;
@@ -56,7 +64,7 @@ select {
   border-radius: 6px;
 }
 
-/* Styling for mat-option */
+
 .mat-option {
   font-size: 14px;
   color: #000000;
@@ -117,11 +125,7 @@ input:focus{
   color: white;
 }
 
-.group-name input{
-  background-color: #000000;
-  color: white;
-  border-bottom: 1px solid white;
-  border-radius: 0;
-}
+
+
 
 
