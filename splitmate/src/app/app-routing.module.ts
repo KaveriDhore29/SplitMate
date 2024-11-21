@@ -37,6 +37,7 @@ const routes: Routes = [
       { path: 'main-dashboard', component: MainDashboardComponent },
       { path: 'friend-detail', component: FriendDetailsComponent },
       { path: 'group-detail', component: GroupDetailsComponent },
+      { path: 'group-detail/:id', component: GroupDetailsComponent },
     ],
   },
   { path:'create-group/new',component:CreateGroupComponent},

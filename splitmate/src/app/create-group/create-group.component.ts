@@ -12,13 +12,23 @@ export class CreateGroupComponent implements OnInit {
   ];
   groupName: string = '';
   groupType = 'Home';
+  createdBy = { username: '', email: '' };
   searchResults: any[] = [];         // To store search results
   searchQuery: string = '';          // Current search query
   
 
   constructor(private http: HttpClient) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const loggedInUser = sessionStorage.getItem('loggedInUser');
+    if (loggedInUser) {
+      const userPayload = JSON.parse(loggedInUser); 
+      this.createdBy = {
+        username: userPayload.name, 
+        email: userPayload.email 
+      };
+    }
+  }
 
   // Add a new member input box
   addInputBox() {
@@ -84,7 +94,8 @@ selectMember(selectedUser: { userId: string, username: string, email: string }, 
       members: this.members.map(member => ({
         username: member.username,
         email: member.email
-      }))
+      })),
+      createdBy: this.createdBy
     };
 
      console.log(groupData,"groupData");

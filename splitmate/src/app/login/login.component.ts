@@ -37,15 +37,11 @@ export class LoginComponent {
  
   }
 
-  
+  ngAfterViewInit() : void{
+    initializeGoogleSignIn();
+  }
 
-  // onSubmit(): void {
-  //   if (this.authService.login(this.username, this.password)) {
-  //     this.router.navigate(['dashboard']);
-  //   } else {
-  //     console.log('User not found');
-  //   }
-  // }
+
 
 
 

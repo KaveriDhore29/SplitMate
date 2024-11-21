@@ -13,14 +13,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <script src="https://accounts.google.com/gsi/client" async defer onload="initializeGoogleSignIn()"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body class="mat-typography">
   <app-root></app-root>
 
   <script>
     function initializeGoogleSignIn() {
+      console.log("outside if");
       if (typeof google !== "undefined" && google.accounts && google.accounts.id) {
+        console.log("inside if");
         google.accounts.id.initialize({
           client_id: '541417568546-kh9sct1mp04ou367mmiuvc69vdebk8ms.apps.googleusercontent.com',
           callback: handleCredentialResponse,
