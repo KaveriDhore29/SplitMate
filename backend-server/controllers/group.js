@@ -146,16 +146,20 @@ const addMembersToGroup = async (req, res) => {
 const getGroupDetails = async (req, res) => {
   try {
     // const groupId = req.params.groupId;
-    // console.log(groupId);
+     console.log(req.body);
     let arrGroupIds = [];
     const {email} = req.body;
+    console.log(email);
+    
     let user = await User.find({email})
     if(!user) return res.status(404).json({ error: 'User not found' });
-
-    console.log(user.groupIds);
-    let allIds = user.groupIds;
+   console.log(user);
+   
+    console.log(user[0].groupIds);
+    let allIds = user[0].groupIds;
 
     let allGroups = [];
+    console.log(allIds);
     // go group ids
     for(let gId of allIds) {
       let oneGroup = await Group.find({groupId: gId});

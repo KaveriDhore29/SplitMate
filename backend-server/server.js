@@ -73,7 +73,7 @@ app.get('/api/search-users-by-username', getSuggestions);
 // Create Group Route** - Handle group creation with selected members
 app.post('/api/create-group', createGroup);
 
-app.get('/api/get-group-details', getGroupDetails);
+app.post('/api/get-group-details', getGroupDetails);
 app.get('/api/get-one-group-detail', getOneGroupDetail);
 
 // Global error handler

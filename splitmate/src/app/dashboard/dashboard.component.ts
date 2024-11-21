@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,9 +11,11 @@ export class DashboardComponent implements OnInit {
   
   currentSection: string = 'dashboard/main-dashboard'; 
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,public dataService: DataService) { }
 
   ngOnInit(): void {
+    const data = this.dataService.getGroupDetails();
+    console.log(data);
   }
 
   setSection(section: string) {
