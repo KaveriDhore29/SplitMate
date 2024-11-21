@@ -144,18 +144,24 @@ const addMembersToGroup = async (req, res) => {
 // Controller to get details of a group
 const getGroupDetails = async (req, res) => {
   try {
-    const groupId = req.params.groupId;
-    console.log(groupId);
+    // const groupId = req.params.groupId;
+    // console.log(groupId);
+    let arrGroupIds = [];
+    const {email} = req.body;
+    let user = await User.find({email})
+    if(!user) return res.status(404).json({ error: 'User not found' });
+
+    console.log(user);
 
     // Fetch the group details along with its members (populate member details)
-    const group = await Group.findById(groupId).populate('members', 'name email');
-    console.log(group);
-    if (!group) {
-      return res.status(404).json({ error: 'Group not found' });
-    }
+    // const group = await Group.findById(groupId).populate('members', 'name email');
+    // console.log(group);
+    // if (!group) {
+    //   return res.status(404).json({ error: 'Group not found' });
+    // }
 
     // Return the group details
-    res.status(200).json(group);
+    res.status(200).json(user.groupIds);
   } catch (error) {
     console.error('Error fetching group details:', error);
     res.status(500).json({ error: 'Error while fetching group details' });
