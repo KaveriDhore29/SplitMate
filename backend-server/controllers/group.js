@@ -151,7 +151,15 @@ const getGroupDetails = async (req, res) => {
     let user = await User.find({email})
     if(!user) return res.status(404).json({ error: 'User not found' });
 
-    console.log(user);
+    console.log(user.groupIds);
+    let allIds = user.groupIds;
+
+    let allGroups = [];
+    // go group ids
+    for(let gId of allIds) {
+      let oneGroup = await Group.find({groupId: gId});
+      allGroups.push(oneGroup);
+    }
 
     // Fetch the group details along with its members (populate member details)
     // const group = await Group.findById(groupId).populate('members', 'name email');
@@ -161,7 +169,7 @@ const getGroupDetails = async (req, res) => {
     // }
 
     // Return the group details
-    res.status(200).json(user.groupIds);
+    res.status(200).json(allGroups);
   } catch (error) {
     console.error('Error fetching group details:', error);
     res.status(500).json({ error: 'Error while fetching group details' });
