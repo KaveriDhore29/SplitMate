@@ -16,7 +16,7 @@ const { Group } = require('./model/group'); // Import Group model for group crea
 const { sendEmailToNewUser } = require('./features/send-email');
 const { redisDb } = require('./data/redis-database');
 const { v4: uuidv4 } = require('uuid'); // For generating a unique group ID
-const { createGroup } = require('./controllers/group');
+const {  getOneGroupDetail, getGroupDetails, createGroup } = require('./controllers/group');
 
 const app = express();
 
@@ -45,7 +45,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 // Handle preflight requests
-app.options('*', cors());
+// app.options('*', cors());
 
 // Connect to the database
 connectDatabase();
@@ -70,8 +70,11 @@ app.get('/api/protected', isAuthenticated, (req, res) => {
 app.get('/api/search-users-by-username', getSuggestions);
 
 
-// **Create Group Route** - Handle group creation with selected members
+// Create Group Route** - Handle group creation with selected members
 app.post('/api/create-group', createGroup);
+
+app.get('/api/get-group-details', getGroupDetails);
+// app.get('/api/get-one-group-detail', getOneGroupDetail);
 
 // Global error handler
 app.use((err, req, res, next) => {
