@@ -74,7 +74,7 @@ app.get('/api/search-users-by-username', getSuggestions);
 app.post('/api/create-group', createGroup);
 
 app.get('/api/get-group-details', getGroupDetails);
-// app.get('/api/get-one-group-detail', getOneGroupDetail);
+app.get('/api/get-one-group-detail', getOneGroupDetail);
 
 // Global error handler
 app.use((err, req, res, next) => {

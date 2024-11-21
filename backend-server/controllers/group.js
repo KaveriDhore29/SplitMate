@@ -92,6 +92,7 @@ const createGroup =
         members: members,
         type: groupType,
         groupId: groupId,
+        createdBy: username
       });
   
       const groupIdHash = groupId;
