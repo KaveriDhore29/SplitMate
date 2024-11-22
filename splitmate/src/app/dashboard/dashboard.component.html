@@ -23,12 +23,14 @@
           <a href="javascript:void(0)" class="add-link">+ Add</a>
         </div>
         <div class="links">
-          <a [routerLink]="['/dashboard/group-detail']" class="side-link">
-            <i class="fas fa-user-friends"></i> BTS Army
-          </a>
-          <a [routerLink]="['/dashboard/group-detail']" class="side-link">
-            <i class="fas fa-user-friends"></i> Another Group
-          </a>
+          <div *ngFor="let group of groupDetails">
+            <a 
+              [routerLink]="['/dashboard/group-detail', group.groupId]" 
+              (click)="showGroupDetails(group)" 
+              class="side-link">
+              <i class="fas fa-user-friends"></i> {{ group.name }}
+            </a>
+          </div>
         </div>
       </div>
 
@@ -89,7 +91,12 @@
        
     </div>
 
-      <p>Load the group and friends details here!</p>
+    <!-- <div class="group-members-list">
+      <div class="header1">GROUP MEMBERS</div>
+      <div *ngFor="let memberName of groupMembersName">
+    <p><i class="fa-solid fa-circle-user"></i>  {{ memberName }}</p>
+      </div>
+    </div> -->
     </div>
   </div>
 </div>

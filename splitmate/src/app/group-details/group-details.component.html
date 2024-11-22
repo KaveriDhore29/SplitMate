@@ -1,1 +1,6 @@
-<p>group-details works!</p>
+<div *ngIf="groupDetails">
+  <h1>{{ groupName}}</h1>
+  <ul>
+    <li *ngFor="let member of membersNames">{{ member }}</li>
+  </ul>
+</div>

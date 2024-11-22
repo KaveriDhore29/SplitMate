@@ -10,13 +10,15 @@ import { AuthService } from '../auth.service';
 export class MainDashboardComponent implements OnInit {
 
   userProfile:any;
-  groupMessage = '';
+  groupMessage = "Currently, you're not part of any group. Join a group to start managing and splitting expenses with friends!";
+
+  constructor(private router: Router,public authService :AuthService) { }
 
   ngOnInit(): void {
     this.userProfile = JSON.parse(sessionStorage.getItem("loggedInUser") || "");
   }
 
-  constructor(private router: Router,public authService :AuthService) { }
+ 
 
  
   navigateToForm() {

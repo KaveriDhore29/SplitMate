@@ -9,14 +9,34 @@ import { DataService } from '../data.service';
 })
 export class DashboardComponent implements OnInit {
   
-  currentSection: string = 'dashboard/main-dashboard'; 
+  currentSection: string = 'dashboard/main-dashboard';
+  groupDetails: any;  
+  groupMembersName = [];
 
   constructor(private router: Router,public dataService: DataService) { }
 
   ngOnInit(): void {
-    const data = this.dataService.getGroupDetails();
-    console.log(data);
+    this.groupDetails = this.dataService.getGroupDetails().subscribe(
+      (data: any[]) => {
+        this.groupDetails = data; 
+        console.log(this.groupDetails); 
+        this.groupMembersName = this.groupDetails
+        .map((group: any) => 
+          group.members.map((member: any) => member.username)
+        )
+        .flat(); // Flatten the array
+
+      console.log('Group Members:', this.groupMembersName);
+       
+      },
+      (error) => {
+        console.error('Error fetching group details:', error);
+      }
+    );;
+    console.log(this.groupDetails);
   }
+
+
 
   setSection(section: string) {
     console.log("Switching to section:", section);
@@ -25,6 +45,11 @@ export class DashboardComponent implements OnInit {
 
   navigateToForm() {
     this.router.navigate(['/create-group/new']);
+  }
+
+  showGroupDetails(group: any): void {
+    console.log('Group Details:', group);
+    this.dataService.setSelectedGroup(group);
   }
 
  
