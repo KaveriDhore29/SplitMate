@@ -2,6 +2,7 @@ const { sendEmailToNewUser } = require('../features/send-email');
 const { Group } = require('../model/group');
 const { v4: uuidv4 } = require('uuid'); // For generating a unique group ID
 const { User } = require('../model/users');
+const { client } = require('../data/redis-database');
 
 // Controller to create a new group
 const createGroup = 
@@ -168,29 +169,33 @@ const getGroupDetails = async (req, res) => {
 
     let allGroups = [];
     console.log(allIds);
-    // go group ids
-    for(let gId of allIds) {
-      let oneGroup = await Group.find({groupId: gId});
-      allGroups.push(oneGroup);
-    }
-
-    // for (let gId of allIds) {
-    //   // Check Redis cache for group details
-    //   const cachedGroup = await getAsync(`group:${gId}`);
-    //   if (cachedGroup) {
-    //     console.log(`Cache hit for groupId: ${gId}`);
-    //     allGroups.push(JSON.parse(cachedGroup));
-    //   } else {
-    //     console.log(`Cache miss for groupId: ${gId}`);
-    //     // Fetch group details from the database
-    //     const oneGroup = await Group.findOne({ groupId: gId });
-    //     if (oneGroup) {
-    //       allGroups.push(oneGroup);
-    //       // Store group details in Redis cache with an expiration time
-    //       await setAsync(`group:${gId}`, JSON.stringify(oneGroup), "EX", 3600); // Cache for 1 hour
-    //     }
-    //   }
+    // // go group ids
+    // for(let gId of allIds) {
+    //   let oneGroup = await Group.find({groupId: gId});
+    //   allGroups.push(oneGroup);
     // }
+
+    for (let gId of allIds) {
+      // Check Redis cache for group details
+      const cachedGroup = await client.get(gId);
+      console.log('cachedGroup ',cachedGroup);
+      console.log('cachedGroup json ',JSON.parse(cachedGroup));
+      if (cachedGroup) {
+        console.log('cachedGroup inside ',cachedGroup);
+        console.log(`Cache hit for groupId: ${gId}`);
+        allGroups.push(JSON.parse(cachedGroup));
+      } else {
+        console.log(`Cache miss for groupId: ${gId}`);
+        // Fetch group details from the database
+        const oneGroup = await Group.findOne({ groupId: gId });
+        console.log('oneGroup ',oneGroup);
+        if (oneGroup) {
+          allGroups.push(oneGroup);
+          // Store group details in Redis cache with an expiration time
+          await client.setEx(gId, 3600, JSON.stringify(oneGroup)); // Cache for 1 hour
+        }
+      }
+    }
 
     // Fetch the group details along with its members (populate member details)
     // const group = await Group.findById(groupId).populate('members', 'name email');
