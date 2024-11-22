@@ -173,7 +173,7 @@ const getGroupDetails = async (req, res) => {
     // for(let gId of allIds) {
     //   let oneGroup = await Group.find({groupId: gId});
     //   allGroups.push(oneGroup);
-    // }
+    // } 
 
     for (let gId of allIds) {
       // Check Redis cache for group details
@@ -190,9 +190,32 @@ const getGroupDetails = async (req, res) => {
         const oneGroup = await Group.findOne({ groupId: gId });
         console.log('oneGroup ',oneGroup);
         if (oneGroup) {
+          // update the joinedbyLink if it is false;
+          // for(member of oneGroup.members) {
+          //   console.log('inside joinedbylink', member);
+          //   let myUserDetails = await Group.updateOne({'members.email': member.email}, {$set: { 'member.joinedByLink': true}});
+          //   console.log('myUserDetails ',myUserDetails);
+          // }
+          for (const member of oneGroup.members) {
+            let myUserDetails = await Group.updateOne(
+              { 
+                _id: oneGroup._id, 
+                'members.email': member.email, // Match the group and member
+                'members.joinedByLink': true   // Ensure `joinedByLink` is `true`
+              },
+              { 
+                $set: { 'members.$.joinedByLink': false } // Update `joinedByLink` to `false`
+              }
+            );
+          
+            console.log('Updated Member:', member.email, 'Result:', myUserDetails);
+          }
+          
+          
+
           allGroups.push(oneGroup);
           // Store group details in Redis cache with an expiration time
-          await client.setEx(gId, 3600, JSON.stringify(oneGroup)); // Cache for 1 hour
+          await client.setEx(gId, 30, JSON.stringify(oneGroup)); // Cache for 1 hour
         }
       }
     }
