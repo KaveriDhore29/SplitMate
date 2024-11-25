@@ -4,7 +4,7 @@ body {
     margin: 0;
     background-color: #001E2B;
     font-family: "Sofia", sans-serif;
-  
+    overflow: hidden;
   }
 
 
