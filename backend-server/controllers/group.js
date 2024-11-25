@@ -19,13 +19,19 @@ const createGroup = async (req, res) => {
     }
 
     try {
-      // adding self
+      // adding self only if not present in members
       let obj ={
         username,
         email,
         joinedByLink: false
       }
-      members.push(obj);
+      let addSelf = true;
+      for(let i=0; i<members.length; i++) {
+        if(members[i].email == email) {
+          addSelf = false;
+        }
+      }
+      if(addSelf) members.push(obj);
 
       // Generate a unique groupId
       const groupId = uuidv4();
@@ -246,6 +252,7 @@ const simplification = async (req, res, input) => {
     netBalances = netBalances.transactions.netBalances;
     const simplifiedData = await simplifyDebts(req.body, netBalances ? netBalances : {});
     await Group.updateOne({groupId: req.body[0].groupId}, {$set: { transactions: simplifiedData }})
+    console.log(simplifiedData);
     res.status(200).json(simplifiedData);
   } catch (error) {
     console.error('Error fetching group details:', error);
