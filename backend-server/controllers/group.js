@@ -241,9 +241,11 @@ const getAddMembersToGroup = async (req, res) => {
 const simplification = async (req, res, input) => {
   try {
     console.log('req.body ',req.body);
-    const {input} = req.body;
-    const simplifiedData = await simplifyDebts(req.body, {});
-    console.log('simplifiedData ', simplifiedData);
+    const {input, groupId} = req.body;
+    let netBalances = await Group.findOne({groupId: req.body[0].groupId})
+    netBalances = netBalances.transactions.netBalances;
+    const simplifiedData = await simplifyDebts(req.body, netBalances ? netBalances : {});
+    await Group.updateOne({groupId: req.body[0].groupId}, {$set: { transactions: simplifiedData }})
     res.status(200).json(simplifiedData);
   } catch (error) {
     console.error('Error fetching group details:', error);
