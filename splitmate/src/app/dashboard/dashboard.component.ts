@@ -24,19 +24,15 @@ export class DashboardComponent implements OnInit {
         .map((group: any) => 
           group.members.map((member: any) => member.username)
         )
-        .flat(); // Flatten the array
-
-      console.log('Group Members:', this.groupMembersName);
-       
+        .flat(); 
+      console.log('Group Members:', this.groupMembersName);   
       },
       (error) => {
         console.error('Error fetching group details:', error);
       }
-    );;
+    );
     console.log(this.groupDetails);
   }
-
-
 
   setSection(section: string) {
     console.log("Switching to section:", section);

@@ -3,13 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ErrorComponent } from './error/error.component';
-import { AlreadyLoggedinGuard } from './already-loggedin.guard';
 import { LogoutComponent } from "./logout/logout.component";
 import { CreateGroupComponent } from './create-group/create-group.component';
 import { MainDashboardComponent } from './main-dashboard/main-dashboard.component';
 import { FriendDetailsComponent } from './friend-details/friend-details.component';
 import { GroupDetailsComponent } from './group-details/group-details.component';
 import { HomepageComponent } from './homepage/homepage.component';
+import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
   {
@@ -24,12 +24,12 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
-    // canActivate: [AlreadyLoggedinGuard],
   },
   {
     path: 'dashboard',
     component: DashboardComponent,
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path:'error',component:ErrorComponent},
@@ -40,8 +40,7 @@ const routes: Routes = [
       { path: 'group-detail/:id', component: GroupDetailsComponent },
     ],
   },
-  { path:'create-group/new',component:CreateGroupComponent},
-  { path:'create-group/existing/:id',component:CreateGroupComponent},
+  { path:'create-group/new',component:CreateGroupComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({
