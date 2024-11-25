@@ -4,7 +4,7 @@ const { v4: uuidv4 } = require('uuid'); // For generating a unique group ID
 const { User } = require('../model/users');
 const { client } = require('../data/redis-database');
 const { addMembers } = require('../features/addMembers');
-const simplifyDebts = require('../features/simplify-debts');
+const { simplifyDebts } = require('../features/simplify-debts');
 
 // Controller to create a new group
 const createGroup = async (req, res) => {
@@ -242,7 +242,8 @@ const simplification = async (req, res, input) => {
   try {
     console.log('req.body ',req.body);
     const {input} = req.body;
-    const simplifiedData = simplifyDebts(req.body, { Person1: 825, Person2: -275, Person3: -275, Person4: -275 });
+    const simplifiedData = await simplifyDebts(req.body, {});
+    console.log('simplifiedData ', simplifiedData);
     res.status(200).json(simplifiedData);
   } catch (error) {
     console.error('Error fetching group details:', error);
