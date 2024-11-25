@@ -1,6 +1,6 @@
 const nodemailer = require("nodemailer");
 
-const sendEmailToNewUser = async (req, res, email, groupId, groupName) => {
+const sendEmailToNewUser = async (req, res, email, groupId, groupName = null) => {
     // Guard against multiple calls
     if (res.headersSent) {
         console.warn('Headers already sent, skipping email send response');
