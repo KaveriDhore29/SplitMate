@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
 const schema = new mongoose.Schema({
-  auth_token: {
+  id_token: {
     type: String,
     required: false, // Change to true if you need this field to be required
   },
-  name: {
+  username: {
     type: String,
     required: true,
   },
