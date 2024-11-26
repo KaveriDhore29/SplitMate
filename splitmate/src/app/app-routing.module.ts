@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ErrorComponent } from './error/error.component';
-import { LogoutComponent } from "./logout/logout.component";
 import { CreateGroupComponent } from './create-group/create-group.component';
 import { MainDashboardComponent } from './main-dashboard/main-dashboard.component';
 import { FriendDetailsComponent } from './friend-details/friend-details.component';
@@ -33,7 +32,6 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path:'error',component:ErrorComponent},
-      { path: 'logout', component: LogoutComponent },
       { path: 'main-dashboard', component: MainDashboardComponent },
       { path: 'friend-detail', component: FriendDetailsComponent },
       { path: 'group-detail', component: GroupDetailsComponent },
