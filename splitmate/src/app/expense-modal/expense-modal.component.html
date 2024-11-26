@@ -1,0 +1,42 @@
+<div class="modal fade" id="addExpenseModal" tabindex="-1" aria-labelledby="addExpenseModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addExpenseModalLabel">Add Expense</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="expenseTitle" class="form-label">Expense Title</label>
+              <input type="text" class="form-control" id="expenseTitle" [(ngModel)]="expense.title" name="title">
+            </div>
+            <div class="mb-3">
+              <label for="expenseCurrency" class="form-label">Currency</label>
+              <select class="form-select" id="expenseCurrency" [(ngModel)]="expense.currency" name="currency">
+                <option value="USD">INR</option>
+                <option value="EUR">EUR</option>
+                <option value="INR">USD</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="totalAmount" class="form-label">Total Amount</label>
+              <input type="number" class="form-control" id="totalAmount" [(ngModel)]="expense.amount" name="amount">
+            </div>
+            <div class="mb-3">
+              <label for="membersChecklist" class="form-label">Select Members</label>
+              <div *ngFor="let member of membersNames">
+                <input type="checkbox" [value]="member" [(ngModel)]="expense.selectedMembers" name="members">
+                {{ member }}
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" (click)="saveExpense()">Save Expense</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

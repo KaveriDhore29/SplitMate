@@ -1,6 +1,11 @@
-<div *ngIf="groupDetails">
-  <h1>{{ groupName}}</h1>
-  <!-- <ul>
-    <li *ngFor="let member of membersNames">{{ member }}</li>
-  </ul> -->
+
+<div class="container">
+  <div *ngIf="groupDetails">
+    <h1>{{ groupName}}</h1>
+   <button class="btn btn-danger"  data-bs-toggle="modal"
+   data-bs-target="#addExpenseModal">
+    Add Expense
+   </button>
+  </div>
+  <app-expense-modal [membersNames]="groupDetails.members"></app-expense-modal>
 </div>

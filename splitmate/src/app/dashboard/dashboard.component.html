@@ -20,7 +20,7 @@
         <div class="header">
           <div> <h3>GROUPS</h3></div>
         
-          <a href="javascript:void(0)" class="add-link">+ Add</a>
+          <a [routerLink]="['/create-group/new']" class="add-link">+ Add</a>
         </div>
         <div class="links">
           <div *ngFor="let group of groupDetails">
@@ -66,12 +66,12 @@
     </div>
 
     <!-- Main Dashboard Section -->
-    <div class="col-6 main-dashboard">
+    <div class="col-9 main-dashboard">
       <router-outlet></router-outlet> 
     </div>
 
     <!-- Group Balances Section -->
-    <div class="col-3 group-balances">
+    <!-- <div class="col-3 group-balances">
       <div class="row">
             <div class="col">
                 <button class="btn btn-warning" title="Create Group" (click)="navigateToForm()">
@@ -91,12 +91,12 @@
        
     </div>
 
-    <!-- <div class="group-members-list">
+  <div class="group-members-list">
       <div class="header1">GROUP MEMBERS</div>
       <div *ngFor="let memberName of groupMembersName">
     <p><i class="fa-solid fa-circle-user"></i>  {{ memberName }}</p>
       </div>
-    </div> -->
     </div>
+    </div> -->
   </div>
 </div>

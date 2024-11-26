@@ -39,10 +39,6 @@ export class DashboardComponent implements OnInit {
     this.router.navigate([`/dashboard/${section}`]);
   }
 
-  navigateToForm() {
-    this.router.navigate(['/create-group/new']);
-  }
-
   showGroupDetails(group: any): void {
     console.log('Group Details:', group);
     this.dataService.setSelectedGroup(group);
