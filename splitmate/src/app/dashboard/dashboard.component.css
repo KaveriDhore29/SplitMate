@@ -1,6 +1,6 @@
 
   .friends-container {
-     background-color: #001E2B;;
+     background-color: #162a2a;
     border: 1px solid #ffffff;
     height: 780px;
     padding: 0%;
@@ -106,7 +106,7 @@
    
   .main-dashboard, .group-balances {
     padding: 20px;
-    background-color: #001E2B;;
+    background-color: #162a2a;
     border: 1px solid #ffffff; border-top: none;
     height: 780px;
     font-family: 'Trirong',serif;

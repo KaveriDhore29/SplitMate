@@ -1,5 +1,5 @@
 
-<nav class="navbar">
+<!-- <nav class="navbar">
   <div class="navbar-brand">SplitMATE</div>
   <div class="navbar-profile">
     <div 
@@ -14,8 +14,25 @@
       <li *ngIf="isLoggedIn" (click)="signOut()">Sign Out</li>
     </ul>
   </div>
-</nav>
+</nav> -->
 
 
 
 
+<header id="header_nav" class="header d-flex align-items-center">
+  <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+    <a href="landing" class="logo d-flex align-items-center">
+      <h1 class="sitename">SplitMate</h1>
+    </a>
+
+    <nav id="navmenu" class="navmenu">
+      <ul>
+        <li *ngIf="isLoggedIn" (click)="viewProfile()">View Profile</li>
+        <li *ngIf="isLoggedIn" (click)="signOut()">Sign Out</li>
+      </ul>
+      <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+    </nav>
+
+  </div>
+</header>

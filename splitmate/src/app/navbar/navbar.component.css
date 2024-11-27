@@ -3,10 +3,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+ 
   padding: 10px 20px;
   background-color: #04AA6D;
   color: white;
   font-family: 'Trirong',serif;
+  margin-bottom: 2rem;
 }
 
 /* Branding area styling */
@@ -14,6 +16,10 @@
   font-size: 20px;
   font-weight: bold;
   color:white
+}
+
+#header_nav{
+background-color: #002b2b;
 }
 
 /* Profile area styling */
@@ -35,6 +41,7 @@
   font-size: 24px; /* Adjust icon size */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
+
 
 /* Font Awesome icon styling */
 .fa {
