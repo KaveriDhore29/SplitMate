@@ -317,16 +317,27 @@ const simplification = async (req, res, input) => {
       netBalances = null;
     }
     let title = "SPlitwisely";
-    const simplifiedData = await simplifyDebts(req.body, { Person1: 375, Person2: -125, Person3: -125, Person4: -125 });
-    // await Group.updateOne({groupId: req.body[0].groupId}, {$push: { transactions: [simplifiedData]}, $set: {title: title} })
+    const simplifiedData = await simplifyDebts(req.body, netBalances ? netBalances : {});
+    simplifiedData.title = title;
     await Group.updateOne(
       { groupId: req.body[0].groupId },
       {
-        $push: { transactions: simplifiedData.transactions }, // Push transactions array
-        $set: { title: title }, // Update title field
+        $push: {
+          transactions: {
+            $each: [simplifiedData], // Insert the new transactions
+            $position: 0, // Push at the beginning of the array
+          },
+        },
+      }
+    );
+    await Group.updateOne(
+      { groupId: req.body[0].groupId },
+      {
+        $set: { netBalances: [simplifiedData.netBalances] }, // Push netBalances array
       }
     );
     console.log("simplifiedData ",simplifiedData);
+    console.log("simplifiedData.netBalances ",simplifiedData.netBalances);
     res.status(200).json(simplifiedData);
   } catch (error) {
     console.error('Error fetching group details:', error);

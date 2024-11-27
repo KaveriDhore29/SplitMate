@@ -17,7 +17,8 @@ const groupSchema = new mongoose.Schema({
   members: Array,
   type: String,  // This should match groupType
   groupId: String,
-  transactions: (Array, String),
+  transactions: Array,
+  netBalances: Array,
   createdBy: String
 });
 const Group = mongoose.model('Group', groupSchema);
