@@ -4,7 +4,7 @@ const { v4: uuidv4 } = require('uuid'); // For generating a unique group ID
 const { User } = require('../model/users');
 const { client } = require('../data/redis-database');
 const { addMembers } = require('../features/addMembers');
-const { simplifyDebts } = require('../features/simplify-debts');
+const { simplifyDebts, mergeTransactions, mergeNetBalances, settle } = require('../features/simplify-debts');
 
 // Controller to create a new group
 const createGroup = async (req, res) => {
@@ -244,8 +244,9 @@ const getAddMembersToGroup = async (req, res) => {
 const simplification = async (req, res, input) => {
   try {
     console.log('req.body ',req.body);
-    const {input, groupId} = req.body;
-    let netBalances = await Group.findOne({groupId: req.body[0].groupId})
+    const { paidBy, members, amount, simplifyCurrency, splitBy, title, groupId, createdBy } = req.body;
+    let getGroup = await Group.findOne({groupId: groupId})
+    let netBalances = getGroup.netBalances;
     console.log('netBalances before ',netBalances);
     if(netBalances && netBalances.transactions && netBalances.transactions.netBalances) {
       netBalances = netBalances.transactions.netBalances;
@@ -253,11 +254,13 @@ const simplification = async (req, res, input) => {
     else {
       netBalances = null;
     }
-    let title = "SPlitwisely";
-    const simplifiedData = await simplifyDebts(req.body, netBalances ? netBalances : {});
+      const transactionId = uuidv4();
+    const simplifiedData = await simplifyDebts(paidBy, members, amount, simplifyCurrency, splitBy, title, groupId, netBalances ? netBalances : {});
     simplifiedData.title = title;
+    simplifiedData.transactionId = transactionId;
+    simplifiedData.createdBy = createdBy;
     await Group.updateOne(
-      { groupId: req.body[0].groupId },
+      { groupId: groupId },
       {
         $push: {
           transactions: {
@@ -267,15 +270,18 @@ const simplification = async (req, res, input) => {
         },
       }
     );
+    let newNetBalances = await mergeNetBalances(getGroup.netBalances, simplifiedData.netBalances);
     await Group.updateOne(
-      { groupId: req.body[0].groupId },
+      { groupId: groupId },
       {
-        $set: { netBalances: [simplifiedData.netBalances] }, // Push netBalances array
+        $set: { netBalances: newNetBalances }, // Push netBalances array
       }
     );
-    console.log("simplifiedData ",simplifiedData);
-    console.log("simplifiedData.netBalances ",simplifiedData.netBalances);
-    res.status(200).json(simplifiedData);
+    getGroup = await Group.findOne({groupId: groupId})
+    let latestTransactions = await mergeTransactions(getGroup.transactions);
+    // justify
+    let justification = settle(newNetBalances);
+    res.status(200).json(justification);
   } catch (error) {
     console.error('Error fetching group details:', error);
   }

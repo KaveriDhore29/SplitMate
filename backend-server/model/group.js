@@ -18,9 +18,9 @@ const groupSchema = new mongoose.Schema({
   type: String,  // This should match groupType
   groupId: String,
   transactions: Array,
-  netBalances: Array,
-  createdBy: String
-});
+  netBalances: Object,
+  createdBy: String,
+}, { timestamps: true });
 const Group = mongoose.model('Group', groupSchema);
 
 module.exports = { Group };
