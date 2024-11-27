@@ -11,27 +11,27 @@ export class GroupDetailsComponent{
   groupId !: string;
   groupDetails: any;
   groupName : string ='';
-  
-  membersNames: string[] = [];
+  membersNames: any[] = [];
+  showPopup: boolean = false;
+
   constructor(private route: ActivatedRoute, private dataService: DataService) { }
 
   ngOnInit(): void {
-  //   this.dataService.selectedGroup$.subscribe(group => {
-  //     if (group) {
-  //       this.groupDetails = group;
-  //       console.log('Group details:', this.groupDetails);
-  //     }
-  //   });
-  // }
   this.groupId = this.route.snapshot.paramMap.get('id')!;
-  console.log("GROUP id:",this.groupId);
-  // Fetch group details using the API
+  console.log("GROUP Id:",this.groupId);
+
   this.dataService.getGroupDetailById(this.groupId).subscribe(
     (data) => {
       this.groupDetails = data;
       console.log('Group Detail:', this.groupDetails);
       this.groupName = this.groupDetails[0].name;
-      this.membersNames = this.groupDetails[0].members.map((member: any) => member.username);
+
+      // Update membersNames to include both name and email
+      this.membersNames = this.groupDetails[0].members.map((member: any) => ({
+        name: member.username,  // or use the appropriate field for the name
+        email: member.email
+      }));
+
       console.log('Group Name:', this.groupName);
       console.log('Members Names:', this.membersNames);
     },

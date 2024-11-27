@@ -22,7 +22,7 @@ export class DataService {
       };
     }   
 
-     console.log(this.currentUserEmail)
+     console.log("Current User Email:",this.currentUserEmail)
   }
   setSelectedGroup(group: any) {
     this.selectedGroupSource.next(group); // Update the selected group
@@ -40,6 +40,12 @@ export class DataService {
         groupId: groupId,
       };
       return this.http.post<any>(`${this.apiUrl}/get-one-group-detail`, payload, {
+        withCredentials: true,
+      });
+    }
+
+    addExpenseService(expenseData :any){
+      return this.http.post<any>(`${this.apiUrl}/simplify`, expenseData,{
         withCredentials: true,
       });
     }

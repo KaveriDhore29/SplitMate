@@ -1,11 +1,15 @@
-
 <div class="container">
   <div *ngIf="groupDetails">
-    <h1>{{ groupName}}</h1>
-   <button class="btn btn-danger"  data-bs-toggle="modal"
-   data-bs-target="#addExpenseModal">
-    Add Expense
-   </button>
+    <h1>{{ groupName }}</h1>
+    <button class="btn btn-danger" (click)="showPopup = true">
+      Add Expense
+    </button>
   </div>
-  <app-expense-modal [membersNames]="groupDetails.members"></app-expense-modal>
+
+  <!-- Popup Component -->
+  <app-expense-modal
+    *ngIf="showPopup"
+    [membersNames]="membersNames"
+    (closePopup)="showPopup = false"
+  ></app-expense-modal>
 </div>
