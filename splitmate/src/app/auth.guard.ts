@@ -9,13 +9,19 @@ import { Observable } from 'rxjs';
 export class AuthGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
-  canActivate( route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): boolean | Observable<boolean> | Promise<boolean>{
-    if (this.authService.checkUserLogin()) { 
-      return true;
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    if (this.authService.checkUserLogin()) {
+      // If the user is already logged in and tries to access restricted routes, redirect them
+      if (state.url === '/login' || state.url === '/homepage') {
+        this.router.navigate(['/dashboard']);
+        return false;
+      }
+      return true; // Allow access to other routes
     } else {
-      this.router.navigate(['/login']); 
+      // Redirect to login if not logged in
+      if (state.url !== '/login') {
+        this.router.navigate(['/login']);
+      }
       return false;
     }
   }

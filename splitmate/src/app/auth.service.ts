@@ -27,7 +27,7 @@ export class AuthService {
     handleSignOut();
     sessionStorage.removeItem("loggedInUser");
     sessionStorage.removeItem("IsLoggedIn");
-    this.router.navigate(['/login']).then(()=>{
+    this.router.navigate(['/landing']).then(()=>{
        window.location.reload();
     })
   }

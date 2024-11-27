@@ -11,6 +11,12 @@
   border-radius: 20px;
 }
 
+.login-img{
+  max-width: 85%;
+  height: auto;
+  border-radius: 3rem;
+  margin: 1rem;
+}
 
 .row {
   display: flex;

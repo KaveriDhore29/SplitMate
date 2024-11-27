@@ -71,42 +71,49 @@
     }
 
     function handleCredentialResponse(response) {
-      console.log(response);
+  console.log(response);
 
-      const responsePayload = decodeJWTToken(response.credential);
-      sessionStorage.setItem("loggedInUser", JSON.stringify(responsePayload));
-      sessionStorage.setItem("IsLoggedIn", JSON.stringify(true));
+  // Show the loader
+  const preloader = document.getElementById("preloader");
+  preloader.style.display = "flex";
 
-      fetch('http://localhost:3000/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify({
-          credential: response.credential,
-          userDetails: {
-            email: responsePayload.email,
-            name: responsePayload.name,
-            sub: responsePayload.sub,
-          },
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.success) {
-            console.log('Login successful:', data.message);
-            window.location.href = '/dashboard/main-dashboard';
-          } else {
-            console.error('Login failed:', data.error);
-          }
-        })
-        .catch((error) => {
-          console.error('Error during login:', error);
-        });
-    }
+  const responsePayload = decodeJWTToken(response.credential);
+  sessionStorage.setItem("loggedInUser", JSON.stringify(responsePayload));
+  sessionStorage.setItem("IsLoggedIn", JSON.stringify(true));
+
+  fetch('http://localhost:3000/api/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify({
+      credential: response.credential,
+      userDetails: {
+        email: responsePayload.email,
+        name: responsePayload.name,
+        sub: responsePayload.sub,
+      },
+    }),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.success) {
+        console.log('Login successful:', data.message);
+        window.location.href = '/dashboard/main-dashboard';
+      } else {
+        console.error('Login failed:', data.error);
+        preloader.style.display = "none"; 
+      }
+    })
+    .catch((error) => {
+      console.error('Error during login:', error);
+      preloader.style.display = "none"; 
+    });
+}
 
     function handleSignOut() {
       if (google && google.accounts && google.accounts.id) {
         google.accounts.id.disableAutoSelect();
+        
       }
     }
   </script>
