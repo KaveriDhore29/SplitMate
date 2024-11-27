@@ -40,6 +40,10 @@ export class ExpenseModalComponent implements OnInit {
     } else {
       console.error("Current user not found in members list!");
     }
+
+    if (this.expense.equally) {
+      this.toggleEqually();
+    }
   }
 
   toggleEqually(): void {
