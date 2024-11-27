@@ -1,6 +1,6 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 
-import Swiper from 'swiper';
+// import Swiper from 'swiper';
 
 
 @Component({
