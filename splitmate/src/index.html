@@ -101,18 +101,19 @@
         window.location.href = '/dashboard/main-dashboard';
       } else {
         console.error('Login failed:', data.error);
-        preloader.style.display = "none"; // Hide loader on failure
+        preloader.style.display = "none"; 
       }
     })
     .catch((error) => {
       console.error('Error during login:', error);
-      preloader.style.display = "none"; // Hide loader on error
+      preloader.style.display = "none"; 
     });
 }
 
     function handleSignOut() {
       if (google && google.accounts && google.accounts.id) {
         google.accounts.id.disableAutoSelect();
+        
       }
     }
   </script>

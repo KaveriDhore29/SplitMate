@@ -10,6 +10,7 @@ import { GroupDetailsComponent } from './group-details/group-details.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { AuthGuard } from './auth.guard';
 import { LandingPageComponent } from './landing-page/landing-page.component';
+import { AlreadyLoggedInGuard } from './already-logged-in.guard';
 
 const routes: Routes = [
   {
@@ -18,28 +19,30 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path:'homepage',
-    component:LandingPageComponent
+    path: 'homepage',
+    component: LandingPageComponent,
+    canActivate: [AlreadyLoggedInGuard],
   },
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,
+    canActivate: [AlreadyLoggedInGuard],
   },
   {
     path: 'dashboard',
     component: DashboardComponent,
     canActivate: [AuthGuard],
-    canActivateChild: [AuthGuard],
     children: [
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-      { path:'error',component:ErrorComponent},
+      { path: '', redirectTo: 'main-dashboard', pathMatch: 'full' },
+      { path: 'error', component: ErrorComponent },
       { path: 'main-dashboard', component: MainDashboardComponent },
       { path: 'friend-detail', component: FriendDetailsComponent },
       { path: 'group-detail', component: GroupDetailsComponent },
       { path: 'group-detail/:id', component: GroupDetailsComponent },
     ],
   },
-  { path:'create-group/new',component:CreateGroupComponent, canActivate: [AuthGuard]}
+  { path: 'create-group/new', component: CreateGroupComponent, canActivate: [AuthGuard] },
+  { path: '**', redirectTo: 'homepage' }, 
 ];
 
 @NgModule({
