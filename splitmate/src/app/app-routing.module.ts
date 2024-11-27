@@ -9,6 +9,7 @@ import { FriendDetailsComponent } from './friend-details/friend-details.componen
 import { GroupDetailsComponent } from './group-details/group-details.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { AuthGuard } from './auth.guard';
+import { LandingPageComponent } from './landing-page/landing-page.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,10 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path:'landing',
+    component: LandingPageComponent
   },
   {
     path: 'dashboard',

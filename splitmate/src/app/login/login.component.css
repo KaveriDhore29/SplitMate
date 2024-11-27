@@ -4,9 +4,9 @@
   align-items: center;
   margin: 0 auto;
   text-align: center;
-  color: black;
+  color: rgb(255, 255, 255);
   width: 80%;
-  background-color: white;
+  background-color: #0e5149;
   margin-top: 5%;
   border-radius: 20px;
 }
@@ -18,7 +18,7 @@
   align-items: center;
   width: 100%;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 3rem auto;
 }
 
 

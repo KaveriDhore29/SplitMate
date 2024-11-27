@@ -23,6 +23,7 @@ import { GroupDetailsComponent } from './group-details/group-details.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { MatIconModule } from '@angular/material/icon';
 import { ExpenseModalComponent } from './expense-modal/expense-modal.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { ExpenseModalComponent } from './expense-modal/expense-modal.component';
     FriendDetailsComponent,
     GroupDetailsComponent,
     HomepageComponent,
-    ExpenseModalComponent
+    ExpenseModalComponent,
+    LandingPageComponent
   ],
   imports: [
     BrowserModule,

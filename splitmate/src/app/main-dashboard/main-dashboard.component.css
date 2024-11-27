@@ -26,13 +26,20 @@
     font-weight: 500;
 }
 
-.section{
+.section_dashboard{
     display: flex;
     margin: 20px 0; /* Add spacing between sections */
    padding-bottom: 2%;
    justify-content: center;
    width: 100%; /* Ensure the section spans the full width */
    
+}
+
+body {
+  margin: 0;
+  background-color: #001E2B;
+  font-family: "Sofia", sans-serif;
+  overflow: hidden;
 }
 
 .container{
@@ -58,3 +65,4 @@
 th,td{
     border : 1px solid black
 }
+
