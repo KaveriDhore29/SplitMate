@@ -61,11 +61,11 @@ const addMembers = async (req, res, members, groupId) => {
         console.error('Error sending email to new user:', error);
       }
     }
-    return isExisting;
+    // return isExisting;
   });
 
   console.log('Filtered members:', members);
-  return
+  return members;
 }
 
 module.exports = { addMembers }

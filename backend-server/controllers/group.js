@@ -36,7 +36,7 @@ const createGroup = async (req, res) => {
       // Generate a unique groupId
       const groupId = uuidv4();
 
-      await addMembers(req, res, members, groupId);
+      members = await addMembers(req, res, members, groupId);
       // // Extract emails from members array
       // let memberEmails = members.map(member => member.email);
 
@@ -71,10 +71,46 @@ const createGroup = async (req, res) => {
       // console.log('Filtered members:', members);
 
       // Add the groupId to userdatas concurrently
-      const updatePromises = members.map(member =>
-        User.updateOne({ email: member.email }, { $push: { groupIds: groupId } })
-      );
-      await Promise.all(updatePromises); // Execute all updates concurrently
+      console.log('before updatePromises');
+      console.log('before members', members);
+      let groupIdsOfUser = [];
+      let id = [];
+      for (const member of members) {
+        console.log('inside update loop');
+        console.log('member ',member);
+        console.log('groupId ', groupId);
+        // Update the user's groupIds in the database
+        await User.updateOne({ email: member.email }, { $push: { groupIds: groupId } });
+        // Initialize groupIdsOfUser as an empty array
+        // Retrieve existing groupIds from the cache
+        id = await client.get(`groupIds:${member.email}`);
+        console.log('id x', id);
+        groupIdsOfUser = []; // Reset groupIdsOfUser for each member
+        // Check if id exists and process it
+        if (id) {
+          try {
+            id = JSON.parse(id); // Parse the JSON string into an object
+            console.log('Parsed id:', id);
+      
+            // Ensure id is an array before pushing into groupIdsOfUser
+            if (Array.isArray(id)) {
+              groupIdsOfUser.push(...id); // Spread the array into groupIdsOfUser
+            } else {
+              console.warn(`Expected array, got ${typeof id}:`, id);
+            }
+          } catch (err) {
+            console.error('Error parsing cached groupIds:', err);
+          }
+        }
+        // Add the new groupId to the array
+        groupIdsOfUser.push(groupId);
+        console.log('groupIdsOfUser:', groupIdsOfUser);
+        // Update the cache with the new groupIds array
+        await client.set(`groupIds:${member.email}`, JSON.stringify(groupIdsOfUser));
+        console.log('Updated cache:', await client.get(`groupIds:${member.email}`));
+      }
+
+      // await Promise.all(updatePromises); // Execute all updates concurrently
 
       // Create the new group
       const newGroup = await Group.create({
@@ -85,7 +121,12 @@ const createGroup = async (req, res) => {
         createdBy: email
       });
 
-      const groupIdHash = groupId;
+      // set the group in redis cache
+      for(let member of members) {
+        await client.set(`group:${groupId}`, JSON.stringify(newGroup));
+      }
+
+        const groupIdHash = groupId;
       const link = `http://localhost:4200/dashboard/group-detail/${groupIdHash}`;
       res.status(201).json({
         success: true,
@@ -139,10 +180,20 @@ const getGroupDetails = async (req, res) => {
     let arrGroupIds = [];
     const {email} = req.body;
 
-    let user = await User.find({email})
-    if(!user) return res.status(404).json({ error: 'User not found' });
+    // check if cache has users groupIds
+    let allIds = [];
+    let userId = await client.get(`groupIds:${email}`);
+    if(userId) {
+      console.log('cache hit for getGroupDetails');
+      allIds = JSON.parse(userId);
+    }
+    else {
+      let user = await User.find({email})
+      if(!user) return res.status(404).json({ error: 'User not found' });
+      allIds = user[0].groupIds;
+    }
+    console.log('allIds ',allIds);
 
-    let allIds = user[0].groupIds;
 
     let allGroups = [];
     // // go group ids
@@ -153,8 +204,10 @@ const getGroupDetails = async (req, res) => {
 
     for (let gId of allIds) {
       // Check Redis cache for group details
-      const cachedGroup = await client.get(gId);
+      const cachedGroup = await client.get(`group:${gId}`);
+      // console.log('cachedGroup ',cachedGroup);
       if (cachedGroup) {
+        console.log('cache hit for gId');
         allGroups.push(JSON.parse(cachedGroup));
       } else {
         // Fetch group details from the database
@@ -183,7 +236,7 @@ const getGroupDetails = async (req, res) => {
 
           allGroups.push(oneGroup);
           // Store group details in Redis cache with an expiration time
-          await client.setEx(gId, 30, JSON.stringify(oneGroup)); // Cache for 1 hour
+          // await client.setEx(gId, 30, JSON.stringify(oneGroup)); // Cache for 1 hour
         }
       }
     }
@@ -196,6 +249,7 @@ const getGroupDetails = async (req, res) => {
     // }
 
     // Return the group details
+    console.log('allGroups ', allGroups);
     res.status(200).json(allGroups);
   } catch (error) {
     console.error('Error fetching group details:', error);
@@ -209,7 +263,13 @@ const getOneGroupDetail = async (req, res) => {
   const {email, groupId} = req.body;
 
   try {
+    // const cachedGroup = await client.get(`group:${gId}`);
+    // if(cachedGroup) {
+    //   console.log('cache hit for getOneGroupDetail');
+    //   res.status(200).json([JSON.parse(cachedGroup)]);
+    // }
     const group = await Group.find({groupId});
+    console.log('group ',group);
     if(!group) res.status(404).json({error: 'Group not found here'});
     res.status(200).json(group);
   } catch (error) {
@@ -228,7 +288,7 @@ const getAddMembersToGroup = async (req, res) => {
     await addMembers(req, res, members, groupdId);
 
     // Add the groupId to userdatas concurrently
-    const updatePromises = members.map(member =>  
+    const updatePromises = members.map(member =>
       User.updateOne({ email: member.email }, { $push: { groupIds: groupId } })
     );
     await Promise.all(updatePromises); // Execute all updates concurrently
@@ -249,10 +309,24 @@ const simplification = async (req, res, input) => {
     console.log('req.body ',req.body);
     const {input, groupId} = req.body;
     let netBalances = await Group.findOne({groupId: req.body[0].groupId})
-    netBalances = netBalances.transactions.netBalances;
-    const simplifiedData = await simplifyDebts(req.body, netBalances ? netBalances : {});
-    await Group.updateOne({groupId: req.body[0].groupId}, {$set: { transactions: simplifiedData }})
-    console.log(simplifiedData);
+    console.log('netBalances before ',netBalances);
+    if(netBalances && netBalances.transactions && netBalances.transactions.netBalances) {
+      netBalances = netBalances.transactions.netBalances;
+    }
+    else {
+      netBalances = null;
+    }
+    let title = "SPlitwisely";
+    const simplifiedData = await simplifyDebts(req.body, { Person1: 375, Person2: -125, Person3: -125, Person4: -125 });
+    // await Group.updateOne({groupId: req.body[0].groupId}, {$push: { transactions: [simplifiedData]}, $set: {title: title} })
+    await Group.updateOne(
+      { groupId: req.body[0].groupId },
+      {
+        $push: { transactions: simplifiedData.transactions }, // Push transactions array
+        $set: { title: title }, // Update title field
+      }
+    );
+    console.log("simplifiedData ",simplifiedData);
     res.status(200).json(simplifiedData);
   } catch (error) {
     console.error('Error fetching group details:', error);
