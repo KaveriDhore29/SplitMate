@@ -1,97 +1,79 @@
+body {
+  background-color: black;
+  color: white;
+height: 100%;
+}
+
+.Space{
+  color: #1a1a1a;
+}
+
 .container-fluid {
   padding: 0;
   text-align: center;
-  background-color: white;
-  width: 85%;
+  background-color: black;
+  width:100%;
+  height: 100%;
   margin-top: 2%;
-}
-
-.img-col {
-  /* background-image: url('src/assets/two-friends.jgp');
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center; */
-  height: 60vh;
-  margin-top:2%
 }
 
 .form-container {
   width: 70%;
   margin: 5% auto;
   padding: 20px;
-  border: 1px solid #4CAF50;
-  background-color: transparent;
-  color: black;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  margin-left: 25%
+  background-color: #1a1a1a;
+  color: white;
+  border-radius: 12px;
+  box-shadow: 
+    0 10px 20px rgba(100, 101, 101, 0.57), /* Cyan 3D effect */
+    0 15px 30px rgba(52, 49, 52, 0.676), /* Magenta 3D effect */
+    inset 0 0 20px rgba(0, 0, 0, 0.5); /* Inner shadow for depth */
+  border: 1px solid #333;
+  margin-left: 21%;
+  perspective: 1000px;
+  transform: rotateX(5deg) rotateY(5deg);
+  transition: transform 0.3s ease;
+}
+
+.form-container:hover {
+  transform: rotateX(0deg) rotateY(0deg) scale(1.02);
+  box-shadow: 
+    0 15px 30px rgba(0, 255, 34, 0.693), 
+    0 20px 40px rgba(255, 0, 255, 0.3),
+    inset 0 0 30px rgba(0, 0, 0, 0.7);
 }
 
 .form-heading h2 {
+  color: white;
   margin-bottom: 20px;
   font-size: 24px;
   font-weight: bold;
   text-align: center;
 }
 
-.group-name,
-.group-type,
-.add-members {
-  margin-bottom: 20px;
-}
-
-input[type="text"],
+nput[type="text"],
 input[type="email"],
 select {
-  width: 50%;
+  width: auto;
   padding: 10px;
   margin-top: 10px;
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
-  background-color: white;
-  color: rgb(0, 0, 0);
-  border-bottom: 2px solid rgb(0, 0, 0);
-  border-radius: 0;
-}
-
-input::placeholder{
-  color: #000000;
-}
-.mat-autocomplete-panel {
-  background-color: #fff;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  border-radius: 6px;
-}
-
-
-.mat-option {
-  font-size: 14px;
-  color: #000000;
-  padding: 10px 20px;
-  transition: background-color 0.2s ease;
-  background-color: white;
-  border-bottom:1px solid #000000;
-  
-}
-
-.mat-option:hover {
-  background-color: #4CAF50;
+  background-color: #2a2a2a;
   color: white;
-  
+  border: none;
+  border-bottom: 2px solid #4CAF50;
+  border-radius: 0;
+  font-size: 16px;
+  min-width: 200px;
+  display: inline-block;
 }
 
-.link-to-add-members{
-  cursor: pointer;
-}
-
-.save-button {
-  text-align: center;
+input::placeholder {
+  color: #888;
 }
 
 .save-group-details {
-  background-image:  linear-gradient(to left, #d41459, #911a6c);
-  color: #ffffff;
+  background-image: linear-gradient(to right, #4CAF50, #2E7D32);
+  color: white;
   padding: 10px 20px;
   border: none;
   width: 100px;
@@ -99,33 +81,59 @@ input::placeholder{
   font-size: 16px;
   font-weight: 400;
   cursor: pointer;
-
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 255, 0, 0.4);
 }
 
 .save-group-details:hover {
-  transform: scale(1.03);
-  background-image:  linear-gradient(to left, #911a6c, #d41459);
-  color: #fff;
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 255, 0, 0.6);
 }
 
-.remove-member{
-  font-size: 30px;
-  cursor: pointer;
-  margin: 1%;
-}
-.email{
-  margin: 1%;
- 
-}
-input:focus{
-  outline: none;
+.mat-autocomplete-panel {
+  background-color: #2a2a2a;
+  color: white;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
 }
 
-.username{
+.mat-option {
+  color: white;
+  background-color: #2a2a2a;
+  transition: all 0.3s ease;
+}
+
+.mat-option:hover {
+  background-color: #4CAF50;
   color: white;
 }
+.remove-member {
+  font-size: 40px;
+  cursor: pointer;
+  margin-bottom: 4%;
+}
+  
 
+.member-inputs {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
 
+.member-inputs .username,
+.member-inputs .email {
+  flex: 1;
+  margin-right: 10px;
+}
 
+.member-inputs .remove-member {
+  margin-left: auto;
+}
 
+.link-to-add-members a {
+  display: block;
+  margin-top: 10px;
+}
+.mat-form-field-infix {
+  height: 43px;
 
+} 
