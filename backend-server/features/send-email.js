@@ -41,7 +41,6 @@ const sendEmailToNewUser = async (req, res, email, groupId, groupName = null) =>
         };
 
         const info = await transporter.sendMail(mailOptions);
-        console.log("Email sent:", info.response);
 
         if (!hasResponded && !res.headersSent) {
             hasResponded = true;

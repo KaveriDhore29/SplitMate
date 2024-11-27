@@ -11,7 +11,6 @@ async function getExchangeRate(baseCurrency, targetCurrency) {
 }
 
 async function simplifyDebts(input, previousBalances = {}, defaultCurrency = "INR") {
-  console.log('simplify inputs ',input);
   const transactions = [];
   const netBalances = { ...previousBalances }; // Carry forward previous balances
   let individualShare = 0;
@@ -38,7 +37,6 @@ async function simplifyDebts(input, previousBalances = {}, defaultCurrency = "IN
 
       // Deduct debts from each member (including the spender)
       allMembers.forEach((member) => {
-        console.log("member :::",member);
           netBalances[member] = (netBalances[member] || 0) - individualShare;
       });
   }
@@ -47,8 +45,6 @@ async function simplifyDebts(input, previousBalances = {}, defaultCurrency = "IN
   const balances = Object.entries(netBalances)
       .filter(([_, balance]) => balance !== 0)
       .map(([person, balance]) => ({ person, balance }));
-
-      console.log('balances ',balances);
 
     //   simple Debt Simplification logic
     function simpleDebtSimplification(balances, individualShare) {
@@ -66,18 +62,14 @@ async function simplifyDebts(input, previousBalances = {}, defaultCurrency = "IN
             }).filter(item => item !== undefined);  // Remove undefined entries (like Amount)
           }).flat();  // Flatten to a single array
 
-          console.log(arr);
           const creditor = balances.find(b => b.person === arr[0]);
-          console.log('creditor ',creditor);
 
         // find all the debtors
         const debtors = balances.filter((b) => b.balance < 0 && arr.includes(b.person)); //also make sure that the person is present in arr
-        console.log('debtors ',debtors);
         // // sort debtors by balance ascending
         // debtors.sort((a, b) => a.balance - b.balance);
 
         // Record the transaction
-        console.log('individualShare ',individualShare);
         for(const debtor of debtors) {
             let settlement = individualShare;
             transactions.push({
@@ -89,9 +81,7 @@ async function simplifyDebts(input, previousBalances = {}, defaultCurrency = "IN
             // Update balances
             creditor.balance += debtor.balance;
             debtor.balance = 0;
-
         }
-        console.log('normal transactions: ', transactions);
     }
 
   // Debt Simplification Logic
@@ -102,7 +92,6 @@ async function simplifyDebts(input, previousBalances = {}, defaultCurrency = "IN
       const maxCreditor = balances.reduce((max, b) =>
           b.balance > max.balance ? b : max
       );
-      console.log('maxCredit ',maxCreditor);
       const maxDebtor = balances.reduce((min, b) =>
           b.balance < min.balance ? b : min
       );
@@ -134,7 +123,6 @@ async function simplifyDebts(input, previousBalances = {}, defaultCurrency = "IN
 
   settle(balances);
 // simpleDebtSimplification(balances, individualShare);
-  console.log('transactionss ',transactions);
 
   return { transactions, netBalances };
 }

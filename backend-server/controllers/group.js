@@ -37,61 +37,20 @@ const createGroup = async (req, res) => {
       const groupId = uuidv4();
 
       members = await addMembers(req, res, members, groupId);
-      // // Extract emails from members array
-      // let memberEmails = members.map(member => member.email);
-
-      // // Find users that exist in the database
-      // const existingUsers = await User.find({ email: { $in: memberEmails } });
-      // const existingUserEmails = existingUsers.map(user => user.email);
-
-      // console.log('Existing users:', existingUsers);
-
-      //  // Mark members who join by link
-      // members = members.map((member) => ({
-      //   ...member,
-      //   joinedByLink: !existingUserEmails.includes(member.email) && member.email !== "",
-      // }));
-
-      // // let isJoinByLink = false;
-      // // Filter out members that do not exist in the database
-      // members.filter(member => {
-      //   const isExisting = existingUserEmails.includes(member.email);
-      //   if (!isExisting && member.email !== '') {
-      //     console.log('User not found, sending email to:', member.email);
-      //     try {
-      //       console.log('sendEmailToNewUser');
-      //       // sendEmailToNewUser(req, res, member.email, groupId, groupName);
-      //     } catch (error) {
-      //       console.error('Error sending email to new user:', error);
-      //     }
-      //   }
-      //   return isExisting;
-      // });
-
-      // console.log('Filtered members:', members);
-
       // Add the groupId to userdatas concurrently
-      console.log('before updatePromises');
-      console.log('before members', members);
       let groupIdsOfUser = [];
       let id = [];
       for (const member of members) {
-        console.log('inside update loop');
-        console.log('member ',member);
-        console.log('groupId ', groupId);
         // Update the user's groupIds in the database
         await User.updateOne({ email: member.email }, { $push: { groupIds: groupId } });
         // Initialize groupIdsOfUser as an empty array
         // Retrieve existing groupIds from the cache
         id = await client.get(`groupIds:${member.email}`);
-        console.log('id x', id);
         groupIdsOfUser = []; // Reset groupIdsOfUser for each member
         // Check if id exists and process it
         if (id) {
           try {
             id = JSON.parse(id); // Parse the JSON string into an object
-            console.log('Parsed id:', id);
-      
             // Ensure id is an array before pushing into groupIdsOfUser
             if (Array.isArray(id)) {
               groupIdsOfUser.push(...id); // Spread the array into groupIdsOfUser
@@ -104,10 +63,8 @@ const createGroup = async (req, res) => {
         }
         // Add the new groupId to the array
         groupIdsOfUser.push(groupId);
-        console.log('groupIdsOfUser:', groupIdsOfUser);
         // Update the cache with the new groupIds array
         await client.set(`groupIds:${member.email}`, JSON.stringify(groupIdsOfUser));
-        console.log('Updated cache:', await client.get(`groupIds:${member.email}`));
       }
 
       // await Promise.all(updatePromises); // Execute all updates concurrently
@@ -184,7 +141,6 @@ const getGroupDetails = async (req, res) => {
     let allIds = [];
     let userId = await client.get(`groupIds:${email}`);
     if(userId) {
-      console.log('cache hit for getGroupDetails');
       allIds = JSON.parse(userId);
     }
     else {
@@ -192,33 +148,17 @@ const getGroupDetails = async (req, res) => {
       if(!user) return res.status(404).json({ error: 'User not found' });
       allIds = user[0].groupIds;
     }
-    console.log('allIds ',allIds);
-
 
     let allGroups = [];
-    // // go group ids
-    // for(let gId of allIds) {
-    //   let oneGroup = await Group.find({groupId: gId});
-    //   allGroups.push(oneGroup);
-    // }
-
     for (let gId of allIds) {
       // Check Redis cache for group details
       const cachedGroup = await client.get(`group:${gId}`);
-      // console.log('cachedGroup ',cachedGroup);
       if (cachedGroup) {
-        console.log('cache hit for gId');
         allGroups.push(JSON.parse(cachedGroup));
       } else {
         // Fetch group details from the database
         const oneGroup = await Group.findOne({ groupId: gId });
         if (oneGroup) {
-          // update the joinedbyLink if it is false;
-          // for(member of oneGroup.members) {
-          //   console.log('inside joinedbylink', member);
-          //   let myUserDetails = await Group.updateOne({'members.email': member.email}, {$set: { 'member.joinedByLink': true}});
-          //   console.log('myUserDetails ',myUserDetails);
-          // }
           for (const member of oneGroup.members) {
             let myUserDetails = await Group.updateOne(
               {
@@ -231,8 +171,6 @@ const getGroupDetails = async (req, res) => {
               }
             );
           }
-
-
 
           allGroups.push(oneGroup);
           // Store group details in Redis cache with an expiration time
@@ -269,7 +207,6 @@ const getOneGroupDetail = async (req, res) => {
     //   res.status(200).json([JSON.parse(cachedGroup)]);
     // }
     const group = await Group.find({groupId});
-    console.log('group ',group);
     if(!group) res.status(404).json({error: 'Group not found here'});
     res.status(200).json(group);
   } catch (error) {

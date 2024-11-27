@@ -1,41 +1,6 @@
 const { client } = require('../data/redis-database');
 const { User } = require('../model/users');
-// const User = require('../model/users');
-// const client = require('../server'); // Correctly import the Redis client
 
-// const getSuggestions = async (req, res) => {
-//   const { query } = req.query;
-
-//   try {
-//     const redisKey = `search:${query}`;
-//     console.log('redisKey ',redisKey);
-//     // Use modern Redis methods
-//     const cachedResult = await client.get(redisKey); // Await Promise-based `get`
-//     // console.log('cachedResult',cachedResult);
-//     if (cachedResult) {
-//       console.log('Cache hit');
-//       return res.json(JSON.parse(cachedResult));
-//     }
-//     console.log('Cache miss');
-//     // Search users by username (case-insensitive search)
-//     const users = await User.find({
-//       name: { $regex: `^${query}`, $options: 'i' }  // Search usernames starting with the query
-//     }).limit(10); // Limit results to 10 users
-
-//     // Return usernames and emails
-//     const results = users.map(user => ({
-//       username: user.name,
-//       email: user.email,
-//       userid: user._id
-//     }));
-//     await client.set(redisKey, JSON.stringify(results)); // Use `setEx`
-//     res.json(results);
-//   } catch (error) {
-//     console.error('Error fetching users:', error);
-//     res.status(500).json({ error: 'Server error while searching users' });
-//   }
-// };
-// Function to scan Redis for a key matching the pattern
 const scanForKey = async (pattern) => {
   let cursor = 0;
   let matchingKeys = [];
@@ -46,8 +11,6 @@ const scanForKey = async (pattern) => {
         MATCH: `*${pattern.toLowerCase()}*`, 
         COUNT: 100000000 
       });
-      
-      console.log('SCAN result:', result);
 
       if (result && Array.isArray(result.keys)) {
         matchingKeys = [...matchingKeys, ...result.keys];
@@ -70,9 +33,6 @@ const scanForKey = async (pattern) => {
   }
 };
 
-
-
-
 const getSuggestions = async (req, res) => {
   const { query } = req.query;
 
@@ -84,15 +44,11 @@ const getSuggestions = async (req, res) => {
     const redisKey = (`user:${query}`);
     let getRedisKey = await client.get(redisKey)
     if(getRedisKey) {
-      console.log('imediate cache hit');
       return res.json([JSON.parse(getRedisKey)]);
     }
     const matchingKeys = await scanForKey(redisKey.trim());
 
     if (matchingKeys && matchingKeys.length > 0) {
-      console.log('found key');
-      console.log('Cache hit for key:', matchingKeys);
-
       // Get values for each key individually
       const results = [];
       for (const key of matchingKeys) {
@@ -116,7 +72,6 @@ const getSuggestions = async (req, res) => {
           continue;
         }
       }
-      console.log('results kjfrj',results);
 
       if (results.length > 0) {
         // Remove duplicates based on email
@@ -124,19 +79,14 @@ const getSuggestions = async (req, res) => {
         const uniqueResults = Array.from(
           new Map(
             results.map(item => {
-              console.log('Processing item:', item); // Log each item
               return [item.email, item];
             })
           ).values()
         );
-        console.log('uniqueResults ',uniqueResults);
-        console.log('redisKey ',redisKey);
         if(uniqueResults.length > 0) await client.set(redisKey, JSON.stringify(uniqueResults));
         return res.json(uniqueResults.slice(0, 10)); // Limit to 10 results
       }
     }
-
-    console.log('Cache miss');
 
     // Fallback to database search
     const users = await User.find({
@@ -148,10 +98,7 @@ const getSuggestions = async (req, res) => {
       email: user.email,
       userid: user._id
     }));
-console.log('results ',results);
-console.log('users ',users);
     if(users.length > 0) {
-      console.log('inside if users');
       await client.set(redisKey, JSON.stringify(results));
 
     // Cache individual results
@@ -176,7 +123,6 @@ console.log('users ',users);
     }
   }
 
-    console.log('eod ',results);
     return res.json(results);
   } catch (error) {
     console.error('Error in getSuggestions:', error);
