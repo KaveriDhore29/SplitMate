@@ -35,18 +35,20 @@
     </div>
 
     <!-- Payer Dropdown -->
-    <div>
-      <label for="payer">Payer:</label>
-      <select
-        id="payer"
-        [(ngModel)]="expense.paidBy"
-        name="payer"
-      >
-        <option *ngFor="let member of membersNames" [value]="member.email">
-          {{ member.name }}
-        </option>
-      </select>
-    </div>
+  <!-- Payer Dropdown -->
+<div>
+  <label for="payer">Payer:</label>
+  <select
+    id="payer"
+    [(ngModel)]="expense.paidBy"
+    name="payer"
+  >
+    <option *ngFor="let member of membersNames" [value]="member.email">
+      {{ member.name }}
+    </option>
+  </select>
+</div>
+
 
     <!-- Equally Checkbox -->
     <div>

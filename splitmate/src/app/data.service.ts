@@ -18,7 +18,8 @@ export class DataService {
     if (loggedInUser) {
       const userPayload = JSON.parse(loggedInUser); 
       this.currentUserEmail = {
-        email: userPayload.email 
+        email: userPayload.email,
+        name : userPayload.name
       };
     }   
 

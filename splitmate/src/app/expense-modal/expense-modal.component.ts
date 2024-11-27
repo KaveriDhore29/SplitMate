@@ -1,46 +1,55 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit, Output,EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../data.service';
-import { FormsModule } from '@angular/forms';
-
+import { log, warn } from 'console';
 
 @Component({
   selector: 'app-expense-modal',
   templateUrl: './expense-modal.component.html',
   styleUrls: ['./expense-modal.component.css']
 })
-export class ExpenseModalComponent {
-  @Input() membersNames:{ name: string; email: string }[] = []; 
-  @Input() groupId !: string;
+export class ExpenseModalComponent implements OnInit {
+  @Input() membersNames: { name: string; email: string }[] = [];
+  @Input() groupId!: string;
   @Output() closePopup = new EventEmitter<void>();
-  expenseDataPaidBy = this.dataService.currentUserEmail;
+
   currencyOptions = ['INR', 'USD', 'EUR', 'GBP'];
+  
   expense = {
     title: '',
     currency: 'INR',
     amount: 0,
-    paidBy: this.dataService.currentUserEmail, // Default to current user
+    paidBy: this.dataService.currentUserEmail.email, // Default to current user
     equally: true, // Default to true
     selectedMembers: [] as string[]
   };
 
-
-  constructor(private route: ActivatedRoute, private dataService: DataService){}
-
+  constructor(private route: ActivatedRoute, public dataService: DataService) {}
 
   ngOnInit(): void {
     this.groupId = this.route.snapshot.paramMap.get('id')!;
-    console.log("GROUP Id:",this.groupId);
- 
+    console.log("GROUP Id:",this.expense);
+    const currentUser = this.membersNames.find(
+      (member) => member.email === this.dataService.currentUserEmail
+    );
+  
+    // Pre-select the current user's email for the dropdown
+    if (currentUser) {
+      this.expense.paidBy = currentUser.email; // Set the email of the current user
+      console.log("Default selected user:", currentUser.name);
+    } else {
+      console.error("Current user not found in members list!");
+    }
   }
 
-  
-
   toggleEqually(): void {
+    console.warn("intogle")
     if (this.expense.equally) {
-      this.expense.selectedMembers = this.membersNames.map(member => member.email);
+      console.log("in iffffffffffff");
+      
+            this.expense.selectedMembers = this.membersNames.map(member => member.email);
     } else {
+      console.log("in elsee");
       this.expense.selectedMembers = [];
     }
   }
@@ -67,10 +76,9 @@ export class ExpenseModalComponent {
       groupId: this.groupId
     };
 
-    console.log(expenseData);
-    
+    console.log('Expense Data:', expenseData);
 
-    // Call the service API
+    // Call the service API to add the expense
     this.dataService.addExpenseService(expenseData).subscribe(
       response => {
         console.log('Expense successfully added:', response);
