@@ -19,15 +19,11 @@ const routes: Routes = [
   },
   {
     path:'homepage',
-    component:HomepageComponent
+    component:LandingPageComponent
   },
   {
     path: 'login',
     component: LoginComponent
-  },
-  {
-    path:'landing',
-    component: LandingPageComponent
   },
   {
     path: 'dashboard',
