@@ -31,7 +31,7 @@ export class DashboardComponent implements OnInit {
         console.error('Error fetching group details:', error);
       }
     );
-    console.log(this.groupDetails);
+    
   }
 
   setSection(section: string) {
@@ -40,7 +40,7 @@ export class DashboardComponent implements OnInit {
   }
 
   showGroupDetails(group: any): void {
-    console.log('Group Details:', group);
+    console.log('Group Details:', group); 
     this.dataService.setSelectedGroup(group);
   }
 

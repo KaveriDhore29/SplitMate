@@ -24,6 +24,8 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { MatIconModule } from '@angular/material/icon';
 import { ExpenseModalComponent } from './expense-modal/expense-modal.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
+import {MatCardModule} from '@angular/material/card';
+import {MatRadioModule} from '@angular/material/radio'
 
 
 @NgModule({
@@ -52,7 +54,10 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
     MatFormFieldModule, // Form field module
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    MatIconModule
+    MatIconModule,
+    MatCardModule,
+    MatRadioModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]

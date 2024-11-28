@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../data.service';
-import { log, warn } from 'console';
+
 
 @Component({
   selector: 'app-expense-modal',
@@ -12,6 +12,7 @@ export class ExpenseModalComponent implements OnInit {
   @Input() membersNames: { name: string; email: string }[] = [];
   @Input() groupId!: string;
   @Output() closePopup = new EventEmitter<void>();
+  selectedSplitOption: string = '';
 
   currencyOptions = ['INR', 'USD', 'EUR', 'GBP'];
   
@@ -21,8 +22,12 @@ export class ExpenseModalComponent implements OnInit {
     amount: 0,
     paidBy: this.dataService.currentUserEmail.email, // Default to current user
     equally: true, // Default to true
-    selectedMembers: [] as string[]
+    selectedMembers: [] as string[],
+    splitBy:''
   };
+
+  memberShares: { [email: string]: number } = {};
+  memberPercentages: { [email: string]: number } = {};
 
   constructor(private route: ActivatedRoute, public dataService: DataService) {}
 
@@ -41,9 +46,9 @@ export class ExpenseModalComponent implements OnInit {
       console.error("Current user not found in members list!");
     }
 
-    if (this.expense.equally) {
-      this.toggleEqually();
-    }
+    // if (this.expense.equally) {
+    //   this.toggleEqually();
+    // }
   }
 
   toggleEqually(): void {
@@ -67,6 +72,57 @@ export class ExpenseModalComponent implements OnInit {
         email => email !== memberEmail
       );
     }
+  }
+
+  onSplitOptionChange(option: string): void {
+    this.selectedSplitOption = option; // Set the selected split option
+    this.expense.splitBy = option; // Store the selected split option in expense data
+    this.expense.selectedMembers = []; // Reset selected members for each option
+    
+    // Initialize shares or percentage fields when needed
+    if (option === 'percentage') {
+      this.initializePercentageFields();
+    } else if (option === 'shares') {
+      this.initializeSharesFields();
+    }else if (option === 'equally') {
+      this.selectAllMembers(); // Select all members when "Equally" is clicked
+    }
+  }
+
+  selectAllMembers(): void {
+    this.expense.selectedMembers = this.membersNames.map(member => member.email); // Select all members
+  }
+
+  // To check if all members are selected
+isAllSelected(): boolean {
+  return this.membersNames.every(member => this.expense.selectedMembers.includes(member.email));
+}
+
+// To handle the "Select All" toggle
+toggleSelectAll(event: Event): void {
+  const isChecked = (event.target as HTMLInputElement).checked;
+  if (isChecked) {
+    // Select all members
+    this.expense.selectedMembers = this.membersNames.map(member => member.email);
+  } else {
+    // Deselect all members
+    this.expense.selectedMembers = [];
+  }
+}
+
+
+  initializePercentageFields(): void {
+    this.memberPercentages = {}; // Reset
+    this.membersNames.forEach(member => {
+      this.memberPercentages[member.email] = 0; // Initialize to 0
+    });
+  }
+
+  initializeSharesFields(): void {
+    this.memberShares = {}; // Reset
+    this.membersNames.forEach(member => {
+      this.memberShares[member.email] = 0; // Initialize to 0
+    });
   }
 
   addExpenseData(): void {
@@ -94,6 +150,10 @@ export class ExpenseModalComponent implements OnInit {
         alert('Failed to add expense. Please try again.');
       }
     );
+  }
+
+  closeSplitOptions(): void {
+    this.selectedSplitOption = ''; // Reset the split option to hide the div
   }
 
   close(): void {

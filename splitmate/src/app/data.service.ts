@@ -9,9 +9,10 @@ export class DataService {
 
   private apiUrl = 'http://localhost:3000/api';
    currentUserEmail : any;
-   private selectedGroupSource = new BehaviorSubject<any>(null); // Initial state is null
-   selectedGroup$ = this.selectedGroupSource.asObservable(); // Observable to subscribe to in other components
-   private selectedGroup: any = null;
+   private selectedGroupSource = new BehaviorSubject<any>(null); 
+  
+
+
 
   constructor(private http: HttpClient) {
     const loggedInUser = sessionStorage.getItem('loggedInUser');
@@ -25,8 +26,9 @@ export class DataService {
 
      console.log("Current User Email:",this.currentUserEmail)
   }
+
   setSelectedGroup(group: any) {
-    this.selectedGroupSource.next(group); // Update the selected group
+    this.selectedGroupSource.next(group); 
   }
 
     getGroupDetails(): Observable<any[]> {

@@ -1,3 +1,5 @@
+<div class="container">
+  
 <div class="popup">
   <h2>Add Expense</h2>
   <form>
@@ -34,7 +36,7 @@
       />
     </div>
 
-    <!-- Payer Dropdown -->
+ 
   <!-- Payer Dropdown -->
 <div>
   <label for="payer">Payer:</label>
@@ -51,7 +53,7 @@
 
 
     <!-- Equally Checkbox -->
-    <div>
+    <!-- <div>
       <label for="equally">Split Equally:</label>
       <input
         id="equally"
@@ -60,10 +62,18 @@
         name="equally"
         (change)="toggleEqually()"
       />
+    </div> -->
+
+    <div class="split-options">
+      <span>Split Options: </span>
+      <button (click)="onSplitOptionChange('equally')">Equally</button>
+  <button (click)="onSplitOptionChange('percentage')">Percentage</button>
+  <button (click)="onSplitOptionChange('shares')">Shares</button>
+  <button (click)="onSplitOptionChange('adjustments')">Adjustments</button>
     </div>
 
     <!-- Checklist for Members -->
-    <div *ngIf="!expense.equally">
+    <!-- <div *ngIf="!expense.equally">
       <label>Members:</label>
       <div *ngFor="let member of membersNames">
         <input
@@ -74,10 +84,53 @@
         />
         <label [for]="member.email">{{ member.name }}</label>
       </div>
-    </div>
+    </div> -->
 
     <!-- Save and Cancel Buttons -->
     <button type="button" (click)="addExpenseData()">Save</button>
     <button type="button" (click)="close()">Cancel</button>
   </form>
 </div>
+
+
+<!-- Members Split Options -->
+<div class="members-split-options" *ngIf="selectedSplitOption">
+  <button class="close-btn" (click)="closeSplitOptions()">&#10006;</button> <!-- Close button -->
+
+  <!-- Select All Checkbox -->
+  <div *ngIf="selectedSplitOption === 'equally'">
+    <label>
+      <input type="checkbox" [checked]="isAllSelected()" (change)="toggleSelectAll($event)" />
+      Select All
+    </label>
+
+    <div *ngFor="let member of membersNames">
+      <label>
+        <input type="checkbox" [checked]="expense.selectedMembers.includes(member.email)" 
+               (change)="toggleMemberSelection(member.email, $event)" />
+        {{ member.name }} ({{ member.email }})
+      </label>
+    </div>
+  </div>
+
+  <div *ngIf="selectedSplitOption === 'percentage'">
+    <label *ngFor="let member of membersNames">
+      <div>{{ member.name }} ({{ member.email }})</div>
+      <input type="number" [(ngModel)]="memberPercentages[member.email]" min="0" max="100" placeholder="Enter Percentage" />
+    </label>
+  </div>
+
+  <div *ngIf="selectedSplitOption === 'shares'">
+    <label *ngFor="let member of membersNames">
+      <div>{{ member.name }} ({{ member.email }})</div>
+      <input type="number" [(ngModel)]="memberShares[member.email]" min="0" placeholder="Enter Shares" />
+    </label>
+  </div>
+
+  <div *ngIf="selectedSplitOption === 'adjustments'">
+    <!-- Add adjustment-related fields here if needed -->
+    <div>Adjustment fields go here</div>
+  </div>
+</div>
+
+  </div>

@@ -1,92 +1,22 @@
-.popup {
-  width: 400px;
-  margin: 50px auto;
-  padding: 20px;
-  background: #f9f9f9;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-  font-family: Arial, sans-serif;
-  color: #333;
-}
-
-.popup h2 {
-  text-align: center;
-  font-size: 24px;
-  color: #4CAF50;
-  margin-bottom: 20px;
-}
-
-.popup form {
+.container{
   display: flex;
-  flex-direction: column;
-  gap: 15px;
+ 
 }
 
-.popup form div {
-  display: flex;
-  flex-direction: column;
-}
-
-.popup label {
-  font-weight: bold;
-  margin-bottom: 5px;
-  color: #555;
-}
-
-.popup input[type="text"],
-.popup input[type="number"],
-.popup select {
-  padding: 8px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  width: 100%;
-}
-
-.popup input[type="text"]:focus,
-.popup input[type="number"]:focus,
-.popup select:focus {
-  border-color: #4CAF50;
-  outline: none;
-  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
-}
-
-.popup input[type="checkbox"] {
-  margin-right: 8px;
-}
-
-.popup button {
-  padding: 10px;
-  font-size: 16px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.popup button[type="button"] {
-  background-color: #4CAF50;
+.popup{
+  border: 2px solid white;
+  width: 50%;
   color: white;
+  height: 335px;
+  background-color: brown;
+  margin: 1%
 }
 
-.popup button[type="button"]:hover {
-  background-color: #45a049;
+.members-split-options{
+  border: 2px solid white;
+  width: 50%;
+  color: white;
+  height: 335px;
+  background-color: brown;
+  margin: 1%
 }
-
-.popup button[type="button"]:nth-child(2) {
-  background-color: #f44336;
-  margin-left: 10px;
-}
-
-.popup button[type="button"]:nth-child(2):hover {
-  background-color: #e53935;
-}
-
-.popup form div *ngFor label {
-  display: inline-block;
-  margin-left: 5px;
-}
-
-.popup div *ngFor {
-  margin-top: 10px;
-}
-

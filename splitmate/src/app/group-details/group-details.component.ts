@@ -39,5 +39,8 @@ export class GroupDetailsComponent{
       console.error('Error fetching group details:', error);
     }
   );
+
+
+
 }
 }
