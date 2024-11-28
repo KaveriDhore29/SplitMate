@@ -39,6 +39,7 @@ const routes: Routes = [
       { path: 'friend-detail', component: FriendDetailsComponent },
       { path: 'group-detail', component: GroupDetailsComponent },
       { path: 'group-detail/:id', component: GroupDetailsComponent },
+      
     ],
   },
   { path: 'create-group/new', component: CreateGroupComponent, canActivate: [AuthGuard] },
