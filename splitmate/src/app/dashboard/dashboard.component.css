@@ -2,7 +2,7 @@
   .friends-container {
      background-color: #162a2a;
     border: 1px solid #ffffff;
-    height: 780px;
+    height: 720px;
     padding: 0%;
     border-top: none;
     border-left: none;
@@ -109,7 +109,7 @@
     padding: 20px;
     background-color: #162a2a;
     border: 1px solid #ffffff; border-top: none;
-    height: 780px;
+    height: 720px;
     font-family: 'Trirong',serif;
   }
 
