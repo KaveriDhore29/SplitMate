@@ -270,6 +270,8 @@ const simplification = async (req, res, input) => {
         },
       }
     );
+    console.log('getGroup.netBalances ',getGroup.netBalances);
+    console.log('simplifiedData.netBalances ',simplifiedData.netBalances);
     let newNetBalances = await mergeNetBalances(getGroup.netBalances, simplifiedData.netBalances);
     await Group.updateOne(
       { groupId: groupId },
@@ -280,8 +282,11 @@ const simplification = async (req, res, input) => {
     getGroup = await Group.findOne({groupId: groupId})
     let latestTransactions = await mergeTransactions(getGroup.transactions);
     // justify
+    console.log('latestTransactions ',latestTransactions);
+    console.log('newNetBalances ',newNetBalances);
     let justification = settle(newNetBalances);
-    res.status(200).json(justification);
+    console.log('justification ',justification);
+    res.status(200).json(latestTransactions);
   } catch (error) {
     console.error('Error fetching group details:', error);
   }

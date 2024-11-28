@@ -43,19 +43,27 @@ async function mergeNetBalances(existingNetBalances = [], newNetBalances = []) {
 
   // Merge existingNetBalances into combinedNetBalances
   existingNetBalances.forEach(({ person, balance }) => {
+    console.log('balance ',balance);
     combinedNetBalances[person] = balance;
   });
+  console.log('existingNetBalances ',existingNetBalances);
 
   // Merge with newNetBalances
   newNetBalances.forEach(({ person, balance }) => {
+    console.log('typeof balance ',typeof balance);
+    balance = parseFloat(balance.toFixed(2));
     if (combinedNetBalances[person] !== undefined) {
       // Adjust the value if the person already exists
+      console.log('combinedNetBalances[person] ',combinedNetBalances[person]);
+      console.log('typeof combinedNetBalances[person] ',typeof combinedNetBalances[person]);
+      console.log('balance ',balance);
       combinedNetBalances[person] += balance;
     } else {
       // Add new person with their balance
       combinedNetBalances[person] = balance;
     }
   });
+  console.log('combinedNetBalances ',combinedNetBalances);
 
   // Convert back to the desired array format
   const netBalancesArray = Object.entries(combinedNetBalances).map(([person, balance]) => ({
@@ -70,10 +78,11 @@ async function mergeNetBalances(existingNetBalances = [], newNetBalances = []) {
 
 
 
-async function simpleDebtSimplification(personOwed, balances, individualShare, members, simplifyCurrency) {
+async function simpleDebtSimplification(personOwed, balances, individualShares, members, simplifyCurrency) {
   let transactions = [];
   const creditor = personOwed;
   console.log('creditor ',creditor);
+  console.log('balances ',balances);
 
   // find all the debtors
   // const debtors = balances.filter((b) => b.balance < 0 && members.includes(b.person)); //also make sure that the person is present in arr
@@ -89,11 +98,17 @@ async function simpleDebtSimplification(personOwed, balances, individualShare, m
 
   // Record the transaction
   for(const debtor of debtors) {
-      let settlement = individualShare;
+      let settlement = 0;
+      for(let i=0; i<individualShares.length; i++) {
+        if(individualShares[i].person == debtor.person) {
+          settlement = individualShares[i].share;
+        }
+      }
+      console.log('settlement ',settlement);
       transactions.push({
           from: debtor.person,
           to: creditor,
-          amount: settlement.toFixed(2), // Round to 2 decimals
+          amount: settlement, // Round to 2 decimals
           currency: simplifyCurrency,
       });
       // Update balances
@@ -106,11 +121,13 @@ async function simpleDebtSimplification(personOwed, balances, individualShare, m
 
 function settle(balances, simplifyCurrency = "INR") {
   // Create a local transactions array to avoid global state issues
+  console.log('balances ',balances);
   const transactions = [];
 
   function settleRecursive(currentBalances) {
+    // console.log('currentBalances ',currentBalances);
     // Base case: if no balances remain, return transactions
-    if (currentBalances.length === 0) {
+    if (currentBalances.length == 0) {
       return transactions;
     }
 
@@ -132,16 +149,17 @@ function settle(balances, simplifyCurrency = "INR") {
     transactions.push({
       from: maxDebtor.person,
       to: maxCreditor.person,
-      amount: settlement.toFixed(2),
+      amount: settlement,
       currency: simplifyCurrency,
     });
 
     // Update balances
-    maxCreditor.balance -= settlement;
-    maxDebtor.balance += settlement;
+    maxCreditor.balance -= parseFloat(settlement.toFixed(2));
+    maxDebtor.balance += parseFloat(settlement.toFixed(2));
 
     // Remove settled balances
-    const updatedBalances = currentBalances.filter((b) => b.balance !== 0);
+    const updatedBalances = currentBalances.filter((b) => b.balance !== 0 || (b.balance > 1 && b.balance < -1));
+    // console.log('updatedBalances ',updatedBalances);
 
     // Recursive call
     return settleRecursive(updatedBalances);
@@ -152,7 +170,7 @@ function settle(balances, simplifyCurrency = "INR") {
 }
 
 
-async function simplifyDebts(paidBy, members, amount, simplifyCurrency, splitBy, title, groupId, previousBalances = {}, defaultCurrency = "INR") {
+async function simplifyDebts(paidBy, members, amount, simplifyCurrency, splitBy = 'equally', title, groupId, previousBalances = {}, defaultCurrency = "INR") {
   let transactions = [];
   let netBalances = { ...previousBalances }; // Carry forward previous balances
   let individualShare = 0;
@@ -172,14 +190,57 @@ async function simplifyDebts(paidBy, members, amount, simplifyCurrency, splitBy,
 
       // Include the spender in the division
       const allMembers = [...members];
-      individualShare = normalizedAmount / allMembers.length;
+
+      let totalDivisions = 0;
+      allMembers.forEach((item) => {
+        totalDivisions += item.division;
+      })
+      console.log('totalDivisions ',totalDivisions);
+
+      let individualShares = [];
+
+      if(splitBy == 'equally') {
+        // for equally
+        allMembers.forEach((item) => {
+          let obj = {
+            person: item.person,
+            share: (normalizedAmount / totalDivisions).toFixed(2)
+          }
+          individualShares.push(obj);
+        })
+      }
+      else if(splitBy == 'shares') {
+        // for shares
+        allMembers.forEach((item) => {
+          let ekShare = (normalizedAmount/totalDivisions);
+          let obj = {
+            person: item.person,
+            share: (ekShare*item.division).toFixed(2)
+          }
+          individualShares.push(obj)
+        })
+      }
+      else if(splitBy == 'percentage') {
+        // for percentage
+        allMembers.forEach((item) => {
+          let obj = {
+            person: item.person,
+            share: ((item.division*0.01)*normalizedAmount).toFixed(2)
+          }
+          individualShares.push(obj);
+        })
+      }
+      console.log('individualShares ',individualShares);
+
+      // individualShare = normalizedAmount / allMembers.length;
 
       // Add credit to the person who paid
       netBalances[personOwed] = (netBalances[personOwed] || 0) + normalizedAmount;
+      console.log('netBalances before ',netBalances);
 
       // Deduct debts from each member (including the spender)
-      allMembers.forEach((member) => {
-          netBalances[member.person] = (netBalances[member.person] || 0) - individualShare;
+      allMembers.forEach((member, index) => {
+          netBalances[member.person] = (netBalances[member.person] || 0) - individualShares[index].share;
       });
 
       // Convert netBalances into an array of objects like [{ person: "Person1", balance: 400 }]
@@ -205,7 +266,7 @@ async function simplifyDebts(paidBy, members, amount, simplifyCurrency, splitBy,
     console.log('balances ', balances);
 
   // simple Debt Simplification logic
-  transactions = await simpleDebtSimplification(personOwed, balances, individualShare, members, simplifyCurrency);
+  transactions = await simpleDebtSimplification(personOwed, balances, individualShares, members, simplifyCurrency);
 
   // Debt Simplification Logic
   // await settle(balances);
