@@ -11,8 +11,26 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
 export class LandingPageComponent implements OnInit {
   constructor(private renderer: Renderer2) {}
 
+  fullText: string = 'SplitMate ';
+  typewriterText: string = ''; 
+  typingSpeed: number = 100; 
+
+
   ngOnInit() {
     this.loadScripts();
+    this.startTypewriterEffect();
+  }
+
+  startTypewriterEffect(): void {
+    let index = 0;
+    const interval = setInterval(() => {
+      if (index < this.fullText.length) {
+        this.typewriterText += this.fullText[index];
+        index++;
+      } else {
+        clearInterval(interval); 
+      }
+    }, this.typingSpeed);
   }
 
   loadScripts() {
