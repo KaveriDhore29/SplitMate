@@ -13,6 +13,7 @@ export class ExpenseModalComponent implements OnInit {
   @Input() groupId!: string;
   @Output() closePopup = new EventEmitter<void>();
   selectedSplitOption: string = '';
+  @Input() groupDetails !: any;
 
   currencyOptions = ['INR', 'USD', 'EUR', 'GBP'];
   
@@ -20,8 +21,8 @@ export class ExpenseModalComponent implements OnInit {
     title: '',
     currency: 'INR',
     amount: 0,
-    paidBy: this.dataService.currentUserEmail.email, // Default to current user
-    equally: true, // Default to true
+    paidBy: this.dataService.currentUserEmail.email, 
+    equally: true, 
     selectedMembers: [] as string[],
     splitBy:''
   };
@@ -33,7 +34,6 @@ export class ExpenseModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.groupId = this.route.snapshot.paramMap.get('id')!;
-    console.log("GROUP Id:",this.expense);
     const currentUser = this.membersNames.find(
       (member) => member.email === this.dataService.currentUserEmail
     );
@@ -51,17 +51,17 @@ export class ExpenseModalComponent implements OnInit {
     // }
   }
 
-  toggleEqually(): void {
-    console.warn("intogle")
-    if (this.expense.equally) {
-      console.log("in iffffffffffff");
+  // toggleEqually(): void {
+  //   console.warn("intogle")
+  //   if (this.expense.equally) {
+  //     console.log("in iffffffffffff");
       
-            this.expense.selectedMembers = this.membersNames.map(member => member.email);
-    } else {
-      console.log("in elsee");
-      this.expense.selectedMembers = [];
-    }
-  }
+  //           this.expense.selectedMembers = this.membersNames.map(member => member.email);
+  //   } else {
+  //     console.log("in elsee");
+  //     this.expense.selectedMembers = [];
+  //   }
+  // }
 
   toggleMemberSelection(memberEmail: string, event: Event): void {
     const isChecked = (event.target as HTMLInputElement).checked;
@@ -143,7 +143,7 @@ toggleSelectAll(event: Event): void {
       response => {
         console.log('Expense successfully added:', response);
         alert('Expense added successfully!');
-        this.closePopup.emit(); // Close the popup
+        this.closePopup.emit(); 
       },
       error => {
         console.error('Error adding expense:', error);

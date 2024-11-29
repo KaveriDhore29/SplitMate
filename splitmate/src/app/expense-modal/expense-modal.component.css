@@ -4,19 +4,48 @@
 }
 
 .popup{
-  border: 2px solid white;
+  border: 2px solid black;
   width: 50%;
-  color: white;
+  color: black;
   height: 335px;
-  background-color: brown;
+  background-color: white;
   margin: 1%
 }
 
 .members-split-options{
-  border: 2px solid white;
+  border: 2px solid black;
   width: 50%;
-  color: white;
+  color: black;
   height: 335px;
-  background-color: brown;
+  background-color: white;
   margin: 1%
 }
+
+.form-heading{
+  background-color: #1ACC8D;
+}
+
+.expense-title{
+   text-align: left;
+   margin-top:10px
+}
+
+.expense-title input{
+    width: 50%; 
+}
+
+.currency{
+  text-align: left;
+  margin-top:10px
+}
+
+.payer{
+  text-align: left;
+  margin-top:10px
+}
+
+.split-options{
+  text-align: left;
+  margin-top:10px
+}
+
