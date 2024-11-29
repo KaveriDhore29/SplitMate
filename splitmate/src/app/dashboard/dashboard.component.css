@@ -174,21 +174,21 @@
   .wave1 use {
     animation: move-forever1 10s linear infinite;
     animation-delay: -2s;
-    fill: #685e5e;
+    fill:#1D7279;
     opacity: 0.6;
   }
   
   .wave2 use {
     animation: move-forever2 8s linear infinite;
     animation-delay: -2s;
-    fill: #aba0a0c2;
+    fill: #114449;
     opacity: 0.4;
   }
   
   .wave3 use {
     animation: move-forever3 6s linear infinite;
     animation-delay: -2s;
-    fill: rgba(68, 222, 108, 0.5);
+    fill: #0d241f;
   }
 
 
