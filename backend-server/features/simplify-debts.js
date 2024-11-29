@@ -1,3 +1,5 @@
+const { User } = require("../model/users");
+
 async function getExchangeRate(baseCurrency, targetCurrency) {
   const apiKey = "your_api_key"; // Replace with your API key
   const url = `https://open.er-api.com/v6/latest/${baseCurrency}`;
@@ -16,6 +18,7 @@ async function mergeTransactions(data) {
 
   // Iterate through the transactions array
   for (const obj of data) {
+    console.log('obj ',obj);
     for (const transaction of obj.transactions) {
       const { from, to, currency, amount } = transaction;
       const key = `${from}-${to}-${currency}`; // Create a unique key based on from, to, and currency

@@ -279,6 +279,7 @@ const simplification = async (req, res, input) => {
     ).lean();
 
     // Merge latest transactions
+    console.log('updateResult ',updateResult);
     let latestTransactions = await mergeTransactions(updateResult.transactions);
     console.log('latestTransactions ',latestTransactions);
 
@@ -297,18 +298,28 @@ const simplification = async (req, res, input) => {
 
 // get total owed amount
 const totalOwed = async(req, res) => {
-  const {email, groupId} = req.body;
+  const {email, groupIds} = req.body;
+  console.log('groupIds ',groupIds);
   try {
-    let group = await Group.findOne({groupId});
-    console.log('group ',group);
-    let netBalances = group.netBalances;
+    let allGroups = [];
+    for(let groupId of groupIds) {
+      let group = await Group.findOne({groupId});
+      allGroups.push(group);
+    }
+    let allNetBalances = [];
+    for(let group of allGroups) {
+      let netBalance = group.netBalances;
+      allNetBalances.push(netBalance);
+    }
     let myBalance = 0;
-    for (const item of netBalances) {
-      if (item.person === email) {
-        myBalance = item.balance;
-        break;  // Exit the loop when a match is found
+    for (const netBalance of allNetBalances) {
+      for(const balance of netBalance) {
+        if(balance.person == email) {
+          myBalance += balance.balance;
+        }
       }
     }
+    console.log('myBalance ',myBalance);
     res.status(200).json({myBalance});
   } catch (error) {
     console.error('Error finding total owed amount', error);
