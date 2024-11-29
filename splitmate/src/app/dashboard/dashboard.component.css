@@ -1,8 +1,9 @@
 
   .friends-container {
-     background-color: #162a2a;
+     background-color: #ffffff;
     border: 1px solid #ffffff;
-    height: 720px;
+    height: 630px;
+    color: black;
     padding: 0%;
     border-top: none;
     border-left: none;
@@ -50,7 +51,7 @@
   }
   
   .side-link {
-    color : #e8e0e0;
+    color : #000000;
     text-decoration: none;
     font-size: 1em;
     /* padding: 8px 0; */
@@ -63,7 +64,7 @@
   
   .side-link i {
    /* // margin-right: 10px; */
-   color : #e8e0e0;
+   color : #000000;
     padding-right: 10px;
   }
   
@@ -77,7 +78,7 @@
     margin-top: 10px;
     border-radius: 4px;
     margin-bottom: 7%;
-    background-color: #001E2B;
+    background-color: #c5cbcd;
     border: 1px solid #F6FCDF;
     color: #F6FCDF;
   }
@@ -107,9 +108,9 @@
    
   .main-dashboard, .group-balances {
     padding: 20px;
-    background-color: #162a2a;
+    background-color: #ffffff;
     border: 1px solid #ffffff; border-top: none;
-    height: 720px;
+    height: 630px;
     font-family: 'Trirong',serif;
   }
 
@@ -170,3 +171,40 @@
   }
 
   
+  .wave1 use {
+    animation: move-forever1 10s linear infinite;
+    animation-delay: -2s;
+    fill: #685e5e;
+    opacity: 0.6;
+  }
+  
+  .wave2 use {
+    animation: move-forever2 8s linear infinite;
+    animation-delay: -2s;
+    fill: #aba0a0c2;
+    opacity: 0.4;
+  }
+  
+  .wave3 use {
+    animation: move-forever3 6s linear infinite;
+    animation-delay: -2s;
+    fill: rgba(68, 222, 108, 0.5);
+  }
+
+
+svg{
+  height: 79px;
+  margin: 0;
+  padding: 0;
+
+}
+
+.container-fluid_dashboard .text-center{
+  padding: 0;
+  margin: 0;
+}
+
+.row .no_margin .align-items-center{
+  margin: 0;
+  padding: 0;
+}

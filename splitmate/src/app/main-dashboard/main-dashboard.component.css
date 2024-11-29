@@ -1,6 +1,7 @@
 .container{
-    color : #e8e0e0;
+    color : #000000;
     font-family: "Trirong", serif;
+    padding: 0;
 }
 
 .balances{
@@ -9,7 +10,7 @@
 
 .balances h4{
     border-bottom: 1px solid white;
-     color : #e8e0e0;;
+     color : #000000;;
 }
 
 .heading{
@@ -55,4 +56,9 @@
 
 th,td{
     border : 1px solid black
+}
+
+.row .no_margin .align-items-center{
+  margin: 0;
+  padding: 0;
 }
