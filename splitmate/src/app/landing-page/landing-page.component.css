@@ -53,3 +53,18 @@ section,
   text-transform: uppercase;
   font-family: var(--heading-font);
 }
+
+.typewriter {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden; /* Hide the text beyond the width */
+  border-right: 5px solid #1acc8d; /* Cursor effect */
+  animation: 0.7s steps(1) infinite;
+  font-size: 50px;
+}
+
+@keyframes blink {
+  50% {
+    border-color: transparent; /* Makes the cursor blink */
+  }
+}
