@@ -277,4 +277,50 @@ async function simplifyDebts(paidBy, members, amount, simplifyCurrency, splitBy 
   return { transactions, netBalances };
 }
 
-module.exports = { simplifyDebts, mergeTransactions, mergeNetBalances, settle }
+const justification = async (req, res) => {
+  console.log('req.body justification ',req.body);
+  const { groupId } = req.body;
+  try {
+    //get the group
+    const getGroup = await Group.findOne({groupId});
+    let netBalances = getGroup.netBalances;
+    let justify = await settle(netBalances);
+    console.log('justify ',justify);
+    res.status(200).json(justify);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: ' Error while justifying' });
+  }
+}
+
+const replaceEmailsWithUsernames = async (transactions) => {
+  try {
+    // Step 1: Extract unique emails from the transactions array
+    const emails = new Set();
+    transactions.forEach(({ from, to }) => {
+      emails.add(from);
+      emails.add(to);
+    });
+
+    // Step 2: Query the database for user names corresponding to these emails
+    const users = await User.find({ email: { $in: Array.from(emails) } }, 'name email');
+    const emailToNameMap = users.reduce((map, user) => {
+      map[user.email] = user.get('name'); // Map email to the user's name
+      return map;
+    }, {});
+
+    // Step 3: Replace emails with user names in the transactions array
+    const updatedTransactions = transactions.map(({ from, to, ...rest }) => ({
+      from: emailToNameMap[from] ? emailToNameMap[from] + ' ' + '(' + (from) + ')' : from, // Fallback to email if name is not found
+      to: emailToNameMap[to] ? emailToNameMap[to] + ' ' + '(' + (to) + ')' : to,
+      ...rest,
+    }));
+
+    return updatedTransactions;
+  } catch (error) {
+    console.error('Error replacing emails with user names:', error);
+    throw error; // Rethrow to handle it in the calling function
+  }
+};
+
+module.exports = { simplifyDebts, mergeTransactions, mergeNetBalances, settle, justification, replaceEmailsWithUsernames }

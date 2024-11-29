@@ -4,7 +4,7 @@ const { v4: uuidv4 } = require('uuid'); // For generating a unique group ID
 const { User } = require('../model/users');
 const { client } = require('../data/redis-database');
 const { addMembers } = require('../features/addMembers');
-const { simplifyDebts, mergeTransactions, mergeNetBalances, settle } = require('../features/simplify-debts');
+const { simplifyDebts, mergeTransactions, mergeNetBalances, settle, replaceEmailsWithUsernames } = require('../features/simplify-debts');
 
 // Controller to create a new group
 const createGroup = async (req, res) => {
@@ -243,62 +243,84 @@ const getAddMembersToGroup = async (req, res) => {
 
 const simplification = async (req, res, input) => {
   try {
-    console.log('req.body ',req.body);
+    console.log('req.body', req.body);
+
     const { paidBy, members, amount, simplifyCurrency, splitBy, title, groupId, createdBy } = req.body;
-    let getGroup = await Group.findOne({groupId: groupId})
-    let netBalances = getGroup.netBalances;
-    if(netBalances && netBalances.transactions && netBalances.transactions.netBalances) {
-      netBalances = netBalances.transactions.netBalances;
+
+    // Fetch the group and its netBalances in one query
+    let getGroup = await Group.findOne({ groupId }).lean();
+    if (!getGroup) {
+      return res.status(404).json({ error: "Group not found" });
     }
-    else {
-      netBalances = null;
-    }
+
+    // Extract netBalances safely
+    const netBalances = getGroup?.netBalances?.transactions?.netBalances || null;
+
+    // Simplify debts and prepare transaction data
     const transactionId = uuidv4();
-    const simplifiedData = await simplifyDebts(paidBy, members, amount, simplifyCurrency, splitBy, title, groupId, netBalances ? netBalances : {});
-    simplifiedData.title = title;
-    simplifiedData.transactionId = transactionId;
-    simplifiedData.createdBy = createdBy;
-    await Group.updateOne(
-      { groupId: groupId },
+    const simplifiedData = await simplifyDebts(
+      paidBy, members, amount, simplifyCurrency, splitBy, title, groupId, netBalances || {}
+    );
+
+    Object.assign(simplifiedData, { title, transactionId, createdBy });
+
+    // Merge and update net balances and transactions in a single update query
+    const newNetBalances = await mergeNetBalances(getGroup.netBalances, simplifiedData.netBalances);
+
+    const updateResult = await Group.findOneAndUpdate(
+      { groupId },
       {
         $push: {
-          transactions: {
-            $each: [simplifiedData], // Insert the new transactions
-            $position: 0, // Push at the beginning of the array
-          },
+          transactions: { $each: [simplifiedData], $position: 0 },
         },
-      }
-    );
-    let newNetBalances = await mergeNetBalances(getGroup.netBalances, simplifiedData.netBalances);
-    await Group.updateOne(
-      { groupId: groupId },
-      {
-        $set: { netBalances: newNetBalances }, // Push netBalances array
-      }
-    );
-    getGroup = await Group.findOne({groupId: groupId})
-    let latestTransactions = await mergeTransactions(getGroup.transactions);
-    res.status(200).json({latestTransactions, getGroup});
-  } catch (error) {
-    console.error('Error fetching group details:', error);
-  }
-}
+        $set: { netBalances: newNetBalances },
+      },
+      { new: true } // Return the updated document
+    ).lean();
 
-const justification = async (req, res) => {
-  console.log('req.body justification ',req.body);
-  const { groupId } = req.body;
+    // Merge latest transactions
+    let latestTransactions = await mergeTransactions(updateResult.transactions);
+    console.log('latestTransactions ',latestTransactions);
+
+    // get usernames in place of emails
+    latestTransactions = await replaceEmailsWithUsernames(latestTransactions);
+
+    // Send the response
+    res.status(200).json({ latestTransactions, getGroup: updateResult });
+  } catch (error) {
+    console.error('Error in simplification:', error);
+    res.status(500).json({ error: 'error.message' });
+  }
+};
+
+
+
+// get total owed amount
+const totalOwed = async(req, res) => {
+  const {email, groupId} = req.body;
   try {
-    //get the group
-    const getGroup = await Group.findOne({groupId});
-    let netBalances = getGroup.netBalances;
-    let justify = await settle(netBalances);
-    console.log('justify ',justify);
-    res.status(200).json(justify);
+    let group = await Group.findOne({groupId});
+    console.log('group ',group);
+    let netBalances = group.netBalances;
+    let myBalance = 0;
+    for (const item of netBalances) {
+      if (item.person === email) {
+        myBalance = item.balance;
+        break;  // Exit the loop when a match is found
+      }
+    }
+    res.status(200).json({myBalance});
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: ' Error while justifying' });
+    console.error('Error finding total owed amount', error);
+    res.status(500).json({ error: 'Error in total owed amount' });
   }
 }
 
 
-module.exports = { createGroup, addMembersToGroup, getGroupDetails, getOneGroupDetail, getAddMembersToGroup, simplification, justification };
+
+
+
+
+
+
+module.exports = { createGroup, addMembersToGroup, getGroupDetails, getOneGroupDetail, getAddMembersToGroup, simplification, totalOwed };
