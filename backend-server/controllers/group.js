@@ -247,14 +247,13 @@ const simplification = async (req, res, input) => {
     const { paidBy, members, amount, simplifyCurrency, splitBy, title, groupId, createdBy } = req.body;
     let getGroup = await Group.findOne({groupId: groupId})
     let netBalances = getGroup.netBalances;
-    console.log('netBalances before ',netBalances);
     if(netBalances && netBalances.transactions && netBalances.transactions.netBalances) {
       netBalances = netBalances.transactions.netBalances;
     }
     else {
       netBalances = null;
     }
-      const transactionId = uuidv4();
+    const transactionId = uuidv4();
     const simplifiedData = await simplifyDebts(paidBy, members, amount, simplifyCurrency, splitBy, title, groupId, netBalances ? netBalances : {});
     simplifiedData.title = title;
     simplifiedData.transactionId = transactionId;
@@ -270,8 +269,6 @@ const simplification = async (req, res, input) => {
         },
       }
     );
-    console.log('getGroup.netBalances ',getGroup.netBalances);
-    console.log('simplifiedData.netBalances ',simplifiedData.netBalances);
     let newNetBalances = await mergeNetBalances(getGroup.netBalances, simplifiedData.netBalances);
     await Group.updateOne(
       { groupId: groupId },
@@ -281,16 +278,27 @@ const simplification = async (req, res, input) => {
     );
     getGroup = await Group.findOne({groupId: groupId})
     let latestTransactions = await mergeTransactions(getGroup.transactions);
-    // justify
-    console.log('latestTransactions ',latestTransactions);
-    console.log('newNetBalances ',newNetBalances);
-    let justification = settle(newNetBalances);
-    console.log('justification ',justification);
-    res.status(200).json(latestTransactions);
+    res.status(200).json({latestTransactions, getGroup});
   } catch (error) {
     console.error('Error fetching group details:', error);
   }
 }
 
+const justification = async (req, res) => {
+  console.log('req.body justification ',req.body);
+  const { groupId } = req.body;
+  try {
+    //get the group
+    const getGroup = await Group.findOne({groupId});
+    let netBalances = getGroup.netBalances;
+    let justify = await settle(netBalances);
+    console.log('justify ',justify);
+    res.status(200).json(justify);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: ' Error while justifying' });
+  }
+}
 
-module.exports = { createGroup, addMembersToGroup, getGroupDetails, getOneGroupDetail, getAddMembersToGroup, simplification };
+
+module.exports = { createGroup, addMembersToGroup, getGroupDetails, getOneGroupDetail, getAddMembersToGroup, simplification, justification };
