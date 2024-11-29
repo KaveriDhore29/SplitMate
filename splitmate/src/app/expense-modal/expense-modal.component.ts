@@ -16,6 +16,8 @@ export class ExpenseModalComponent implements OnInit {
   @Input() groupDetails !: any;
 
   currencyOptions = ['INR', 'USD', 'EUR', 'GBP'];
+
+
   
   expense = {
     title: '',
@@ -125,25 +127,33 @@ toggleSelectAll(event: Event): void {
     });
   }
 
+
   addExpenseData(): void {
+    const memberForEqualSplit = this.expense.selectedMembers.map(memberEmail => {
+      return {
+        person: memberEmail,
+        division: this.expense.splitBy === 'equally' ? 1 : this.memberShares[memberEmail] || 1
+      };
+    });
+  
     const expenseData = {
       paidBy: this.expense.paidBy,
-      members: this.expense.selectedMembers,
-      Amount: { value: this.expense.amount, currency: this.expense.currency },
+      members: memberForEqualSplit,
+      amount: { value: this.expense.amount, currency: this.expense.currency },
       simplifyCurrency: this.expense.currency,
-      splitBy: this.expense.equally ? 'equally' : 'manually',
+      splitBy: this.expense.splitBy, 
       title: this.expense.title,
       groupId: this.groupId
     };
-
+  
     console.log('Expense Data:', expenseData);
-
+  
     // Call the service API to add the expense
     this.dataService.addExpenseService(expenseData).subscribe(
       response => {
         console.log('Expense successfully added:', response);
         alert('Expense added successfully!');
-        this.closePopup.emit(); 
+        this.closePopup.emit(); // Close the modal
       },
       error => {
         console.error('Error adding expense:', error);
@@ -151,6 +161,7 @@ toggleSelectAll(event: Event): void {
       }
     );
   }
+  
 
   closeSplitOptions(): void {
     this.selectedSplitOption = ''; // Reset the split option to hide the div
