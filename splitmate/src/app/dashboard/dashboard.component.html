@@ -1,15 +1,14 @@
 <app-navbar></app-navbar>
 <div class="container-fluid_dashboard text-center">
-  <div class="row no_margin align-items-center"  style="margin: 0;">
+  <div class="row no_margin align-items-center">
     <!-- Sidebar Links -->
     <div class="col-3 friends-container">
       <div class="section">
         <div class="links">
-          <a [routerLink]="['/dashboard/main-dashboard']" class="side-link">
-            <i class="fas fa-tachometer-alt"></i> Dashboard
+          <a [routerLink]="['/dashboard/main-dashboard']" routerLinkActive="active" class="side-link">
+            <i class="fa-solid fa-gauge-simple-high"></i> Dashboard
           </a>
-          <!-- <input type="search" placeholder="Search your friend" class="search-input"> -->
-          <a [routerLink]="['/dashboard/all-expenses']" class="side-link">
+          <a [routerLink]="['/dashboard/all-expenses']" routerLinkActive="active" class="side-link">
             <i class="fa-solid fa-money-bill-trend-up"></i> All Expenses
           </a>
         </div>
@@ -17,18 +16,18 @@
 
       <!-- Groups Section -->
       <div class="section">
-        <div class="header">
-          <div> <h3>GROUPS</h3></div>
+        <div class="d-header">
+          <div> <h3>Groups</h3></div>
         
-          <a [routerLink]="['/create-group/new']" class="add-link">+ Add</a>
+          <a [routerLink]="['/create-group/new']" routerLinkActive="active" class="add-link">+ Add</a>
         </div>
         <div class="links">
           <div *ngFor="let group of groupDetails">
             <a 
               [routerLink]="['/dashboard/group-detail', group.groupId]" 
-              (click)="showGroupDetails(group)" 
+              (click)="showGroupDetails(group)"  routerLinkActive="active"
               class="side-link">
-              <i class="fas fa-user-friends"></i> {{ group.name }}
+              <i class="fa-solid fa-users-line"></i>{{ group.name }}
             </a>
           </div>
         </div>
@@ -36,15 +35,15 @@
 
       <!-- Friends Section -->
       <div class="section">
-        <div class="header">
-       <div><h3>FRIENDS</h3> </div>
+        <div class="d-header">
+       <div><h3>Friends</h3> </div>
           <a href="javascript:void(0)" class="add-link">+ Add</a>
         </div>
         <div class="links">
-          <a [routerLink]="['/dashboard/friend-detail']" class="side-link">
+          <a [routerLink]="['/dashboard/friend-detail']" routerLinkActive="active" class="side-link">
             <i class="fas fa-user"></i> Friend 1
           </a>
-          <a [routerLink]="['/dashboard/friend-detail']" class="side-link">
+          <a [routerLink]="['/dashboard/friend-detail']" routerLinkActive="active" class="side-link">
             <i class="fas fa-user"></i> Friend 2
           </a>
         </div>

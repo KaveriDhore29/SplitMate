@@ -1,15 +1,16 @@
 .container{
   display: flex;
- 
 }
 
 .popup{
+  position:relative;
   border: 2px solid black;
-  width: 50%;
+  width: 40%;
   color: black;
   height: 335px;
   background-color: white;
-  margin: 1%
+  margin: 1%;
+  z-index: 2;
 }
 
 .members-split-options{

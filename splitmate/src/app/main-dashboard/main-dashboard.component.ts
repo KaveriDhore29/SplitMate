@@ -18,12 +18,5 @@ export class MainDashboardComponent implements OnInit {
     this.userProfile = JSON.parse(sessionStorage.getItem("loggedInUser") || "");
   }
 
- 
-
- 
-  navigateToForm() {
-    this.router.navigate(['/create-group/new']);
-  }
-
 
 }

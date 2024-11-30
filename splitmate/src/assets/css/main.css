@@ -605,15 +605,16 @@ h6 {
 # Preloader
 --------------------------------------------------------------*/
 #preloader {
-  position: fixed;
+ position: fixed;
   inset: 0;
   z-index: 999999;
   overflow: hidden;
   background: var(--background-color);
-  transition: all 0.6s ease-out;
+  transition: all 0.6s ease-out; 
+
 }
 
-#preloader:before {
+ #preloader:before {
   content: "";
   position: fixed;
   top: calc(50% - 30px);

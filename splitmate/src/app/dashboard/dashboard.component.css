@@ -1,44 +1,47 @@
 
   .friends-container {
-    background-color: #ebebeb;
-    border: 1px solid #000000;
-    height: 630px;
-    color: black;
+    background-color: #f9f9f9;
+    /* border: 1px solid #000000; */
+    height: 690px;
     padding: 0%;
     border-top: none;
     border-left: none;
-    font-family: 'Trirong',serif;
+
   }
   
   .section {
     margin: 8% 0%;
   }
 
-  h3{
-    margin: 0px 12px 0px
-  }
-  .btn{
-    width:120px;
-  }
-  .header {
-    width: 100%;
 
+  .btn{
+    width:120px; 
+  }
+  .d-header {
+    width: 100%;
     display: flex;
     justify-content: space-between;
-   
+    
   h3{
-    color: #1acc8d;
-    font-size: 22px;
+    color: #008080;
+    font-size: 25px;
     font-weight: 700;
-    text-decoration: underline;
+    margin-left: 49%;
   }  
   }
   
-
+  .active {
+    background-color: #008080;
+    color:white;     
+    font-weight: bold;  
+    height:45px  ;
+    border-radius: 10px; 
+  }
+  
  
   .add-link {
-    font-size: 22px;
-    color:#04AA6D;
+    font-size: 20px;
+    color:#5bc5a7;
     text-decoration: none;
     margin-right: 10px;
     margin-top:5px;
@@ -51,44 +54,27 @@
   .links {
     display: flex;
     flex-direction: column;
-    margin: 3% 15%;
+    margin: 6% 15%;
   }
   
   .side-link {
-    color : #04AA6D;
+    
     text-decoration: none;
-    font-size: 1em;
-    /* padding: 8px 0; */
     display: flex;
     align-items: center;
     width: 100%;
     margin-bottom: 7%;
-    font-size: 15px;
+    font-size: 20px;
+    cursor: pointer;
+    font-weight: 600;
   }
   
   .side-link i {
-   color : #04AA6D;
+   color : #5bc5a7;
     padding-right: 10px;
   }
   
-  .side-link:hover {
-    color: #90a53a;
-  }
-  
-  .search-input {
-    width: 100%;
-    padding: 8px;
-    margin-top: 10px;
-    border-radius: 4px;
-    margin-bottom: 7%;
-    background-color: #c5cbcd;
-    border: 1px solid #F6FCDF;
-    color: #F6FCDF;
-  }
-  .search-input:focus{
-    outline: none;
-  }
- 
+
 
   .invite-friends{
      border: 1px solid rgb(234, 225, 225);
@@ -96,7 +82,7 @@
   }
 
   .invite-friends-heading{
-    background-color: #04AA6D; 
+    background-color: #5bc5a7; 
     padding: 2%;
     font-size: large;
     color: white
@@ -111,10 +97,10 @@
    
   .main-dashboard, .group-balances {
     padding: 20px;
-    background-color: #ffffff;
-    border: 1px solid #ffffff; border-top: none;
-    height: 630px;
-    font-family: 'Trirong',serif;
+    background-color: #f4f6f8;
+    /* border: 1px solid #0c0b0b; border-top: none; */
+    height: 690px;
+   
   }
 
   .share-links{
@@ -177,26 +163,26 @@
   .wave1 use {
     animation: move-forever1 10s linear infinite;
     animation-delay: -2s;
-    fill:#1D7279;
+    fill: #685e5e;
     opacity: 0.6;
   }
   
   .wave2 use {
     animation: move-forever2 8s linear infinite;
     animation-delay: -2s;
-    fill: #114449;
+    fill: #aba0a0c2;
     opacity: 0.4;
   }
   
   .wave3 use {
     animation: move-forever3 6s linear infinite;
     animation-delay: -2s;
-    fill: #0d241f;
+    fill: rgba(68, 222, 108, 0.5);
   }
 
 
 svg{
-  height: 79px;
+  height: 90px;
   margin: 0;
   padding: 0;
 
