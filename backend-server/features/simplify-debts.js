@@ -13,70 +13,98 @@ async function getExchangeRate(baseCurrency, targetCurrency) {
 }
 
 async function mergeTransactions(data) {
-  console.log('data ',data);
-  const mergedData = {};
+  // Array to store the merged transactions
+  const mergedTransactions = [];
 
-  // Iterate through the transactions array
-  for (const obj of data) {
-    console.log('obj ',obj);
-    for (const transaction of obj.transactions) {
-      const { from, to, currency, amount } = transaction;
-      const key = `${from}-${to}-${currency}`; // Create a unique key based on from, to, and currency
+  // Helper function to find a transaction in the mergedTransactions array
+  function findTransaction(from, to, currency) {
+    for (let i = 0; i < mergedTransactions.length; i++) {
+      const item = mergedTransactions[i];
+      if (item.from === from && item.to === to && item.currency === currency) {
+        return i;
+      }
+    }
+    return -1;
+  }
 
-      if (!mergedData[key]) {
-        // Initialize if key does not exist
-        mergedData[key] = { from, to, currency, amount: parseFloat(amount) };
-      } else {
-        // Add amounts if key exists
-        mergedData[key].amount += parseFloat(amount);
+  // Iterate over the input array and merge transactions
+  for (let i = 0; i < data.length; i++) {
+    const currentData = data[i];
+
+    // Ensure `transactions` exists and is an array
+    if (Array.isArray(currentData.transactions)) {
+      for (let j = 0; j < currentData.transactions.length; j++) {
+        const transaction = currentData.transactions[j];
+        const index = findTransaction(transaction.from, transaction.to, transaction.currency);
+
+        if (index !== -1) {
+          // If a matching transaction exists, combine the amounts
+          mergedTransactions[index].amount = parseFloat(
+            (parseFloat(mergedTransactions[index].amount) + parseFloat(transaction.amount)).toFixed(2)
+          );
+        } else {
+          // Add a new transaction to the merged array
+          mergedTransactions.push({
+            from: transaction.from,
+            to: transaction.to,
+            amount: parseFloat(transaction.amount).toFixed(2),
+            currency: transaction.currency,
+          });
+        }
       }
     }
   }
 
-  // Convert the mergedData object back into an array
-  return Object.values(mergedData);
+  return mergedTransactions;
 }
 
 async function mergeNetBalances(existingNetBalances = [], newNetBalances = []) {
-  console.log("existingNetBalances", existingNetBalances);
-  console.log("newNetBalances", newNetBalances);
+  // Create an empty array to hold merged balances
+  const mergedBalances = [];
 
-  // Initialize an empty object to store combined balances
-  const combinedNetBalances = {};
-
-  // Merge existingNetBalances into combinedNetBalances
-  existingNetBalances.forEach(({ person, balance }) => {
-    console.log('balance ',balance);
-    combinedNetBalances[person] = balance;
-  });
-  console.log('existingNetBalances ',existingNetBalances);
-
-  // Merge with newNetBalances
-  newNetBalances.forEach(({ person, balance }) => {
-    console.log('typeof balance ',typeof balance);
-    balance = parseFloat(balance.toFixed(2));
-    if (combinedNetBalances[person] !== undefined) {
-      // Adjust the value if the person already exists
-      console.log('combinedNetBalances[person] ',combinedNetBalances[person]);
-      console.log('typeof combinedNetBalances[person] ',typeof combinedNetBalances[person]);
-      console.log('balance ',balance);
-      combinedNetBalances[person] += balance;
-    } else {
-      // Add new person with their balance
-      combinedNetBalances[person] = balance;
+  // Helper function to find a person in the mergedBalances array
+  function findPerson(person) {
+    for (let i = 0; i < mergedBalances.length; i++) {
+      if (mergedBalances[i].person === person) {
+        return i;
+      }
     }
-  });
-  console.log('combinedNetBalances ',combinedNetBalances);
+    return -1;
+  }
 
-  // Convert back to the desired array format
-  const netBalancesArray = Object.entries(combinedNetBalances).map(([person, balance]) => ({
-    person,
-    balance
-  }));
+  // Process existingNetBalances
+  for (let i = 0; i < existingNetBalances.length; i++) {
+    const item = existingNetBalances[i];
+    mergedBalances.push({
+      person: item.person,
+      balance: parseFloat(item.balance.toFixed(2)),
+      currency: item.currency
+    });
+  }
 
-  console.log("netBalancesArray", netBalancesArray);
-  return netBalancesArray;
+  // Process newNetBalances
+  for (let i = 0; i < newNetBalances.length; i++) {
+    const item = newNetBalances[i];
+    const index = findPerson(item.person);
+    if (index !== -1) {
+      // Update the balance for the existing person
+      mergedBalances[index].balance = parseFloat(
+        (mergedBalances[index].balance + item.balance).toFixed(2)
+      );
+    } else {
+      // Add a new person
+      mergedBalances.push({
+        person: item.person,
+        balance: parseFloat(item.balance.toFixed(2)),
+        currency: item.currency
+      });
+    }
+  }
+  console.log('mergedBalances ',mergedBalances);
+
+  return mergedBalances;
 }
+
 
 
 
@@ -175,7 +203,8 @@ function settle(balances, simplifyCurrency = "INR") {
 
 async function simplifyDebts(paidBy, members, amount, simplifyCurrency, splitBy = 'equally', title, groupId, previousBalances = {}, defaultCurrency = "INR") {
   let transactions = [];
-  let netBalances = { ...previousBalances }; // Carry forward previous balances
+  let netBalances = previousBalances || []; // Carry forward previous balances
+  console.log('netBalances ;',netBalances);
   let individualShare = 0;
 
   // Extract the currency for simplification
@@ -237,20 +266,57 @@ async function simplifyDebts(paidBy, members, amount, simplifyCurrency, splitBy 
 
       // individualShare = normalizedAmount / allMembers.length;
 
+      // Check if `personOwed` already exists in `netBalances`
+      const existingEntry = netBalances.find(entry => entry.person === personOwed);
+
+      if (existingEntry) {
+        // If person already exists, update their balance
+        existingEntry.balance += normalizedAmount;
+      } else {
+        // If person does not exist, create a new entry
+        netBalances.push({
+          person: personOwed,
+          balance: normalizedAmount,
+          currency: currency
+        });
+      }
+      console.log('netBalances :',netBalances);
+
       // Add credit to the person who paid
-      netBalances[personOwed] = (netBalances[personOwed] || 0) + normalizedAmount;
-      console.log('netBalances before ',netBalances);
+      // netBalances[personOwed] = (netBalances[personOwed] || 0) + normalizedAmount;
+      // console.log('netBalances before ',netBalances);
 
       // Deduct debts from each member (including the spender)
+
+      // allMembers.forEach((member, index) => {
+      //     netBalances[member.person] = (netBalances[member.person] || 0) - individualShares[index].share;
+      // });
       allMembers.forEach((member, index) => {
-          netBalances[member.person] = (netBalances[member.person] || 0) - individualShares[index].share;
+        const person = member.person;
+        const share = individualShares[index].share;
+      
+        // Check if the person already exists in netBalances
+        const existingEntry = netBalances.find(entry => entry.person === person);
+      
+        if (existingEntry) {
+          // If person exists, update their balance
+          existingEntry.balance -= share;
+        } else {
+          // If person does not exist, create a new entry
+          netBalances.push({
+            person: person,
+            balance: -share,
+            currency: 'INR' // Replace with the actual currency if dynamic
+          });
+        }
       });
+      console.log('netBalances ',netBalances);
 
       // Convert netBalances into an array of objects like [{ person: "Person1", balance: 400 }]
-      netBalances = Object.entries(netBalances).map(([person, balance]) => ({
-        person,
-        balance,
-      }));
+      // netBalances = Object.entries(netBalances).map(([person, balance]) => ({
+      //   person,
+      //   balance,
+      // }));
   // }
   console.log('allMembers ',allMembers);
   console.log('netBalances ',netBalances);

@@ -259,12 +259,14 @@ const simplification = async (req, res, input) => {
     // Simplify debts and prepare transaction data
     const transactionId = uuidv4();
     const simplifiedData = await simplifyDebts(
-      paidBy, members, amount, simplifyCurrency, splitBy, title, groupId, netBalances || {}
+      paidBy, members, amount, simplifyCurrency, splitBy, title, groupId, netBalances || []
     );
 
     Object.assign(simplifiedData, { title, transactionId, createdBy });
 
     // Merge and update net balances and transactions in a single update query
+    console.log('getGroup.netBalances ',getGroup.netBalances);
+    console.log('simplif.netBalances ',simplifiedData.netBalances);
     const newNetBalances = await mergeNetBalances(getGroup.netBalances, simplifiedData.netBalances);
 
     const updateResult = await Group.findOneAndUpdate(
@@ -285,6 +287,7 @@ const simplification = async (req, res, input) => {
 
     // get usernames in place of emails
     latestTransactions = await replaceEmailsWithUsernames(latestTransactions);
+    console.log(latestTransactions);
 
     // Send the response
     res.status(200).json({ latestTransactions, getGroup: updateResult });
@@ -311,16 +314,30 @@ const totalOwed = async(req, res) => {
       let netBalance = group.netBalances;
       allNetBalances.push(netBalance);
     }
-    let myBalance = 0;
+    let myTotalBalance = 0;
+    // calculate total owed
+    // keep total owed and owes separate
+    let owesBalance = 0;
+    let owedBalance = 0;
+    console.log('allNetBalances ',allNetBalances);
     for (const netBalance of allNetBalances) {
       for(const balance of netBalance) {
         if(balance.person == email) {
-          myBalance += balance.balance;
+          myTotalBalance += balance.balance;
+          if(balance.balance < 0) {
+            owesBalance += balance.balance;
+          }
+          else {
+            owedBalance += balance.balance;
+          }
         }
       }
     }
-    console.log('myBalance ',myBalance);
-    res.status(200).json({myBalance});
+
+    console.log('myTotalBalance ',myTotalBalance);
+    console.log('owesBalance ',owesBalance);
+    console.log('owedBalance ',owedBalance);
+    res.status(200).json({myTotalBalance, owesBalance, owedBalance});
   } catch (error) {
     console.error('Error finding total owed amount', error);
     res.status(500).json({ error: 'Error in total owed amount' });
