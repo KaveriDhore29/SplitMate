@@ -10,10 +10,7 @@ export class DataService {
   private apiUrl = 'http://localhost:3000/api';
    currentUserEmail : any;
    private selectedGroupSource = new BehaviorSubject<any>(null); 
-  
-
-
-
+ 
   constructor(private http: HttpClient) {
     const loggedInUser = sessionStorage.getItem('loggedInUser');
     if (loggedInUser) {
