@@ -2,7 +2,7 @@
   .friends-container {
     background-color: #f9f9f9;
     /* border: 1px solid #000000; */
-    height: 690px;
+    height: 630px;
     padding: 0%;
     border-top: none;
     border-left: none;
@@ -99,7 +99,7 @@
     padding: 20px;
     background-color: #f4f6f8;
     /* border: 1px solid #0c0b0b; border-top: none; */
-    height: 690px;
+    height: 630px;
    
   }
 
@@ -196,4 +196,9 @@ svg{
 .row .no_margin .align-items-center{
   margin: 0;
   padding: 0;
+  margin-right: 0;
+}
+
+i{
+  margin: 1rem;
 }
