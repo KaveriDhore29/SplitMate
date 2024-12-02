@@ -3,14 +3,17 @@
 }
 
 .popup{
-  position:relative;
+   position: relative;
   border: 2px solid black;
   width: 40%;
   color: black;
-  height: 335px;
+  height: auto;
   background-color: white;
   margin: 1%;
   z-index: 2;
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  padding: 20px; /* Inner spacing */
 }
 
 .members-split-options{
@@ -19,11 +22,23 @@
   color: black;
   height: 335px;
   background-color: white;
-  margin: 1%
+  margin: 1%;
+  background-color: white;
+  margin: 1%;
+  z-index: 2;
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  padding: 20px; /* Inner spacing */
 }
 
 .form-heading{
   background-color: #1ACC8D;
+  color: white;
+  text-align: center;
+  font-size: 1.5rem;
+  padding: 10px;
+  border-radius: 10px 10px 0 0; /* Rounded top corners */
+  font-weight: bold;
 }
 
 .expense-title{
@@ -49,4 +64,149 @@
   text-align: left;
   margin-top:10px
 }
+.expense-title input,
+.currency select,
+.currency input,
+.payer select {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #1ACC8D;
+  border-radius: 5px;
+  outline: none;
+  background: transparent;
+  color: black;
+  font-size: 1rem;
+  transition: border 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
+.expense-title input:focus,
+.currency select:focus,
+.currency input:focus,
+.payer select:focus {
+  border-color: #0b8f64;
+  box-shadow: 0 0 5px rgba(26, 204, 141, 0.7); /* Highlight on focus */
+}
+
+.close-btn{
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background-color: #f8f8f8;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  border-radius: 50%;
+  color: #555;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: background 0.3s ease;
+}
+
+.close-btn1{
+  position:relative;
+  left:45%;
+  color: #555;
+  background-color:#f8f8f8;
+  border: none;
+  font-size: 25px;
+  margin-top: 9px;
+  width: 35px;
+  height: 34px;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 2;
+}
+
+.close-btn1:hover,.close-btn:hover{
+  background-color: #ff3b3b;
+  color: white;
+}
+
+.split-eq-heading{
+  background-color: #1ACC8D;
+  color: white;
+  text-align: center;
+  font-size: 1.5rem;
+  padding: 10px;
+  border-radius: 10px 10px 0 0; /* Rounded top corners */
+  font-weight: bold;
+  position: relative;
+  bottom: 30px;
+}
+
+.eq-members{
+  text-align: left;
+  font-size: 18px;
+}
+.member-names{
+  margin-bottom: 10px;
+}
+
+.select-all{
+  margin-bottom: 10px;
+}
+
+.check-container{
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.check-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+}
+
+.check-container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+.check-container input:checked ~ .checkmark {
+  background-color: #2196F3;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.check-container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.check-container .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}

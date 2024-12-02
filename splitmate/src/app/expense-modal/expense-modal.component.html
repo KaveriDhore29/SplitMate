@@ -1,6 +1,7 @@
 <div class="container">
   
 <div class="popup">
+  <button type="button" class="close-btn" (click)="close()">&#10006;</button>
   <h2 class="form-heading">Add Expense</h2>
   <form>
     <!-- Expense Title -->
@@ -60,27 +61,29 @@
 
     <!-- Save and Cancel Buttons -->
     <button type="button" (click)="addExpenseData()">Save</button>
-    <button type="button" (click)="close()">Cancel</button>
+   
   </form>
 </div>
 
 
 <!-- Members Split Options -->
 <div class="members-split-options" *ngIf="selectedSplitOption">
-  <button class="close-btn" (click)="closeSplitOptions()">&#10006;</button> <!-- Close button -->
+  <button class="close-btn1" (click)="closeSplitOptions()">&#10006;</button> <!-- Close button -->
 
   <!-- Select All Checkbox -->
-  <div *ngIf="selectedSplitOption === 'equally'">
-    <label>
+  <div *ngIf="selectedSplitOption === 'equally'" class="eq-members">
+    <h3 class="split-eq-heading">Split Equally</h3>
+    <label class="select-all">
       <input type="checkbox" [checked]="isAllSelected()" (change)="toggleSelectAll($event)" />
       Select All
     </label>
 
-    <div *ngFor="let member of membersNames">
-      <label>
+    <div *ngFor="let member of membersNames" class="member-names">
+      <label class="check-container">
         <input type="checkbox" [checked]="expense.selectedMembers.includes(member.email)" 
                (change)="toggleMemberSelection(member.email, $event)" />
         {{ member.name }} ({{ member.email }})
+        <span class="checkmark"></span>
       </label>
     </div>
   </div>

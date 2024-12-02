@@ -36,34 +36,21 @@ export class ExpenseModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.groupId = this.route.snapshot.paramMap.get('id')!;
-    const currentUser = this.membersNames.find(
-      (member) => member.email === this.dataService.currentUserEmail
-    );
+    // const currentUser = this.membersNames.find(
+    //   (member) => member.email === this.dataService.currentUserEmail
+    // );
   
-    // Pre-select the current user's email for the dropdown
-    if (currentUser) {
-      this.expense.paidBy = currentUser.email; // Set the email of the current user
-      console.log("Default selected user:", currentUser.name);
-    } else {
-      console.error("Current user not found in members list!");
-    }
 
-    // if (this.expense.equally) {
-    //   this.toggleEqually();
+    // if (currentUser) {
+    //   this.expense.paidBy = currentUser.email; 
+    //   console.log("Default selected user:", currentUser.name);
+    // } else {
+    //   console.error("Current user not found in members list!");
     // }
+
   }
 
-  // toggleEqually(): void {
-  //   console.warn("intogle")
-  //   if (this.expense.equally) {
-  //     console.log("in iffffffffffff");
-      
-  //           this.expense.selectedMembers = this.membersNames.map(member => member.email);
-  //   } else {
-  //     console.log("in elsee");
-  //     this.expense.selectedMembers = [];
-  //   }
-  // }
+
 
   toggleMemberSelection(memberEmail: string, event: Event): void {
     const isChecked = (event.target as HTMLInputElement).checked;
@@ -95,35 +82,31 @@ export class ExpenseModalComponent implements OnInit {
     this.expense.selectedMembers = this.membersNames.map(member => member.email); // Select all members
   }
 
-  // To check if all members are selected
-isAllSelected(): boolean {
-  return this.membersNames.every(member => this.expense.selectedMembers.includes(member.email));
-}
-
-// To handle the "Select All" toggle
-toggleSelectAll(event: Event): void {
-  const isChecked = (event.target as HTMLInputElement).checked;
-  if (isChecked) {
-    // Select all members
-    this.expense.selectedMembers = this.membersNames.map(member => member.email);
-  } else {
-    // Deselect all members
-    this.expense.selectedMembers = [];
+  isAllSelected(): boolean {
+    return this.membersNames.every(member => this.expense.selectedMembers.includes(member.email));
   }
-}
+
+  toggleSelectAll(event: Event): void {
+    const isChecked = (event.target as HTMLInputElement).checked;
+    if (isChecked) {
+      this.expense.selectedMembers = this.membersNames.map(member => member.email);
+    } else {
+      this.expense.selectedMembers = [];
+    }
+  }
 
 
   initializePercentageFields(): void {
-    this.memberPercentages = {}; // Reset
+    this.memberPercentages = {}; 
     this.membersNames.forEach(member => {
-      this.memberPercentages[member.email] = 0; // Initialize to 0
+      this.memberPercentages[member.email] = 0; 
     });
   }
 
   initializeSharesFields(): void {
-    this.memberShares = {}; // Reset
+    this.memberShares = {}; 
     this.membersNames.forEach(member => {
-      this.memberShares[member.email] = 0; // Initialize to 0
+      this.memberShares[member.email] = 0; 
     });
   }
 
@@ -164,7 +147,7 @@ toggleSelectAll(event: Event): void {
   
 
   closeSplitOptions(): void {
-    this.selectedSplitOption = ''; // Reset the split option to hide the div
+    this.selectedSplitOption = '';
   }
 
   close(): void {
