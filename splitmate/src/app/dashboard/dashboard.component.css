@@ -2,7 +2,7 @@
   .friends-container {
     background-color: #f9f9f9;
     /* border: 1px solid #000000; */
-    height: 630px;
+    height: 100%;
     padding: 0%;
     border-top: none;
     border-left: none;
@@ -99,7 +99,7 @@
     padding: 20px;
     background-color: #f4f6f8;
     /* border: 1px solid #0c0b0b; border-top: none; */
-    height: 630px;
+    height: auto;
    
   }
 
@@ -163,21 +163,22 @@
   .wave1 use {
     animation: move-forever1 10s linear infinite;
     animation-delay: -2s;
-    fill: #685e5e;
-    opacity: 0.6;
+    fill: #1E7279 ;
+    opacity: 0.8;
   }
   
   .wave2 use {
     animation: move-forever2 8s linear infinite;
     animation-delay: -2s;
-    fill: #aba0a0c2;
-    opacity: 0.4;
+    fill: #1E7279 ;
+    opacity: 0.6;
   }
   
   .wave3 use {
     animation: move-forever3 6s linear infinite;
     animation-delay: -2s;
-    fill: rgba(68, 222, 108, 0.5);
+    fill: #1E7279 ;
+    opacity: 0.4;
   }
 
 
