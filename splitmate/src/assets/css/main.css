@@ -1693,3 +1693,10 @@ h6 {
 .starter-section {
   /* Add your styles here */
 }
+
+
+:host ::ng-deep .mat-form-field input {
+  caret-color: #4CAF50;
+  color: #4CAF50;
+}
+

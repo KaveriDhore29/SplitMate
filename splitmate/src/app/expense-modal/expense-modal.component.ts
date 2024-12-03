@@ -14,6 +14,7 @@ export class ExpenseModalComponent implements OnInit {
   @Output() closePopup = new EventEmitter<void>();
   selectedSplitOption: string = '';
   @Input() groupDetails !: any;
+  isSaveDisabled: boolean = false;
 
   currencyOptions = ['INR', 'USD', 'EUR', 'GBP'];
 
@@ -135,6 +136,7 @@ export class ExpenseModalComponent implements OnInit {
     this.dataService.addExpenseService(expenseData).subscribe(
       response => {
         console.log('Expense successfully added:', response);
+        this.isSaveDisabled = true;
         alert('Expense added successfully!');
         this.closePopup.emit(); // Close the modal
       },

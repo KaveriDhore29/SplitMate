@@ -39,13 +39,21 @@ export class DataService {
         email: this.currentUserEmail,
         groupId: groupId,
       };
-      return this.http.post<any>(`${this.apiUrl}/get-one-group-detail`, payload, {
-        withCredentials: true,
-      });
+      return this.http.post<any>(`${this.apiUrl}/get-one-group-detail`, payload)
     }
 
     addExpenseService(expenseData :any){
       return this.http.post<any>(`${this.apiUrl}/simplify`, expenseData,{
+        withCredentials: true,
+      });
+    }
+
+    addMembersToGroup(membersToAdd:any,groupId:any){
+      const payload ={
+        members : membersToAdd,
+        groupId : groupId
+      }
+      return this.http.post<any>(`${this.apiUrl}/add-members`,{
         withCredentials: true,
       });
     }
