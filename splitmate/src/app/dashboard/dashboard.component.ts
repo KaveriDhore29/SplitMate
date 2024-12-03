@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from '../data.service';
 
 @Component({
@@ -12,10 +12,16 @@ export class DashboardComponent implements OnInit {
   currentSection: string = 'dashboard/main-dashboard';
   groupDetails: any;  
   groupMembersName = [];
+  currentGroupId !: any;
+ 
 
-  constructor(private router: Router,public dataService: DataService) { }
+ 
+
+  constructor(private router: Router,public dataService: DataService,private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+
+    this.currentGroupId = this.route.snapshot.paramMap.get('id')!;
     this.groupDetails = this.dataService.getGroupDetails().subscribe(
       (data: any[]) => {
         this.groupDetails = data; 
@@ -36,13 +42,16 @@ export class DashboardComponent implements OnInit {
 
   setSection(section: string) {
     console.log("Switching to section:", section);
+    this.currentSection = section;
     this.router.navigate([`/dashboard/${section}`]);
+   
   }
 
   showGroupDetails(group: any): void {
     console.log('Group Details:', group); 
     // this.dataService.setSelectedGroup(group);
   }
+
 
  
 }
