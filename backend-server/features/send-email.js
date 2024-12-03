@@ -1,6 +1,6 @@
 const nodemailer = require("nodemailer");
 
-const sendEmailToNewUser = async (req, res, email, groupId, groupName = null) => {
+const sendEmailToNewUser = async (req, res, email, groupId, groupName = '') => {
     // Guard against multiple calls
     if (res.headersSent) {
         console.warn('Headers already sent, skipping email send response');
@@ -21,12 +21,13 @@ const sendEmailToNewUser = async (req, res, email, groupId, groupName = null) =>
         const groupIdHash = groupId;
         const link = `http://localhost:4200/dashboard/group-detail/${groupIdHash}`;
         const newLink = 'http://localhost:4200/login'
+        // zptafkazpfqyvmpc
 
         const transporter = nodemailer.createTransport({
             service: "Gmail",
             auth: {
                 user: "rahul5555br@gmail.com",
-                pass: "zptafkazpfqyvmpc",
+                pass: "vuzfimbeykqaeoaq",
             },
         });
 
