@@ -99,12 +99,16 @@
   }
   
    
-  .main-dashboard, .group-balances {
-    padding: 20px;
-    background-color: #f4f6f8;
-    /* border: 1px solid #0c0b0b; border-top: none; */
+  .main-dashboard {
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2);
     height: auto;
-   
+    border: 1px solid #000000;
+    border-bottom: none;
+  }
+
+  .group-balances{
+     background-color: #f9f9f9; ;
   }
 
   .share-links{
@@ -149,17 +153,19 @@
 
   .group-members-list{
     text-align: left;
+    color: black;
   }
 
   .header1{
     text-align: center;
     background-color: black;
     padding: 1%;
-    margin: 5% -6% 
+    margin: 5% -3%;
+    color: white;
   }
 
   .group-members-list p{
-    border-bottom: 1px solid white;
+    border-bottom: 1px solid rgb(0, 0, 0);
     padding-bottom: 3%;
   }
 
@@ -190,7 +196,7 @@ svg{
   height: 90px;
   margin: 0;
   padding: 0;
-
+  width: 100%;
 }
 
 .container-fluid_dashboard .text-center{

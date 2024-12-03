@@ -104,25 +104,23 @@ const createGroup = async (req, res) => {
 // Controller to add members to an existing group
 const addMembersToGroup = async (req, res) => {
   try {
-    const { groupId, membersToAdd } = req.body;  // Expecting groupId and an array of user IDs to add
-
+    const { groupId, membersToAdd } = req.body;
     if (!groupId || !membersToAdd || membersToAdd.length === 0) {
       return res.status(400).json({ error: 'Group ID and members to add are required' });
     }
-
     // Find the group by its ID
     const group = await Group.findById(groupId);
     if (!group) {
       return res.status(404).json({ error: 'Group not found' });
     }
-
-    // Add members to the group
-    group.members.push(...membersToAdd);
-
-    // Save the updated group
+    // Add new members to the group, checking for duplicates
+    membersToAdd.forEach(member => {
+      const memberExists = group.members.some(existingMember => existingMember.email === member.email);
+      if (!memberExists) {
+        group.members.push(member); // Add member if not already in group
+      }
+    });
     await group.save();
-
-    // Respond with the updated group
     res.status(200).json(group);
   } catch (error) {
     console.error('Error adding members to group:', error);
@@ -265,6 +263,7 @@ const simplification = async (req, res, input) => {
     Object.assign(simplifiedData, { title, transactionId, createdBy });
 
     // Merge and update net balances and transactions in a single update query
+    console.log('simplifiedData ',simplifiedData);
     console.log('getGroup.netBalances ',getGroup.netBalances);
     console.log('simplif.netBalances ',simplifiedData.netBalances);
     const newNetBalances = await mergeNetBalances(getGroup.netBalances, simplifiedData.netBalances);
@@ -288,6 +287,13 @@ const simplification = async (req, res, input) => {
     // get usernames in place of emails
     latestTransactions = await replaceEmailsWithUsernames(latestTransactions);
     console.log(latestTransactions);
+
+    // store the latestTransactions in db
+    await Group.updateOne(
+      { groupId }, // Filter by groupId
+      { $set: { latestTransactions: latestTransactions } } // Update the transactions field
+    );
+
 
     // Send the response
     res.status(200).json({ latestTransactions, getGroup: updateResult });

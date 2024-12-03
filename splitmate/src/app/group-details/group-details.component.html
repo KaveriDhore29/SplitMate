@@ -1,15 +1,34 @@
 <div class="container">
-  <div *ngIf="groupDetails">
-    <h1 class="text-content">{{ groupName }}</h1>
-    <button class="btn btn-danger" (click)="showPopup = true">
-      Add Expense
-    </button>
+  <div class="row">
+    <div class="col-6 main-details">
+      <div *ngIf="groupDetails">
+        <h1 class="text-content">{{ groupName }}</h1>
+        <button class="btn btn-danger" (click)="showPopup = true">
+          Add Expense
+        </button>
+      </div>
+    </div>
+    <div class="col-3 member-details">
+      <div class="add-members-button">
+        <button class="btn btn-warning" (click)="showAddmembersPopup = true">Add Members</button>
+      </div>
+      <div *ngFor="let member of membersNames">
+        <ul>
+          <li>{{member.name}}</li>
+        </ul>
+      </div>
+    </div>
   </div>
-
+ 
+ 
   <!-- Popup Component -->
   <app-expense-modal
     *ngIf="showPopup"
     [membersNames]="membersNames"
     (closePopup)="showPopup = false"
   ></app-expense-modal>
+
+  <app-edit-group-modal
+  *ngIf="showAddmembersPopup"
+  (closeAddMemberPopup) ="showAddmembersPopup = false"></app-edit-group-modal>
   </div>

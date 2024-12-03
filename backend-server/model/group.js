@@ -19,6 +19,7 @@ const groupSchema = new mongoose.Schema({
   groupId: String,
   transactions: Array,
   netBalances: Object,
+  latestTransactions: Array,
   createdBy: String,
 }, { timestamps: true });
 const Group = mongoose.model('Group', groupSchema);

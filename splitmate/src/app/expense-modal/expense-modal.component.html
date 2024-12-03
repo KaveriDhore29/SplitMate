@@ -6,13 +6,13 @@
   <form>
     <!-- Expense Title -->
     <div class="expense-title">
-      <label for="label" class="label">Expense Title: </label>
+      <!-- <label for="label" class="label">Expense Title: </label> -->
       <input id="title" [(ngModel)]="expense.title" name="title" placeholder="Expense Title"/>
     </div>
 
     <!-- Currency Dropdown -->
     <div class="currency">
-      <label for="currency">Currency:</label>
+      <!-- <label for="currency">Currency:</label> -->
       <select
         id="currency"
         [(ngModel)]="expense.currency"
@@ -23,7 +23,7 @@
           {{ currency }}
         </option>
       </select>
-      <label for="amount">Amount:</label>
+      <!-- <label for="amount">Amount:</label> -->
       <input
         id="amount"
         type="number"
@@ -35,7 +35,7 @@
 
   <!-- Payer Dropdown -->
 <div class="payer">
-  <label for="payer">Payer:</label>
+  <label for="payer" class="payer-label">Paid By:</label> &nbsp; &nbsp;
   <select
     id="payer"
     [(ngModel)]="expense.paidBy"
@@ -49,18 +49,22 @@
 
 
 
-    <div class="split-options">
-      <span>Split Options: </span>
-      <button (click)="onSplitOptionChange('equally')">Equally</button>
-  <button (click)="onSplitOptionChange('percentage')">Percentage</button>
-  <button (click)="onSplitOptionChange('shares')">Shares</button>
-  <button (click)="onSplitOptionChange('adjustments')">Adjustments</button>
+    <div class="split-options ">
+      <span  class="payer-label">Split Options: </span>
+        <button (click)="onSplitOptionChange('equally')" class="split-tabs"
+        [ngClass]="{'active-option': selectedSplitOption === 'equally'}">Equally</button>
+      <button (click)="onSplitOptionChange('percentage')"  class="split-tabs"
+      [ngClass]="{'active-option': selectedSplitOption === 'percentage'}">Percentage</button>
+      <button (click)="onSplitOptionChange('shares')"  class="split-tabs"
+      [ngClass]="{'active-option': selectedSplitOption === 'shares'}">Shares</button>
+      <button (click)="onSplitOptionChange('adjustments')"  class="split-tabs"
+      [ngClass]="{'active-option': selectedSplitOption === 'adjustments'}">Adjustments</button>
     </div>
 
    
 
     <!-- Save and Cancel Buttons -->
-    <button type="button" (click)="addExpenseData()">Save</button>
+    <button type="button" (click)="addExpenseData()" class="save-button"   [disabled]="isSaveDisabled">Save</button>
    
   </form>
 </div>

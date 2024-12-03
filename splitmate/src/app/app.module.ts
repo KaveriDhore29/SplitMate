@@ -25,7 +25,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { ExpenseModalComponent } from './expense-modal/expense-modal.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import {MatCardModule} from '@angular/material/card';
-import {MatRadioModule} from '@angular/material/radio'
+import {MatRadioModule} from '@angular/material/radio';
+import { EditGroupModalComponent } from './edit-group-modal/edit-group-modal.component'
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import {MatRadioModule} from '@angular/material/radio'
     GroupDetailsComponent,
     HomepageComponent,
     ExpenseModalComponent,
-    LandingPageComponent
+    LandingPageComponent,
+    EditGroupModalComponent
   ],
   imports: [
     BrowserModule,

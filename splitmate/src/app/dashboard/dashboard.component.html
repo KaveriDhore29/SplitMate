@@ -2,11 +2,10 @@
 <app-navbar></app-navbar>
 <div class="container-fluid_dashboard text-center">
   <div class="row no_margin " style="margin-right: 0;">
-    <!-- Sidebar Links -->
     <div class="col-3 friends-container">
       <div class="section">
         <div class="links">
-          <a [routerLink]="['/dashboard/main-dashboard']" routerLinkActive="active" class="side-link">
+          <a [routerLink]="['/dashboard/main-dashboard']" routerLinkActive="active" class="side-link" (click)='setSection("dashboard/main-dashboard")'>
             <i class="fa-solid fa-gauge-simple-high"></i> Dashboard
           </a>
           <a [routerLink]="['/dashboard/all-expenses']" routerLinkActive="active" class="side-link">
@@ -26,7 +25,7 @@
           <div *ngFor="let group of groupDetails">
             <a 
               [routerLink]="['/dashboard/group-detail', group.groupId]" 
-              (click)="showGroupDetails(group)"  routerLinkActive="active"
+              routerLinkActive="active"
               class="side-link">
               <i class="fa-solid fa-users-line"></i>{{ group.name }}
             </a>
@@ -50,70 +49,7 @@
         </div>
       </div>
 
-      <!-- <div class="invite-friends">
-        <div class="invite-friends-heading">
-          Invite Friends
-        </div>
-        <div class="invite-friends-detail">
-          <input type="text" placeholder="Enter an email address" class="invite-friend-email">
-          <button class="invite-btn">Send invite</button>
-        </div>
-        <div class="share-links">
-          <a href=" " class="fa fa-facebook"> </a>
-          <a href=" " class="fa fa-twitter"></a>
-        </div>
-      </div> -->
     </div>
 
-    <!-- Main Dashboard Section -->
-    <div class="col-9 main-dashboard">
-      <router-outlet></router-outlet> 
-    </div>
-<!-- 
-    <svg class="hero-waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28 " preserveAspectRatio="none">
-      <defs>
-        <path id="wave-path" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"></path>
-      </defs>
-      <g class="wave1">
-        <use xlink:href="#wave-path" x="50" y="3"></use>
-      </g>
-      <g class="wave2">
-        <use xlink:href="#wave-path" x="50" y="0"></use>
-      </g>
-      <g class="wave3">
-        <use xlink:href="#wave-path" x="50" y="9"></use>
-      </g>
-    </svg> -->
-
-    
-    <!-- Group Balances Section -->
-    <!-- <div class="col-3 group-balances">
-      <div class="row">
-            <div class="col">
-                <button class="btn btn-warning" title="Create Group" (click)="navigateToForm()">
-                  Create Group
-                </button>
-              </div>
-              <div class="col">
-                <button class="btn btn-info" title="Settle Up">
-                 Settle Up
-                </button>
-              </div>
-              <div class="col">
-                <button class="btn btn-danger" title="Add Expense">
-                 Add Expense
-                </button>
-        </div>
-       
-    </div>
-
-  <div class="group-members-list">
-      <div class="header1">GROUP MEMBERS</div>
-      <div *ngFor="let memberName of groupMembersName">
-    <p><i class="fa-solid fa-circle-user"></i>  {{ memberName }}</p>
-      </div>
-    </div>
-    </div> -->
   </div>
 </div>
-</body>
