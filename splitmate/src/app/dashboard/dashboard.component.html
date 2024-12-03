@@ -65,44 +65,21 @@
     </div>
 
     <!-- Main Dashboard Section -->
-    <div class="col-9 main-dashboard">
+    <div class="col-6 main-dashboard">
       <router-outlet></router-outlet> 
     </div>
 
-    <svg class="hero-waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28 " preserveAspectRatio="none">
-      <defs>
-        <path id="wave-path" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"></path>
-      </defs>
-      <g class="wave1">
-        <use xlink:href="#wave-path" x="50" y="3"></use>
-      </g>
-      <g class="wave2">
-        <use xlink:href="#wave-path" x="50" y="0"></use>
-      </g>
-      <g class="wave3">
-        <use xlink:href="#wave-path" x="50" y="9"></use>
-      </g>
-    </svg>
+
 
     
     <!-- Group Balances Section -->
-    <!-- <div class="col-3 group-balances">
+ <div class="col-3 group-balances">
       <div class="row">
             <div class="col">
-                <button class="btn btn-warning" title="Create Group" (click)="navigateToForm()">
-                  Create Group
+                <button class="btn btn-warning" title="Create Group">
+                  Edit Group
                 </button>
               </div>
-              <div class="col">
-                <button class="btn btn-info" title="Settle Up">
-                 Settle Up
-                </button>
-              </div>
-              <div class="col">
-                <button class="btn btn-danger" title="Add Expense">
-                 Add Expense
-                </button>
-        </div>
        
     </div>
 
@@ -112,6 +89,23 @@
     <p><i class="fa-solid fa-circle-user"></i>  {{ memberName }}</p>
       </div>
     </div>
-    </div> -->
+    </div>
   </div>
+ 
+  
 </div>
+<svg class="hero-waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28 " preserveAspectRatio="none">
+  <defs>
+    <path id="wave-path" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"></path>
+  </defs>
+  <g class="wave1">
+    <use xlink:href="#wave-path" x="50" y="3"></use>
+  </g>
+  <g class="wave2">
+    <use xlink:href="#wave-path" x="50" y="0"></use>
+  </g>
+  <g class="wave3">
+    <use xlink:href="#wave-path" x="50" y="9"></use>
+  </g>
+</svg>
+

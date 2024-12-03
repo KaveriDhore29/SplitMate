@@ -39,9 +39,7 @@ export class DataService {
         email: this.currentUserEmail,
         groupId: groupId,
       };
-      return this.http.post<any>(`${this.apiUrl}/get-one-group-detail`, payload, {
-        withCredentials: true,
-      });
+      return this.http.post<any>(`${this.apiUrl}/get-one-group-detail`, payload)
     }
 
     addExpenseService(expenseData :any){

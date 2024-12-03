@@ -41,7 +41,7 @@ export class DashboardComponent implements OnInit {
 
   showGroupDetails(group: any): void {
     console.log('Group Details:', group); 
-    this.dataService.setSelectedGroup(group);
+    // this.dataService.setSelectedGroup(group);
   }
 
  
