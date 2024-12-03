@@ -1,45 +1,59 @@
 const { client } = require("../data/redis-database");
 const { User } = require("../model/users");
+const { sendEmailToNewUser } = require("./send-email");
 
 const addMembers = async (req, res, members, groupId) => {
-  // Extract emails from members array
-  let memberEmails = members.map(member => member.email);
+  try {
+    // Extract emails from members
+    const memberEmails = members.map((member) => member.email);
+    console.log("Extracted member emails:", memberEmails);
 
-  let existingUsers = [];
-  for (const member of memberEmails) {
-    let user = await client.get(`user:${member}`);
-    if (user) {
-      existingUsers.push(JSON.parse(user)); // Assuming user data in Redis is JSON string
-    } else {
-      let findUser = await User.find({ email: member });
-      existingUsers.push(findUser);
-    }
-  }
+    // Fetch existing users from Redis or MongoDB
+    const existingUsers = await Promise.all(
+      memberEmails.map(async (email) => {
+        if (!email) return null; // Skip empty emails
+        let user = await client.get(`user:${email}`);
+        if (user) {
+          return JSON.parse(user);
+        } else {
+          const findUser = await User.findOne({ email });
+          return findUser || null;
+        }
+      })
+    );
 
-  const existingUserEmails = existingUsers.map(user => user.email);
+    // Filter undefined or null users
+    const validExistingUsers = existingUsers.filter((user) => user);
+    console.log("Valid existing users:", validExistingUsers);
 
-  // Mark members who join by link
-  members = members.map((member) => ({
-    ...member,
-    joinedByLink: !existingUserEmails.includes(member.email) && member.email !== "",
-  }));
+    // Extract emails of existing users
+    const existingUserEmails = validExistingUsers.map((user) => user.email);
+    console.log("Emails of existing users:", existingUserEmails);
 
-  // let isJoinByLink = false;
-  // Filter out members that do not exist in the database
-  members.filter(member => {
-    const isExisting = existingUserEmails.includes(member.email);
-    if (!isExisting && member.email !== '') {
-      try {
-        console.log('sendEmailToNewUser');
-        // sendEmailToNewUser(req, res, member.email, groupId, groupName);
-      } catch (error) {
-        console.error('Error sending email to new user:', error);
+    // Mark members who joined by link
+    const updatedMembers = members.map((member) => ({
+      ...member,
+      joinedByLink: !existingUserEmails.includes(member.email) && member.email !== "",
+    }));
+
+    // Send emails to new members
+    for (const member of updatedMembers) {
+      if (member.joinedByLink) {
+        try {
+          console.log(`Sending email to new user: ${member.email}`);
+          await sendEmailToNewUser(req, res, member.email, groupId);
+        } catch (error) {
+          console.error(`Error sending email to ${member.email}:`, error);
+        }
       }
     }
-    // return isExisting;
-  });
 
-  return members;
-}
+    console.log("Final member list:", updatedMembers);
+    return updatedMembers;
+  } catch (error) {
+    console.error("Error in addMembers:", error);
+    throw error; // Re-throw to handle at a higher level
+  }
+};
 
-module.exports = { addMembers }
+module.exports = { addMembers };

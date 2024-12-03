@@ -265,6 +265,7 @@ const simplification = async (req, res, input) => {
     Object.assign(simplifiedData, { title, transactionId, createdBy });
 
     // Merge and update net balances and transactions in a single update query
+    console.log('simplifiedData ',simplifiedData);
     console.log('getGroup.netBalances ',getGroup.netBalances);
     console.log('simplif.netBalances ',simplifiedData.netBalances);
     const newNetBalances = await mergeNetBalances(getGroup.netBalances, simplifiedData.netBalances);
@@ -288,6 +289,13 @@ const simplification = async (req, res, input) => {
     // get usernames in place of emails
     latestTransactions = await replaceEmailsWithUsernames(latestTransactions);
     console.log(latestTransactions);
+
+    // store the latestTransactions in db
+    await Group.updateOne(
+      { groupId }, // Filter by groupId
+      { $set: { latestTransactions: latestTransactions } } // Update the transactions field
+    );
+
 
     // Send the response
     res.status(200).json({ latestTransactions, getGroup: updateResult });
