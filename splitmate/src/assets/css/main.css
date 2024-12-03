@@ -62,7 +62,7 @@
 --------------------------------------------------------------*/
 body {
   color: var(--default-color);
-  background-color: var(--background-color);
+  background-color: #f4f6f8;
   font-family: var(--default-font);
 }
 

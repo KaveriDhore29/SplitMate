@@ -1,7 +1,11 @@
 
 
 .container{
-  background-color: #f9f9f9;
+  background-color: #f4f6f8;
+}
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    body{
+  background-color: #f4f6f8;
 }
 
 .heading{
@@ -31,7 +35,7 @@
   
 
   .section1 {
-    background-color: #ffffff;
+    background-color: #f4f6f8;
     color: #000000;
     padding: 20px;
     border-radius: 10px; /* Optional: Round the corners of the section */
