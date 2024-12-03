@@ -65,6 +65,12 @@ select {
   width: auto;
   padding: 10px;
   margin-top: 10px;
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+  border-bottom: 1px solid black;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
   background-color: #3b8964;
   border-radius: 22px;
   color: white;
@@ -89,6 +95,19 @@ input::placeholder {
   font-size: 16px;
   margin: 4px 2px;
   cursor: pointer;
+  border-radius: 5%;
+
+}
+
+.group-name{
+  display: flex;
+  justify-content: center;
+  border: none none 2px none;
+}
+
+.save-button{
+  justify-content: center;
+  display: flex;
   transition: all 0.3s ease;
   /* box-shadow: 0 5px 15px rgba(0, 255, 0, 0.4); */
 }
