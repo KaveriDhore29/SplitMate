@@ -4,7 +4,7 @@
 
 .popup{
    position: relative;
-  border: 2px solid black;
+  border: 1px solid black;
   width: 40%;
   color: black;
   height: auto;
@@ -17,7 +17,7 @@
 }
 
 .members-split-options{
-  border: 2px solid black;
+  border: 1px solid black;
   width: 50%;
   color: black;
   height: 335px;
@@ -43,7 +43,8 @@
 
 .expense-title{
    text-align: left;
-   margin-top:10px
+   margin-top:10px;
+   margin-bottom:20px;
 }
 
 .expense-title input{
@@ -52,42 +53,106 @@
 
 .currency{
   text-align: left;
-  margin-top:10px
+  margin-top:10px;
+  margin-bottom:20px;
 }
 
 .payer{
   text-align: left;
-  margin-top:10px
+  margin-top:10px;
+  margin-bottom:25px;
+}
+
+.payer-label{
+  font-size: 16px;
 }
 
 .split-options{
   text-align: left;
-  margin-top:10px
+  margin-top:10px;
+  margin-bottom:20px;
 }
-.expense-title input,
-.currency select,
-.currency input,
-.payer select {
+.expense-title input{
   width: 100%;
   padding: 10px;
-  border: 2px solid #1ACC8D;
-  border-radius: 5px;
-  outline: none;
+  border: none;
+  border-bottom: 1px solid #0b8f64;
   background: transparent;
   color: black;
   font-size: 1rem;
   transition: border 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
+}
+.currency select{
+  width: 18%;
+  padding: 10px;
+  border:none;
+  border-bottom: 1px solid #0b8f64;
+  background: transparent;
+  color: black;
+  font-size: 1rem;
+  transition: border 0.3s ease;
+}
+.currency input{
+  width: 82%;
+  padding: 10px;
+  border:none;
+  border-bottom: 1px solid #0b8f64;
+  background: transparent;
+  color: black;
+  font-size: 1rem;
+  transition: border 0.3s ease;
+}
+.payer select {
+  width: 75%;
+  padding: 10px;
+  border:none;
+  border-bottom: 1px solid #0b8f64;
+  background: transparent;
+  color: black;
+  font-size: 1rem;
+  transition: border 0.3s ease;
 }
 
 .expense-title input:focus,
 .currency select:focus,
 .currency input:focus,
 .payer select:focus {
-  border-color: #0b8f64;
+  outline: none;
   box-shadow: 0 0 5px rgba(26, 204, 141, 0.7); /* Highlight on focus */
 }
 
+.split-tabs{
+  background-color: transparent;
+  color: #0b8f64;
+  border: 1px solid #0b8f64;
+  padding:2%;
+  border-radius: 6px;
+  margin: 1%;
+}
+.split-tabs:hover{
+  background-color: #0b8f64;
+  color: white;
+}
+.save-button{
+  background-color: #0b8f64;
+  color: white;
+  border-radius: 6px;
+  width: 30%;
+  height: 40px;
+}
+.save-button:disabled {
+  background-color: #A5D6A7; /* Lighter Green */
+  color: #BDBDBD; /* Gray */
+  cursor: not-allowed; /* Change cursor to indicate it's disabled */
+  opacity: 0.5; /* Optional: make button look faded */
+}
+
+.active-option {
+  background-color: #0b8f64;
+  color: #fff;
+  border-color: #0b8f64;
+}
 .close-btn{
   position: absolute;
   top: 15px;
@@ -210,3 +275,4 @@
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
+

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { DataService } from '../data.service';
 
 
 @Component({
@@ -11,10 +12,23 @@ import { ActivatedRoute } from '@angular/router';
 export class EditGroupModalComponent{
 
  @Output() closeAddMemberPopup = new EventEmitter<void>();
+ @Input() groupId!: string;
  memberToAdd: { email: string }[] = [{ email: '' }];
 
+ constructor(private dataService:DataService){}
+
  addMembers(){
-   console.log(this.memberToAdd,"This person is getting added in the group") 
+   console.log(this.memberToAdd,"Adding to group");
+   this.dataService.addMembersToGroup(this.memberToAdd,this.groupId).subscribe(
+    response => {
+      console.log('Members successfully added:', response);
+      this.closeAddMemberPopup.emit(); // Close the modal
+    },
+    error => {
+      console.error('Error adding expense:', error);
+      alert('Failed to add members. Please try again.');
+    }
+  );
  }
 
  addInputBox(): void {

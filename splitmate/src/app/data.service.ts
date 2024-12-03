@@ -48,6 +48,16 @@ export class DataService {
       });
     }
 
+    addMembersToGroup(membersToAdd:any,groupId:any){
+      const payload ={
+        members : membersToAdd,
+        groupId : groupId
+      }
+      return this.http.post<any>(`${this.apiUrl}/add-members`,{
+        withCredentials: true,
+      });
+    }
+
 
   
 }
