@@ -1,3 +1,11 @@
 .text-content{
     color: rgb(0, 0, 0);
 }
+
+.main-details{
+    border: 1px solid black;
+}
+
+.member-details{
+    margin-left:20%
+}

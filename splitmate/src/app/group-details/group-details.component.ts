@@ -13,6 +13,7 @@ export class GroupDetailsComponent implements OnInit{
   groupName : string ='';
   membersNames: any[] = [];
   showPopup: boolean = false;
+  showAddmembersPopup: boolean = false;
 
   constructor(private route: ActivatedRoute, private dataService: DataService) { }
 
@@ -28,8 +29,6 @@ export class GroupDetailsComponent implements OnInit{
 
 
   loadGroupDetails(): void {
-    console.log("GROUP Id:", this.groupId);
-
     this.dataService.getGroupDetailById(this.groupId).subscribe(
       (data) => {
         this.groupDetails = data;

@@ -1,1 +1,19 @@
-<p>edit group modal</p>
+<div class="container">
+    <button class="close-btn" (click)="close()">&#10006;</button>
+    <div class="form">
+        <div *ngFor="let member of memberToAdd; let i = index" class="members-to-add">
+           <input
+             type="email"
+             placeholder="Enter email to add member"
+             [(ngModel)]="memberToAdd[i].email"
+             required
+           />
+           <button (click)="removeInputBox(i)">&#10006;</button>
+        </div>
+
+        <a (click)="addInputBox()">+ Add more people</a>
+        <div class="add-button">
+            <button (click)="addMembers()">Add Members</button>
+        </div>
+    </div>
+</div>
