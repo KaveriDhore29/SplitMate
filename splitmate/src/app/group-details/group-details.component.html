@@ -2,10 +2,16 @@
   <div class="row">
     <div class="col-6 main-details">
       <div *ngIf="groupDetails">
-        <h1 class="text-content">{{ groupName }}</h1>
-        <button class="btn btn-danger" (click)="showPopup = true">
-          Add Expense
-        </button>
+    <h1 class="g-heading">{{ groupName }}</h1>
+    <div class="btns">
+      <button class="btn btn-danger" (click)="showPopup = true">
+        Add Expense
+      </button>
+      <button class="btn btn-success">
+        Settle Up
+      </button>
+    </div>
+       
       </div>
     </div>
     <div class="col-3 member-details">
