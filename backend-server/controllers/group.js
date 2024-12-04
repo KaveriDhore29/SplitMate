@@ -214,13 +214,15 @@ const getOneGroupDetail = async (req, res) => {
 
 
 const getAddMembersToGroup = async (req, res) => {
-  const {members, groupdId} = req.body;
+  const {members, groupId} = req.body;
+  console.log('members ',members);
+  console.log('groupdId ',groupId);
 
   if(members.length == 0) {
     return res.status(400).json({error: 'No members to be added'});
   }
   try {
-    await addMembers(req, res, members, groupdId);
+    await addMembers(req, res, members, groupId);
 
     // Add the groupId to userdatas concurrently
     const updatePromises = members.map(member =>
@@ -229,9 +231,9 @@ const getAddMembersToGroup = async (req, res) => {
     await Promise.all(updatePromises); // Execute all updates concurrently
 
     const updateGroup = members.map(async (member) => {
-      await Group.updateOne({email: member.email}, {$push: {members: member}});
+      await Group.updateOne({groupId}, {$push: {members: member}});
     })
-    const getUpdatedGroup = await getOneGroupDetail(req, res, email, groupdId);
+    const getUpdatedGroup = await getOneGroupDetail(req, res, groupId);
     res.status(200).json(getUpdatedGroup);
   } catch (error) {
     console.error('Error fetching group details:', error);
