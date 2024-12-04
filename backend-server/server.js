@@ -48,7 +48,7 @@ app.use(cors(corsOptions));
 // Handle preflight requests
 // app.options('*', cors());
 
-// Connect to the database
+// //Connect to the database
 connectDatabase();
 
 // Connect Redis
