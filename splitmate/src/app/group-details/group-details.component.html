@@ -26,15 +26,20 @@
     </div>
   </div>
  
+  <div class="overlay" *ngIf="showPopup || showAddmembersPopup"></div>
  
   <!-- Popup Component -->
   <app-expense-modal
-    *ngIf="showPopup"
-    [membersNames]="membersNames"
-    (closePopup)="showPopup = false"
-  ></app-expense-modal>
+  *ngIf="showPopup"
+  class="modal-container"
+  [membersNames]="membersNames"
+  (closePopup)="showPopup = false"
+></app-expense-modal>
 
-  <app-edit-group-modal
+<!-- Edit Group Modal -->
+<app-edit-group-modal
   *ngIf="showAddmembersPopup"
-  (closeAddMemberPopup) ="showAddmembersPopup = false"></app-edit-group-modal>
+  class="modal-container"
+  (closeAddMemberPopup)="showAddmembersPopup = false"
+></app-edit-group-modal>
   </div>

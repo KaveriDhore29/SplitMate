@@ -40,14 +40,15 @@
   
  
   .add-link {
-    font-size: 20px;
+    font-size: 15px;
     color:#5bc5a7;
     text-decoration: none;
     margin-right: 10px;
     margin-top:5px;
     border: 1px solid #5bc5a7;
     padding:2%;
-    border-radius:37px
+    border-radius:37px;
+    width:15%
   }
   
   .add-link:hover {
