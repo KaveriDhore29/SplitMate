@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { log } from 'console';
@@ -48,5 +48,15 @@ export class NavbarComponent implements OnInit {
    alert('View Profile Clicked');
   }
 
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: Event): void {
+    const target = event.target as HTMLElement;
+    const dropdown = document.querySelector('.dropdown-menu');
+    const profileIcon = document.querySelector('.profile-icon');
+
+    if (this.isDropdownVisible && !dropdown?.contains(target) && !profileIcon?.contains(target)) {
+      this.isDropdownVisible = false;
+    }
+  }
 
 }
