@@ -3,17 +3,9 @@
     <h1 class="text-content">{{ groupName }}</h1>
     <h1 class="text-content"> Hi {{ username }}</h1>
 
-    <div class="expense-summary-container">
-      <div class="expense-summary-box">
-        <div class="total-expense-label">Total Group Expenses</div>
-        <div class="total-expense-amount">{{ totalGroupExpenses | currency }}</div>
-      </div>
+ 
 
-      <div class="expense-summary-box">
-        <div class="total-expense-label">Total Amount Owed</div>
-        <div class="total-owed-amount">{{ totalAmountOwed | currency }}</div>
-      </div>
-    </div>
+    
     <button class="btn btn-danger" (click)="showPopup = true">
       Add Expense
     </button>
