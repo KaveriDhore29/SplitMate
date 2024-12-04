@@ -1,33 +1,27 @@
-/* Navbar container styling */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
- 
   padding: 10px 20px;
   background-color: #04AA6D;
   color: white;
   font-family: 'Trirong',serif;
   margin-bottom: 2rem;
 }
-
 /* Branding area styling */
 .navbar-brand {
   font-size: 20px;
   font-weight: bold;
   color:white
 }
-
 #header_nav{
-background-color: #f8f8f8;
+background-color: #EBEBEB;
 }
-
 /* Profile area styling */
 .navbar-profile {
   position: relative;
   cursor: pointer;
 }
-
 /* Profile icon (circle) styling */
 .profile-icon {
   display: flex;
@@ -41,22 +35,17 @@ background-color: #f8f8f8;
   font-size: 16px; /* Adjust icon size */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
-
 .header .logo h1{
-  color: #5bc5a7;
+  color: #5BC5A7;
 }
-
-
 .current-user-name{
   padding: 0.5rem;
 }
-
 /* Font Awesome icon styling */
 .fa {
   font-size: 18px; /* Adjust font size */
   padding: 0.5rem;
 }
-
 /* Dropdown menu styling */
 .dropdown-menu {
   position: absolute;
@@ -70,18 +59,27 @@ background-color: #f8f8f8;
   padding: 0.5rem;
   color: #008080;
 }
-
 /* Dropdown menu item styling */
 .dropdown-menu li {
   padding: 10px 20px;
   cursor: pointer;
 }
-
 /* Dropdown hover effect */
 .dropdown-menu li:hover {
-  color: #1acc8d;
+  color: #1ACC8D;
 }
-
 .logo_span{
   color:#008080;
 }
+
+
+
+
+
+
+
+
+
+
+
+

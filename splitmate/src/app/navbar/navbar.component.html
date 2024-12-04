@@ -1,48 +1,47 @@
-<!-- 
+<!--
 <nav class="navbar">
   <div class="navbar-brand">SplitMATE</div>
-  
 </nav>
-
  -->
-
-
-<header id="header_nav" class="header d-flex align-items-center" style="color: #002b2b;">
+ <header id="header_nav" class="header d-flex align-items-center" style="color: #002B2B;">
   <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
-
     <a href="landing" class="logo d-flex align-items-center">
       <h1 class="sitename">Split<span class="logo_span">Mate</span></h1>
     </a>
-
-    
-<!-- 
+<!--
     <nav id="navmenu" class="navmenu">
       <ul>
         <li *ngIf="isLoggedIn" (click)="viewProfile()">View Profile</li>
         <li *ngIf="isLoggedIn" (click)="signOut()">Sign Out</li>
       </ul>
        -->
-        <div 
+        <div
           class="profile-icon"
           (click)="toggleDropdown()"
         >
-          <i class="fa fa-user"></i> 
+          <i class="fa fa-user"></i>
           <span *ngIf="isLoggedIn" class="current-user-name">{{ currentUser }}</span>
-
         </div>
-        
         <ul class="dropdown-menu" *ngIf="isDropdownVisible">
           <li *ngIf="isLoggedIn" (click)="viewProfile()">View Profile</li>
           <li *ngIf="isLoggedIn" (click)="signOut()">Sign Out</li>
         </ul>
-
-        
-      
       <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-
     <!-- </nav> -->
-
-   
-
   </div>
 </header>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
