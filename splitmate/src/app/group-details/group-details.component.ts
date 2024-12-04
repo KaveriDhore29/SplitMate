@@ -14,6 +14,7 @@ export class GroupDetailsComponent implements OnInit{
   membersNames: any[] = [];
   showPopup: boolean = false;
   showAddmembersPopup: boolean = false;
+  username: string='';
 
   constructor(private route: ActivatedRoute, private dataService: DataService) { }
 
@@ -58,13 +59,6 @@ export class GroupDetailsComponent implements OnInit{
     }
   }
   calculateTotalExpenses(): void {
-    // Calculate total group expenses
-    this.totalGroupExpenses = this.groupDetails[0].expenses.reduce(
-      (total: number, expense: any) => total + expense.amount, 0
-    );
-
-    // Calculate total amount owed (example calculation)
-    this.totalAmountOwed = this.calculateTotalOwed(this.groupDetails[0].expenses);
   }
 
   calculateTotalOwed(expenses: any[]): number {
