@@ -1,22 +1,10 @@
-
-<!-- <nav class="navbar">
+<!-- 
+<nav class="navbar">
   <div class="navbar-brand">SplitMATE</div>
-  <div class="navbar-profile">
-    <div 
-      class="profile-icon"
-      (click)="toggleDropdown()"
-    >
-      <i class="fa fa-user"></i>
-    </div>
-    <ul class="dropdown-menu" *ngIf="isDropdownVisible">
-      <li *ngIf="!isLoggedIn" (click)="signIn()">Sign In</li>
-      <li *ngIf="isLoggedIn" (click)="viewProfile()">View Profile</li>
-      <li *ngIf="isLoggedIn" (click)="signOut()">Sign Out</li>
-    </ul>
-  </div>
-</nav> -->
+  
+</nav>
 
-
+ -->
 
 
 <header id="header_nav" class="header d-flex align-items-center" style="color: #002b2b;">
@@ -26,13 +14,35 @@
       <h1 class="sitename">Split<span class="logo_span">Mate</span></h1>
     </a>
 
+    
+<!-- 
     <nav id="navmenu" class="navmenu">
       <ul>
         <li *ngIf="isLoggedIn" (click)="viewProfile()">View Profile</li>
         <li *ngIf="isLoggedIn" (click)="signOut()">Sign Out</li>
       </ul>
+       -->
+        <div 
+          class="profile-icon"
+          (click)="toggleDropdown()"
+        >
+          <i class="fa fa-user"></i> 
+          <span *ngIf="isLoggedIn" class="current-user-name">{{ currentUser }}</span>
+
+        </div>
+        
+        <ul class="dropdown-menu" *ngIf="isDropdownVisible">
+          <li *ngIf="isLoggedIn" (click)="viewProfile()">View Profile</li>
+          <li *ngIf="isLoggedIn" (click)="signOut()">Sign Out</li>
+        </ul>
+
+        
+      
       <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-    </nav>
+
+    <!-- </nav> -->
+
+   
 
   </div>
 </header>

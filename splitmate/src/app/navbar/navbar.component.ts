@@ -12,12 +12,20 @@ export class NavbarComponent implements OnInit {
 
   isDropdownVisible = false; 
   isLoggedIn = false; 
+  currentUser ='';
 
   constructor(private router: Router,public authService : AuthService) { }
 
   ngOnInit() {
     this.isLoggedIn = this.authService.checkUserLogin();
     console.log(this.isLoggedIn);
+
+    const loggedInUser = sessionStorage.getItem('loggedInUser');
+    if (loggedInUser) {
+      const userPayload = JSON.parse(loggedInUser);
+      this.currentUser= userPayload.name
+    }
+
   }
 
 
