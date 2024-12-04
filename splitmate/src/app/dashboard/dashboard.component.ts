@@ -13,8 +13,8 @@ export class DashboardComponent implements OnInit {
   groupDetails: any;  
   groupMembersName = [];
   currentGroupId !: any;
- 
-
+  groupIds = [];
+ responseOftotalOwed : any
  
 
   constructor(private router: Router,public dataService: DataService,private route: ActivatedRoute) { }
@@ -35,6 +35,24 @@ export class DashboardComponent implements OnInit {
       },
       (error) => {
         console.error('Error fetching group details:', error);
+      }
+    );
+    this.groupDetails = this.dataService.getGroupDetails().subscribe(
+      (data: any[]) => {
+        this.groupDetails = data;   
+      this.groupIds = this.groupDetails.map((group: any) => group.groupId);
+      console.log('Group IDs:', this.groupIds); 
+      },
+      (error) => {
+        console.error('Error fetching group details:', error);
+      }
+    );
+
+    this.dataService.totalOwed(this.groupIds).subscribe(
+      (data: any[]) => {
+        this.responseOftotalOwed = data;
+        console.log( this.responseOftotalOwed ,"totalowed");
+        
       }
     );
     

@@ -59,6 +59,17 @@ export class DataService {
     }
 
 
+    totalOwed(groupIds :any[]){
+      const payload = {
+        email : this.currentUserEmail,
+        groupIds : groupIds
+      }
+      return this.http.post<any>(`${this.apiUrl}/totalOwed`,payload,{
+        withCredentials: true,
+      });
+    }
+
+
   
 }
 
