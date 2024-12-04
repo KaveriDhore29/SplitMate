@@ -25,6 +25,7 @@ export class GroupDetailsComponent implements OnInit{
         this.loadGroupDetails();
       }
     });
+    console.log(this.groupId);
   }
 
 

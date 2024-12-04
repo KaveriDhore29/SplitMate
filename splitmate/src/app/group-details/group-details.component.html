@@ -49,5 +49,6 @@
   *ngIf="showAddmembersPopup"
   class="modal-container"
   (closeAddMemberPopup)="showAddmembersPopup = false"
+  [groupId]="groupId"
 ></app-edit-group-modal>
   </div>
