@@ -77,6 +77,11 @@ background-color: #f8f8f8;
   cursor: pointer;
 }
 
+h1 .heading{
+  margin-left:10rem;
+  color: black;
+}
+
 /* Dropdown hover effect */
 .dropdown-menu li:hover {
   color: #1acc8d;
