@@ -9,7 +9,7 @@ import { ErrorComponent } from './error/error.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { CreateGroupComponent } from './create-group/create-group.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // Imported FormsModule for ngModel
-import { HttpClientModule } from '@angular/common/http'; // Imported HttpClientModule for API calls
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http'; // Imported HttpClientModule for API calls
 
 // Angular Material Imports
 import { MatAutocompleteModule } from '@angular/material/autocomplete'; // For autocomplete
@@ -27,9 +27,13 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 import {MatCardModule} from '@angular/material/card';
 import {MatRadioModule} from '@angular/material/radio';
 import { EditGroupModalComponent } from './edit-group-modal/edit-group-modal.component'
+import { AuthInterceptorInterceptor } from './auth-interceptor.interceptor';
 
 
 @NgModule({
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorInterceptor, multi: true }
+  ],
   declarations: [
     AppComponent,
     DashboardComponent,
@@ -61,7 +65,6 @@ import { EditGroupModalComponent } from './edit-group-modal/edit-group-modal.com
     MatRadioModule
 
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

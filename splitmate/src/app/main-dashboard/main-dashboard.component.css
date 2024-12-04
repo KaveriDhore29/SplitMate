@@ -4,10 +4,6 @@
   background-color: #f4f6f8;
 }
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        body{
-  background-color: #f4f6f8;
-}
-
 .heading{
     font-size: 35px;
     font-weight: 600;
@@ -35,7 +31,7 @@
   
 
   .section1 {
-    background-color: #f4f6f8;
+    background-color: #ffffff;
     color: #000000;
     padding: 20px;
     border-radius: 10px; /* Optional: Round the corners of the section */

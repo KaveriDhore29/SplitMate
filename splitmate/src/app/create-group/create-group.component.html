@@ -2,42 +2,62 @@
   <app-navbar></app-navbar>
 
   <div class="container">
-    
     <div class="row">
       <!-- Left Side: Video -->
-  
       <div class="col video-container">
         <img src="assets/img/login.avif" class="login-img" alt="">
       </div>
-  
-      <!-- Right Side: Login Text and Sign-In Button -->
 
-
+      <!-- Right Side: Login Form -->
       <div class="col login-container">
         <div class="heading">
           <div class="col-md-8" style="width: 100%;">
             <div class="form-container">
               <div class="form-heading">
-                <h2>Create a new group</h2>  
-              </div>  
-            
+                <h2>Create a new group</h2>
+              </div>
+
               <!-- Group Name -->
               <div class="group-name">
-                <!-- <label for="group-name">My group shall be called…</label><br/> -->
                 <input type="text" id="group-name" [(ngModel)]="groupName" (input)="onGroupNameInput()" class="group-name" placeholder="Group Name" />
               </div>
-            
+
               <hr>
-              
+
               <!-- Group Members -->
               <div class="group-members" *ngIf="groupName">
                 <div class="group-members-heading"><h2>GROUP MEMBERS</h2></div>
-            
-                <!-- Add Members -->
+
+                <!-- Logged-In User (Read-Only) -->
+                <div class="member-inputs">
+                  <mat-form-field appearance="fill" class="readonly-field">
+                    <mat-label>Username</mat-label>
+                    <input 
+                      type="text" 
+                      matInput 
+                      [value]="createdBy.username" 
+                      readonly 
+                      placeholder="Username"
+                      class="username readonly-input"
+                    />
+                  </mat-form-field>
+
+                  <mat-form-field appearance="fill" class="readonly-field">
+                    <mat-label>Email</mat-label>
+                    <input 
+                      type="text" 
+                      matInput 
+                      [value]="createdBy.email" 
+                      readonly 
+                      placeholder="Email"
+                      class="email readonly-input"
+                    />
+                  </mat-form-field>
+                </div>
+
+                <!-- Add Other Members -->
                 <div class="add-members">
                   <div *ngFor="let member of members; let i = index" class="member-inputs">
-                    
-                    <!-- Autocomplete for Username -->
                     <mat-form-field appearance="fill">
                       <mat-label>Username</mat-label>
                       <input 
@@ -46,57 +66,46 @@
                         [(ngModel)]="member.username" 
                         [matAutocomplete]="auto" 
                         (input)="onSearchUsername($event, i)" 
-                        placeholder="Username" 
+                        placeholder="Username"
                         class="username"
                       />
                       <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectMember($event.option.value, i)">
                         <mat-option *ngFor="let result of searchResults" [value]="result">
                           {{ result.username }} ({{ result.email }})
                         </mat-option>
-                      </mat-autocomplete>          
+                      </mat-autocomplete>
                     </mat-form-field>
-                    &nbsp;
-                    &nbsp;
-                    &nbsp;
-                    &nbsp;
-                    
-                    <!-- Email input (auto-filled based on selected username) -->
-                    <!-- <input type="email" [(ngModel)]="member.email" placeholder="Email" class="email" /> -->
+
                     <mat-form-field appearance="fill">
                       <mat-label>Email</mat-label>
                       <input 
                         type="text" 
                         matInput 
                         [(ngModel)]="member.email" 
-                        [matAutocomplete]="auto"
                         placeholder="Email" 
                         class="email"
                       />
-                      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectMember($event.option.value, i)">
-                        <mat-option *ngFor="let result of searchResults" [value]="result">
-                          {{ result.username }} ({{ result.email }})
-                        </mat-option>
-                      </mat-autocomplete>          
                     </mat-form-field>
+
                     <span class="remove-member" (click)="removeInputBox(i)">&times;</span>
                   </div>
                 </div>
-            
+
                 <!-- Link to Add More Members -->
-                <div class="link-to-add-members">  
+                <div class="link-to-add-members">
                   <a (click)="addInputBox()">+ Add a person</a>
                 </div>
               </div>
-            
+
               <hr *ngIf="groupName">
-              
+
               <!-- Group Type -->
               <div class="group-type" *ngIf="groupName">
                 <div class="group-type-heading">
-                  <h2>GROUP TYPE</h2> 
+                  <h2>GROUP TYPE</h2>
                 </div>
                 <div class="group-type-dropdown">
-                  <select  [(ngModel)]= "groupType">
+                  <select [(ngModel)]="groupType">
                     <option>Home</option>
                     <option>Office</option>
                     <option>Trip</option>
@@ -104,25 +113,18 @@
                   </select>
                 </div>
               </div>
-              
+
               <hr *ngIf="groupName">
-              
+
               <!-- Save Button -->
               <div class="save-button">
-                <button type="button button1" class="save-group-details"  (click)="saveGroup()">Save</button>
+                <button type="button" class="save-group-details" (click)="saveGroup()">Save</button>
               </div>
             </div>
           </div>
         </div>
         <div id="google-signin-button" class="google-btn"></div>
       </div>
-     
     </div>
-
-    
   </div>
-  
-  </body>
-  
-  
-  
+</body>
