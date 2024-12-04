@@ -305,20 +305,6 @@ const simplification = async (req, res, input) => {
   }
 };
 
-const getGroup = async (req, res) => {
-  const groupId = req.params;
-
-  try {
-    let group = await Group.findOne({ groupId: groupId });
-    if(!group) {
-      res.status(404).json({success: false});
-    }
-    res.status(200).json({group});
-  } catch (error) {
-    res.status(500).json({ error: 'error.message' });
-  }
-}
-
 
 
 // get total owed amount
@@ -373,4 +359,4 @@ const totalOwed = async(req, res) => {
 
 
 
-module.exports = { createGroup, addMembersToGroup, getGroupDetails, getOneGroupDetail, getAddMembersToGroup, simplification, totalOwed, getGroup };
+module.exports = { createGroup, addMembersToGroup, getGroupDetails, getOneGroupDetail, getAddMembersToGroup, simplification, totalOwed };
