@@ -6,7 +6,7 @@
  
   padding: 10px 20px;
   background-color: #04AA6D;
-  color: white;
+  color: #002b2b;
   font-family: 'Trirong',serif;
   margin-bottom: 2rem;
 }
@@ -15,11 +15,15 @@
 .navbar-brand {
   font-size: 20px;
   font-weight: bold;
-  color:white
+  color:#002b2b
+}
+
+.header .logo h1{
+  color: #002b2b;
 }
 
 #header_nav{
-background-color: #002b2b;
+background-color: #f8f8f8;
 }
 
 /* Profile area styling */
