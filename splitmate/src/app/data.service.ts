@@ -42,8 +42,8 @@ export class DataService {
       return this.http.post<any>(`${this.apiUrl}/get-one-group-detail`, payload)
     }
 
-    addExpenseService(expenseData :any){
-      return this.http.post<any>(`${this.apiUrl}/simplify`, expenseData,{
+    addExpenseService(expenseData: any): Observable<any> {
+      return this.http.post<any>(`${this.apiUrl}/simplify`, expenseData, {
         withCredentials: true,
       });
     }

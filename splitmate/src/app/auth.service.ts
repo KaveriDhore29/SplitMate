@@ -13,7 +13,6 @@ export class AuthService {
   
   checkUserLogin(): boolean {
     this.isUserLoggedIn = sessionStorage.getItem('IsLoggedIn') || ''; 
-    
     if (this.isUserLoggedIn === 'true') {
       return true; 
     } else {
