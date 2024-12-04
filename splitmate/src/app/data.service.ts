@@ -53,7 +53,7 @@ export class DataService {
         members : membersToAdd,
         groupId : groupId
       }
-      return this.http.post<any>(`${this.apiUrl}/add-members`,{
+      return this.http.post<any>(`${this.apiUrl}/add-members`,payload,{
         withCredentials: true,
       });
     }

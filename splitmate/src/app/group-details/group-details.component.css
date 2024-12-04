@@ -1,11 +1,161 @@
-.text-content{
-    color: rgb(0, 0, 0);
+
+.group-details-header{
+  display:flex;
+  justify-content: space-around;
+}
+/* Main Container for Group Details Header */
+.group-details-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  margin: 20px 0;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading Styling */
+.group-details-header .g-heading {
+  font-size: 1.8em;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+  letter-spacing: 1px;
+}
+
+/* Button Container */
+.group-details-header .btns {
+  display: flex;
+  gap: 15px;
+}
+
+/* Buttons Styling */
+.group-details-header .btn {
+  padding: 10px 15px;
+  font-size: 1em;
+  font-weight: 600;
+  border-radius: 5px;
+  border: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.group-details-header .btn-danger {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.group-details-header .btn-success {
+  background-color: #28a745;
+  color: #fff;
+}
+
+/* Hover Effects */
+.group-details-header .btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.group-details-header .btn-danger:hover {
+  background-color: #c82333;
+}
+
+.group-details-header .btn-success:hover {
+  background-color: #218838;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .group-details-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .group-details-header .btns {
+    margin-top: 10px;
+    gap: 10px;
+  }
 }
 
 .main-details{
-    border: 1px solid black;
+  background-color: white;
 }
 
-.member-details{
-    margin-left:20%
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent black */
+  z-index: 10;
+}
+
+/* Expense Summary Container */
+.expense-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin: 20px 0;
+  padding: 10px 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Individual Expense Item */
+.expense-item {
+  display: flex
+  ;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 15px;
+}
+
+/* Expense Title Styling */
+.expense-title {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Expense Amount Styling */
+.expense-amount {
+  font-size: 1.1em;
+  font-weight: 600;
+  color: #dc3545; /* Red for owed amount */
+}
+
+/* Hover Effect for Items */
+/* .expense-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+} */
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .expense-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .expense-amount {
+    margin-top: 5px;
+    text-align: right;
+    width: 100%;
+  }
+}
+
+
+
+
+/* Centered Modal */
+.modal-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 20;
+  width:70%
 }

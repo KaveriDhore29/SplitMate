@@ -13,14 +13,7 @@ export class GroupDetailsComponent implements OnInit{
   groupName : string ='';
   membersNames: any[] = [];
   showPopup: boolean = false;
-<<<<<<< HEAD
-  username: string='';
-  totalGroupExpenses: number = 0;
-  totalAmountOwed: number = 0;
-  value  :string='';
-=======
   showAddmembersPopup: boolean = false;
->>>>>>> f43b67d0447429225cd083e62972622c8ecd600f
 
   constructor(private route: ActivatedRoute, private dataService: DataService) { }
 
@@ -43,18 +36,12 @@ export class GroupDetailsComponent implements OnInit{
     this.dataService.getGroupDetailById(this.groupId).subscribe(
       (data) => {
         this.groupDetails = data;
-        console.log('Group Detail:', this.groupDetails);
+        console.log('Specific Group Detail by Id:', this.groupDetails);
         this.groupName = this.groupDetails[0].name;
-
-        // Update membersNames to include both name and email
         this.membersNames = this.groupDetails[0].members.map((member: any) => ({
-          name: member.username,  // or use the appropriate field for the name
+          name: member.username, 
           email: member.email
         }));
-        this.calculateTotalExpenses();
-        console.log('Group Name:', this.groupName);
-        console.log('Members Names:', this.membersNames);
-        
       },
       (error) => {
         console.error('Error fetching group details:', error);

@@ -77,9 +77,10 @@
   <!-- Select All Checkbox -->
   <div *ngIf="selectedSplitOption === 'equally'" class="eq-members">
     <h3 class="split-eq-heading">Split Equally</h3>
-    <label class="select-all">
+    <label class="select-all check-container">
       <input type="checkbox" [checked]="isAllSelected()" (change)="toggleSelectAll($event)" />
       Select All
+      <span class="checkmark"></span>
     </label>
 
     <div *ngFor="let member of membersNames" class="member-names">
@@ -93,21 +94,23 @@
   </div>
 
   <div *ngIf="selectedSplitOption === 'percentage'">
+    <h3>Split by percentage</h3>
     <label *ngFor="let member of membersNames">
-      <div>{{ member.name }} ({{ member.email }})</div>
+      <div>{{ member.name }} ({{ member.email }})
       <input type="number" [(ngModel)]="memberPercentages[member.email]" min="0" max="100" placeholder="Enter Percentage" />
-    </label>
+    </div></label>
   </div>
 
   <div *ngIf="selectedSplitOption === 'shares'">
+    <h3>Split by Shares</h3>
     <label *ngFor="let member of membersNames">
-      <div>{{ member.name }} ({{ member.email }})</div>
+      <div>{{ member.name }} ({{ member.email }})
       <input type="number" [(ngModel)]="memberShares[member.email]" min="0" placeholder="Enter Shares" />
-    </label>
+    </div></label>
   </div>
 
   <div *ngIf="selectedSplitOption === 'adjustments'">
-    <!-- Add adjustment-related fields here if needed -->
+    <h3>Split by Adjustments</h3>
     <div>Adjustment fields go here</div>
   </div>
 </div>

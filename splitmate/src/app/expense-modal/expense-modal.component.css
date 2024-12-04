@@ -28,7 +28,7 @@
   z-index: 2;
   border-radius: 10px; /* Rounded corners */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
-  padding: 20px; /* Inner spacing */
+  padding: 10px; /* Inner spacing */
 }
 
 .form-heading{
@@ -222,11 +222,12 @@
   padding-left: 35px;
   margin-bottom: 12px;
   cursor: pointer;
-  font-size: 22px;
+  font-size: 20px;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  border-bottom: 1px solid black;
 }
 
 .check-container input {
@@ -241,7 +242,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  height: 25px;
+  height: 20px;
   width: 25px;
   background-color: #eee;
 }

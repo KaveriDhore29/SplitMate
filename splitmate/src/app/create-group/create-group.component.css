@@ -68,14 +68,7 @@ select {
   background-color: #ffffff;
   color: rgb(0, 0, 0);
   border-bottom: 1px solid black;
-  border-top: 0;
-  border-left: 0;
-  border-right: 0;
-  background-color: #3b8964;
-  border-radius: 22px;
-  color: white;
-  border: none;
- 
+  border-radius: 0;
   font-size: 16px;
   min-width: 200px;
   display: inline-block;
@@ -102,7 +95,6 @@ input::placeholder {
 .group-name{
   display: flex;
   justify-content: center;
-  border: none none 2px none;
 }
 
 .save-button{
