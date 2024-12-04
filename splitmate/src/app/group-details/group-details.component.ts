@@ -14,6 +14,10 @@ export class GroupDetailsComponent implements OnInit{
   membersNames: any[] = [];
   showPopup: boolean = false;
   showAddmembersPopup: boolean = false;
+  username: string='';
+  totalGroupExpenses: number = 0;
+  totalAmountOwed: number = 0;
+  value  :string='';
 
   constructor(private route: ActivatedRoute, private dataService: DataService) { }
 
@@ -42,6 +46,10 @@ export class GroupDetailsComponent implements OnInit{
           name: member.username, 
           email: member.email
         }));
+
+        this.calculateTotalExpenses();
+        console.log('Group Name:', this.groupName);
+        console.log('Members Names:', this.membersNames);
       },
       (error) => {
         console.error('Error fetching group details:', error);

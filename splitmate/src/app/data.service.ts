@@ -42,8 +42,8 @@ export class DataService {
       return this.http.post<any>(`${this.apiUrl}/get-one-group-detail`, payload)
     }
 
-    addExpenseService(expenseData: any): Observable<any> {
-      return this.http.post<any>(`${this.apiUrl}/simplify`, expenseData, {
+    addExpenseService(expenseData :any){
+      return this.http.post<any>(`${this.apiUrl}/simplify`, expenseData,{
         withCredentials: true,
       });
     }
@@ -53,7 +53,7 @@ export class DataService {
         members : membersToAdd,
         groupId : groupId
       }
-      return this.http.post<any>(`${this.apiUrl}/add-members`,payload,{
+      return this.http.post<any>(`${this.apiUrl}/add-members`,{
         withCredentials: true,
       });
     }
