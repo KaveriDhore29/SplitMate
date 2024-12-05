@@ -18,6 +18,7 @@ export class GroupDetailsComponent implements OnInit{
   totalGroupExpenses: number = 0;
   totalAmountOwed: number = 0;
   value  :string='';
+ groupIds = [];
 
   constructor(private route: ActivatedRoute, private dataService: DataService) { }
 
@@ -32,7 +33,18 @@ export class GroupDetailsComponent implements OnInit{
       this.senddata();
       }
     });
-  
+    console.log(this.groupId);
+
+    this.groupDetails = this.dataService.getGroupDetails().subscribe(
+      (data: any[]) => {
+        this.groupDetails = data;   
+      this.groupIds = this.groupDetails.map((group: any) => group.groupId);
+      console.log('Group IDs:', this.groupIds); 
+      },
+      (error) => {
+        console.error('Error fetching group details:', error);
+      }
+    );
   }
 
 

@@ -1,7 +1,10 @@
 
-
 .container{
-  background-color: #f4f6f8;
+  background-color: #F4F6F8;
+}
+.row{
+  justify-content: space-between;
+  margin-bottom: 1rem;
 }
 
 .row{
@@ -13,30 +16,25 @@
     font-size: 20px;
     font-weight: 600;
     letter-spacing: 1px;
-    margin-bottom: 10px; 
+    margin-bottom: 10px;
    color: #000000a1;
    margin-right: 60%;
 }
-
 .welcome-text{
     font-weight: 500;
     color: white;
     font-size: 15px;
     font-weight: 500;
 }
-
 /* .section{
     display: flex;
     margin: 20px 0;
    padding-bottom: 2%;
    justify-content: center;
-   width: 100%; 
+   width: 100%;
 } */
-
-  
-
   .section1 {
-    background-color: #ffffff;
+    background-color: #FFFFFF;
     color: #000000;
     padding: 20px;
     border-radius: 10px; /* Optional: Round the corners of the section */
@@ -44,23 +42,24 @@
     flex-direction: column;
     margin-top: 0%;
     width: auto;
+<<<<<<< HEAD
   }  
 
+=======
+  }
+>>>>>>> e306e9e61e8125415654476c8fd846c7edecdb8e
   .section2{
     margin-left: 6%
   }
-
-
   .expense-table{
     margin-top: 10%;
-    background-color: #caffef;
+    background-color: #CAFFEF;
     height:150px;
     border-radius: 10px;
     width: 90%;
     position: relative;
     margin:auto;
   }
-
   .expense-table .col{
     margin-top: 37px;
     h1{
@@ -74,17 +73,28 @@
       color: #000000a1;
     }
   }
-
 .expense-table .col h1,p{
     color: rgb(0, 0, 0);
   }
-
-
 th,td{
     border : 1px solid black
 }
-
 .row .no_margin .align-items-center{
   margin: 0;
   padding: 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
