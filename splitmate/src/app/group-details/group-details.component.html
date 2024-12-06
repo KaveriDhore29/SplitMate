@@ -24,13 +24,16 @@
     </div>
     <div class="col-4 member-details">
       <div class="add-members-button">
-        <button class="btn btn-warning" (click)="showAddmembersPopup = true">Add Members</button>
+        <a class="add-members-link" (click)="showAddmembersPopup = true">+ Click here to add members</a>
       </div>
-      <div *ngFor="let member of membersNames">
-        <ul>
-          <li>{{member.email}}</li>
-        </ul>
+      <div class="list-container">
+        <div *ngFor="let member of membersNames" class="member-list">
+          <ul>
+            <li><i class="fa-solid fa-circle-user"></i> &nbsp;  &nbsp;{{member.email}}</li>
+          </ul>
+        </div>
       </div>
+    
     </div>
   </div>
  

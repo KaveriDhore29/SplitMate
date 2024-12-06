@@ -1,9 +1,70 @@
 .container{
   border: 1px solid black;
-  width: 30%;
+  width: 40%;
+  background: white;
+  border-radius: 10px;
+  padding: 1%;
+}
+
+
+.members-to-add input{
+  border: none;
+  border-bottom: 1px solid #1ACC8D;
+  margin-bottom: 12px;
+  width:65%;
+  &:focus{
+    outline: none;
+  }
+ 
+}
+
+.mat-chip {
+ background-color: #1ACC8D;
+}
+
+.mat-chip.mat-standard-chip .mat-chip-remove {
+  color: #fff;
+}
+
+.mat-input-element {
+  margin-top: 10px;
+  width: 70%;
+  height: 4vh;
+  border: none;
+  border-bottom: 1px solid #1ACC8D;
+}
+
+.mat-input-element:focus {
+   outline: none;
+}
+
+.mat-input-element::placeholder {
+ color: rgb(139, 139, 139);
 }
 
 .close-btn{
   position: relative;
-  left:50%;
+  left:48%;
+  top:-8px;
+  border: none;
+  background-color: transparent;
+}
+
+.remove-btn{
+  border: none;
+  background-color: transparent;
+}
+
+.add-link{
+  cursor: pointer;
+}
+
+.add-button button{
+   background-color: #1ACC8D;
+   color: white;
+   border: none;
+   margin-top: 25px;
+   width: max-content;
+   border-radius: 10px;
+   padding: 5px;
 }
