@@ -42,7 +42,7 @@
     name="payer"
   >
     <option *ngFor="let member of membersNames" [value]="member.email">
-      {{ member.name }}
+      {{ member.email }}
     </option>
   </select>
 </div>
@@ -64,7 +64,7 @@
    
 
     <!-- Save and Cancel Buttons -->
-    <button type="button" (click)="addExpenseData()" class="save-button"   [disabled]="isSaveDisabled">Save</button>
+    <button type="button" (click)="addExpenseData()" class="save-button" [disabled]="isSaveDisabled">Save</button>
    
   </form>
 </div>
