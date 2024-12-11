@@ -29,11 +29,11 @@ background-color: #EBEBEB;
   align-items: center;
   width: auto;
   height: 40px;
-  border-radius: 8%;
   background-color: white;
   color: #00684A;
   font-size: 16px; /* Adjust icon size */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  cursor:pointer
 }
 .header .logo h1{
   color: #5BC5A7;
@@ -58,6 +58,7 @@ background-color: #EBEBEB;
   display: block;
   padding: 0.5rem;
   color: #008080;
+  cursor: pointer;
 }
 /* Dropdown menu item styling */
 .dropdown-menu li {

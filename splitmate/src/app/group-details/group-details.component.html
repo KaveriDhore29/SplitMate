@@ -1,58 +1,42 @@
 <div class="container">
-  <div *ngIf="groupDetails">
-    <h1 class="text-content">{{ groupName }}</h1>
-    <h1 class="text-content"> Hi {{ username }}</h1>
-
-    <div class="expense-summary-container">
-      <div class="expense-summary-box">
-        <div class="total-expense-label">Total Group Expenses</div>
-        <div class="total-expense-amount">{{ totalGroupExpenses | currency }}</div>
-      </div>
-
-      <div class="expense-summary-box">
-        <div class="total-expense-label">Total Amount Owed</div>
-        <div class="total-owed-amount">{{ totalAmountOwed | currency }}</div>
-      </div>
-    </div>
-    <button class="btn btn-danger" (click)="showPopup = true">
-      Add Expense
-    </button>
-  </div>
-
-  
-
   <div class="row">
-    <div class="col-8 main-details">
+    <div class="col-9 main-details">
       <div *ngIf="groupDetails" class="group-details-header">
-    <div><h1 class="g-heading">{{ groupName }}</h1></div>
+    <div><h1 class="g-heading">{{ groupName | uppercase}} </h1></div>
     <div class="btns">
-      <button class="btn btn-danger" (click)="showPopup = true">
+      <button class="btn btn-outline-danger" (click)="showPopup = true">
         Add Expense
       </button> &nbsp;
-      <button class="btn btn-success">
+      <button class="btn btn-outline-success" (click)="showSettleUpPopup = true">
         Settle Up
       </button>
     </div>
        
       </div>
  <!-- expense details -->
- <div class="expense-summary">
- <div class="expense-item">    <!--*ngFor="let expense of expenses" -->
-    <div class="expense-title">Expense Title</div>
+ <div class="expense-summary" *ngFor="let expense of groupExpenses">
+ <div class="expense-item" >   
+    <div class="expense-title">{{expense.title}}</div>
     <div class="expense-amount">You Owe: 100</div>
   </div>
 </div>
 
+
+
     </div>
-    <div class="col-4 member-details">
-      <div class="add-members-button">
-        <button class="btn btn-warning" (click)="showAddmembersPopup = true">Add Members</button>
+    <div class="col-3 member-details">
+      <div class="group-mem-heading">
+        <h2>Group Members</h2>
       </div>
-      <div *ngFor="let member of membersNames">
-        <ul>
-          <li>{{member.name}}</li>
-        </ul>
+      <div class="list-container">
+        <div *ngFor="let member of membersNames" class="member-list">
+          <ul>
+            <li><i class="fa-solid fa-circle-user"></i>&nbsp;{{ member.name ? member.name : member.email }}</li>
+          </ul>
+        </div>
+        <a class="add-members-link" (click)="showAddmembersPopup = true">+ Click here to add members</a>
       </div>
+    
     </div>
   </div>
  
@@ -64,6 +48,7 @@
   class="modal-container"
   [membersNames]="membersNames"
   (closePopup)="showPopup = false"
+  (onAddExpense)="loadGroupDetails()"
 ></app-expense-modal>
 
 <!-- Edit Group Modal -->
@@ -71,5 +56,13 @@
   *ngIf="showAddmembersPopup"
   class="modal-container"
   (closeAddMemberPopup)="showAddmembersPopup = false"
+  [groupId]="groupId"
+  (onMemberAdd)="loadGroupDetails()"
 ></app-edit-group-modal>
+
+
+<app-settle-up
+*ngIf = "showSettleUpPopup">
+
+</app-settle-up>
   </div>

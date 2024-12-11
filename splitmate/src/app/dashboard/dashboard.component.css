@@ -1,207 +1,5 @@
-
-  .friends-container {
-    background-color: #f9f9f9;
-    /* border: 1px solid #000000; */
-    height: 100%;
-    padding: 1%;
-    margin-right: -1rem;
-    border-top: none;
-    border-left: none;
-
-  }
-  
-  .section {
-    margin: 8% 0%;
-  }
-
-
-  .btn{
-    width:120px; 
-  }
-  .d-header {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    
-  h3{
-    color: #008080;
-    font-size: 25px;
-    font-weight: 700;
-    margin-left: 35%;
-  }  
-  }
-  
-  .active {
-    background-color: #008080;
-    color:white;     
-    font-weight: bold;  
-    height:45px  ;
-    border-radius: 10px; 
-  }
-  
- 
-  .add-link {
-    font-size: 14px;
-    color: #5bc5a7;
-    text-decoration: none;
-    margin: 0% 1.5rem 2% 0%;
-    border: 1px solid #5bc5a7;
-    padding: 2%;
-    border-radius: 15%;
-    width: 18%;
-  }
-
-  
-  
-  .add-link:hover {
-   background-color: #5bc5a7;
-   color:white
-  }
-  
-  .links {
-    display: flex;
-    flex-direction: column;
-    margin: 6% 8%;
-  }
-  
-  .side-link {
-    
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 7%;
-    font-size: 18px;
-    cursor: pointer;
-    font-weight: 500;
-  }
-  
-  .side-link i {
-   color : #5bc5a7;
-    padding-right: 10px;
-  }
-  
-
-
-  .invite-friends{
-     border: 1px solid rgb(234, 225, 225);
-     margin: 5%;
-  }
-
-  .invite-friends-heading{
-    background-color: #5bc5a7; 
-    padding: 2%;
-    font-size: large;
-    color: white
-  }
-
-  .invite-friends-detail input,button{
-    margin: 3%;
-    padding: 10px;
-    border-radius: 4px;
-  }
-  
-   
-  .main-dashboard {
-    background-color: #f9f9f9;
-    height: auto;
-    margin-top: 2rem;
-    border-bottom: none;
-  }
-
-  .group-balances{
-     background-color: #f9f9f9; ;
-  }
-
-  .share-links{
-    .fa {
-      padding: 10px;
-      font-size: 30px;
-      width: 20%;
-      text-align: center;
-      text-decoration: none;
-      margin: 5px 2px;
-    }
-    
-    .fa:hover {
-        opacity: 0.7;
-    }
-    
-    .fa-facebook {
-      background: #3B5998;
-      color: white;
-    }
-    
-    .fa-twitter {
-      background: #55ACEE;
-      color: white;
-    }
-  }
-
-  .invite-btn{
-    background-color: #F6FCDF;
-  }
-
-
-  .group-balances{
-    color: white;
-  }
-
-  .invite-friend-email{
-     background-color: #001E2B;
-     border: 1px solid #F6FCDF;
-     color: #F6FCDF;
-  }
-
-  .group-members-list{
-    text-align: left;
-    color: black;
-  }
-
-  .header1{
-    text-align: center;
-    background-color: black;
-    padding: 1%;
-    margin: 5% -3%;
-    color: white;
-  }
-
-  .group-members-list p{
-    border-bottom: 1px solid rgb(0, 0, 0);
-    padding-bottom: 3%;
-  }
-
-  
-  .wave1 use {
-    animation: move-forever1 10s linear infinite;
-    animation-delay: -2s;
-    fill: #1E7279 ;
-    opacity: 0.8;
-  }
-  
-  .wave2 use {
-    animation: move-forever2 8s linear infinite;
-    animation-delay: -2s;
-    fill: #1E7279 ;
-    opacity: 0.6;
-  }
-  
-  .wave3 use {
-    animation: move-forever3 6s linear infinite;
-    animation-delay: -2s;
-    fill: #1E7279 ;
-    opacity: 0.4;
-  }
-
-
-svg{
-  height: 90px;
-  margin: 0;
-  padding: 0;
-}
-
 .friends-container {
-  background-color: #F9F9F9;
+  background-color: #f6fdfb;
   /* border: 1px solid #000000; */
   height: 100%;
   padding: 1%;
@@ -220,32 +18,32 @@ svg{
   display: flex;
   justify-content: space-between;
 h3{
-  color: #008080;
-  font-size: 25px;
+  color: #000000;
+  font-size: 23px;
   font-weight: 700;
   margin-left: 35%;
 }
 }
 .active {
-  background-color: #008080;
-  color:white;
+  border:1px solid #008080;
+  color:#008080;
   font-weight: bold;
   height:45px  ;
   border-radius: 10px;
 }
 .add-link {
   font-size: 14px;
-  color: #5BC5A7;
+  color: black;
   text-decoration: none;
-  margin: 0% 1.5rem 2% 0%;
-  border: 1px solid #5BC5A7;
-  padding: 2%;
-  border-radius: 15%;
-  width: 18%;
+  margin: 0% 1.1rem 2% 0%;
+  /* border: 1px solid #5BC5A7; */
+  padding: 5px;
+  border-radius: 50px;
+text-decoration: underline;
 }
 .add-link:hover {
- background-color: #5BC5A7;
- color:white
+ cursor:pointer;
+ color: #5BC5A7
 }
 .links {
   display: flex;
@@ -260,79 +58,25 @@ h3{
   margin-bottom: 7%;
   font-size: 18px;
   cursor: pointer;
-  font-weight: 500;
+  font-weight: 600;
+  color: #008080;
+}
+
+.group-side-link{
+  text-transform: uppercase;
 }
 .side-link i {
- color : #5BC5A7;
+ color : #008080;
   padding-right: 10px;
 }
-.invite-friends{
-   border: 1px solid rgb(234, 225, 225);
-   margin: 5%;
-}
-.invite-friends-heading{
-  background-color: #5BC5A7;
-  padding: 2%;
-  font-size: large;
-  color: white
-}
-.invite-friends-detail input,button{
-  margin: 3%;
-  padding: 10px;
-  border-radius: 4px;
-}
+
 .main-dashboard {
-  background-color: #F9F9F9;
+  background-color: #f6fdfb;
   height: auto;
-  margin-top: 2rem;
+  /* margin-top: 1rem; */
   border-bottom: none;
 }
-.group-balances{
-   background-color: #F9F9F9; ;
-}
-.share-links{
-  .fa {
-    padding: 10px;
-    font-size: 30px;
-    width: 20%;
-    text-align: center;
-    text-decoration: none;
-    margin: 5px 2px;
-  }
-  .fa:hover {
-      opacity: 0.7;
-  }
-  .fa-facebook {
-    background: #3B5998;
-    color: white;
-  }
-  .fa-twitter {
-    background: #55ACEE;
-    color: white;
-  }
-}
-.invite-btn{
-  background-color: #F6FCDF;
-}
-.group-balances{
-  color: white;
-}
-.invite-friend-email{
-   background-color: #001E2B;
-   border: 1px solid #F6FCDF;
-   color: #F6FCDF;
-}
-.group-members-list{
-  text-align: left;
-  color: black;
-}
-.header1{
-  text-align: center;
-  background-color: black;
-  padding: 1%;
-  margin: 5% -3%;
-  color: white;
-}
+
 .group-members-list p{
   border-bottom: 1px solid rgb(0, 0, 0);
   padding-bottom: 3%;

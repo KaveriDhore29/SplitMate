@@ -14,7 +14,7 @@ export class DashboardComponent implements OnInit {
   groupMembersName = [];
   currentGroupId !: any;
   groupIds = [];
- responseOftotalOwed : any
+  responseOftotalOwed : any
  
 
   constructor(private router: Router,public dataService: DataService,private route: ActivatedRoute) { }

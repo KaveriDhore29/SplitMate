@@ -12,9 +12,10 @@ export class ExpenseModalComponent implements OnInit {
   @Input() membersNames: { name: string; email: string }[] = [];
   @Input() groupId!: string;
   @Output() closePopup = new EventEmitter<void>();
-  selectedSplitOption: string = '';
+  selectedSplitOption: string = 'equally';
   @Input() groupDetails !: any;
   isSaveDisabled: boolean = false;
+  @Output() onAddExpense = new EventEmitter<void>();
 
   currencyOptions = ['INR', 'USD', 'EUR', 'GBP'];
 
@@ -23,7 +24,7 @@ export class ExpenseModalComponent implements OnInit {
   expense = {
     title: '',
     currency: 'INR',
-    amount: 0,
+    amount: '',
     paidBy: this.dataService.currentUserEmail.email, 
     equally: true, 
     selectedMembers: [] as string[],
@@ -37,18 +38,7 @@ export class ExpenseModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.groupId = this.route.snapshot.paramMap.get('id')!;
-    // const currentUser = this.membersNames.find(
-    //   (member) => member.email === this.dataService.currentUserEmail
-    // );
-  
-
-    // if (currentUser) {
-    //   this.expense.paidBy = currentUser.email; 
-    //   console.log("Default selected user:", currentUser.name);
-    // } else {
-    //   console.error("Current user not found in members list!");
-    // }
-
+    this.selectAllMembers();
   }
 
 
@@ -119,6 +109,8 @@ export class ExpenseModalComponent implements OnInit {
         division: this.expense.splitBy === 'equally' ? 1 : this.memberShares[memberEmail] || 1
       };
     });
+
+    
   
     const expenseData = {
       paidBy: this.expense.paidBy,
@@ -127,7 +119,8 @@ export class ExpenseModalComponent implements OnInit {
       simplifyCurrency: this.expense.currency,
       splitBy: this.expense.splitBy, 
       title: this.expense.title,
-      groupId: this.groupId
+      groupId: this.groupId,
+      createdBy : this.dataService.currentUserEmail     //expense created by current user
     };
   
     console.log('Expense Data:', expenseData);
@@ -138,6 +131,7 @@ export class ExpenseModalComponent implements OnInit {
         console.log('Expense successfully added:', response);
         this.isSaveDisabled = true;
         alert('Expense added successfully!');
+        this.onAddExpense.emit();
         this.closePopup.emit(); // Close the modal
       },
       error => {

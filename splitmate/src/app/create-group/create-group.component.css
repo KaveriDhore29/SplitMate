@@ -1,5 +1,64 @@
-body {
-  background-color: black;
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  text-align: center;
+  color: rgb(0, 0, 0);
+  width: 80%;
+  background-color: #0e5149;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  border-radius: 20px;
+}
+
+.login-img{
+  max-width: 85%;
+  height: auto;
+  border-radius: 3rem;
+  margin: 1rem;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 1rem auto;
+}
+
+
+
+.video-container video {
+  width: 100%; 
+  height: auto;
+  border-radius: 10px;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  text-align: left;
+}
+
+.main-heading {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  margin-left: 50px;
+}
+
+.sub-heading {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  margin-right: 10px;
+}
+
+.google-btn {
+  padding: 10px 20px;
   color: white;
   font-size: 1rem;
   text-align: center;
@@ -15,44 +74,30 @@ body {
 .Space{
   color: #1a1a1a;
 }
-img{
-  margin-top: 5rem;
-    margin-left: 1rem;
-}
+
 .container-fluid {
   padding: 0;
   text-align: center;
-  background-color: #0e5149;
-  width: 70%;
-  height: 43rem;
-  margin-top: 10vh;
-  border-radius: 3rem;
+  background-color: black;
+  width:100%;
+  height: 100%;
+  margin-top: 2%;
 }
 
 .form-container {
   width: 100%;
   margin: 5% auto;
   padding: 20px;
-  background-color: #b5ead1;
-  color: black;
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
   border-radius: 12px;
- 
-  margin-left: 21%;
   perspective: 1000px;
-  /* transform: rotateX(5deg) rotateY(5deg);   */
-  transition: transform 0.3s ease;
+  
 }
 
-.form-container:hover {
-  /* transform: rotateX(0deg) rotateY(0deg) scale(1.02);
-  box-shadow: 
-    0 10px 30px #d6f6e7, 
-    /* 0 20px 40px rgba(255, 0, 255, 0.3), */
-    /* inset 0 0 30px rgba(0, 0, 0, 0.7); */ 
-}
 
 .form-heading h2 {
-color: #000;
+  color: rgb(0, 0, 0);
   margin-bottom: 20px;
   font-size: 24px;
   font-weight: bold;
@@ -79,7 +124,8 @@ input::placeholder {
 }
 
 .save-group-details {
-  background-image: linear-gradient(to right, #3b8964, #0e5149);
+  background-color: #04AA6D; /* Green */
+  border: none;
   color: white;
   padding: 15px 40px;
   text-align: center;
@@ -100,13 +146,13 @@ input::placeholder {
 .save-button{
   justify-content: center;
   display: flex;
-  transition: all 0.3s ease;
-  /* box-shadow: 0 5px 15px rgba(0, 255, 0, 0.4); */
 }
 
 .save-group-details:hover {
-  transform: scale(1.05);
-  /* box-shadow: 0 8px 20px rgba(0, 255, 0, 0.6); */
+  background-color: #ffffff;
+  color: #04AA6D;
+  border: 2px solid #04AA6D;
+  border-radius: 5%;
 }
 
 .mat-autocomplete-panel {

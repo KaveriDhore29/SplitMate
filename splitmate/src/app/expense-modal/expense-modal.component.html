@@ -29,7 +29,7 @@
         type="number"
         [(ngModel)]="expense.amount"
         name="amount"
-      
+        placeholder="0.00"
       />
     </div>
 
@@ -42,7 +42,7 @@
     name="payer"
   >
     <option *ngFor="let member of membersNames" [value]="member.email">
-      {{ member.name }}
+      {{ member.name ? member.name : member.email }}
     </option>
   </select>
 </div>
@@ -63,57 +63,91 @@
 
    
 
-    <!-- Save and Cancel Buttons -->
-    <button type="button" (click)="addExpenseData()" class="save-button"   [disabled]="isSaveDisabled">Save</button>
+
    
   </form>
+  <div *ngIf="selectedSplitOption">
+      <!-- Select All Checkbox -->
+    <div *ngIf="selectedSplitOption === 'equally'" class="eq-members">
+      <h3>Split Equally</h3>
+      <label class="select-all check-container">
+        <input type="checkbox" [checked]="isAllSelected()" (change)="toggleSelectAll($event)" />
+        Select All
+        <span class="checkmark"></span>
+      </label>
+  
+      <div *ngFor="let member of membersNames" class="member-names">
+        <label class="check-container">
+          <input type="checkbox" [checked]="expense.selectedMembers.includes(member.email)" 
+                 (change)="toggleMemberSelection(member.email, $event)" />
+                 {{ member.name ? member.name : member.email }}
+          <span class="checkmark"></span>
+        </label>
+      </div>
+    </div>
+  
+   
+    <div *ngIf="selectedSplitOption === 'percentage'">
+      <h3>Split by Percentage</h3>
+      <div class="member-percentage-row" *ngFor="let member of membersNames">
+        <div class="member-details">
+          <span class="member-email">{{ member.name ? member.name : member.email }}</span>
+        </div>
+        <div class="input-with-shares">
+          <input
+            type="number"
+            [(ngModel)]="memberPercentages[member.email]"
+            min="0"
+            max="100"
+            class="percentage-input"
+            placeholder="Enter Percentage"
+          />
+        </div>
+        <span class="percent-label">%</span>
+      </div>
+    </div>
+    
+  
+    <div *ngIf="selectedSplitOption === 'shares'">
+      <h3>Split by Shares</h3>
+      <div *ngFor="let member of membersNames" class="member-share-row">
+        <div class="member-details">
+          <span>{{ member.name ? member.name : member.email }}</span>
+        </div>
+        <div class="input-with-shares">
+          <input
+            type="number"
+            [(ngModel)]="memberShares[member.email]"
+            min="0"
+            placeholder="Enter Shares"
+          />
+        </div>
+      </div>
+    </div>
+    
+  
+    <div *ngIf="selectedSplitOption === 'adjustments'">
+      <h3>Adjustments</h3>
+      <div *ngFor="let member of membersNames" class="member-adjustment-row">
+        <div class="member-details">
+          <span>{{ member.name ? member.name : member.email }}</span>
+        </div>
+        <div class="input-with-adjustments">
+          <input
+            type="number"
+            min="0"
+          />
+        </div>
+      </div>
+    </div>
+        <!-- Save and Cancel Buttons -->
+        <button type="button" (click)="addExpenseData()" class="save-button" [disabled]="isSaveDisabled">Split Expense</button>
+  </div>
 </div>
 
 
 <!-- Members Split Options -->
-<div class="members-split-options" *ngIf="selectedSplitOption">
-  <button class="close-btn1" (click)="closeSplitOptions()">&#10006;</button> <!-- Close button -->
 
-  <!-- Select All Checkbox -->
-  <div *ngIf="selectedSplitOption === 'equally'" class="eq-members">
-    <h3 class="split-eq-heading">Split Equally</h3>
-    <label class="select-all check-container">
-      <input type="checkbox" [checked]="isAllSelected()" (change)="toggleSelectAll($event)" />
-      Select All
-      <span class="checkmark"></span>
-    </label>
-
-    <div *ngFor="let member of membersNames" class="member-names">
-      <label class="check-container">
-        <input type="checkbox" [checked]="expense.selectedMembers.includes(member.email)" 
-               (change)="toggleMemberSelection(member.email, $event)" />
-        {{ member.name }} ({{ member.email }})
-        <span class="checkmark"></span>
-      </label>
-    </div>
-  </div>
-
-  <div *ngIf="selectedSplitOption === 'percentage'">
-    <h3>Split by percentage</h3>
-    <label *ngFor="let member of membersNames">
-      <div>{{ member.name }} ({{ member.email }})
-      <input type="number" [(ngModel)]="memberPercentages[member.email]" min="0" max="100" placeholder="Enter Percentage" />
-    </div></label>
-  </div>
-
-  <div *ngIf="selectedSplitOption === 'shares'">
-    <h3>Split by Shares</h3>
-    <label *ngFor="let member of membersNames">
-      <div>{{ member.name }} ({{ member.email }})
-      <input type="number" [(ngModel)]="memberShares[member.email]" min="0" placeholder="Enter Shares" />
-    </div></label>
-  </div>
-
-  <div *ngIf="selectedSplitOption === 'adjustments'">
-    <h3>Split by Adjustments</h3>
-    <div>Adjustment fields go here</div>
-  </div>
-</div>
 
   </div>
 

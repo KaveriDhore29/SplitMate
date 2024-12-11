@@ -1,17 +1,41 @@
-<div class="container">
+<!-- <div class="container">
     <button class="close-btn" (click)="close()">&#10006;</button>
     <div class="form">
         <div *ngFor="let member of memberToAdd; let i = index" class="members-to-add">
            <input
              type="email"
-             placeholder="Enter email to add member"
+             placeholder="Enter email to add"
              [(ngModel)]="memberToAdd[i].email"
              required
            />
-           <button (click)="removeInputBox(i)">&#10006;</button>
+           <button (click)="removeInputBox(i)" class="remove-btn">&#10006;</button>
         </div>
 
-        <a (click)="addInputBox()">+ Add more people</a>
+        <a (click)="addInputBox()" class="add-link">+ Add more people</a>
+        <div class="add-button">
+            <button (click)="addMembers()">Add Members</button>
+        </div>
+    </div>
+</div> -->
+<div class="container">
+    <button class="close-btn" (click)="close()">&#10006;</button>
+    <div class="form">
+        <mat-chip-list>
+            <mat-chip 
+                *ngFor="let member of memberToAdd; let i = index" 
+                removable="true" 
+                (removed)="removeChip(i)">
+                {{ member.email }}
+                <button matChipRemove>&#10006;</button>
+            </mat-chip>
+        </mat-chip-list>
+        <p style="color: red;">{{errorMessage}}</p>
+        <input
+            matInput
+            placeholder="Enter email to add"
+            [(ngModel)]="newEmail"
+            (keydown.enter)="addChip()"
+        />
         <div class="add-button">
             <button (click)="addMembers()">Add Members</button>
         </div>

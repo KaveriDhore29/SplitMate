@@ -8,12 +8,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./create-group.component.css']
 })
 export class CreateGroupComponent implements OnInit {
-  members = [{ username: '', email: '' }]; // Holds additional members
+
+  members = [{ username: '', email: '' }]; 
   groupName: string = '';
   groupType: string = 'Home';
-  createdBy = { username: '', email: '' }; // Stores logged-in user info
-  searchResults: any[] = []; // Stores search results
-  searchQuery: string = ''; // Current search query
+  createdBy = { username: '', email: '' }; 
+  searchResults: any[] = [];
+  searchQuery: string = ''; 
   joinedByLink: boolean = false;
 
   constructor(private http: HttpClient, public router: Router) {}
@@ -29,17 +30,14 @@ export class CreateGroupComponent implements OnInit {
     }
   }
 
-  // Add a new member input box
   addInputBox(): void {
     this.members.push({ username: '', email: '' });
   }
 
-  // Remove a member input box
   removeInputBox(index: number): void {
     this.members.splice(index, 1);
   }
 
-  // Trigger search for matching usernames
   onSearchUsername(event: Event, index: number): void {
     const input = event.target as HTMLInputElement;
     if (input.value) {
@@ -49,7 +47,6 @@ export class CreateGroupComponent implements OnInit {
     }
   }
 
-  // Fetch matching users from the backend
   fetchSearchResults(query: string): void {
     this.http.get<any[]>(`http://localhost:3000/api/search-users-by-username?query=${query}`).subscribe(
       (results) => {
@@ -61,18 +58,17 @@ export class CreateGroupComponent implements OnInit {
     );
   }
 
-  // Select member from search results
   selectMember(selectedUser: { userId: string; username: string; email: string }, index: number): void {
     this.members[index].username = selectedUser.username;
     this.members[index].email = selectedUser.email;
   }
 
-  // Handle group name input change
+
   onGroupNameInput(): void {
     console.log('Group Name Input Changed:', this.groupName);
   }
 
-  // Save the group
+
   saveGroup(): void {
     if (!this.groupName.trim() || !this.createdBy.username || !this.createdBy.email) {
       alert('Please fill the required details');
