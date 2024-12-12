@@ -29,6 +29,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import { EditGroupModalComponent } from './edit-group-modal/edit-group-modal.component'
 import { AuthInterceptorInterceptor } from './auth-interceptor.interceptor';
 import { SettleUpComponent } from './settle-up/settle-up.component';
+import { MyGroupsComponent } from './my-groups/my-groups.component';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { SettleUpComponent } from './settle-up/settle-up.component';
     ExpenseModalComponent,
     LandingPageComponent,
     EditGroupModalComponent,
-    SettleUpComponent
+    SettleUpComponent,
+    MyGroupsComponent
   ],
   imports: [
     BrowserModule,

@@ -28,7 +28,7 @@ export class ExpenseModalComponent implements OnInit {
     paidBy: this.dataService.currentUserEmail.email, 
     equally: true, 
     selectedMembers: [] as string[],
-    splitBy:''
+    splitBy:'equally'
   };
 
   memberShares: { [email: string]: number } = {};

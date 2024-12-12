@@ -5,6 +5,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ErrorComponent } from './error/error.component';
 import { CreateGroupComponent } from './create-group/create-group.component';
 import { MainDashboardComponent } from './main-dashboard/main-dashboard.component';
+import { MyGroupsComponent } from './my-groups/my-groups.component';
 import { FriendDetailsComponent } from './friend-details/friend-details.component';
 import { GroupDetailsComponent } from './group-details/group-details.component';
 import { HomepageComponent } from './homepage/homepage.component';
@@ -39,7 +40,7 @@ const routes: Routes = [
       { path: 'friend-detail', component: FriendDetailsComponent },
       { path: 'group-detail', component: GroupDetailsComponent },
       { path: 'group-detail/:id', component: GroupDetailsComponent },
-      
+      { path: 'all-groups', component: MyGroupsComponent },
     ],
   },
   { path: 'create-group/new', component: CreateGroupComponent, canActivate: [AuthGuard] },
