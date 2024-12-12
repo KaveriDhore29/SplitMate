@@ -15,7 +15,9 @@ export class EditGroupModalComponent{
  @Input() groupId!: string;
  memberToAdd: { email: string }[] = [];
  newEmail: string = '';
- errorMessage = ''
+ errorMessage = '';
+ @Output() onMemberAdd = new EventEmitter<any>();
+
  constructor(private dataService:DataService){}
 
  addMembers(){
@@ -30,6 +32,7 @@ export class EditGroupModalComponent{
    this.dataService.addMembersToGroup(this.memberToAdd,this.groupId).subscribe(
     response => {
       console.log('Members successfully added:', response);
+      this.onMemberAdd.emit();
       alert(this.memberToAdd[0].email+" added in group");
       this.closeAddMemberPopup.emit(); // Close the modal
     },

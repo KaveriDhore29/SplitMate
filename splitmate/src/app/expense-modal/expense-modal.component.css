@@ -5,20 +5,21 @@
 .popup{
    position: relative;
   border: 1px solid black;
-  width: 40%;
+  width: 45%;
   color: black;
-  height: auto;
+  height: 630px;
   background-color: white;
-  margin: 1%;
+  margin: 25%;
   z-index: 2;
   border-radius: 10px; /* Rounded corners */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
   padding: 20px; /* Inner spacing */
+  overflow: auto;
 }
 
 .members-split-options{
   border: 1px solid black;
-  width: 50%;
+  width: 35%;
   color: black;
   background-color: white;
   margin: 1%;
@@ -83,7 +84,7 @@
   
 }
 .currency select{
-  width: 18%;
+  width: 20%;
   padding: 10px;
   border:none;
   border-bottom: 1px solid #0b8f64;
@@ -93,8 +94,8 @@
   transition: border 0.3s ease;
 }
 .currency input{
-  width: 82%;
-  padding: 10px;
+  width: 80%;
+  padding: 11px;
   border:none;
   border-bottom: 1px solid #0b8f64;
   background: transparent;
@@ -134,12 +135,17 @@
   color: white;
 }
 .save-button{
-  background-color: #0b8f64;
+  background-color: #04AA6D;
   color: white;
   border-radius: 6px;
-  width: 30%;
+  width: 40%;
   height: 40px;
+  border:none   
 }
+.save-button:hover{
+  background-color: #017d50;
+}
+
 .save-button:disabled {
   background-color: #A5D6A7; /* Lighter Green */
   color: #BDBDBD; /* Gray */
@@ -205,7 +211,7 @@
 
 .eq-members{
   text-align: left;
-  font-size: 18px;
+ 
 }
 .member-names{
   margin-bottom: 10px;
@@ -226,7 +232,7 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-
+  font-size: 17px;
 }
 
 .check-container input {
@@ -251,7 +257,7 @@
 }
 
 .check-container input:checked ~ .checkmark {
-  background-color: #2196F3;
+  background-color: #1acc8d;
 }
 
 .checkmark:after {
@@ -275,4 +281,60 @@
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
+
+.member-percentage-row {
+  display: flex; /* Align email, input, and percentage sign horizontally */
+  justify-content: space-between; /* Space out the items */
+  margin-bottom: 10px; /* Space between each member's row */
+  align-items: center; /* Vertically align the elements */
+}
+
+.member-details {
+  flex: 1; /* Let the email take available space */
+}
+
+.input-with-shares {
+  display: flex; /* Ensure the input field stays aligned with the label */
+  align-items: center; /* Center the input vertically with the percentage sign */
+}
+
+.percentage-input {
+  width: 80px; /* Set a fixed width for the input */
+  padding: 5px;
+  text-align: center; /* Center the text inside the input box */
+  margin-right: 5px; /* Space between input and percentage symbol */
+}
+
+.percent-label {
+  font-size: 16px; /* Font size for the percentage sign */
+  margin-left: 5px; /* Space between the input and the percentage sign */
+}
+
+
+.member-share-row {
+  display: flex; /* Display both the email and the input box in one line */
+  justify-content: space-between; /* Space between the name/email and input box */
+  margin-bottom: 10px; /* Space between rows */
+}
+
+.input-with-shares input {
+  width: 100px; /* Set a fixed width for the input */
+  padding: 5px;
+  margin-left: 10px; /* Space between the email and the input */
+}
+.member-adjustment-row {
+  display: flex; /* Display both the email and the input box in one line */
+  justify-content: space-between; /* Space between the name/email and input box */
+  margin-bottom: 10px; /* Space between rows */
+}
+
+
+.input-with-adjustments input {
+  width: 100px; /* Set a fixed width for the input */
+  padding: 5px;
+  margin-left: 10px; /* Space between the email and the input */
+}
+
+
+
 

@@ -10,12 +10,19 @@
           <a [routerLink]="['/dashboard/all-expenses']" routerLinkActive="active" class="side-link">
             <i class="fa-solid fa-money-bill-trend-up"></i> All Expenses
           </a>
+
+          <a [routerLink]="['/dashboard/all-groups']" routerLinkActive="active" class="side-link">
+            <i class="fa-solid fa-solid fa-users"></i> My Groups
+            <a [routerLink]="['/create-group/new']" routerLinkActive="active" class="add-link">+ Add</a>
+          </a>
+          
+
         </div>
       </div>
       <!-- Groups Section -->
-      <div class="section">
+      <!-- <div class="section">
         <div class="d-header">
-          <div> <h3>Groups</h3></div>
+          <div><h3>Groups</h3></div>
           <a [routerLink]="['/create-group/new']" routerLinkActive="active" class="add-link">+ Add</a>
         </div>
         <div class="links">
@@ -23,14 +30,14 @@
             <a
               [routerLink]="['/dashboard/group-detail', group.groupId]"
               routerLinkActive="active"
-              class="side-link">
+              class="side-link group-side-link">
               <i class="fa-solid fa-users-line"></i>{{ group.name }}
             </a>
           </div>
         </div>
-      </div>
+      </div> -->
       <!-- Friends Section -->
-      <div class="section">
+      <!-- <div class="section">
         <div class="d-header">
        <div><h3>Friends</h3> </div>
           <a href="javascript:void(0)" class="add-link">+ Add</a>
@@ -43,7 +50,7 @@
             <i class="fas fa-user"></i> Friend 2
           </a>
         </div>
-      </div>
+      </div> -->
     </div>
     <!-- Main Dashboard Section -->
     <div class="col-10 main-dashboard">

@@ -1,0 +1,11 @@
+
+<div class="links">
+    <div *ngFor="let group of groupDetails">
+      <a
+        [routerLink]="['/dashboard/group-detail', group.groupId]"
+        routerLinkActive="active"
+        class="side-link group-side-link">
+        {{ group.name }}
+      </a>
+    </div>
+  </div>

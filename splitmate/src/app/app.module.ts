@@ -28,6 +28,8 @@ import {MatCardModule} from '@angular/material/card';
 import {MatRadioModule} from '@angular/material/radio';
 import { EditGroupModalComponent } from './edit-group-modal/edit-group-modal.component'
 import { AuthInterceptorInterceptor } from './auth-interceptor.interceptor';
+import { SettleUpComponent } from './settle-up/settle-up.component';
+import { MyGroupsComponent } from './my-groups/my-groups.component';
 
 
 @NgModule({
@@ -47,7 +49,9 @@ import { AuthInterceptorInterceptor } from './auth-interceptor.interceptor';
     HomepageComponent,
     ExpenseModalComponent,
     LandingPageComponent,
-    EditGroupModalComponent
+    EditGroupModalComponent,
+    SettleUpComponent,
+    MyGroupsComponent
   ],
   imports: [
     BrowserModule,

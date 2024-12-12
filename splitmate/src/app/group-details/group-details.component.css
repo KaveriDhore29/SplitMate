@@ -25,8 +25,9 @@
 }
 
 .member-details{
-  background-color: white;
+  /* background-color: white; */
   padding: 20px;
+  background-color: #f6fdfb;
   li{
       list-style-type: none;
       padding: 2px;
@@ -45,6 +46,7 @@
 }
 
 .member-list li{
+  color: #008080;
   cursor: pointer;
   font-size: 16px;
   i{
@@ -64,19 +66,18 @@
   font-size: 1em;
   font-weight: 600;
   border-radius: 5px;
-  border: none;
   transition: all 0.3s ease;
   cursor: pointer;
 }
 
-.group-details-header .btn-danger {
-  background-color: #dc3545;
-  color: #fff;
+ .group-details-header .btn-danger {
+  border:1px solid #dc3545;
+  color: #dc3545;
 }
 
 .group-details-header .btn-success {
-  background-color: #28a745;
-  color: #fff;
+  border:1px solid #28a745;
+  color: #28a745;
 }
 
 /* Hover Effects */
@@ -91,7 +92,7 @@
 
 .group-details-header .btn-success:hover {
   background-color: #218838;
-}
+} 
 
 /* Responsive Design */
 @media (max-width: 768px) {
@@ -134,11 +135,10 @@
 
 /* Individual Expense Item */
 .expense-item {
-  display: flex
-  ;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
 }
 
 /* Expense Title Styling */
@@ -155,11 +155,7 @@
   color: #dc3545; /* Red for owed amount */
 }
 
-/* Hover Effect for Items */
-/* .expense-item:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
-} */
+
 
 /* Responsive Design */
 @media (max-width: 768px) {
@@ -176,8 +172,6 @@
 }
 
 
-
-
 /* Centered Modal */
 .modal-container {
   position: fixed;
@@ -189,15 +183,18 @@
 }
 
 .add-members-link{
+  color: black;
   cursor: pointer;
-  position: relative;
-  right: 59px;
-  bottom: -23px;
   margin-bottom: 50px;
+  font-weight: 500;
+  text-decoration: underline;
   &:hover{
-    color:#218838
+    color:#008035
   }
+
 }
+
+
 
 
 
