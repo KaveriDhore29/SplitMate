@@ -31,11 +31,28 @@
 }
 
 .group-detail-card{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   padding: 1%;
   height: 30vh;
   width:100%;
   border-radius: 10px;
   background-color: white;
+  text-align: center;
+}
+
+.group-detail-card .group-name{
+  color: #008081;
+  font-weight:bold;
+  font-size: 24px;
+}
+
+.created-details{
+  color: #008081;
+  margin-bottom: 20px;
 }
 
 .avatar {
@@ -63,11 +80,13 @@
 }
 
 .add-btn{
-  background-color: transparent;
-  color: #008081;
-  border:1px solid #008081;
   border-radius: 50px;
-  padding: 2% 4%;
+  margin-top: 9%;
+  width: max-content;
+  background-color:#5ac5a7;
+  color: white;
+  border: none;
+  padding: 8px 12%;
 }
 .add-btn:hover{
   background-color:#008081;
