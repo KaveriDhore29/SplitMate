@@ -164,18 +164,17 @@
 .nav-link {
   padding: 10px 20px;
   border: 1px solid #4fab91;
-  color: #008081;
+  color:#5ac5a7;
   border: none;
 }
 .nav-link:hover {
-  color: #008081;
-  border-bottom: 1px solid #008081;
+  color:#5ac5a7;
+  border-bottom: 1px solid #5ac5a7;
 }
 
 .nav-link.active {
-  color:#5ac5a7;
-  border-bottom: 1px solid #5ac5a7;
-
+  color: #008081;
+  border-bottom: 1px solid #008081;
 }
 
 .tab-content {
