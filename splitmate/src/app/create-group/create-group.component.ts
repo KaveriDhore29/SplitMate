@@ -2,19 +2,25 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
+// Define the member type
+interface Member {
+  username: string;
+  email: string;
+}
+
 @Component({
   selector: 'app-create-group',
   templateUrl: './create-group.component.html',
-  styleUrls: ['./create-group.component.css']
+  styleUrls: ['./create-group.component.css'],
 })
 export class CreateGroupComponent implements OnInit {
-
-  members = [{ username: '', email: '' }]; 
+  // Define members as an array of Member objects
+  members: Member[] = []; // Now explicitly typed
   groupName: string = '';
   groupType: string = 'Home';
-  createdBy = { username: '', email: '' }; 
+  createdBy: Member = { username: '', email: '' }; // Typed createdBy object
   searchResults: any[] = [];
-  searchQuery: string = ''; 
+  searchQuery: string = '';
   joinedByLink: boolean = false;
 
   constructor(private http: HttpClient, public router: Router) {}
@@ -27,6 +33,11 @@ export class CreateGroupComponent implements OnInit {
         username: userPayload.name,
         email: userPayload.email,
       };
+      // Add logged-in user as the first member
+      this.members.push({
+        username: this.createdBy.username,
+        email: this.createdBy.email,
+      });
     }
   }
 
@@ -38,39 +49,60 @@ export class CreateGroupComponent implements OnInit {
     this.members.splice(index, 1);
   }
 
-  onSearchUsername(event: Event, index: number): void {
-    const input = event.target as HTMLInputElement;
-    if (input.value) {
-      this.fetchSearchResults(input.value);
+  onSearchUsername(): void {
+    if (this.searchQuery.length > 0) {
+      this.fetchSearchResults(this.searchQuery);
     } else {
-      this.searchResults = [];
+      this.searchResults = []; // Clear results if query is empty
     }
   }
 
   fetchSearchResults(query: string): void {
-    this.http.get<any[]>(`http://localhost:3000/api/search-users-by-username?query=${query}`).subscribe(
-      (results) => {
-        this.searchResults = results;
-      },
-      (error) => {
-        console.error('Error fetching search results:', error);
+    this.http
+      .get<any[]>(
+        `http://localhost:3000/api/search-users-by-username?query=${query}`
+      )
+      .subscribe(
+        (results) => {
+          this.searchResults = results;
+        },
+        (error) => {
+          console.error('Error fetching search results:', error);
+        }
+      );
+  }
+
+  selectMember(selectedUser: {
+    userId: string;
+    username: string;
+    email: string;
+  }): void {
+    // Prevent adding the logged-in user again
+    if (selectedUser.username !== this.createdBy.username) {
+      const existingMember = this.members.find(
+        (member) => member.username === selectedUser.username
+      );
+      if (!existingMember) {
+        this.members.push({
+          username: selectedUser.username,
+          email: selectedUser.email,
+        });
       }
-    );
+    }
+    this.searchQuery = ''; // Clear search field after selection
+    this.searchResults = []; // Clear suggestions after selection
   }
 
-  selectMember(selectedUser: { userId: string; username: string; email: string }, index: number): void {
-    this.members[index].username = selectedUser.username;
-    this.members[index].email = selectedUser.email;
+  removeMember(index: number): void {
+    this.members.splice(index, 1);
   }
-
-
-  onGroupNameInput(): void {
-    console.log('Group Name Input Changed:', this.groupName);
-  }
-
 
   saveGroup(): void {
-    if (!this.groupName.trim() || !this.createdBy.username || !this.createdBy.email) {
+    if (
+      !this.groupName.trim() ||
+      !this.createdBy.username ||
+      !this.createdBy.email
+    ) {
       alert('Please fill the required details');
       return;
     }
@@ -93,14 +125,18 @@ export class CreateGroupComponent implements OnInit {
       createdBy: this.createdBy,
     };
 
-    this.http.post('http://localhost:3000/api/create-group', groupData, { withCredentials: true }).subscribe(
-      (response) => {
-        alert('Group created successfully!');
-        this.router.navigate(['dashboard/group-detail']);
-      },
-      (error) => {
-        console.error('Error creating group:', error);
-      }
-    );
+    this.http
+      .post('http://localhost:3000/api/create-group', groupData, {
+        withCredentials: true,
+      })
+      .subscribe(
+        (response) => {
+          alert('Group created successfully!');
+          this.router.navigate(['dashboard/group-detail']);
+        },
+        (error) => {
+          console.error('Error creating group:', error);
+        }
+      );
   }
 }
