@@ -6,14 +6,15 @@
 
 .row {
   /* border: 2px solid darkblue;
-  background-color: lightblue; */
-  margin: 10px 0; 
+  background-color: lightblue;
+  margin: 10px 0;  */
   padding: 10px;
 }
 
 .expense-summary-div{
   background-color: white;
   border-radius: 10px;
+  margin:10px
 }
 
 .col {
@@ -52,7 +53,8 @@
 
 .created-details{
   color: #008081;
-  margin-bottom: 20px;
+  margin-bottom: 14px;
+  margin-top: 20px;
 }
 
 .avatar {
@@ -63,12 +65,17 @@
 }
 
 .profile-container {
- display:flex;
-  width: 40px; 
+  display: flex;
+      width: 15%;
+}
+
+.add-member-btn{
+  margin-right: 2rem;
+
 }
 
 .profile-icon {
-  width: 30px; 
+  width: 15px; 
   border-radius: 50%; 
   background-color: transparent; 
 }
@@ -81,22 +88,24 @@
 
 .add-btn{
   border-radius: 50px;
-  margin-top: 9%;
+  margin-top: 30%;
   width: max-content;
   background-color:#5ac5a7;
   color: white;
   border: none;
   padding: 8px 12%;
 }
+
 .add-btn:hover{
   background-color:#008081;
   color: white;
 }
 
 .summary-heading{
-  text-align: left;
-  position: relative;
-  left:3%;
+  text-align: center;
+  color: #008081;
+  font-weight: bold;
+  font-size: 24px;
 }
 
 .summary-btns{
@@ -107,6 +116,11 @@
   padding: 8px 4%;
   margin: 1%;
   margin-top:3%
+}
+
+.summary-btns:hover{
+  background-color:#008081;
+  color: white;
 }
 
 
@@ -159,8 +173,6 @@
 }
 
 .nav-link.active {
-  font-weight: bold;
-  /* background-color: #5ac5a7; */
   color:#5ac5a7;
   border-bottom: 1px solid #5ac5a7;
 
@@ -204,7 +216,13 @@
 .expense-item {
   display: flex;
   justify-content: space-between;
-  padding: 10px 15px;
+  padding: 5px 10px;
+}
+
+.expense-summary:hover{
+  background-color: #5ac5a7;
+  color: white;
+  cursor: pointer;
 }
 
 

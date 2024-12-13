@@ -2,7 +2,7 @@
  <div class="row">
   <div class="col">
     <div class="group-detail-card">
-       <h2 class="group-name" *ngIf="groupName">{{groupName | uppercase}} </h2>
+       <h2 class="group-name" *ngIf="groupName">{{groupName}} </h2>
        <span class="created-details" *ngIf="this.groupDetails[0].createdBy && this.groupDetails[0].createdAt"> Created on: {{this.groupDetails[0].createdAt | date}}   by {{this.groupDetails[0].createdBy}}</span>
        
        <div class="profile-container">
@@ -21,7 +21,7 @@
       </div>
        
       <div class="add-member-btn">
-        <button  (click)="showAddmembersPopup = true"  class="add-btn">Add Members</button>
+        <button  (click)="showAddmembersPopup = true"  class="add-btn">  Add Members</button>
       </div>
       
     </div>
