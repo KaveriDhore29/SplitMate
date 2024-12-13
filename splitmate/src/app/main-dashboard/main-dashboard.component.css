@@ -1,11 +1,6 @@
 
 .container{
-<<<<<<< Updated upstream
-  background-color: #F4F6F8;
-  margin: 1rem;
-=======
   background-color: #f9f9f9;
->>>>>>> Stashed changes
 }
 .row{
   justify-content: space-between;

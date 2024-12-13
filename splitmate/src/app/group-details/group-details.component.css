@@ -25,14 +25,14 @@
 .summary-text{
   /* border:1px solid black; */
   width: 100%;
-    height: 25vh;
+    height: 30vh;
     border-radius: 10px;
     background-color: white;
 }
 
 .group-detail-card{
   padding: 1%;
-  /* border: 1px solid black; */
+  height: 30vh;
   width:100%;
   border-radius: 10px;
   background-color: white;
@@ -40,8 +40,8 @@
 
 .avatar {
   vertical-align: middle;
-  width: 50px;
-  height: 50px;
+  width: 25px;
+  height: 25px;
   border-radius: 50%;
 }
 
@@ -74,14 +74,20 @@
   color: white;
 }
 
+.summary-heading{
+  text-align: left;
+  position: relative;
+  left:3%;
+}
+
 .summary-btns{
   background-color:#5ac5a7;
   color: white;
   border: none;
   border-radius: 50px;
-  padding: 2% 4%;
+  padding: 8px 4%;
   margin: 1%;
-  margin-top:5%
+  margin-top:3%
 }
 
 
@@ -90,10 +96,13 @@
   display: flex;
   gap:30px;
   justify-content: center;
-}
-
-.group-expense-summary-card{
-  /* border:1px solid black */
+  margin-top: 10%;
+  background-color: #CAFFEF;
+  border-radius: 10px;
+  width: 90%;
+  position: relative;
+  margin:auto;
+  padding: 4%;
 }
 
 .balances {
@@ -102,13 +111,13 @@
 
 .balances h3 {
   font-weight: bold;
+  font-size: large;
   margin: 0;
 }
 
 .balances p {
-  margin: 5px 0 0;
-  font-size: 16px;
-  color: #555;
+  font-size: 12px;
+  color: black;
 }
 
 .nav-tabs {
@@ -126,15 +135,15 @@
   border: none;
 }
 .nav-link:hover {
-  color:#4fab91;
-  border-bottom: 1px solid #4fab91;
+  color: #008081;
+  border-bottom: 1px solid #008081;
 }
 
 .nav-link.active {
   font-weight: bold;
   /* background-color: #5ac5a7; */
-  color: #008081;
-  border-bottom: 2px solid #008081;
+  color:#5ac5a7;
+  border-bottom: 1px solid #5ac5a7;
 
 }
 
@@ -165,9 +174,11 @@
   display: flex;
   flex-direction: column;
   padding: 10px 20px;
-  background-color: #f9f9f9;
+  background-color: #ffffff;
   margin-top: 2%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #5ac5a7;
+  border-radius: 10px;
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
 }
 
 
@@ -178,17 +189,8 @@
 }
 
 
-.expense-title {
-  font-size: 1.2em;
-  font-weight: bold;
-  color: #333;
-}
 
 
-.expense-amount {
-  font-weight: 600;
-  color: #dc3545; 
-}
 
 
 
