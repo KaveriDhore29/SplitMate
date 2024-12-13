@@ -17,6 +17,8 @@ export class GroupDetailsComponent implements OnInit{
   showAddmembersPopup: boolean = false;
   groupIds = [];
   groupExpenses : any;
+  activeTab: string = 'expenses'; 
+  
 
   constructor(private route: ActivatedRoute, private dataService: DataService) { }
 
@@ -53,12 +55,16 @@ export class GroupDetailsComponent implements OnInit{
           email: member.email
         }));
          this.groupExpenses = this.groupDetails[0].transactions;
-
+        
       },
       (error) => {
         console.error('Error fetching group details:', error);
       }
     );
+  }
+
+  setActiveTab(tab: string) {
+    this.activeTab = tab;
   }
 }
 

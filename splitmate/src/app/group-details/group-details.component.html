@@ -1,4 +1,128 @@
-<div class="container">
+<div class="container-fluid">
+ <div class="row">
+  <div class="col">
+    <div class="group-detail-card">
+       <h2 class="group-name" *ngIf="groupName">{{groupName}}</h2>
+       <span *ngIf="this.groupDetails[0].createdBy"> Created on: {{this.groupDetails[0].createdAt | date}}   by {{this.groupDetails[0].createdBy}}</span>
+       
+       <div class="profile-container">
+        <div class="profile-icon"><img src="assets/img/img_avatar.png" alt="Avatar" class="avatar">
+       </div>
+        <div class="profile-icon">
+          <img src="assets/img/img_avatar2.png" alt="Avatar" class="avatar">
+        </div>
+        <div class="profile-icon">
+          <img src="assets/img/img_avatar.png" alt="Avatar" class="avatar">
+        </div>
+        <div class="profile-icon">
+          <img src="assets/img/img_avatar2.png" alt="Avatar" class="avatar">
+        </div>
+       <span class="more-text">+10...</span> 
+      </div>
+       
+      <div class="add-member-btn">
+        <button  (click)="showAddmembersPopup = true"  class="add-btn"> + Add Members</button>
+      </div>
+      
+    </div>
+  </div>
+  <div class="col">
+    <div class="summary-text">
+    <div class="group-expense-summary-card">
+     
+      <h1 class="summary-heading">Summary</h1>
+      <div class="expense-table">
+        <div class="balances">
+          <h3>You Owe</h3>
+          <p>$200</p>
+        </div>
+        <div class="balances">
+          <h3>You Owe</h3>
+          <p>$200</p>
+        </div>
+        <div class="balances">
+          <h3>You Owe</h3>
+          <p>$200</p>
+        </div>
+      </div>
+    
+    </div>
+    <div class="buttons">
+      <button (click)="showPopup = true" class="summary-btns">Add Expense</button>
+      <button class="summary-btns">Settle Up</button>
+    </div>
+  </div>
+  </div>
+ 
+</div>
+ <div class="row expense-summary-div">
+  <div class="col-12">
+    <!-- Tabs -->
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="activeTab === 'expenses'" (click)="setActiveTab('expenses')">Group Expenses</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="activeTab === 'balances'" (click)="setActiveTab('balances')">Group Balances</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="activeTab === 'activities'" (click)="setActiveTab('activities')">Activities</a>
+      </li>
+    </ul>
+
+    <!-- Tab Content -->
+    <div *ngIf="activeTab === 'expenses'">
+      <div class="tab-content">
+        <div *ngIf="groupExpenses.length === 0">
+          <p>There is no expense.</p>
+        </div>
+        
+        <div class="expense-summary" *ngFor="let expense of groupExpenses">
+          <div class="expense-item">
+            <div class="expense-title">{{expense.title}}</div>
+            <div class="expense-amount">You Owe: 100</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="activeTab === 'balances'">
+      <div class="tab-content">
+        <!-- Content for Group Balances -->
+        <h4>Group Balances Content</h4>
+        <p>Details for Group Balances...</p>
+      </div>
+    </div>
+    <div *ngIf="activeTab === 'activities'">
+      <div class="tab-content">
+        <!-- Content for Activities -->
+        <h4>Activities Content</h4>
+        <p>Details for Activities...</p>
+      </div>
+    </div>
+  </div>
+
+
+ </div>
+ <div class="overlay" *ngIf="showPopup || showAddmembersPopup"></div>
+ <app-edit-group-modal
+  *ngIf="showAddmembersPopup"
+  class="modal-container"
+  (closeAddMemberPopup)="showAddmembersPopup = false"
+  [groupId]="groupId"
+  (onMemberAdd)="loadGroupDetails()"
+></app-edit-group-modal>
+
+<app-expense-modal
+*ngIf="showPopup"
+class="modal-container"
+[membersNames]="membersNames"
+(closePopup)="showPopup = false"
+(onAddExpense)="loadGroupDetails()"
+></app-expense-modal>
+</div>
+  
+  
+  <!-- <div class="container">
   <div class="row">
     <div class="col-9 main-details">
       <div *ngIf="groupDetails" class="group-details-header">
@@ -13,7 +137,7 @@
     </div>
        
       </div>
- <!-- expense details -->
+
  <div class="expense-summary" *ngFor="let expense of groupExpenses">
  <div class="expense-item" >   
     <div class="expense-title">{{expense.title}}</div>
@@ -40,29 +164,17 @@
     </div>
   </div>
  
-  <div class="overlay" *ngIf="showPopup || showAddmembersPopup"></div>
- 
-  <!-- Popup Component -->
-  <app-expense-modal
-  *ngIf="showPopup"
-  class="modal-container"
-  [membersNames]="membersNames"
-  (closePopup)="showPopup = false"
-  (onAddExpense)="loadGroupDetails()"
-></app-expense-modal>
 
-<!-- Edit Group Modal -->
-<app-edit-group-modal
-  *ngIf="showAddmembersPopup"
-  class="modal-container"
-  (closeAddMemberPopup)="showAddmembersPopup = false"
-  [groupId]="groupId"
-  (onMemberAdd)="loadGroupDetails()"
-></app-edit-group-modal>
+ 
+
+
+
+
+
 
 
 <app-settle-up
 *ngIf = "showSettleUpPopup">
 
 </app-settle-up>
-  </div>
+  </div> -->

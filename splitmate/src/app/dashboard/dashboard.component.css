@@ -1,5 +1,5 @@
 .friends-container {
-  background-color: #f6fdfb;
+  background-color: #f9f9f9;
   /* border: 1px solid #000000; */
   height: 100%;
   padding: 1%;
@@ -71,7 +71,7 @@ text-decoration: underline;
 }
 
 .main-dashboard {
-  background-color: #f6fdfb;
+  background-color: #f9f9f9;
   height: auto;
   /* margin-top: 1rem; */
   border-bottom: none;
