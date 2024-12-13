@@ -63,8 +63,8 @@
 --------------------------------------------------------------*/
 body {
   color: var(--default-color);
-  background-color: var(--background-color);
- 
+  /* background-color: var(--background-color); */
+  background-color: #f6fdfb;
 }
 
 a {

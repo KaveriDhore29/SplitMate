@@ -1,11 +1,34 @@
-
-<div class="links">
-    <div *ngFor="let group of groupDetails">
-      <a
-        [routerLink]="['/dashboard/group-detail', group.groupId]"
-        routerLinkActive="active"
-        class="side-link group-side-link">
-        {{ group.name }}
-      </a>
+<!-- <div class="row">
+  <div class="col-sm-4" *ngFor="let group of groupDetails">
+    <div class="card">
+      <figure class="card-image">
+        <img
+          src="https://images.unsplash.com/photo-1494253109108-2e30c049369b?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTYyNDcwMTUwOQ&ixlib=rb-1.2.1&q=85"
+          alt="An orange painted blue, cut in half laying on a blue background"
+        />
+      </figure>
+      <div class="card-header">
+        <a href="#">{{ group.name }}</a>
+      </div>
     </div>
   </div>
+</div> -->
+
+
+<div class="row">
+  <div class="col-sm-4" *ngFor="let group of groupDetails">
+    <div class="card">
+      <figure class="card-image">
+        <img
+          [src]="getInitials(group.name)"
+          alt="Initials for {{ group.name }}"
+        />
+      </figure>
+      <div class="card-header">
+        <a [routerLink]="['/dashboard/group-detail', group.groupId]"
+              routerLinkActive="active"
+              class="side-link group-side-link">{{ group.name }}</a>
+      </div>
+    </div>
+  </div>
+</div>
