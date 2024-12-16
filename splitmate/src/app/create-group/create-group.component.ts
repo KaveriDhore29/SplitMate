@@ -132,7 +132,7 @@ export class CreateGroupComponent implements OnInit {
       .subscribe(
         (response) => {
           alert('Group created successfully!');
-          this.router.navigate(['dashboard/group-detail']);
+          this.router.navigate(['dashboard/all-groups']);
         },
         (error) => {
           console.error('Error creating group:', error);

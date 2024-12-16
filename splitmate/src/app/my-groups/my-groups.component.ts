@@ -67,12 +67,12 @@ export class MyGroupsComponent implements OnInit {
     }
 
     // Background color
-    context.fillStyle = '#CAFFEF';
+    context.fillStyle = '#f8f8f8';
     context.fillRect(0, 0, canvas.width, canvas.height);
-
+    
     // Text properties
     context.font = '64px Roboto, "Helvetica Neue", sans-serif'; // Adjust font size for better fit
-    context.fillStyle = '#ccc';
+    context.fillStyle = 'black';
     context.textAlign = 'center';
     context.textBaseline = 'middle';
 

@@ -15,7 +15,10 @@
 </div> -->
 
 
-<div class="row">
+<!-- <div class="row">
+  <div class="add-button-container">
+    <a [routerLink]="['/create-group/new']" routerLinkActive="active" class="add-link"><button class="add-button">Create Group</button></a>
+  </div>
   <div class="col-sm-4" *ngFor="let group of groupDetails">
     <div class="card">
       <figure class="card-image">
@@ -29,6 +32,34 @@
               routerLinkActive="active"
               class="side-link group-side-link">{{ group.name }}</a>
       </div>
+    </div>
+  </div>
+</div> -->
+
+<div class="container">
+  <div class="add-button-container">
+    <a [routerLink]="['/create-group/new']" routerLinkActive="active" class="add-link"><button class="add-button">Create Group</button></a>
+  </div>
+  <div class="row">
+    <div class="col-12 col-sm-6 col-md-4 col-lg-4" *ngFor="let group of groupDetails">
+       <a
+              [routerLink]="['/dashboard/group-detail', group.groupId]"
+              routerLinkActive="active"
+              class="side-link group-side-link">
+      <div class="our-team">
+        
+        <div class="picture">
+          <img [src]="getInitials(group.name)" alt="Initials for {{ group.name }}" />
+        </div>
+        <div class="team-content">
+          <h3 class="name">{{ group.name }}</h3>
+        </div>
+        <ul class="social">
+          Click to view expenses
+        </ul>
+      </div>
+             </a>
+
     </div>
   </div>
 </div>
