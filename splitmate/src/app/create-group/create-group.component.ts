@@ -73,24 +73,51 @@ export class CreateGroupComponent implements OnInit {
   }
 
   selectMember(selectedUser: {
-    userId: string;
+    userId?: string;
     username: string;
     email: string;
   }): void {
-    // Prevent adding the logged-in user again
-    if (selectedUser.username !== this.createdBy.username) {
+    // Check if the user is already in the members list
+    const existingMember = this.members.find(
+      (member) => member.username === selectedUser.username
+    );
+
+    // Add the user if not already present and not the creator
+    if (!existingMember && selectedUser.username !== this.createdBy.username) {
+      this.members.push({
+        username: selectedUser.username,
+        email: selectedUser.email,
+      });
+    }
+
+    // Clear the search field and results
+    this.searchQuery = '';
+    this.searchResults = [];
+  }
+
+  addNonExistentUser(): void {
+    // Add the user entered in the search query as a member
+    if (this.searchQuery.trim()) {
       const existingMember = this.members.find(
-        (member) => member.username === selectedUser.username
+        (member) => member.username === this.searchQuery.trim()
       );
+
       if (!existingMember) {
         this.members.push({
-          username: selectedUser.username,
-          email: selectedUser.email,
+          username: this.searchQuery.trim(),
+          email: '', // Email can be left empty or collected later
         });
+        alert(`Added ${this.searchQuery.trim()} as a new member.`);
+      } else {
+        alert('This user is already added.');
       }
+
+      // Clear the search field and results
+      this.searchQuery = '';
+      this.searchResults = [];
+    } else {
+      alert('Please enter a username to add.');
     }
-    this.searchQuery = ''; // Clear search field after selection
-    this.searchResults = []; // Clear suggestions after selection
   }
 
   removeMember(index: number): void {

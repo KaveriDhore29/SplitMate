@@ -4,60 +4,51 @@
   <div class="container">
     <div class="row">
       <!-- Left Side: Video -->
-      <div class="col video-container">
-        <img src="assets/img/login.avif" class="login-img" alt="">
+      <div class="col-md-6 video-container">
+        <img src="assets/img/login.avif" class="login-img" alt="Login Illustration">
       </div>
 
       <!-- Right Side: Login Form -->
-      <div class="col login-container">
-        <div class="heading">
-          <div class="col-md-8" style="width: 100%;">
-            <div class="form-container">
-              <div class="form-heading">
-                <h2>Create a new group</h2>
-              </div>
+      <div class="col-md-6 login-container">
+        <div class="form-container">
+          <div class="form-heading">
+            <h2>Create a New Group</h2>
+          </div>
 
-              <!-- Group Name -->
-              <div class="group-name">
-                <input type="text" id="group-name" [(ngModel)]="groupName" class="group-name" placeholder="Group Name" />
-              </div>
+          <!-- Group Name -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Group Name</mat-label>
+            <input matInput id="group-name" [(ngModel)]="groupName" placeholder="Enter group name" />
+          </mat-form-field>
 
-              <hr>
-              <div class="group-members" *ngIf="groupName">
-                <div class="group-members-heading">
-                  <h2>GROUP MEMBERS</h2>
-                </div>
+          <hr *ngIf="groupName">
 
-              
+          <!-- Group Members -->
+          <div class="group-members" *ngIf="groupName">
+            <h3>Group Members</h3>
+            <mat-chip-list #chipList aria-label="Group members">
+              <mat-chip *ngFor="let member of members; let i = index" (removed)="removeMember(i)">
+                {{ member.username }}
+                <mat-icon matChipRemove>cancel</mat-icon>
+              </mat-chip>
 
-                <!-- Add Other Members with Material Chips -->
-                <mat-chip-list #chipList aria-label="User selection">
-                  <mat-chip *ngFor="let member of members; let i = index" (removed)="removeMember(i)">
-                    {{ member.username }}
-                    <mat-icon matChipRemove>cancel</mat-icon>
-                  </mat-chip>
+              <input
+                matInput
+                placeholder="Search or add member"
+                [(ngModel)]="searchQuery"
+                (input)="onSearchUsername()"
+                [matAutocomplete]="auto"
+              />
+              <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectMember($event.option.value)">
+                <mat-option *ngFor="let result of searchResults" [value]="result">
+                  {{ result.username }} ({{ result.email }})
+                </mat-option>
+              </mat-autocomplete>
+            </mat-chip-list>
+            <button mat-raised-button color="primary" (click)="addNonExistentUser()">Add Member</button>
+          </div>
 
-                  <input 
-                    matInput 
-                    placeholder="Search users by username or email" 
-                    [(ngModel)]="searchQuery" 
-                    (input)="onSearchUsername()" 
-                    [matAutocomplete]="auto"
-                  />
-                  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectMember($event.option.value)">
-                    <mat-option *ngFor="let result of searchResults" [value]="result">
-                      {{ result.username }} ({{ result.email }})
-                    </mat-option>
-                  </mat-autocomplete>
-                </mat-chip-list>
-
-                <!-- Link to Add More Members -->
-                <!-- <div class="link-to-add-members">
-                  <a (click)="addInputBox()">+ Add a person</a>
-                </div> -->
-              </div>
-
-              <hr *ngIf="groupName">
+          <hr *ngIf="groupName">
 
               <!-- Group Type -->
               <div class="group-type" *ngIf="groupName">
@@ -76,13 +67,15 @@
 
               <hr *ngIf="groupName">
 
-              <!-- Save Button -->
-              <div class="save-button">
-                <button type="button" class="save-group-details" (click)="saveGroup()">Save</button>
-              </div>
-            </div>
+                <!-- Save Button -->
+          <div class="save-button">
+            <button mat-raised-button color="accent" [disabled]="!groupName || members.length === 0" (click)="saveGroup()">
+              Save
+            </button>
           </div>
         </div>
+
+        <!-- Google Sign-In Button -->
         <div id="google-signin-button" class="google-btn"></div>
       </div>
     </div>

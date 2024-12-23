@@ -204,6 +204,10 @@ input::placeholder {
 
 } 
 
+input{
+      border-bottom: 1px solid black;
+}
+
 .mat-form-field input {
   caret-color: #4CAF50;
   color: #4CAF50; /* Ensures the text matches the caret color for a consistent look */
