@@ -183,6 +183,12 @@ img {
 	color: #555;
   }
 
+  .group-info-icons{
+		position: relative;
+		left: -4px;
+		top: 8px;
+  }
+
   .options-menu {
 	position: absolute;
 	top: 40px;

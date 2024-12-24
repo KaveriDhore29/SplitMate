@@ -48,8 +48,8 @@
           <i class="material-icons">more_vert</i>
         </div>
         <div class="options-menu" *ngIf="group.isOptionsMenuOpen">
-          <button (click)="editGroup(group)">Edit Group Details</button>
-          <button (click)="deleteGroup(group)">Delete Group</button>
+          <button (click)="editGroup(group)"><i class="material-icons group-info-icons">edit</i>Edit Group Details</button>
+          <button (click)="deleteGroup(group)"><i class="material-icons group-info-icons">delete</i>Delete Group</button>
         </div>
         <div  (click)="onGroupClick( group.groupId)">
         <div class="picture">

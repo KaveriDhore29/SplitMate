@@ -40,13 +40,10 @@ export class MyGroupsComponent implements OnInit {
     );
 
    
-<<<<<<< Updated upstream
     this.dataService.totalOwed(this.groupIds).subscribe((data: any[]) => {
       this.responseOftotalOwed = data;
       console.log(this.responseOftotalOwed, 'totalowed');
     });
-=======
->>>>>>> Stashed changes
   }
 
   onGroupClick(groupId:any){
