@@ -1,8 +1,14 @@
 .container{
-    border: 1px solid black;
-    width: 40%;
-    background: white;
-    border-radius: 10px;
-    padding: 1%;
-  }
-  
+  border: 1px solid black;
+  width: 40%;
+  background: white;
+  border-radius: 10px;
+  padding: 1%;
+}
+
+.expense-div{
+  background-color: #5ac5a7;
+  color: white;
+  padding: 1%;
+  cursor: pointer;
+}

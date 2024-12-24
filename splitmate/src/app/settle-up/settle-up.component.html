@@ -1,3 +1,8 @@
 <div class="container">
-   settle-up
+   <button class="close-btn" (click)="close()">&#10006;</button>
+ <p> Which expense do you want to settle?</p> 
+   <div class="expense-div" *ngFor="let expense of owedExpenses">
+      You Owe <b>"{{expense.to}}"</b> - <b>"{{expense.currency}} {{expense.amount}}"</b>
+      <button (click)="settleUp(expense.to,expense.amount,expense.currency)">Settle</button>
+   </div>
 </div>

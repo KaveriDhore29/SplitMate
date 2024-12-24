@@ -49,7 +49,7 @@
     </div>
     <div class="buttons">
       <button (click)="showPopup = true" class="summary-btns">Add Expense</button>
-      <button class="summary-btns">Settle Up</button>
+      <button class="summary-btns" (click)="showOwedExpenses()" >Settle Up</button>
     </div>
   </div>
   </div>
@@ -74,7 +74,7 @@
     <div *ngIf="activeTab === 'expenses'">
       <div class="tab-content">
         <div *ngIf="groupExpenses.length === 0">
-          <p>There is no expense.</p>
+          <p>It looks like there are no expenses yet. Click "Add Expense" to create one!</p>
         </div>
         
         <div class="expense-summary" *ngFor="let expense of groupExpenses">
@@ -103,7 +103,18 @@
 
 
  </div>
- <div class="overlay" *ngIf="showPopup || showAddmembersPopup"></div>
+ <div class="overlay" *ngIf="showPopup || showAddmembersPopup || showSettleUpPopup || showAddmembersPopup"></div>
+
+ <app-settle-up
+*ngIf="showSettleUpPopup"
+ (closeSettleUpPopup)="showSettleUpPopup = false"
+ (onSettleUp) = "loadGroupDetails()"
+  class="modal-container"
+  [groupDetails]="groupDetails"
+  [owedExpenses]="owedExpenses"
+  [groupId]="groupId">
+</app-settle-up>
+
  <app-edit-group-modal
   *ngIf="showAddmembersPopup"
   class="modal-container"
@@ -119,6 +130,8 @@ class="modal-container"
 (closePopup)="showPopup = false"
 (onAddExpense)="loadGroupDetails()"
 ></app-expense-modal>
+
+
 </div>
   
   
@@ -173,8 +186,5 @@ class="modal-container"
 
 
 
-<app-settle-up
-*ngIf = "showSettleUpPopup">
 
-</app-settle-up>
   </div> -->

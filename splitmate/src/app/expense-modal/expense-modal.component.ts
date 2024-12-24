@@ -38,6 +38,8 @@ export class ExpenseModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.groupId = this.route.snapshot.paramMap.get('id')!;
+    this.initializeSharesFields();
+    this.initializePercentageFields();
     this.selectAllMembers();
   }
 
@@ -88,33 +90,48 @@ export class ExpenseModalComponent implements OnInit {
 
 
   initializePercentageFields(): void {
-    this.memberPercentages = {}; 
+    this.memberPercentages = {};
     this.membersNames.forEach(member => {
       this.memberPercentages[member.email] = 0; 
     });
   }
-
+  
   initializeSharesFields(): void {
-    this.memberShares = {}; 
+    this.memberShares = {};
     this.membersNames.forEach(member => {
       this.memberShares[member.email] = 0; 
     });
   }
+  
 
 
   addExpenseData(): void {
-    const memberForEqualSplit = this.expense.selectedMembers.map(memberEmail => {
+    const memberData = this.expense.selectedMembers.map(memberEmail => {
+      let division = 1; // Default division for 'equally'
+    
+      if (this.expense.splitBy === 'shares') {
+        division = this.memberShares[memberEmail] || 0; // Use the share value from the input
+      } else if (this.expense.splitBy === 'percentage') {
+        division = this.memberPercentages[memberEmail] || 0; // Use the percentage value from the input
+      }
+    
       return {
         person: memberEmail,
-        division: this.expense.splitBy === 'equally' ? 1 : this.memberShares[memberEmail] || 1
+        division: division
       };
     });
 
-    
+    if (
+      this.expense.splitBy === 'percentage' &&
+      Object.values(this.memberPercentages).reduce((a, b) => a + b, 0) !== 100
+    ) {
+      alert('Total percentage must equal 100.');
+      return;
+    }
   
     const expenseData = {
       paidBy: this.expense.paidBy,
-      members: memberForEqualSplit,
+      members: memberData,
       amount: { value: this.expense.amount, currency: this.expense.currency },
       simplifyCurrency: this.expense.currency,
       splitBy: this.expense.splitBy, 
@@ -133,6 +150,10 @@ export class ExpenseModalComponent implements OnInit {
         alert('Expense added successfully!');
         this.onAddExpense.emit();
         this.closePopup.emit(); // Close the modal
+        console.log('Selected Split Option:', this.selectedSplitOption);
+        console.log('Member Shares:', this.memberShares);
+        console.log('Member Percentages:', this.memberPercentages);
+
       },
       error => {
         console.error('Error adding expense:', error);

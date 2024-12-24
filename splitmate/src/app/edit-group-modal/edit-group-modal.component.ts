@@ -37,7 +37,7 @@ export class EditGroupModalComponent{
       this.closeAddMemberPopup.emit(); // Close the modal
     },
     error => {
-      console.error('Error adding expense:', error);
+      console.error('Error adding members:', error);
       // alert('Failed to add members. Please try again.');
     }
   );

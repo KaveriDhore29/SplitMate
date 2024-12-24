@@ -18,6 +18,8 @@ export class GroupDetailsComponent implements OnInit{
   groupIds = [];
   groupExpenses : any;
   activeTab: string = 'expenses'; 
+  transactions :{from:'',to:'',amount:number;currency:''}[]=  [];
+  owedExpenses :any[] = [];
   
 
   constructor(private route: ActivatedRoute, private dataService: DataService) { }
@@ -55,7 +57,7 @@ export class GroupDetailsComponent implements OnInit{
           email: member.email
         }));
          this.groupExpenses = this.groupDetails[0].transactions;
-        
+        this.transactions = this.groupDetails[0].latestTransactions;
       },
       (error) => {
         console.error('Error fetching group details:', error);
@@ -65,6 +67,14 @@ export class GroupDetailsComponent implements OnInit{
 
   setActiveTab(tab: string) {
     this.activeTab = tab;
+  }
+
+  showOwedExpenses(): void {
+    this.showSettleUpPopup = true;
+
+    //from matlab mein owe kr rhi hu
+    this.owedExpenses = this.transactions.filter(transaction => transaction.from === this.dataService.currentUserEmail.email);
+    console.log("Owed Expenses",this.owedExpenses)
   }
 }
 

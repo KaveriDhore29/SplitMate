@@ -14,11 +14,11 @@ interface Member {
   styleUrls: ['./create-group.component.css'],
 })
 export class CreateGroupComponent implements OnInit {
-  // Define members as an array of Member objects
-  members: Member[] = []; // Now explicitly typed
+  
+  members: Member[] = []; 
   groupName: string = '';
   groupType: string = 'Home';
-  createdBy: Member = { username: '', email: '' }; // Typed createdBy object
+  createdBy: Member = { username: '', email: '' }; 
   searchResults: any[] = [];
   searchQuery: string = '';
   joinedByLink: boolean = false;

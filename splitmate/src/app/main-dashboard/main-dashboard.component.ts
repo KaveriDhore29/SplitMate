@@ -12,7 +12,9 @@ export class MainDashboardComponent implements OnInit {
 
   userProfile:any;
   groupMessage = "Currently, you're not part of any group. Join a group to start managing and splitting expenses with friends!";
-  responseOftotalOwed = {};
+  responseOftotalOwed:{myTotalBalance: number; owedBalance : number; owesBalance : number} = {  myTotalBalance: 0,
+    owedBalance: 0,
+    owesBalance: 0};
   groupDetails : any;
   groupIds : any;
 
@@ -53,9 +55,9 @@ export class MainDashboardComponent implements OnInit {
         this.groupIds = this.groupDetails.map((group: any) => group.groupId);
         console.log('Group IDs:', this.groupIds); 
   
-        // Now call the totalOwed API
+        
         this.dataService.totalOwed(this.groupIds).subscribe(
-          (owedData: any[]) => {
+          (owedData: any) => {
             this.responseOftotalOwed = owedData;
             console.log(this.responseOftotalOwed, "totalowed");
           },
