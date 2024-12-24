@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from '../data.service';
 
@@ -14,6 +14,7 @@ export class MyGroupsComponent implements OnInit {
   groupIds = [];
   responseOftotalOwed: any;
   isOptionsMenuOpen = false;
+  openGroupId: any;
 
   constructor(
     private router: Router,
@@ -47,6 +48,16 @@ export class MyGroupsComponent implements OnInit {
 
   onGroupClick(groupId:any){
     this.router.navigate([`/dashboard/group-detail/${groupId}`])
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    // If the click target is not part of the options menu or the dots icon, close the menu
+    const target = event.target as Element; // Cast to Element
+    const clickedInsideMenu = target.closest('.our-team');
+    if (!clickedInsideMenu) {
+      this.closeAllOptionsMenus();
+    }
   }
 
   getInitials(name: string): string {
@@ -97,14 +108,22 @@ export class MyGroupsComponent implements OnInit {
     console.log('Group Details:', group);
   }
 
-  toggleOptionsMenu(group:any) {
-    this.isOptionsMenuOpen = !this.isOptionsMenuOpen;
-
-    this.groupDetails.forEach((grp:any) => {
-      grp.isOptionsMenuOpen = grp === group ? !grp.isOptionsMenuOpen : false;
-    });
+  toggleOptionsMenu(group: any): void {
+    if (this.openGroupId === group.groupId) {
+      this.closeAllOptionsMenus(); // If the same group is clicked again, close the menu
+    } else {
+      this.openGroupId = group.groupId;
+      group.isOptionsMenuOpen = true; // Open the options menu for the clicked group
+    }
   }
 
+  // Close all options menus
+  closeAllOptionsMenus(): void {
+    this.groupDetails.forEach((group:any) => {
+      group.isOptionsMenuOpen = false; // Close the menu for each group
+    });
+    this.openGroupId = null; // Reset the open group ID
+  }
   editGroup(group:any) {
     console.log('Edit Group Details clicked',group);
   }
@@ -118,4 +137,6 @@ export class MyGroupsComponent implements OnInit {
       console.log('Deleted Group:', group);
     }
   }
+
+
 }
