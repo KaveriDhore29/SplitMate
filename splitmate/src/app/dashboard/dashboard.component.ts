@@ -22,21 +22,21 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
 
     this.currentGroupId = this.route.snapshot.paramMap.get('id')!;
-    this.groupDetails = this.dataService.getGroupDetails().subscribe(
-      (data: any[]) => {
-        this.groupDetails = data; 
-        console.log(this.groupDetails); 
-        this.groupMembersName = this.groupDetails
-        .map((group: any) => 
-          group.members.map((member: any) => member.username)
-        )
-        .flat(); 
-      console.log('Group Members:', this.groupMembersName);   
-      },
-      (error) => {
-        console.error('Error fetching group details:', error);
-      }
-    );
+    // this.groupDetails = this.dataService.getGroupDetails().subscribe(
+    //   (data: any[]) => {
+    //     this.groupDetails = data; 
+    //    // console.log(this.groupDetails,"Printing groupDetails loaded in dashboard"); 
+    //   //   this.groupMembersName = this.groupDetails
+    //   //   .map((group: any) => 
+    //   //     group.members.map((member: any) => member.username)
+    //   //   )
+    //   //   .flat(); 
+    //   // console.log('Group Members:', this.groupMembersName);   
+    //   },
+    //   (error) => {
+    //     console.error('Error fetching group details:', error);
+    //   }
+    // );
     this.groupDetails = this.dataService.getGroupDetails().subscribe(
       (data: any[]) => {
         this.groupDetails = data;   

@@ -10,10 +10,10 @@ import { DataService } from '../data.service';
 export class MyGroupsComponent implements OnInit {
   currentSection: string = 'dashboard/main-dashboard';
   groupDetails: any;
-  groupMembersName = [];
   currentGroupId!: any;
   groupIds = [];
   responseOftotalOwed: any;
+  isOptionsMenuOpen = false;
 
   constructor(
     private router: Router,
@@ -25,35 +25,28 @@ export class MyGroupsComponent implements OnInit {
     this.currentGroupId = this.route.snapshot.paramMap.get('id')!;
     this.groupDetails = this.dataService.getGroupDetails().subscribe(
       (data: any[]) => {
-        this.groupDetails = data;
-        console.log(this.groupDetails);
-        this.groupMembersName = this.groupDetails
-          .map((group: any) =>
-            group.members.map((member: any) => member.username)
-          )
-          .flat();
-        console.log('Group Members:', this.groupMembersName);
-      },
-      (error) => {
-        console.error('Error fetching group details:', error);
-      }
-    );
-
-    this.groupDetails = this.dataService.getGroupDetails().subscribe(
-      (data: any[]) => {
-        this.groupDetails = data;
+        this.groupDetails = Array.isArray(data) ? data : Object.values(data);
         this.groupIds = this.groupDetails.map((group: any) => group.groupId);
-        console.log('Group IDs:', this.groupIds);
+        this.groupDetails.forEach((group : any) => {
+          group.isOptionsMenuOpen = false;
+        });    
       },
+      
       (error) => {
         console.error('Error fetching group details:', error);
       }
+      
     );
 
+   
     this.dataService.totalOwed(this.groupIds).subscribe((data: any[]) => {
       this.responseOftotalOwed = data;
       console.log(this.responseOftotalOwed, 'totalowed');
     });
+  }
+
+  onGroupClick(groupId:any){
+    this.router.navigate([`/dashboard/group-detail/${groupId}`])
   }
 
   getInitials(name: string): string {
@@ -95,12 +88,34 @@ export class MyGroupsComponent implements OnInit {
   }
 
   setSection(section: string) {
-    console.log('Switching to section:', section);
+    // console.log('Switching to section:', section);
     this.currentSection = section;
     this.router.navigate([`/dashboard/${section}`]);
   }
 
   showGroupDetails(group: any): void {
     console.log('Group Details:', group);
+  }
+
+  toggleOptionsMenu(group:any) {
+    this.isOptionsMenuOpen = !this.isOptionsMenuOpen;
+
+    this.groupDetails.forEach((grp:any) => {
+      grp.isOptionsMenuOpen = grp === group ? !grp.isOptionsMenuOpen : false;
+    });
+  }
+
+  editGroup(group:any) {
+    console.log('Edit Group Details clicked',group);
+  }
+
+  deleteGroup(group:any) {
+
+    //below part when response from api will come
+    const index = this.groupDetails.findIndex((g:any) => g.groupId === group.groupId);
+    if (index !== -1) {
+      this.groupDetails.splice(index, 1); 
+      console.log('Deleted Group:', group);
+    }
   }
 }
