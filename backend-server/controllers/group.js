@@ -5,6 +5,7 @@ const { User } = require('../model/users');
 const { client } = require('../data/redis-database');
 const { addMembers } = require('../features/addMembers');
 const { simplifyDebts, mergeTransactions, mergeNetBalances, settle, replaceEmailsWithUsernames } = require('../features/simplify-debts');
+const { deleteGroupService } = require('../features/delete-group'); // Import the service layer
 
 // Controller to create a new group
 const createGroup = async (req, res) => {
@@ -352,6 +353,26 @@ const totalOwed = async(req, res) => {
   }
 }
 
+// Delete group API endpoint
+const deleteGroup = async (req, res) => {
+  try {
+    const { groupId } = req.params; // Get groupId from the request params
+    const members = req.body.members; // Get members from the request body
+
+    if (!members || members.length === 0) {
+      return res.status(400).json({ message: 'No members provided.' });
+    }
+
+    // Call the deleteGroupService with the members and groupId
+    const result = await deleteGroupService(members, groupId);
+
+    // Respond with success message
+    res.status(200).json(result);
+  } catch (error) {
+    console.error("Error in deleteGroup controller:", error);
+    res.status(500).json({ message: error.message });
+  }
+};
 
 
 
@@ -359,4 +380,6 @@ const totalOwed = async(req, res) => {
 
 
 
-module.exports = { createGroup, addMembersToGroup, getGroupDetails, getOneGroupDetail, getAddMembersToGroup, simplification, totalOwed };
+
+
+module.exports = { createGroup, addMembersToGroup, getGroupDetails, getOneGroupDetail, getAddMembersToGroup, simplification, totalOwed, deleteGroup };
