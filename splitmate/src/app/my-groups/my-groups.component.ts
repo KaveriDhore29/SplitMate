@@ -128,15 +128,38 @@ export class MyGroupsComponent implements OnInit {
     console.log('Edit Group Details clicked',group);
   }
 
-  deleteGroup(group:any) {
+  // deleteGroup(group: any) {
+  
+  // //below part when response from api will come
+  // const index = this.groupDetails.findIndex((g:any) => g.groupId === group.groupId);
+  // if (index !== -1) {
+  //   this.groupDetails.splice(index, 1); 
+  //   console.log('Deleted Group:', group);
+  // }
+  // }
 
-    //below part when response from api will come
-    const index = this.groupDetails.findIndex((g:any) => g.groupId === group.groupId);
-    if (index !== -1) {
-      this.groupDetails.splice(index, 1); 
-      console.log('Deleted Group:', group);
-    }
+  deleteGroup(group: any) {
+    const groupId = group.groupId;
+    const members = group.members; // Make sure `members` exists in the group object
+  
+    this.dataService.deleteGroup(groupId, members).subscribe({
+      next: (response) => {
+        console.log('Group deleted successfully:', response);
+  
+        // Remove group from the list
+        const index = this.groupDetails.findIndex((g: any) => g.groupId === groupId);
+        if (index !== -1) {
+          this.groupDetails.splice(index, 1);
+        }
+      },
+      error: (err) => {
+        console.error('Error while deleting group:', err);
+      },
+    });
   }
+  
 
+  
+  
 
 }

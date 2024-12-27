@@ -13,12 +13,17 @@ export class EditGroupModalComponent{
 
  @Output() closeAddMemberPopup = new EventEmitter<void>();
  @Input() groupId!: string;
- memberToAdd: { email: string }[] = [];
+ memberToAdd: { email: string, username:string }[] = [];
  newEmail: string = '';
  errorMessage = '';
  @Output() onMemberAdd = new EventEmitter<any>();
 
+
  constructor(private dataService:DataService){}
+
+ ngOnInit():void{
+  
+ }
 
  addMembers(){
    console.log(this.memberToAdd,"Adding to group");
@@ -43,11 +48,7 @@ export class EditGroupModalComponent{
   );
  }
 
- addInputBox(): void {
-  console.log("add");
-  
-  this.memberToAdd.push({ email: '' });
-}
+
 removeInputBox(index: number): void {
   this.memberToAdd.splice(index, 1);
 }
@@ -59,7 +60,7 @@ close(){
  addChip(): void {
    // Add email only if valid and not empty
    if (this.newEmail.trim() && this.isValidEmail(this.newEmail)) {
-     this.memberToAdd.push({ email: this.newEmail.trim() });
+     this.memberToAdd.push({ email: this.newEmail.trim(),username: '' });
      this.newEmail = ''; // Clear the input field
    } else {
      alert('Please enter a valid email!');
