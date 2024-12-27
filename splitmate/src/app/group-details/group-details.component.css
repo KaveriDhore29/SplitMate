@@ -79,23 +79,18 @@
 .borrowed-expenses {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 15px;
+  gap: 10px;
 }
 
 .expense-item {
   background-color: #fff;
   padding: 15px;
   border-radius: 8px;
-  width: 80%;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  transition: transform 0.2s ease;
 }
 
-.expense-item:hover {
-  transform: scale(1.05);
-}
+
 
 .expense-info {
   display: flex;
@@ -180,6 +175,7 @@ button:hover {
 
 .material-icons:hover{
   cursor:pointer;
+  opacity: 0.8;
 }
 
 .tab-content{
@@ -247,9 +243,7 @@ button:hover {
   background-color: transparent;
   border: 1px solid #388164;
   color: #388164;
-  width: 10%;
-  height: 35px;
-  /* padding: 0px 1%; */
+  padding: 0px 1%;
   border-radius: 50px;
   margin-top:1%;
   margin-right: 2%;
@@ -258,7 +252,6 @@ button:hover {
     color: white;
   }
 }
-
 
 
 .expenses{

@@ -145,6 +145,20 @@ export class MyGroupsComponent implements OnInit {
     this.dataService.deleteGroup(groupId, members).subscribe({
       next: (response) => {
         console.log('Group deleted successfully:', response);
+        this.groupDetails = this.dataService.getGroupDetails().subscribe(
+          (data: any[]) => {
+            this.groupDetails = Array.isArray(data) ? data : Object.values(data);
+            this.groupIds = this.groupDetails.map((group: any) => group.groupId);
+            this.groupDetails.forEach((group : any) => {
+              group.isOptionsMenuOpen = false;
+            });    
+          },
+          
+          (error) => {
+            console.error('Error fetching group details:', error);
+          }
+          
+        );
   
         // Remove group from the list
         const index = this.groupDetails.findIndex((g: any) => g.groupId === groupId);
