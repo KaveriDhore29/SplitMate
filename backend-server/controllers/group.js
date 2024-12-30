@@ -356,8 +356,8 @@ const totalOwed = async(req, res) => {
 // Delete group API endpoint
 const deleteGroup = async (req, res) => {
   try {
-    const { groupId } = req.params; // Get groupId from the request params
-    const members = req.body.members; // Get members from the request body
+    const { groupId } = req.params; 
+    const members = req.body.members; 
 
     if (!members || members.length === 0) {
       return res.status(400).json({ message: 'No members provided.' });

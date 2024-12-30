@@ -4,7 +4,6 @@ const { Group } = require("../model/group");  // Import the Group model
 
 const deleteGroupService = async (members, groupId) => {
   try {
-    // Extract emails from members and filter out invalid emails
     const memberEmails = members.filter((member) => member.email).map((member) => member.email);
     console.log("Extracted member emails:", memberEmails);
 
@@ -14,7 +13,7 @@ const deleteGroupService = async (members, groupId) => {
         const findUser = await User.findOne({ email });
         if (findUser) {
           await User.updateOne(
-            { email },  // Find the user by email
+            { email }, 
             { $pull: { groupIds: groupId } }  
           );
         }
