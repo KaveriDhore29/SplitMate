@@ -79,6 +79,16 @@ export class DataService {
 }
 
 
+deleteGroup(groupId: string, members: any[]): Observable<any> {
+  const payload = { groupId, members };
+  console.log(JSON.stringify(payload),"for delete")
+  return this.http.request<any>('DELETE', `${this.apiUrl}/deleteGroup`, {
+    body: payload,
+    withCredentials: true, // Add this if your backend requires credentials (cookies, etc.)
+  });
+   
+
+
   
 }
 
@@ -94,3 +104,4 @@ export class DataService {
     //     }
     //   );
     // }
+}

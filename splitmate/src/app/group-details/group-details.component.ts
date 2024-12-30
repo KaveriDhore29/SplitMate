@@ -20,7 +20,114 @@ export class GroupDetailsComponent implements OnInit{
   activeTab: string = 'expenses'; 
   transactions :{from:'',to:'',amount:number;currency:''}[]=  [];
   owedExpenses :any[] = [];
-  
+  borrowedExpenses = [
+    { title: 'Dinner with friends', amount: 50, date: '2024-12-12' },
+    { title: 'Concert ticket', amount: 80, date: '2024-12-10' },
+    { title: 'Grocery shopping', amount: 30, date: '2024-12-08' }
+  ];
+
+  selectedExpense: any = null;
+
+  openExpenseModal(expense: any) {
+    this.selectedExpense = expense;
+  }
+
+  closeModal() {
+    this.selectedExpense = null;
+  }
+  updates = [
+    { person: 'Person 1', action: "added expense 'Dinner'", time: '2 hours ago' },
+    { person: 'Person 2', action: 'settled up with Person 4', time: '1 day ago' },
+    { person: 'Person 3', action: "added expense 'Groceries'", time: '3 days ago' },
+    { person: 'Person 5', action: 'joined the group', time: '5 days ago' },
+    { person: 'Person 6', action: 'removed expense "Lunch"', time: '7 days ago' }
+  ];
+  expenses = [
+    {
+      date: new Date(),
+      title: 'Dinner',
+      amount: 1500,
+      paidBy: 'John Doe',
+      borrowed: 500
+    },
+    {
+      date: new Date(),
+      title: 'Groceries',
+      amount: 3000,
+      paidBy: 'Jane Smith',
+      borrowed: 1200
+    },
+    {
+      date: new Date(),
+      title: 'Groceries',
+      amount: 3000,
+      paidBy: 'Jane Smith',
+      borrowed: 1200
+    },
+    {
+      date: new Date(),
+      title: 'Groceries',
+      amount: 3000,
+      paidBy: 'Jane Smith',
+      borrowed: 1200
+    },
+    {
+      date: new Date(),
+      title: 'Groceries',
+      amount: 3000,
+      paidBy: 'Jane Smith',
+      borrowed: 1200
+    },
+    {
+      date: new Date(),
+      title: 'Groceries',
+      amount: 3000,
+      paidBy: 'Jane Smith',
+      borrowed: 1200
+    },
+    {
+      date: new Date(),
+      title: 'Groceries',
+      amount: 3000,
+      paidBy: 'Jane Smith',
+      borrowed: 1200
+    },
+    {
+      date: new Date(),
+      title: 'Groceries',
+      amount: 3000,
+      paidBy: 'Jane Smith',
+      borrowed: 1200
+    },
+    {
+      date: new Date(),
+      title: 'Groceries',
+      amount: 3000,
+      paidBy: 'Jane Smith',
+      borrowed: 1200
+    },
+    {
+      date: new Date(),
+      title: 'Groceries',
+      amount: 3000,
+      paidBy: 'Jane Smith',
+      borrowed: 1200
+    },
+    {
+      date: new Date(),
+      title: 'Groceries',
+      amount: 3000,
+      paidBy: 'Jane Smith',
+      borrowed: 1200
+    },
+    {
+      date: new Date(),
+      title: 'Groceries',
+      amount: 3000,
+      paidBy: 'Jane Smith',
+      borrowed: 1200
+    }
+  ];
 
   constructor(private route: ActivatedRoute, private dataService: DataService) { }
 

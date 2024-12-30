@@ -34,6 +34,8 @@ export class ExpenseModalComponent implements OnInit {
   memberShares: { [email: string]: number } = {};
   memberPercentages: { [email: string]: number } = {};
 
+  memberExpense : [{email:string,divison:number}] = [{email:'',divison:1}];
+
   constructor(private route: ActivatedRoute, public dataService: DataService) {}
 
   ngOnInit(): void {
@@ -106,7 +108,7 @@ export class ExpenseModalComponent implements OnInit {
 
 
   addExpenseData(): void {
-    const memberData = this.expense.selectedMembers.map(memberEmail => {
+    let memberData = this.expense.selectedMembers.map(memberEmail => {
       let division = 1; // Default division for 'equally'
     
       if (this.expense.splitBy === 'shares') {
@@ -120,7 +122,8 @@ export class ExpenseModalComponent implements OnInit {
         division: division
       };
     });
-
+ 
+    console.warn(memberData,"memberdata")
     if (
       this.expense.splitBy === 'percentage' &&
       Object.values(this.memberPercentages).reduce((a, b) => a + b, 0) !== 100

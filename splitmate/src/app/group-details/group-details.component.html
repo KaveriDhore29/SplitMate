@@ -1,4 +1,181 @@
 <div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="header d-flex justify-content-between align-items-center">
+        
+        <div>
+          <h1 class="group-name" *ngIf="groupName">{{ groupName }}</h1>
+          <p>
+            Created on: <b>Dec 12, 2024</b> by <b>Kaveri Dhore</b>
+          </p>
+        </div>
+  
+      
+        <div>
+          <i class="material-icons" title="Add Members" (click)="showAddmembersPopup = true">group_add</i> &nbsp;
+          <i class="settings-icon material-icons" title="Settings">settings</i> &nbsp;
+          <i class="material-icons" title="Delete Group">delete</i>
+       
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+   <div class="col">
+     <div class="group-expense-summary">
+       <h2 class="summary-heading">Summary</h2>
+       <div class="expense-table">
+        <div class="balances">
+          <h3>$200</h3>
+          <p>You Owe</p>
+        </div>
+        <div class="balances">
+          <h3>$200</h3>
+          <p>Owed to you</p>
+        </div>
+        <div class="balances">
+          <h3>$200</h3>
+          <p>Total Balances</p>
+        </div>
+      </div>
+     </div>
+   </div>
+   <div class="col">
+    <div class="recent-updates">
+      <h2 class="summary-heading">Recent Updates</h2>
+      <div *ngFor="let update of updates" class="update-row">
+        <div class="update-info">
+          <strong>"{{ update.person }}"</strong> {{ update.action }} 
+          <span class="update-time">{{ update.time }}</span>
+        </div>
+      </div>
+    </div>
+    
+   </div>
+  
+ </div>
+  <div class="row expense-summary-div">
+   <div class="col-12">
+   
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="activeTab === 'expenses'" (click)="setActiveTab('expenses')">Group Expenses</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="activeTab === 'balances'" (click)="setActiveTab('balances')">Group Balances</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="activeTab === 'settle-up'" (click)="setActiveTab('settle-up')">Settle Up</a>
+      </li>
+    </ul>
+ 
+    <div *ngIf="activeTab === 'expenses'" class="active-tab">
+      <div class="tab-content">
+       <div class="add-expense">
+        <h2 class="expense-heading">Expenses</h2>
+        <button (click)="showPopup = true" class="add-expense-btn">+ Add Expense</button>
+       </div>
+      <div class="group-expenses">
+         <div class="expenses">
+          <div class="ek-expense">
+            <th>Expense Date</th>
+            <th>Title</th>
+            <th>Total Amount</th>
+            <th>Paid By</th>
+            <th>You Borrowed</th>
+          </div>
+           <div class="ek-expense" *ngFor="let expense of expenses">
+            <td>{{ expense.date | date: 'MMM d, y' }}</td>
+            <td>{{ expense.title }}</td>
+            <td>{{ expense.amount | currency }}</td>
+            <td>{{ expense.paidBy }}</td>
+            <td>{{ expense.borrowed | currency }}</td>
+           </div>
+         </div>
+      </div>
+      </div>
+    </div>
+    <div *ngIf="activeTab === 'balances'" class="active-tab">
+      <div class="tab-content">
+   
+        <h4>Group Balances Content</h4>
+        <p>Details for Group Balances... kon kisko kitna owe kr rha hai issi group mein</p>
+      </div>
+    </div>
+    <div *ngIf="activeTab === 'settle-up'" class="active-tab">
+      <div class="tab-content">
+        <div class="settle-up-heading">
+          <h2>Select expense to settle up</h2>
+        </div>
+      
+        <div class="borrowed-expenses">
+          <!-- Example list of borrowed expenses -->
+          <div *ngFor="let expense of borrowedExpenses" class="expense-item" (click)="openExpenseModal(expense)">
+            <div class="expense-info">
+              <span class="expense-title">{{ expense.title }}</span>
+              <span class="expense-amount">{{ expense.amount | currency }}</span>
+            </div>
+          </div>
+        </div>
+      
+        <!-- Modal for expense details -->
+        <div *ngIf="selectedExpense" class="expense-modal">
+          <div class="modal-content">
+            <h3>Expense Details</h3>
+            <p><strong>Title:</strong> {{ selectedExpense.title }}</p>
+            <p><strong>Amount:</strong> {{ selectedExpense.amount | currency }}</p>
+            <p><strong>Date:</strong> {{ selectedExpense.date | date: 'MMM d, y' }}</p>
+            <button (click)="closeModal()">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+   
+   </div>
+ 
+ 
+  </div>
+
+
+  <div class="overlay" *ngIf="showPopup || showAddmembersPopup || showSettleUpPopup || showAddmembersPopup"></div>
+ 
+  <app-settle-up
+ *ngIf="showSettleUpPopup"
+  (closeSettleUpPopup)="showSettleUpPopup = false"
+  (onSettleUp) = "loadGroupDetails()"
+   class="modal-container"
+   [groupDetails]="groupDetails"
+   [owedExpenses]="owedExpenses"
+   [groupId]="groupId">
+ </app-settle-up>
+ 
+  <app-edit-group-modal
+   *ngIf="showAddmembersPopup"
+   class="modal-container"
+   (closeAddMemberPopup)="showAddmembersPopup = false"
+   [groupId]="groupId"
+   (onMemberAdd)="loadGroupDetails()"
+   
+ ></app-edit-group-modal>
+ 
+ <app-expense-modal
+ *ngIf="showPopup"
+ class="modal-container"
+ [membersNames]="membersNames"
+ (closePopup)="showPopup = false"
+ (onAddExpense)="loadGroupDetails()"
+ ></app-expense-modal>
+ 
+ 
+ </div>
+
+
+
+
+
+<!-- <div class="container-fluid">
  <div class="row">
   <div class="col">
     <div class="group-detail-card">
@@ -57,7 +234,7 @@
 </div>
  <div class="row expense-summary-div">
   <div class="col-12">
-    <!-- Tabs -->
+  
     <ul class="nav nav-tabs">
       <li class="nav-item">
         <a class="nav-link" [class.active]="activeTab === 'expenses'" (click)="setActiveTab('expenses')">Group Expenses</a>
@@ -70,7 +247,6 @@
       </li>
     </ul>
 
-    <!-- Tab Content -->
     <div *ngIf="activeTab === 'expenses'">
       <div class="tab-content">
         <div *ngIf="groupExpenses.length === 0">
@@ -87,14 +263,14 @@
     </div>
     <div *ngIf="activeTab === 'balances'">
       <div class="tab-content">
-        <!-- Content for Group Balances -->
+   
         <h4>Group Balances Content</h4>
-        <p>Details for Group Balances...</p>
+        <p>Details for Group Balances... kon kisko kitna owe kr rha hai issi group mein</p>
       </div>
     </div>
     <div *ngIf="activeTab === 'activities'">
       <div class="tab-content">
-        <!-- Content for Activities -->
+  
         <h4>Activities Content</h4>
         <p>Details for Activities...</p>
       </div>
@@ -132,50 +308,15 @@ class="modal-container"
 ></app-expense-modal>
 
 
-</div>
+</div> -->
   
   
-  <!-- <div class="container">
-  <div class="row">
-    <div class="col-9 main-details">
-      <div *ngIf="groupDetails" class="group-details-header">
-    <div><h1 class="g-heading">{{ groupName | uppercase}} </h1></div>
-    <div class="btns">
-      <button class="btn btn-outline-danger" (click)="showPopup = true">
-        Add Expense
-      </button> &nbsp;
-      <button class="btn btn-outline-success" (click)="showSettleUpPopup = true">
-        Settle Up
-      </button>
-    </div>
-       
-      </div>
-
- <div class="expense-summary" *ngFor="let expense of groupExpenses">
- <div class="expense-item" >   
-    <div class="expense-title">{{expense.title}}</div>
-    <div class="expense-amount">You Owe: 100</div>
-  </div>
-</div>
+ 
 
 
 
-    </div>
-    <div class="col-3 member-details">
-      <div class="group-mem-heading">
-        <h2>Group Members</h2>
-      </div>
-      <div class="list-container">
-        <div *ngFor="let member of membersNames" class="member-list">
-          <ul>
-            <li><i class="fa-solid fa-circle-user"></i>&nbsp;{{ member.name ? member.name : member.email }}</li>
-          </ul>
-        </div>
-        <a class="add-members-link" (click)="showAddmembersPopup = true">+ Click here to add members</a>
-      </div>
-    
-    </div>
-  </div>
+
+  
  
 
  
@@ -187,4 +328,3 @@ class="modal-container"
 
 
 
-  </div> -->
