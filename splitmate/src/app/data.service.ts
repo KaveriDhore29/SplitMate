@@ -67,7 +67,16 @@ export class DataService {
       return this.http.post<any>(`${this.apiUrl}/totalOwed`,payload,{
         withCredentials: true,
       });
-    }
+  }
+  
+
+
+  deleteGroup(groupId: string, members: any): Observable<any> {
+  const payload = { groupId, members };
+  return this.http.post<any>(`${this.apiUrl}/deleteGroup`, payload, {
+    withCredentials: true,
+  });
+}
 
 
   
