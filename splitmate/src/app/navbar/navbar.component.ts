@@ -6,36 +6,33 @@ import { log } from 'console';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
+  isDropdownVisible = false;
+  isLoggedIn = false;
+  currentUser = '';
 
-  isDropdownVisible = false; 
-  isLoggedIn = false; 
-  currentUser ='';
-
-  constructor(private router: Router,public authService : AuthService) { }
+  constructor(private router: Router, public authService: AuthService) {}
 
   ngOnInit() {
     this.isLoggedIn = this.authService.checkUserLogin();
-    
+
     const loggedInUser = sessionStorage.getItem('loggedInUser');
     if (loggedInUser) {
       const userPayload = JSON.parse(loggedInUser);
-      this.currentUser= userPayload.name
+      this.currentUser = userPayload.name;
     }
-
   }
-
 
   toggleDropdown() {
     this.isDropdownVisible = !this.isDropdownVisible;
   }
 
   signIn() {
-    this.router.navigate(['/login']).then(()=>{
+    this.router.navigate(['/login']).then(() => {
       window.location.reload();
-   })
+    });
   }
 
   signOut() {
@@ -43,8 +40,8 @@ export class NavbarComponent implements OnInit {
     this.authService.handleSignOut();
   }
 
-  viewProfile() { 
-   alert('View Profile Clicked');
+  viewProfile() {
+    this.router.navigate(['/dashboard/my-profile']);
   }
 
   @HostListener('document:click', ['$event'])
@@ -53,9 +50,12 @@ export class NavbarComponent implements OnInit {
     const dropdown = document.querySelector('.dropdown-menu');
     const profileIcon = document.querySelector('.profile-icon');
 
-    if (this.isDropdownVisible && !dropdown?.contains(target) && !profileIcon?.contains(target)) {
+    if (
+      this.isDropdownVisible &&
+      !dropdown?.contains(target) &&
+      !profileIcon?.contains(target)
+    ) {
       this.isDropdownVisible = false;
     }
   }
-
 }
