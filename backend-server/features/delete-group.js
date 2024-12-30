@@ -15,7 +15,7 @@ const deleteGroupService = async (members, groupId) => {
         if (findUser) {
           await User.updateOne(
             { email },  // Find the user by email
-            { $pull: { groupIds: groupId } }  /
+            { $pull: { groupIds: groupId } }  
           );
         }
       })
