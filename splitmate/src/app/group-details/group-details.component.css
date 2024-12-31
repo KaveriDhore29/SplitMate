@@ -143,19 +143,16 @@
   margin-bottom: 15px;
 }
 
-button {
-  padding: 10px 15px;
-  background-color: #4CAF50;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
+
+.close-btn{
+  bottom: 34px;
+  position: relative;
+  width: 8%;
+  left: 96%;
   cursor: pointer;
+  background: transparent;
+  border: none;
 }
-
-button:hover {
-  background-color: #45a049;
-}
-
 
 .summary-heading{
   font-weight: bolder;
@@ -180,6 +177,68 @@ button:hover {
 .material-icons:hover{
   cursor:pointer;
   opacity: 0.8;
+}
+.paying-members{
+  margin-top: 5%;
+}
+.text-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5%;
+}
+
+.person-name, .action-text{
+  font-size: 16px;
+}
+.money-input{
+  margin-top: 9%;
+}
+
+.settle-heading{
+  font-size: 20px;
+  font-weight: bold;
+  letter-spacing: 0;
+}
+
+.currency{
+    background: transparent;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    width: 18%;
+    height: 3vh;
+}
+
+.amount{
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  background: transparent;
+  &:focus{
+    outline: none;
+  }
+}
+
+.settle-up-btn{
+  margin-top: 10%;
+  background-color: transparent;
+  color: #388164;
+  width: 50%;
+  border: 1px solid #388164;
+  border-radius: 10px;
+  padding: 8px;
+  position: relative;
+  left: 24%;
+  &:hover{
+    background-color:#388164;
+    color: white;
+  }
+}
+
+
+.icon-container i {
+  font-size: 32px;
 }
 
 .tab-content{

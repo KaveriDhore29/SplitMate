@@ -39,7 +39,7 @@ export class DataService {
 
   getGroupDetailById(groupId: string): Observable<any> {
     const payload = {
-      email: this.currentUserEmail,
+      email: this.currentUserEmail.email,
       groupId: groupId,
     };
     return this.http.post<any>(`${this.apiUrl}/get-one-group-detail`, payload);
@@ -63,9 +63,10 @@ export class DataService {
 
   totalOwed(groupIds: any[]) {
     const payload = {
-      email: this.currentUserEmail,
+      email: this.currentUserEmail.email,
       groupIds: groupIds,
     };
+    console.log(JSON.stringify(payload),"totalowed data");
     return this.http.post<any>(`${this.apiUrl}/totalOwed`, payload, {
       withCredentials: true,
     });
@@ -85,14 +86,7 @@ export class DataService {
   //   });
   // }
 
-  // deleteGroup(groupId: string, members: any[]): Observable<any> {
-  //   const payload = { groupId, members };
-  //   console.log(JSON.stringify(payload),"for delete")
-  //   return this.http.request<any>('DELETE', `${this.apiUrl}/deleteGroup`, {
-  //     body: payload,
-  //     withCredentials: true, // Add this if your backend requires credentials (cookies, etc.)
-  //   });
-  // }
+
 
   // getGroupDetails(): Observable<any[]> {
   //   this.http.post('http://localhost:3000/api/get-group-details',this.currentUserEmail,{withCredentials:true} ).subscribe(

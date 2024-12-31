@@ -20,6 +20,7 @@ export class GroupDetailsComponent implements OnInit{
   activeTab: string = 'expenses'; 
   transactions :{from:'',to:'',amount:number;currency:''}[]=  [];
   owedExpenses :any[] = [];
+  currencyOptions = ['INR', 'USD', 'EUR', 'GBP'];
   borrowedExpenses = [
     { title: 'Dinner with friends', amount: 50, date: '2024-12-12' },
     { title: 'Concert ticket', amount: 80, date: '2024-12-10' },

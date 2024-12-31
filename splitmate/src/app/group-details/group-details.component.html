@@ -14,7 +14,7 @@
         <div>
           <i class="material-icons" title="Add Members" (click)="showAddmembersPopup = true">group_add</i> &nbsp;
           <i class="settings-icon material-icons" title="Settings">settings</i> &nbsp;
-          <i class="material-icons" title="Delete Group">delete</i>
+          <!-- <i class="material-icons" title="Delete Group">delete</i> -->
        
         </div>
       </div>
@@ -120,14 +120,48 @@
           </div>
         </div>
       
-        <!-- Modal for expense details -->
+        <!-- Settle Up Modal -->
         <div *ngIf="selectedExpense" class="expense-modal">
           <div class="modal-content">
-            <h3>Expense Details</h3>
-            <p><strong>Title:</strong> {{ selectedExpense.title }}</p>
+            <span class="settle-heading">Record a payment</span><button class="close-btn" (click)="closeModal()">&#10006;</button>
+            <!-- <p><strong>Title:</strong> {{ selectedExpense.title }}</p>
             <p><strong>Amount:</strong> {{ selectedExpense.amount | currency }}</p>
-            <p><strong>Date:</strong> {{ selectedExpense.date | date: 'MMM d, y' }}</p>
-            <button (click)="closeModal()">Close</button>
+            <p><strong>Date:</strong> {{ selectedExpense.date | date: 'MMM d, y' }}</p> -->
+
+
+            <div class="paying-members">
+              <div class="payment-info">
+                <div class="icon-container">
+                  <i class="fa-solid fa-user"></i>&nbsp; &nbsp; &nbsp;
+                  <i class="fa-solid fa-money-bill-trend-up"></i> &nbsp; &nbsp; &nbsp;
+                  <i class="fa-solid fa-user"></i>
+                </div>
+                <div class="text-container">
+                  <div class="person-name">Anuja</div> &nbsp;&nbsp;
+                  <div class="action-text">paid</div> &nbsp;&nbsp;
+                  <div class="person-name">Kaveri</div>
+                </div>
+              </div>
+              
+            </div>
+            <div class="money-input">
+       
+              <select
+                class="currency"
+              >
+                <option *ngFor="let currency of currencyOptions" [value]="currency">
+                  {{ currency }}
+                </option>
+              </select>
+           
+              <input
+                class="amount"
+                type="number"
+            
+           
+              />
+            </div>
+            <button class="settle-up-btn">Settle Payment</button>
           </div>
         </div>
       </div>
