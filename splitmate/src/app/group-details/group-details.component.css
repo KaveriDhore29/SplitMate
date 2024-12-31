@@ -74,43 +74,57 @@
 }
 
 .settle-up-heading {
-  text-align: center;
+  border-bottom: 1px solid black;
+  text-align: left;
   margin-bottom: 20px;
   font-size: 24px;
-  color: #4CAF50;
+  h2{
+    margin: 0;
+    padding: 1%;
+  }
 }
 
 .borrowed-expenses {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  flex-wrap: wrap;
+  gap: 15px;
 }
 
 .expense-item {
-  background-color: #fff;
-  padding: 15px;
-  border-radius: 8px;
+  background-color: #388164;
+  padding: 19px;
+  /* border-radius: 8px; */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   cursor: pointer;
+  width: 24%;
+  color: white;
+  &:hover{
+   opacity: 0.8;
+  }
 }
+
 
 
 
 .expense-info {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  span{
+    margin-bottom: 5px;
+  }
 }
 
 .expense-title {
   font-weight: bold;
   font-size: 18px;
-  color: #333;
 }
 
 .expense-amount {
   font-size: 16px;
-  color: #E91E63;
+  color: #e46262;
+  font-weight: bold;
 }
 
 .expense-modal {
@@ -159,9 +173,7 @@
   font-size: 25px;
 }
 
-.settle-up-heading{
-  border-bottom: 1px solid black;
-}
+
 .active-tab{
   border:1px solid white;
   background-color: white;
