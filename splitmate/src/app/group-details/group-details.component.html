@@ -113,7 +113,8 @@
           <!-- Example list of borrowed expenses -->
           <div *ngFor="let expense of borrowedExpenses" class="expense-item" (click)="openExpenseModal(expense)">
             <div class="expense-info">
-              <span class="expense-title">{{ expense.title }}</span>
+              <!-- <span class="expense-title">{{ expense.title }}</span> -->
+               <span class="settle-up-with">Shravan Shetty</span>
               <span class="expense-amount">{{ expense.amount | currency }}</span>
             </div>
           </div>

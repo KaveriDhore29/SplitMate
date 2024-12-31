@@ -42,28 +42,30 @@
   }
   .expense-table{
     margin-top: 10%;
-    background-color: #CAFFEF;
+    background-color: #388164;
     height:150px;
     border-radius: 10px;
     width: 90%;
     position: relative;
     margin:auto;
+ 
   }
   .expense-table .col{
     margin-top: 37px;
+ 
     h1{
       font-weight: bold;
+      color: white;
     }
     p{
       font-size: 16px;
       font-weight: 500;
       margin-top: -6%;
-      color: #000000a1;
+      color: white;
+
     }
   }
-.expense-table .col h1,p{
-    color: rgb(0, 0, 0);
-  }
+
 th,td{
     border : 1px solid black
 }
