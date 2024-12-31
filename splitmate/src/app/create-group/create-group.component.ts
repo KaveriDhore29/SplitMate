@@ -104,8 +104,8 @@ export class CreateGroupComponent implements OnInit {
 
       if (!existingMember) {
         this.members.push({
-          username: this.searchQuery.trim(),
-          email: '', // Email can be left empty or collected later
+          username: '',
+          email: this.searchQuery.trim(), // Email can be left empty or collected later
         });
         alert(`Added ${this.searchQuery.trim()} as a new member.`);
       } else {
@@ -138,11 +138,6 @@ export class CreateGroupComponent implements OnInit {
       groupName: this.groupName,
       groupType: this.groupType,
       members: [
-        {
-          username: this.createdBy.username,
-          email: this.createdBy.email,
-          joinedByLink: false,
-        },
         ...this.members.map((member) => ({
           username: member.username,
           email: member.email,
