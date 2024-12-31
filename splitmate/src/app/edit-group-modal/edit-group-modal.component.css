@@ -1,5 +1,5 @@
 .container{
-  border: 1px solid black;
+  /* border: 1px solid black; */
   width: 40%;
   background: white;
   border-radius: 10px;
@@ -9,7 +9,7 @@
 
 .members-to-add input{
   border: none;
-  border-bottom: 1px solid #1ACC8D;
+  border-bottom: 1px solid #388164;
   margin-bottom: 12px;
   width:65%;
   &:focus{
@@ -19,7 +19,7 @@
 }
 
 .mat-chip {
- background-color: #1ACC8D;
+ background-color: #388164;
 }
 
 .mat-chip.mat-standard-chip .mat-chip-remove {
@@ -31,7 +31,7 @@
   width: 70%;
   height: 4vh;
   border: none;
-  border-bottom: 1px solid #1ACC8D;
+  border-bottom: 1px solid #388164;
 }
 
 .mat-input-element:focus {
@@ -60,11 +60,14 @@
 }
 
 .add-button button{
-   background-color: #1ACC8D;
+   background-color: #388164;
    color: white;
    border: none;
    margin-top: 25px;
-   width: max-content;
+   width: 29%;
    border-radius: 10px;
-   padding: 5px;
+   padding: 8px;
+   &:hover{
+    opacity: 0.8;
+   }
 }

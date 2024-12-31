@@ -234,8 +234,8 @@
 
 .settle-up-btn{
   margin-top: 10%;
-  background-color: transparent;
-  color: #388164;
+  background-color: #388164;
+  color: white;
   width: 50%;
   border: 1px solid #388164;
   border-radius: 10px;
@@ -243,8 +243,7 @@
   position: relative;
   left: 24%;
   &:hover{
-    background-color:#388164;
-    color: white;
+   opacity: 0.8;
   }
 }
 
