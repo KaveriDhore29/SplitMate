@@ -6,11 +6,13 @@ const { client } = require('../data/redis-database');
 const { addMembers } = require('../features/addMembers');
 const { simplifyDebts, mergeTransactions, mergeNetBalances, settle, replaceEmailsWithUsernames } = require('../features/simplify-debts');
 const { deleteGroupService } = require('../features/delete-group'); // Import the service layer
+const { addInRedis, getFromRedis } = require('../features/redis-crud');
 
 // Controller to create a new group
 const createGroup = async (req, res) => {
     const { groupName, groupType } = req.body;
     let { members, joinedByLink } = req.body;
+    console.log('members ',members);
     const username = req.body.createdBy.username;
     const email = req.body.createdBy.email;
 
@@ -32,12 +34,14 @@ const createGroup = async (req, res) => {
           addSelf = false;
         }
       }
+      console.log('addSelf ',addSelf);
       if(addSelf) members.push(obj);
 
       // Generate a unique groupId
       const groupId = uuidv4();
 
       members = await addMembers(req, res, members, groupId);
+      console.log('updated members ',members);
       // Add the groupId to userdatas concurrently
       let groupIdsOfUser = [];
       let id = [];
@@ -46,7 +50,8 @@ const createGroup = async (req, res) => {
         await User.updateOne({ email: member.email }, { $push: { groupIds: groupId } });
         // Initialize groupIdsOfUser as an empty array
         // Retrieve existing groupIds from the cache
-        id = await client.get(`groupIds:${member.email}`);
+        // id = await client.get(`groupIds:${member.email}`);
+        id = await getFromRedis(`groupIds:${member.email}`);
         groupIdsOfUser = []; // Reset groupIdsOfUser for each member
         // Check if id exists and process it
         if (id) {
@@ -65,7 +70,8 @@ const createGroup = async (req, res) => {
         // Add the new groupId to the array
         groupIdsOfUser.push(groupId);
         // Update the cache with the new groupIds array
-        await client.set(`groupIds:${member.email}`, JSON.stringify(groupIdsOfUser));
+        // await client.set(`groupIds:${member.email}`, JSON.stringify(groupIdsOfUser));
+        await addInRedis(`groupIds:${member.email}`, JSON.stringify(groupIdsOfUser));
       }
 
       // await Promise.all(updatePromises); // Execute all updates concurrently
@@ -81,7 +87,8 @@ const createGroup = async (req, res) => {
 
       // set the group in redis cache
       for(let member of members) {
-        await client.set(`group:${groupId}`, JSON.stringify(newGroup));
+        // await client.set(`group:${groupId}`, JSON.stringify(newGroup));
+        await addInRedis(`group:${groupId}`, JSON.stringify(newGroup));
       }
 
         const groupIdHash = groupId;
@@ -138,7 +145,7 @@ const getGroupDetails = async (req, res) => {
 
     // check if cache has users groupIds
     let allIds = [];
-    let userId = await client.get(`groupIds:${email}`);
+    let userId = await getFromRedis(`groupIds:${email}`);
     if(userId) {
       allIds = JSON.parse(userId);
     }
@@ -151,7 +158,7 @@ const getGroupDetails = async (req, res) => {
     let allGroups = [];
     for (let gId of allIds) {
       // Check Redis cache for group details
-      const cachedGroup = await client.get(`group:${gId}`);
+      const cachedGroup = await getFromRedis(`group:${gId}`);
       if (cachedGroup) {
         allGroups.push(JSON.parse(cachedGroup));
       } else {
@@ -215,7 +222,8 @@ const getOneGroupDetail = async (req, res) => {
 
 
 const getAddMembersToGroup = async (req, res) => {
-  const {members, groupId} = req.body;
+  const {groupId} = req.body;
+  let {members} = req.body;
   console.log('members ',members);
   console.log('groupdId ',groupId);
 
@@ -223,7 +231,7 @@ const getAddMembersToGroup = async (req, res) => {
     return res.status(400).json({error: 'No members to be added'});
   }
   try {
-    await addMembers(req, res, members, groupId);
+    members = await addMembers(req, res, members, groupId);
 
     // Add the groupId to userdatas concurrently
     const updatePromises = members.map(member =>
