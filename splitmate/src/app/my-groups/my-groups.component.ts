@@ -1,6 +1,8 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from '../data.service';
+import { HttpClient } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-my-groups',
@@ -19,7 +21,8 @@ export class MyGroupsComponent implements OnInit {
   constructor(
     private router: Router,
     public dataService: DataService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private http: HttpClient
   ) {}
 
   ngOnInit(): void {
@@ -28,26 +31,24 @@ export class MyGroupsComponent implements OnInit {
       (data: any[]) => {
         this.groupDetails = Array.isArray(data) ? data : Object.values(data);
         this.groupIds = this.groupDetails.map((group: any) => group.groupId);
-        this.groupDetails.forEach((group : any) => {
+        this.groupDetails.forEach((group: any) => {
           group.isOptionsMenuOpen = false;
-        });    
+        });
       },
-      
+
       (error) => {
         console.error('Error fetching group details:', error);
       }
-      
     );
 
-   
     this.dataService.totalOwed(this.groupIds).subscribe((data: any[]) => {
       this.responseOftotalOwed = data;
       console.log(this.responseOftotalOwed, 'totalowed');
     });
   }
 
-  onGroupClick(groupId:any){
-    this.router.navigate([`/dashboard/group-detail/${groupId}`])
+  onGroupClick(groupId: any) {
+    this.router.navigate([`/dashboard/group-detail/${groupId}`]);
   }
 
   @HostListener('document:click', ['$event'])
@@ -73,7 +74,7 @@ export class MyGroupsComponent implements OnInit {
     // Background color
     context.fillStyle = '#f8f8f8';
     context.fillRect(0, 0, canvas.width, canvas.height);
-    
+
     // Text properties
     context.font = '64px Roboto, "Helvetica Neue", sans-serif'; // Adjust font size for better fit
     context.fillStyle = 'black';
@@ -119,61 +120,125 @@ export class MyGroupsComponent implements OnInit {
 
   // Close all options menus
   closeAllOptionsMenus(): void {
-    this.groupDetails.forEach((group:any) => {
+    this.groupDetails.forEach((group: any) => {
       group.isOptionsMenuOpen = false; // Close the menu for each group
     });
     this.openGroupId = null; // Reset the open group ID
   }
-  editGroup(group:any) {
-    console.log('Edit Group Details clicked',group);
-  }
 
-  // deleteGroup(group: any) {
-  
-  // //below part when response from api will come
-  // const index = this.groupDetails.findIndex((g:any) => g.groupId === group.groupId);
-  // if (index !== -1) {
-  //   this.groupDetails.splice(index, 1); 
-  //   console.log('Deleted Group:', group);
-  // }
-  // }
+  editGroup(group: any) {
+    console.log('Edit Group Details clicked', group);
+  }
 
   deleteGroup(group: any) {
     const groupId = group.groupId;
-    const members = group.members; // Make sure `members` exists in the group object
-  
-    this.dataService.deleteGroup(groupId, members).subscribe({
-      next: (response) => {
-        console.log('Group deleted successfully:', response);
-        this.groupDetails = this.dataService.getGroupDetails().subscribe(
-          (data: any[]) => {
-            this.groupDetails = Array.isArray(data) ? data : Object.values(data);
-            this.groupIds = this.groupDetails.map((group: any) => group.groupId);
-            this.groupDetails.forEach((group : any) => {
-              group.isOptionsMenuOpen = false;
-            });    
-          },
-          
-          (error) => {
-            console.error('Error fetching group details:', error);
+    const members = group.members;
+
+    if (!groupId) {
+      console.error('groupId is undefined. Cannot delete group.');
+      return;
+    }
+
+    if (!members || members.length === 0) {
+      console.log('No members provided for deletion.');
+      return;
+    }
+
+    this.dataService.deleteGroup(groupId, members).subscribe(
+      (response) => {
+        console.log('API Response:', response);
+
+        if (response.success) {
+          // Remove the deleted group from the frontend
+          const index = this.groupDetails.findIndex(
+            (g: any) => g.groupId === groupId
+          );
+          if (index !== -1) {
+            this.groupDetails.splice(index, 1);
+            console.log('Deleted Group from frontend:', group);
           }
-          
-        );
-  
-        // Remove group from the list
-        const index = this.groupDetails.findIndex((g: any) => g.groupId === groupId);
-        if (index !== -1) {
-          this.groupDetails.splice(index, 1);
+        } else {
+          console.error('Backend responded with failure:', response.message);
         }
       },
-      error: (err) => {
-        console.error('Error while deleting group:', err);
-      },
-    });
+      (error) => {
+        console.error('Error deleting group from backend:', error);
+      }
+    );
   }
-  
 
-  
-  
+  // deleteGroup(group:any) {
 
+  //   //below part when response from api will come
+  //   const index = this.groupDetails.findIndex((g:any) => g.groupId === group.groupId);
+  //   if (index !== -1) {
+  //     this.groupDetails.splice(index, 1);
+  //     console.log('Deleted Group:', group);
+  //   }
+  // }
+
+  // deleteGroup(group: any) {
+  //   const groupId = group.groupId;
+  //   console.log(groupId);
+  //   const members = group.members;
+  //   console.log(members);
+
+  //   if (!members || members.length === 0) {
+  //     console.log('No members provided for deletion.');
+  //     return;
+  //   }
+
+  //   this.dataService.deleteGroup(groupId, members).subscribe(
+  //     (response) => {
+  //       const index = this.groupDetails.findIndex(
+  //         (g: any) => g.groupId === groupId
+  //       );
+  //       if (index !== -1) {
+  //         this.groupDetails.splice(index, 1);
+  //         console.log('Deleted Group:', group);
+  //       }
+  //     },
+  //     (error) => {
+  //       console.error('Error deleting group:', error);
+  //     }
+  //   );
+  // }
+
+  // deleteGroup(group: any) {
+  //   console.log('Group to be deleted:', group);
+
+  //   const groupId = group.groupId;
+  //   const members = group.members;
+
+  //   if (!groupId) {
+  //     console.error('groupId is undefined. Cannot delete group.');
+  //     return;
+  //   }
+
+  //   if (!members || members.length === 0) {
+  //     console.log('No members provided for deletion.');
+  //     return;
+  //   }
+
+  //   this.dataService.deleteGroup(groupId, members).subscribe(
+  //     (response) => {
+  //       console.log('API Response:', response);
+
+  //       if (response.success) {
+  //         const index = this.groupDetails.findIndex(
+  //           (g: any) => g.groupId === groupId
+  //         );
+  //         if (index !== -1) {
+  //           this.groupDetails.splice(index, 1);
+  //           console.log('Deleted Group from frontend:', group);
+  //         }
+  //       } else {
+  //         console.error('Backend responded with failure:', response.message);
+  //       }
+  //     },
+  //     (error) => {
+  //       console.error('Error deleting group from backend:', error);
+  //     }
+  //   );
+  // }
 }

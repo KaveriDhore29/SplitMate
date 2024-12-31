@@ -12,6 +12,7 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { AuthGuard } from './auth.guard';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { AlreadyLoggedInGuard } from './already-logged-in.guard';
+import { MyProfileComponent } from './my-profile/my-profile.component';
 
 const routes: Routes = [
   {
@@ -41,10 +42,15 @@ const routes: Routes = [
       { path: 'group-detail', component: GroupDetailsComponent },
       { path: 'group-detail/:id', component: GroupDetailsComponent },
       { path: 'all-groups', component: MyGroupsComponent },
+      { path: 'my-profile', component: MyProfileComponent },
     ],
   },
-  { path: 'create-group/new', component: CreateGroupComponent, canActivate: [AuthGuard] },
-  { path: '**', redirectTo: 'homepage' }, 
+  {
+    path: 'create-group/new',
+    component: CreateGroupComponent,
+    canActivate: [AuthGuard],
+  },
+  { path: '**', redirectTo: 'homepage' },
 ];
 
 @NgModule({

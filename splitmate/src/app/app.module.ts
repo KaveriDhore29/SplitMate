@@ -30,6 +30,7 @@ import { EditGroupModalComponent } from './edit-group-modal/edit-group-modal.com
 import { AuthInterceptorInterceptor } from './auth-interceptor.interceptor';
 import { SettleUpComponent } from './settle-up/settle-up.component';
 import { MyGroupsComponent } from './my-groups/my-groups.component';
+import { MyProfileComponent } from './my-profile/my-profile.component';
 
 
 @NgModule({
@@ -51,7 +52,8 @@ import { MyGroupsComponent } from './my-groups/my-groups.component';
     LandingPageComponent,
     EditGroupModalComponent,
     SettleUpComponent,
-    MyGroupsComponent
+    MyGroupsComponent,
+    MyProfileComponent
   ],
   imports: [
     BrowserModule,
