@@ -134,13 +134,17 @@ selectMember(selectedUser: { username: string; email: string }): void {
       username: selectedUser.username || '', // Use username if available
       email: selectedUser.email,
     });
+    this.newmemberToAdd.push({
+      username: selectedUser.username || '', // Use username if available
+      email: selectedUser.email,
+    });
     this.errorMessage = ''; // Clear error message if any
   } else {
     this.errorMessage = 'This member is already added.';
     setTimeout(() => {
       this.errorMessage = '';
     }, 3000);  // 3000ms = 3 seconds
-  
+   
   }
 
   // Clear input and search results
