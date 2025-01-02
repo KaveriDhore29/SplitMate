@@ -88,7 +88,7 @@
             <div
               class="ek-expense"
               *ngFor="let expense of expenses"
-              (click)="openExpenseDetail"
+              (click)="showExpenseDetailModal = true"
             >
               <td>{{ expense.date | date: 'MMM d, y' }}</td>
               <td>{{ expense.title }}</td>
@@ -237,11 +237,9 @@
 
 
 <app-expense-detail-modal
-*ngIf="openExpenseDetail"
+*ngIf="showExpenseDetailModal"
  class="modal-container"
-  [expense]="selectedExpense"
-  [showModal]="showExpenseModal"
-  (closeModalEvent)="closeExpenseModal()"
+ (closeExpenseDetailPopup)="showExpenseDetailModal = false"
 ></app-expense-detail-modal>
  
  </div>

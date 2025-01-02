@@ -1,12 +1,45 @@
-<!-- <div class="modal" *ngIf="showModal">
-  <div class="modal-content">
-    <span class="close-btn" (click)="closeModal()">&#10006;</span>
-    <h2>Expense Details</h2>
-    <p><strong>Title:</strong> {{ expense.title }}</p>
-    <p><strong>Amount:</strong> {{ expense.amount | currency }}</p>
-    <p><strong>Date:</strong> {{ expense.date | date: 'MMM d, y' }}</p>
-    <p><strong>Paid By:</strong> {{ expense.paidBy }}</p>
-    <p><strong>You Borrowed:</strong> {{ expense.borrowed | currency }}</p>
-  </div>
-</div> -->
-jjjj
+
+<div class="expense-modal">
+          <div class="modal-content">
+         <span class="settle-heading"></span><button class="close-btn" (click)="closeModal()">&#10006;</button>
+    
+
+      <div class="modal-body">
+        <div class="column" id="main">
+          <h2>Food </h2>
+          <h1><b>$1500</b> </h1>
+          <h5>Created by <b>xyz</b> on <b>January 01, 2025</b></h5>
+         <ul>
+    <li style="--accent-color:#60c5a6">
+        <div class="icon"><i class="fa-brands fa-codepen"></i></div>
+        <!-- <div class="title">Paid by - Harleen</div>
+        <div contenteditable>
+          <div>
+            Finish the codepen you started
+          </div>
+          <div>
+            Drink more coffee
+          </div>
+        </div> -->
+    </li>
+    <div class="ul-div">
+      <div class="text-expense-big">
+        You paid $1500
+      </div>
+      <div class="text-expense">
+        You owe $500
+      </div>
+      <div class="text-expense">
+        Anuja owe $500
+      </div>
+       <div class="text-expense">
+        Kaveri owe $500
+      </div>
+    </div>
+</ul>
+        </div>
+
+      </div>
+      </div>
+    
+          </div>

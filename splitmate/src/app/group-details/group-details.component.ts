@@ -13,6 +13,7 @@ export class GroupDetailsComponent implements OnInit {
   groupName: string = '';
   membersNames: any[] = [];
   showPopup: boolean = false;
+  showExpenseDetailModal: boolean = false;
   showSettleUpPopup = false;
   showAddmembersPopup: boolean = false;
   groupIds = [];
@@ -36,6 +37,7 @@ export class GroupDetailsComponent implements OnInit {
   closeModal() {
     this.selectedExpense = null;
   }
+
   updates = [
     {
       person: 'Person 1',
@@ -145,7 +147,6 @@ export class GroupDetailsComponent implements OnInit {
       borrowed: 1200,
     },
   ];
-  showExpenseModal: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -208,12 +209,11 @@ export class GroupDetailsComponent implements OnInit {
 
   openExpenseDetail() {
     console.log('Opening expense detail:');
-    this.showExpenseModal = true;
+    this.showExpenseDetailModal = true;
   }
 
-  closeExpenseModal() {
-    this.showExpenseModal = false;
-    this.selectedExpense = null;
+  closeExpenseDetailPopup() {
+    this.showExpenseDetailModal = false;
   }
 
   onExpenseSelect(expense:any): void{
