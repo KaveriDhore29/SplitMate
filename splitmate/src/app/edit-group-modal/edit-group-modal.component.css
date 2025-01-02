@@ -71,3 +71,13 @@
     opacity: 0.8;
    }
 }
+
+.mat-form-field input {
+  caret-color: #4CAF50;
+  color: #4CAF50; /* Ensures the text matches the caret color for a consistent look */
+}
+
+.mat-form-field input::selection {
+  background-color: #A5D6A7; /* Optional: Changes the highlight color when text is selected */
+  color: #000; /* Optional: Changes the color of the selected text */
+}

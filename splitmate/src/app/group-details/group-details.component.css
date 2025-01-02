@@ -265,6 +265,9 @@
 }
 .nav-link{
   color: white;
+  &:hover{
+    border-radius: 0;
+  }
 }
 
 .expense-table {
@@ -341,7 +344,21 @@
     &:hover{
       background-color: #f9f5f1 ;
     }
+
+    th{
+      color: #388164;
+    }
   
+}
+
+.close-btn-1{
+  bottom: 49px;
+    position: relative;
+    width: 8%;
+    left: 102%;
+    cursor: pointer;
+    background: transparent;
+    border: none;
 }
 
 .modal-container {
@@ -361,6 +378,90 @@
   height: 100%;
   background-color: rgba(0, 0, 0, 0.3); 
   z-index: 10;
+}
+
+.settle-text{
+  color: #388164;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+
+/* Modal styling */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 500px;
+  max-width: 90%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Modal Header */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+}
+
+.header-left h3 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.header-left p {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #555;
+}
+
+.header-right .delete-btn {
+  background: none;
+  border: none;
+  color: red;
+  cursor: pointer;
+}
+
+.header-right .material-icons {
+  font-size: 24px;
+}
+
+/* Modal Body */
+.modal-body {
+  margin-top: 20px;
+}
+
+.modal-body h4 {
+  margin-bottom: 5px;
+  font-size: 1.2rem;
+}
+
+.modal-body p {
+  margin: 0 0 10px;
+}
+
+.modal-body ul {
+  list-style: none;
+  padding: 0;
+}
+
+.modal-body li {
+  margin-bottom: 5px;
 }
 
 

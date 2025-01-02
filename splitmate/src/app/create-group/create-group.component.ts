@@ -85,7 +85,7 @@ export class CreateGroupComponent implements OnInit {
     // Add the user if not already present and not the creator
     if (!existingMember && selectedUser.username !== this.createdBy.username) {
       this.members.push({
-        username: selectedUser.username,
+        username: selectedUser.username || selectedUser.email ,
         email: selectedUser.email,
       });
     }
@@ -104,8 +104,8 @@ export class CreateGroupComponent implements OnInit {
 
       if (!existingMember) {
         this.members.push({
-          username: '',
-          email: this.searchQuery.trim(), // Email can be left empty or collected later
+          username: this.searchQuery.trim(),// Using email as username since there's no username
+          email: this.searchQuery.trim(), 
         });
         alert(`Added ${this.searchQuery.trim()} as a new member.`);
       } else {

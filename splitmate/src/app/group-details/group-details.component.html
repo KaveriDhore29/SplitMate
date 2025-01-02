@@ -85,7 +85,7 @@
             <th>Paid By</th>
             <th>You Borrowed</th>
           </div>
-           <div class="ek-expense" *ngFor="let expense of expenses">
+           <div class="ek-expense" *ngFor="let expense of expenses" (click) = "onExpenseSelect(expense)">
             <td>{{ expense.date | date: 'MMM d, y' }}</td>
             <td>{{ expense.title }}</td>
             <td>{{ expense.amount | currency }}</td>
@@ -96,6 +96,34 @@
       </div>
       </div>
     </div>
+
+    <div *ngIf="selectedExpense" class="modal">
+      <div class="modal-content">
+        <!-- Header -->
+        <div class="modal-header">
+          <div class="header-left">
+            <h3>{{ selectedExpense.title }}</h3>
+            <p>{{ selectedExpense.amount | currency }}</p>
+          </div>
+          <div class="header-right">
+            <button class="close-btn-1" (click)="closeModal()">&#10006;</button>
+            <button class="delete-btn" (click)="deleteExpense(selectedExpense)">
+              <i class="fa-solid fa-trash-can"></i>
+            </button>
+          </div>
+        </div>
+        <!-- Body -->
+        <div class="modal-body">
+          <h4>Paid By</h4>
+          <p>{{ selectedExpense.paidBy }}</p>
+          <h4>Owed By</h4>
+          <ul>
+            <li *ngFor="let owed of selectedExpense.owedBy">
+              {{ owed.name }} - {{ owed.amount | currency }}
+            </li>
+          </ul>
+        </div>
+      </div>
     <div *ngIf="activeTab === 'balances'" class="active-tab">
       <div class="tab-content">
    
@@ -106,7 +134,7 @@
     <div *ngIf="activeTab === 'settle-up'" class="active-tab">
       <div class="tab-content">
         <div class="settle-up-heading">
-          <h2>  <i class="fa-solid fa-circle-info"></i> &nbsp; Select expense to settle up</h2>
+          <h2>  <i class="fa-solid fa-circle-info"></i> &nbsp; Select an expense to <span class="settle-text">settle up </span>your balances.</h2>
         </div>
       
         <div class="borrowed-expenses">
@@ -137,7 +165,7 @@
                   <i class="fa-solid fa-user"></i>
                 </div>
                 <div class="text-container">
-                  <div class="person-name"><b>Anuja</b></div> &nbsp;&nbsp;
+                  <div class="person-name"><b>You</b></div> &nbsp;&nbsp;
                   <div class="action-text">paid</div> &nbsp;&nbsp;
                   <div class="person-name"><b>Kaveri</b></div>
                 </div>
@@ -145,21 +173,12 @@
               
             </div>
             <div class="money-input">
-       
-              <select
-                class="currency"
-              >
+              <select class="currency">
                 <option *ngFor="let currency of currencyOptions" [value]="currency">
                   {{ currency }}
                 </option>
               </select>
-           
-              <input
-                class="amount"
-                type="number"
-            
-           
-              />
+              <input class="amount" type="number" />
             </div>
             <button class="settle-up-btn">Settle Payment</button>
           </div>

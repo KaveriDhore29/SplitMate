@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../data.service';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -17,33 +18,27 @@ export class EditGroupModalComponent{
  newEmail: string = '';
  errorMessage = '';
  @Output() onMemberAdd = new EventEmitter<any>();
+ searchResults: any[] = [];
+ searchQuery: string = '';
+ members : any;
+ groupDetails : any;   //for extracting members
+ newmemberToAdd: { email: string, username:string }[] = [];
 
-
- constructor(private dataService:DataService){}
+ constructor(private dataService:DataService,public http:HttpClient){}
 
  ngOnInit():void{
-  
- }
-
- addMembers(){
-   console.log(this.memberToAdd,"Adding to group");
-   if(this.memberToAdd.length == 0){
-    this.errorMessage = 'Email cannot be empty'
-    setTimeout(()=>{
-      this.errorMessage = ''  
-    },3000);
-  
-   }
-   this.dataService.addMembersToGroup(this.memberToAdd,this.groupId).subscribe(
-    response => {
-      console.log('Members successfully added:', response);
-      this.onMemberAdd.emit();
-      alert(this.memberToAdd[0].email+" added in group");
-      this.closeAddMemberPopup.emit(); // Close the modal
+  this.dataService.getGroupDetailById(this.groupId).subscribe(
+    (data) => {
+      this.groupDetails = data;
+      console.log('Specific Group Detail by Id in modal:', this.groupDetails);
+      this.memberToAdd = this.groupDetails[0].members.map((member: any) => ({
+        username: member.username, 
+        email: member.email
+      }));
+      console.log('Members added to chips:', this.memberToAdd);
     },
-    error => {
-      console.error('Error adding members:', error);
-      // alert('Failed to add members. Please try again.');
+    (error) => {
+      console.error('Error fetching group details:', error);
     }
   );
  }
@@ -58,19 +53,38 @@ close(){
  }
 
  addChip(): void {
-   // Add email only if valid and not empty
-   if (this.newEmail.trim() && this.isValidEmail(this.newEmail)) {
-     this.memberToAdd.push({ email: this.newEmail.trim(),username: '' });
-     this.newEmail = ''; // Clear the input field
-   } else {
-     alert('Please enter a valid email!');
-   }
- }
+  if (this.newEmail.trim()) {
+    const existingMember = this.memberToAdd.find(
+      (member) => member.email === this.newEmail.trim()
+    );
+    const newMember = { email: this.newEmail.trim(),username:'' };
+    
+    // Add to the new members list only
+    this.newmemberToAdd.push(newMember);
+    
+    // Optionally add it to the UI list (if you want to display it there too)
+    this.memberToAdd.push(newMember);
+    
 
- removeChip(index: number): void {
-   this.memberToAdd.splice(index, 1); // Remove chip at the specified index
- }
+    if (!existingMember) {
+      this.memberToAdd.push({ email: this.newEmail.trim(),username:  this.newEmail.trim() });
+      this.errorMessage = '';
+    } else {
+      this.errorMessage = 'This member is already added.';
+    }
+  } else {
+    this.errorMessage = 'Please enter a valid email.';
+  }
 
+  this.newEmail = ''; // Clear the input field
+}
+
+removeChip(index: number): void {
+  this.newmemberToAdd.splice(index, 1);
+  
+  // Remove from the UI list
+  this.memberToAdd.splice(index, 1);
+}
 
 
  isValidEmail(email: string): boolean {
@@ -78,5 +92,95 @@ close(){
    return emailRegex.test(email);
  }
 
+ onSearchUsername(): void {
+  if (this.newEmail.trim()) {
+    this.fetchSearchResults(this.newEmail.trim());
+  } else {
+    this.searchResults = []; // Clear results if input is empty
+  }
+}
+
+fetchSearchResults(query: string): void {
+  this.http
+    .get<any[]>(
+      `http://localhost:3000/api/search-users-by-username?query=${query}`
+    )
+    .subscribe(
+      (results) => {
+        this.searchResults = results;
+      },
+      (error) => {
+        console.error('Error fetching search results:', error);
+      }
+    );
+}
+
+selectMember(selectedUser: { username: string; email: string }): void {
+  // Check if the user is already added
+  const existingMember = this.memberToAdd.find(
+    (member) => member.email === selectedUser.email
+  );
+
+  if (!existingMember) {
+    this.memberToAdd.push({
+      username: selectedUser.username || '', // Use username if available
+      email: selectedUser.email,
+    });
+    this.errorMessage = ''; // Clear error message if any
+  } else {
+    this.errorMessage = 'This member is already added.';
+  }
+
+  // Clear input and search results
+  this.newEmail = '';
+  this.searchResults = [];
+}
+
+addNonExistentUser(): void {
+  if (this.newEmail.trim()) {
+    const existingMember = this.memberToAdd.find(
+      (member) => member.email === this.newEmail.trim()
+    );
+
+    if (!existingMember) {
+      this.memberToAdd.push({
+        username: '', // No username for new user
+        email: this.newEmail.trim(),
+      });
+      this.errorMessage = ''; // Clear any error message
+      alert(`${this.newEmail.trim()} added as a new member.`);
+    } else {
+      this.errorMessage = 'This member is already added.';
+    }
+
+    // Clear input
+    this.newEmail = '';
+  } else {
+    this.errorMessage = 'Please enter an email to add.';
+  }
+}
+
+addMembers(): void {
+ 
+console.log(this.newmemberToAdd,"adding members");
+  if (this.newmemberToAdd.length > 0) {
+    this.dataService.addMembersToGroup(this.newmemberToAdd, this.groupId).subscribe(
+      (response) => {
+        console.log('New members added successfully:', response);
+        alert(`${this.newmemberToAdd.length} member(s) added successfully!`);
+        this.newmemberToAdd = []; // Clear new members list after success
+        this.memberToAdd = []; // Optional: Clear UI list
+        this.closeAddMemberPopup.emit(); // Close modal
+      },
+      (error) => {
+        console.error('Error adding new members:', error);
+        alert('Failed to add new members. Please try again.');
+      }
+    );
+  } else {
+    alert('Please add new members first or unknown error');
+  }
+
+}
 
 }

@@ -29,7 +29,7 @@ export class MyGroupsComponent implements OnInit {
     this.currentGroupId = this.route.snapshot.paramMap.get('id')!;
     this.groupDetails = this.dataService.getGroupDetails().subscribe(
       (data: any[]) => {
-        this.groupDetails = Array.isArray(data) ? data : Object.values(data);
+        this.groupDetails = data;
         this.groupIds = this.groupDetails.map((group: any) => group.groupId);
         this.groupDetails.forEach((group: any) => {
           group.isOptionsMenuOpen = false;
