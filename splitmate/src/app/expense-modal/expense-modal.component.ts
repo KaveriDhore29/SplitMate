@@ -122,6 +122,8 @@ export class ExpenseModalComponent implements OnInit {
 
 
   addExpenseData(): void {
+
+   
     // Determine the members to use based on the split option
   let membersToUse: string[] = [];
   if (this.expense.splitBy === 'equally') {
@@ -132,7 +134,7 @@ export class ExpenseModalComponent implements OnInit {
 
   // Create member data
   let memberData = membersToUse.map(memberEmail => {
-    let division = 0; // Default division for 'equally'
+    let division = 1; // Default division for 'equally'
     if (this.expense.splitBy === 'shares') {
       division = this.memberShares[memberEmail] || 0; // Use the share value from input
     } else if (this.expense.splitBy === 'percentage') {
@@ -145,7 +147,7 @@ export class ExpenseModalComponent implements OnInit {
     };
   });
     
-    // console.log('Constructed Member Data:', memberData);
+     console.log('Constructed Member Data:', memberData);
     
     if (
       this.expense.splitBy === 'percentage' &&
@@ -176,9 +178,9 @@ export class ExpenseModalComponent implements OnInit {
         alert('Expense added successfully!');
         this.onAddExpense.emit();
         this.closePopup.emit(); // Close the modal
-        // console.log('Selected Split Option:', this.selectedSplitOption);
-        // console.log('Member Shares:', this.memberShares);
-        // console.log('Member Percentages:', this.memberPercentages);
+        console.log('Selected Split Option:', this.selectedSplitOption);
+        console.log('Member Shares:', this.memberShares);
+        console.log('Member Percentages:', this.memberPercentages);
 
       },
       error => {

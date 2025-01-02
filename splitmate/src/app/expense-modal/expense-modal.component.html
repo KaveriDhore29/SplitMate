@@ -2,17 +2,16 @@
   
 <div class="popup">
   <button type="button" class="close-btn" (click)="close()">&#10006;</button>
-  <h2 class="form-heading">Add Expense</h2>
+  <div class="heading">
+    <h2 class="form-heading">Add Expense</h2></div>
   <form>
     <!-- Expense Title -->
     <div class="expense-title">
-      <!-- <label for="label" class="label">Expense Title: </label> -->
-      <input id="title" [(ngModel)]="expense.title" name="title" placeholder="Expense Title"/>
+      <input id="title" [(ngModel)]="expense.title" name="title" placeholder="Expense Title *"/>
     </div>
 
     <!-- Currency Dropdown -->
     <div class="currency">
-      <!-- <label for="currency">Currency:</label> -->
       <select
         id="currency"
         [(ngModel)]="expense.currency"
@@ -29,7 +28,7 @@
         type="number"
         [(ngModel)]="expense.amount"
         name="amount"
-        placeholder="0.00"
+        placeholder="0.00 *"
       />
     </div>
 
@@ -139,14 +138,12 @@
         </div>
       </div>
     </div>
-        <!-- Save and Cancel Buttons -->
+        <!-- Save Button -->
         <button type="button" (click)="addExpenseData()" class="save-button" [disabled]="isSaveDisabled">Split Expense</button>
   </div>
 </div>
 
 
-<!-- Members Split Options -->
-
 
   </div>
 
@@ -155,31 +152,4 @@
 
 
 
-    <!-- Equally Checkbox -->
-    <!-- <div>
-      <label for="equally">Split Equally:</label>
-      <input
-        id="equally"
-        type="checkbox"
-        [(ngModel)]="expense.equally"
-        name="equally"
-        (change)="toggleEqually()"
-      />
-    </div> -->
-
-
-
-
-   <!-- Checklist for Members -->
-    <!-- <div *ngIf="!expense.equally">
-      <label>Members:</label>
-      <div *ngFor="let member of membersNames">
-        <input
-          type="checkbox"
-          [id]="member.email"
-          [checked]="expense.selectedMembers.includes(member.email)"
-          (change)="toggleMemberSelection(member.email, $event)"
-        />
-        <label [for]="member.email">{{ member.name }}</label>
-      </div>
-    </div> -->
+   
