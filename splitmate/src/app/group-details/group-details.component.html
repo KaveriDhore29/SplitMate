@@ -88,7 +88,7 @@
             <div
               class="ek-expense"
               *ngFor="let expense of expenses"
-              (click)="openExpenseDetail"
+              (click)="openExpenseDetail()"
             >
               <td>{{ expense.date | date: 'MMM d, y' }}</td>
               <td>{{ expense.title }}</td>
