@@ -59,15 +59,16 @@ close(){
     );
     const newMember = { email: this.newEmail.trim(),username:'' };
     
-    // Add to the new members list only
-    this.newmemberToAdd.push(newMember);
+    // // Add to the new members list only
+    // this.newmemberToAdd.push(newMember);
     
-    // Optionally add it to the UI list (if you want to display it there too)
-    this.memberToAdd.push(newMember);
+    // // Optionally add it to the UI list (if you want to display it there too)
+    // this.memberToAdd.push(newMember);
     
 
     if (!existingMember) {
-      this.memberToAdd.push({ email: this.newEmail.trim(),username:  this.newEmail.trim() });
+      this.memberToAdd.push({ email: this.newEmail.trim(),username: ''});
+      this.newmemberToAdd.push(newMember);
       this.errorMessage = '';
     } else {
       this.errorMessage = 'This member is already added.';
@@ -148,7 +149,6 @@ addNonExistentUser(): void {
         email: this.newEmail.trim(),
       });
       this.errorMessage = ''; // Clear any error message
-      alert(`${this.newEmail.trim()} added as a new member.`);
     } else {
       this.errorMessage = 'This member is already added.';
     }
@@ -166,11 +166,11 @@ console.log(this.newmemberToAdd,"adding members");
   if (this.newmemberToAdd.length > 0) {
     this.dataService.addMembersToGroup(this.newmemberToAdd, this.groupId).subscribe(
       (response) => {
-        console.log('New members added successfully:', response);
         alert(`${this.newmemberToAdd.length} member(s) added successfully!`);
         this.newmemberToAdd = []; // Clear new members list after success
         this.memberToAdd = []; // Optional: Clear UI list
         this.closeAddMemberPopup.emit(); // Close modal
+        this.onMemberAdd.emit();
       },
       (error) => {
         console.error('Error adding new members:', error);
