@@ -131,11 +131,6 @@ selectMember(selectedUser: { username: string; email: string }): void {
     this.errorMessage = 'This member is already added.';
   }
 
-  this.newmemberToAdd.push({
-    username: selectedUser.username || '', // Use username if available
-    email: selectedUser.email,
-  });
-
   // Clear input and search results
   this.newEmail = '';
   this.searchResults = [];
