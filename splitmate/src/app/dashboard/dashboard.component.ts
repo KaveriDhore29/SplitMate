@@ -59,7 +59,7 @@ export class DashboardComponent implements OnInit {
   }
 
   setSection(section: string) {
-    console.log("Switching to section:", section);
+    // console.log("Switching to section:", section);
     this.currentSection = section;
     this.router.navigate([`/dashboard/${section}`]);
    

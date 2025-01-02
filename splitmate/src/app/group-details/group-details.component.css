@@ -265,9 +265,6 @@
 }
 .nav-link{
   color: white;
-  &:hover{
-    border-radius: 0;
-  }
 }
 
 .expense-table {
@@ -344,21 +341,7 @@
     &:hover{
       background-color: #f9f5f1 ;
     }
-
-    th{
-      color: #388164;
-    }
   
-}
-
-.close-btn-1{
-  bottom: 49px;
-    position: relative;
-    width: 8%;
-    left: 102%;
-    cursor: pointer;
-    background: transparent;
-    border: none;
 }
 
 .modal-container {
@@ -379,13 +362,6 @@
   background-color: rgba(0, 0, 0, 0.3); 
   z-index: 10;
 }
-
-.settle-text{
-  color: #388164;
-  font-size: 18px;
-  font-weight: 700;
-}
-
 
 /* Modal styling */
 .modal {
@@ -463,6 +439,7 @@
 .modal-body li {
   margin-bottom: 5px;
 }
+
 
 
 

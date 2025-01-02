@@ -35,7 +35,6 @@ export class EditGroupModalComponent{
         username: member.username, 
         email: member.email
       }));
-      console.log('Members added to chips:', this.memberToAdd);
     },
     (error) => {
       console.error('Error fetching group details:', error);

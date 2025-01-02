@@ -21,6 +21,8 @@
 .mat-chip {
  background-color: #f9f5f1;
  color: black;
+ border: 1px solid #388164;
+ cursor:pointer;
 }
 
 .mat-chip.mat-standard-chip .mat-chip-remove {

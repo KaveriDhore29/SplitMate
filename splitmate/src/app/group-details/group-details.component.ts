@@ -185,17 +185,10 @@ export class GroupDetailsComponent implements OnInit{
     console.log("Owed Expenses",this.owedExpenses)
   }
 
-  onExpenseSelect(expense:any): void{
-  //  console.log(expense);
-  this.selectedExpense = expense;
-  }
-
   deleteExpense(expense: any): void {
     this.expenses = this.expenses.filter(e => e !== expense);
     this.selectedExpense = null; // Close modal after deletion
   }
-
- 
 }
 
 
