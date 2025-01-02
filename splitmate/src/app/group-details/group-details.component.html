@@ -76,26 +76,14 @@
         <h2 class="expense-heading">Expenses</h2>
         <button (click)="showPopup = true" class="add-expense-btn">+ Add Expense</button>
        </div>
-        <div class="group-expenses">
-          <div class="expenses">
-            <div class="ek-expense">
-              <th>Expense Date</th>
-              <th>Title</th>
-              <th>Total Amount</th>
-              <th>Paid By</th>
-              <th>You Borrowed</th>
-            </div>
-            <div
-              class="ek-expense"
-              *ngFor="let expense of expenses"
-              (click)="openExpenseDetail()"
-            >
-              <td>{{ expense.date | date: 'MMM d, y' }}</td>
-              <td>{{ expense.title }}</td>
-              <td>{{ expense.amount | currency }}</td>
-              <td>{{ expense.paidBy }}</td>
-              <td>{{ expense.borrowed | currency }}</td>
-            </div>
+      <div class="group-expenses">
+         <div class="expenses">
+          <div class="ek-expense">
+            <th>Expense Date</th>
+            <th>Title</th>
+            <th>Total Amount</th>
+            <th>Paid By</th>
+            <th>You Borrowed</th>
           </div>
            <div class="ek-expense" *ngFor="let expense of expenses" (click) = "onExpenseSelect(expense)">
             <td>{{ expense.date | date: 'MMM d, y' }}</td>
@@ -234,15 +222,6 @@
  (onAddExpense)="loadGroupDetails()"
  ></app-expense-modal>
  
-
-
-<app-expense-detail-modal
-*ngIf="openExpenseDetail"
- class="modal-container"
-  [expense]="selectedExpense"
-  [showModal]="showExpenseModal"
-  (closeModalEvent)="closeExpenseModal()"
-></app-expense-detail-modal>
  
  </div>
 

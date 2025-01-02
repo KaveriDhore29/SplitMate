@@ -8,11 +8,9 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 export class ExpenseDetailModalComponent {
   @Input() expense: any;
   @Input() showModal: boolean = false;
-  @Output() closeModalEvent = new EventEmitter<void>();
-
+  @Output() closeExpenseDetailPopup = new EventEmitter<void>();
 
   closeModal() {
-    this.closeModalEvent.emit();
+    this.closeExpenseDetailPopup.emit();
   }
-  
 }
