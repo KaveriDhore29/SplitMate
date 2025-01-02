@@ -19,11 +19,12 @@
 }
 
 .mat-chip {
- background-color: #388164;
+ background-color: #f9f5f1;
+ color: black;
 }
 
 .mat-chip.mat-standard-chip .mat-chip-remove {
-  color: #fff;
+  color: #000;
 }
 
 .mat-input-element {

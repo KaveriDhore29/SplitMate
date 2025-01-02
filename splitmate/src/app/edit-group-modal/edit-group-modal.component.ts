@@ -72,9 +72,17 @@ close(){
       this.errorMessage = '';
     } else {
       this.errorMessage = 'This member is already added.';
+      setTimeout(() => {
+        this.errorMessage = '';
+      }, 3000);  // 3000ms = 3 seconds
+    
     }
   } else {
     this.errorMessage = 'Please enter a valid email.';
+    setTimeout(() => {
+      this.errorMessage = '';
+    }, 3000);  // 3000ms = 3 seconds
+  
   }
 
   this.newEmail = ''; // Clear the input field
@@ -130,6 +138,10 @@ selectMember(selectedUser: { username: string; email: string }): void {
     this.errorMessage = ''; // Clear error message if any
   } else {
     this.errorMessage = 'This member is already added.';
+    setTimeout(() => {
+      this.errorMessage = '';
+    }, 3000);  // 3000ms = 3 seconds
+  
   }
 
   // Clear input and search results
@@ -151,12 +163,20 @@ addNonExistentUser(): void {
       this.errorMessage = ''; // Clear any error message
     } else {
       this.errorMessage = 'This member is already added.';
+      setTimeout(() => {
+        this.errorMessage = '';
+      }, 3000);  // 3000ms = 3 seconds
+    
     }
 
     // Clear input
     this.newEmail = '';
   } else {
     this.errorMessage = 'Please enter an email to add.';
+    setTimeout(() => {
+      this.errorMessage = '';
+    }, 3000);  // 3000ms = 3 seconds
+  
   }
 }
 
