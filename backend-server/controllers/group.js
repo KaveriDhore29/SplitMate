@@ -504,7 +504,8 @@ const getGroupExpenses = async (req, res) => {
         date: transaction.expenseDate,                // Transaction date 
         title: transaction.title,                   // Expense title
         amount: parseFloat(transaction.amount),     // Total amount for the transaction
-        paidBy: transaction.paidBy,                             // Person who paid
+        paidBy: transaction.paidBy, 
+        paidByName: group.members.find(member => member.email === transaction.paidBy)?.username, // Username of the person who paid
         borrowed: borrowed                          // Amount borrowed (if any)
       };
  
@@ -521,10 +522,57 @@ const getGroupExpenses = async (req, res) => {
   }
 };
 
+// Controller to fetch all expenses for multiple groups
+const getAllExpenses = async (req, res) => {
+  try {
+    const { groupIds } = req.body;  // Extract groupIds from the request body
+
+    if (!Array.isArray(groupIds) || groupIds.length === 0) {
+      return res.status(400).json({ error: 'Group IDs are required' });
+    }
+
+    let allExpenses = [];
+
+    // Iterate over each group ID to fetch relevant expenses
+    for (const groupId of groupIds) {
+      const group = await Group.findOne({ groupId });
+
+      if (!group) {
+        continue; // Skip if group is not found
+      }
+
+      // Iterate over each transaction in the group's transactions
+      group.transactions.forEach(transaction => {
+        // Prepare the expense object based on the provided data structure
+        let expense = {
+          groupName: group.name,        // Group name
+          expenseDate: transaction.expenseDate,  // Transaction date
+          amount: {
+            value: transaction.amount,  // Total amount for the transaction
+            currency: 'USD'  // Assuming the currency is USD (you can make this dynamic if needed)
+          },
+          paidBy: transaction.paidBy,   // Person who paid
+          paidByName: group.members.find(member => member.email === transaction.paidBy)?.username, // Username of the person who paid
+          title: transaction.title,     // Expense title
+        };
+
+        // Add the processed expense to the list of all expenses
+        allExpenses.push(expense);
+      });
+    }
+
+    // Send the expenses back in the response
+    res.status(200).json({ expenses: allExpenses });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error fetching expenses for the groups' });
+  }
+};
 
 
 
 
 
 
-module.exports = { createGroup, addMembersToGroup, getGroupDetails, getOneGroupDetail, getAddMembersToGroup, simplification, totalOwed, grpTotalOwed, deleteGroup, grpBalance,getGroupExpenses };
+module.exports = { createGroup, addMembersToGroup, getGroupDetails, getOneGroupDetail, getAddMembersToGroup, simplification, totalOwed, grpTotalOwed, deleteGroup, grpBalance,getGroupExpenses,getAllExpenses };

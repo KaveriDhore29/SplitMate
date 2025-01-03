@@ -88,4 +88,13 @@ export class DataService {
       withCredentials: true, 
     }); 
   }
+   // Fetch expenses for multiple groups using groupIds
+   getExpensesForGroups(groupIds: string[]): Observable<any> {
+    const payload = {
+      groupIds: groupIds
+    };
+    return this.http.post<any>(`${this.apiUrl}/get-group-expenses`, payload, {
+      withCredentials: true,
+    });
+  }
 }
