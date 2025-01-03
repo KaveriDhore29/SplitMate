@@ -74,6 +74,7 @@ export class DataService {
 
   deleteGroup(groupId: string, members: any[]): Observable<any> {
     const payload = { groupId, members };
+    console.log(JSON.stringify(payload));
     return this.http.post<any>(`${this.apiUrl}/deleteGroup`, payload, {
       withCredentials: true, 
     });

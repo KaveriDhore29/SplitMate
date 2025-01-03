@@ -165,7 +165,8 @@ export class ExpenseModalComponent implements OnInit {
       splitBy: this.expense.splitBy, 
       title: this.expense.title,
       groupId: this.groupId,
-      createdBy : this.dataService.currentUserEmail     //expense created by current user
+      createdBy : this.dataService.currentUserEmail ,
+      expenseDate: new Date(),    //expense created by current user
     };
   
     console.log('Expense Data:', expenseData);

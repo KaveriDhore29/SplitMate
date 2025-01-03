@@ -246,8 +246,8 @@ const simplification = async (req, res, input) => {
   try {
     console.log('req.body', req.body);
 
-    const { paidBy, members, amount, simplifyCurrency, splitBy, title, groupId, createdBy } = req.body;
-
+    const { paidBy, members, amount, simplifyCurrency, splitBy, title, groupId,expenseDate, createdBy } = req.body;
+    const amountValue = amount?.value || 0; 
     // Fetch the group and its netBalances in one query
     let getGroup = await Group.findOne({ groupId }).lean();
     if (!getGroup) {
@@ -263,12 +263,17 @@ const simplification = async (req, res, input) => {
       paidBy, members, amount, simplifyCurrency, splitBy, title, groupId, netBalances || []
     );
 
-    Object.assign(simplifiedData, { title, transactionId, createdBy });
+    Object.assign(simplifiedData, { title, transactionId, createdBy, paidBy, 
+      expenseDate: new Date(expenseDate) || new Date(),
+      amount: amountValue  //store the amount value
+     });
 
     // Merge and update net balances and transactions in a single update query
     console.log('simplifiedData ',simplifiedData);
     console.log('getGroup.netBalances ',getGroup.netBalances);
     console.log('simplif.netBalances ',simplifiedData.netBalances);
+    console.log(paidBy,expenseDate,amountValue);
+
     const newNetBalances = await mergeNetBalances(getGroup.netBalances, simplifiedData.netBalances);
 
     const updateResult = await Group.findOneAndUpdate(
@@ -463,6 +468,58 @@ const grpBalance = async(req, res) => {
   }
 }
 
+const getGroupExpenses = async (req, res) => {
+  try {
+    const { groupId , currentUserEmail} = req.body;  // Extract groupId from the request body
+
+    // Find the group by groupId
+    const group = await Group.findOne({ groupId });
+
+    if (!group) {
+      return res.status(404).json({ error: 'Group not found' });
+    }
+    let transactionList = [];
+    
+    // Iterate over each transaction in the group's transactions
+    group.transactions.forEach(transaction => {
+      // Extract "Paid By" from the "to" field in the transaction (who paid)
+      const paidBy = transaction.to;
+
+       let borrowed = 0;
+       
+      // Check if the transaction has a netBalances array
+      if (transaction.netBalances && Array.isArray(transaction.netBalances)) {
+        // Loop through each item in netBalances
+        transaction.netBalances.forEach(Balance => {
+          // If the amount is negative, add the absolute value to borrowed
+          if (Balance.balance < 0 && Balance.person == currentUserEmail) {
+            borrowed += Math.abs(Balance.balance);  // Add the absolute value of negative amounts
+          }
+        });
+      }
+    
+      // Construct the expense object
+      const expense = {
+        transactionId: transaction.transactionId,  // Unique transaction ID
+        date: transaction.expenseDate,                // Transaction date 
+        title: transaction.title,                   // Expense title
+        amount: parseFloat(transaction.amount),     // Total amount for the transaction
+        paidBy: transaction.paidBy,                             // Person who paid
+        borrowed: borrowed                          // Amount borrowed (if any)
+      };
+
+      // Add the processed expense to the transactionList
+      transactionList.push(expense);
+    });
+
+    // Send the expenses back in the response
+    res.status(200).json({ expenses: transactionList });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error fetching group expenses' });
+  }
+};
 
 
 
@@ -470,5 +527,4 @@ const grpBalance = async(req, res) => {
 
 
 
-
-module.exports = { createGroup, addMembersToGroup, getGroupDetails, getOneGroupDetail, getAddMembersToGroup, simplification, totalOwed, grpTotalOwed, deleteGroup, grpBalance };
+module.exports = { createGroup, addMembersToGroup, getGroupDetails, getOneGroupDetail, getAddMembersToGroup, simplification, totalOwed, grpTotalOwed, deleteGroup, grpBalance,getGroupExpenses };
