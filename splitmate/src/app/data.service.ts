@@ -93,7 +93,7 @@ export class DataService {
     const payload = {
       groupIds: groupIds
     };
-    return this.http.post<any>(`${this.apiUrl}/get-group-expenses`, payload, {
+    return this.http.post<any>(`${this.apiUrl}/getAllExpense`, payload, {
       withCredentials: true,
     });
   }

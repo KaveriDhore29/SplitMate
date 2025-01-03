@@ -544,13 +544,14 @@ const getAllExpenses = async (req, res) => {
       // Iterate over each transaction in the group's transactions
       group.transactions.forEach(transaction => {
         // Prepare the expense object based on the provided data structure
+        const transactionCurrency = transaction.transactions?.[0]?.currency || currency;
         let expense = {
           groupName: group.name,        // Group name
           expenseDate: transaction.expenseDate,  // Transaction date
           amount: {
-            value: transaction.amount,  // Total amount for the transaction
-            currency: 'USD'  // Assuming the currency is USD (you can make this dynamic if needed)
+            value: transaction.amount // Total amount for the transaction
           },
+          currency: transactionCurrency,
           paidBy: transaction.paidBy,   // Person who paid
           paidByName: group.members.find(member => member.email === transaction.paidBy)?.username, // Username of the person who paid
           title: transaction.title,     // Expense title

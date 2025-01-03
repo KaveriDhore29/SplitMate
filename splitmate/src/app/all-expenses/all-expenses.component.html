@@ -5,7 +5,7 @@
         <span class="expense-statement">
           <strong>{{ expense.paidByName }}</strong> added <strong>{{ expense.title }}</strong>
           in group <strong>{{ expense.groupName }}</strong> for
-          <strong>{{ expense.amount.value | currency: expense.amount.currency }}</strong>
+          <strong>{{ expense.amount.value | currency: expense.currency }}</strong>
         </span>
         <i
           class="fa-solid"
