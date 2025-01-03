@@ -79,25 +79,13 @@ export class DataService {
       withCredentials: true, 
     });
   }
-
-  //   deleteGroup(groupId: string, members: any): Observable<any> {
-  //   const payload = { groupId, members };
-  //   return this.http.post<any>(`${this.apiUrl}/deleteGroup`, payload, {
-  //     withCredentials: true,
-  //   });
-  // }
-
-
-
-  // getGroupDetails(): Observable<any[]> {
-  //   this.http.post('http://localhost:3000/api/get-group-details',this.currentUserEmail,{withCredentials:true} ).subscribe(
-  //     (response) => {
-  //       console.log('Group details fetched successfully:', response);
-  //       this.groupDetailsBackend.push(response);
-  //     },
-  //     (error) => {
-  //       console.error('Error fetching group details:', error);
-  //     }
-  //   );
-  // }
+  getGroupExpenses(groupId : string) : Observable<any> {
+    const payload = {
+     groupId: groupId,
+     currentUserEmail:  this.currentUserEmail.email
+    }
+    return this.http.post<any>(`${this.apiUrl}/get-group-expenses`, payload, {
+      withCredentials: true, 
+    }); 
+  }
 }

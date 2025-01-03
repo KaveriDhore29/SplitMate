@@ -17,6 +17,7 @@ export class GroupDetailsComponent implements OnInit{
   showAddmembersPopup: boolean = false;
   groupIds = [];
   groupExpenses : any;
+  groupExpensesArray : any;
   activeTab: string = 'expenses'; 
   transactions :{from:'',to:'',amount:number;currency:''}[]=  [];
   owedExpenses :any[] = [];
@@ -151,6 +152,14 @@ export class GroupDetailsComponent implements OnInit{
         console.error('Error fetching group details:', error);
       }
     );
+
+    this.groupExpenses =this.dataService.getGroupExpenses(this.groupId).subscribe(
+          (data:any[]) =>{        
+            this.groupExpenses = data;
+            console.log("expense",this.groupExpenses);
+            this.groupExpensesArray = this.groupExpenses.expenses;
+          }
+    );
   }
 
 
@@ -164,8 +173,8 @@ export class GroupDetailsComponent implements OnInit{
           name: member.username, 
           email: member.email
         }));
-         this.groupExpenses = this.groupDetails[0].transactions;
-        this.transactions = this.groupDetails[0].latestTransactions;
+        //  this.groupExpenses = this.groupDetails[0].transactions;
+        // this.transactions = this.groupDetails[0].latestTransactions;
       },
       (error) => {
         console.error('Error fetching group details:', error);

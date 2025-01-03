@@ -88,9 +88,12 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let expense of groupExpenses" (click)="openExpenseModal(expense)">
+            <tr *ngFor="let expense of groupExpensesArray" (click)="openExpenseModal(expense)">
               <td>{{ expense.date | date:'shortDate' }}</td> <!-- Assuming expense has a 'date' field -->
               <td>{{ expense.title }}</td>
+              <td>{{ expense.amount }}</td>
+              <td>{{ expense.paidBy }}</td>
+              <td>{{ expense.borrowed }}</td>
               <td></td>
               <td></td>
               <td></td>

@@ -507,7 +507,7 @@ const getGroupExpenses = async (req, res) => {
         paidBy: transaction.paidBy,                             // Person who paid
         borrowed: borrowed                          // Amount borrowed (if any)
       };
-
+ 
       // Add the processed expense to the transactionList
       transactionList.push(expense);
     });
