@@ -153,13 +153,7 @@ export class GroupDetailsComponent implements OnInit{
       }
     );
 
-    this.groupExpenses =this.dataService.getGroupExpenses(this.groupId).subscribe(
-          (data:any[]) =>{        
-            this.groupExpenses = data;
-            console.log("expense",this.groupExpenses);
-            this.groupExpensesArray = this.groupExpenses.expenses;
-          }
-    );
+   
   }
 
 
@@ -180,6 +174,14 @@ export class GroupDetailsComponent implements OnInit{
         console.error('Error fetching group details:', error);
       }
     );
+
+    this.groupExpenses =this.dataService.getGroupExpenses(this.groupId).subscribe(
+      (data:any[]) =>{        
+        this.groupExpenses = data;
+        console.log("expense",this.groupExpenses);
+        this.groupExpensesArray = this.groupExpenses.expenses;
+      }
+);
   }
 
   setActiveTab(tab: string) {
