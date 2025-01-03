@@ -67,7 +67,21 @@
   
 }
 
-
+.save-btn{
+  background-color: #388164;
+  color: white;
+  width: 27%;
+  border: none;
+  border-radius: 10px;
+  padding: 1% 0;
+  cursor: pointer;
+  &:disabled{
+    opacity: 0.7;
+  }
+  &:hover{
+    opacity: 0.9;
+  }
+}
 
 
 

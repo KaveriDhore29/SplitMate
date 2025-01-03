@@ -28,7 +28,7 @@
             <h3>Group Members</h3>
             <mat-chip-list #chipList aria-label="Group members">
               <mat-chip *ngFor="let member of members; let i = index" (removed)="removeMember(i)">
-                {{ member.username }}
+                {{  member.username ? member.username : member.email }}
                 <mat-icon matChipRemove>cancel</mat-icon>
               </mat-chip>
 
@@ -69,7 +69,7 @@
 
                 <!-- Save Button -->
           <div class="save-button">
-            <button mat-raised-button color="accent" [disabled]="!groupName || members.length === 0" (click)="saveGroup()">
+            <button class="save-btn" [disabled]="!groupName || members.length === 0" (click)="saveGroup()">
               Save
             </button>
           </div>

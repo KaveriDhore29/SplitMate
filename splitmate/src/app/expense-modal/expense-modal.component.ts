@@ -147,7 +147,7 @@ export class ExpenseModalComponent implements OnInit {
     };
   });
     
-     console.log('Constructed Member Data:', memberData);
+    //  console.log('Constructed Member Data:', memberData);
     
     if (
       this.expense.splitBy === 'percentage' &&
@@ -178,9 +178,9 @@ export class ExpenseModalComponent implements OnInit {
         alert('Expense added successfully!');
         this.onAddExpense.emit();
         this.closePopup.emit(); // Close the modal
-        console.log('Selected Split Option:', this.selectedSplitOption);
-        console.log('Member Shares:', this.memberShares);
-        console.log('Member Percentages:', this.memberPercentages);
+        // console.log('Selected Split Option:', this.selectedSplitOption);
+        // console.log('Member Shares:', this.memberShares);
+        // console.log('Member Percentages:', this.memberPercentages);
 
       },
       error => {

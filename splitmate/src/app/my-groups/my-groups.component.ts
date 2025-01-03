@@ -128,6 +128,7 @@ export class MyGroupsComponent implements OnInit {
 
   editGroup(group: any) {
     console.log('Edit Group Details clicked', group);
+    this.router.navigate([`create-group/${group.groupId}`]);
   }
 
   deleteGroup(group: any) {
