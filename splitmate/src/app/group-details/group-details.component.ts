@@ -130,7 +130,7 @@ export class GroupDetailsComponent implements OnInit{
     }
   ];
 
-  constructor(private route: ActivatedRoute, private dataService: DataService,private router:Router) { }
+  constructor(private route: ActivatedRoute, public dataService: DataService,private router:Router) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {

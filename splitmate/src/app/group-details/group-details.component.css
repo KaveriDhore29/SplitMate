@@ -331,18 +331,33 @@
 .expenses{
   border-top:2px solid black;
   margin-top:1%;
+  width:100%;
+  tr{
+    border-bottom: 1px solid black;
+    padding: 7%;
+  }
 }
-.ek-expense{
-    display: flex;
-    justify-content: space-around;
-    padding: 1% 0;
-    border-bottom: 1px solid rgb(194, 188, 188);
-    cursor:pointer;
-    &:hover{
-      background-color: #f9f5f1 ;
-    }
-  
+
+.group-expenses th{
+  border-bottom: 1px solid black;
+  padding: 8px;
+  text-align: center;
+  color: #388164  ;
 }
+.group-expenses td {
+  border-bottom: 1px solid black;
+  padding: 8px;
+  text-align: center;
+  cursor: pointer;
+ 
+}
+
+.group-expenses tr{
+  &:hover{
+    background-color: #f9f5f1;
+  }
+}
+
 
 .modal-container {
   position: fixed;
