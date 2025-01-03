@@ -50,6 +50,11 @@ const routes: Routes = [
     component: CreateGroupComponent,
     canActivate: [AuthGuard],
   },
+  {
+    path: 'create-group/:id',
+    component: CreateGroupComponent,
+    canActivate: [AuthGuard],
+  },
   { path: '**', redirectTo: 'homepage' },
 ];
 

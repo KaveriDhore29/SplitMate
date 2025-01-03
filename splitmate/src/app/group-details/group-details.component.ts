@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from '../data.service';
 
 @Component({
@@ -130,7 +130,7 @@ export class GroupDetailsComponent implements OnInit{
     }
   ];
 
-  constructor(private route: ActivatedRoute, private dataService: DataService) { }
+  constructor(private route: ActivatedRoute, private dataService: DataService,private router:Router) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -188,6 +188,10 @@ export class GroupDetailsComponent implements OnInit{
   deleteExpense(expense: any): void {
     this.expenses = this.expenses.filter(e => e !== expense);
     this.selectedExpense = null; // Close modal after deletion
+  }
+
+  editGroup():void{
+    this.router.navigate([`/create-group/${this.groupId}`]);
   }
 }
 

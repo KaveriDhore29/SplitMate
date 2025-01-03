@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DataService } from '../data.service';
 
 // Define the member type
 interface Member {
@@ -14,7 +15,8 @@ interface Member {
   styleUrls: ['./create-group.component.css'],
 })
 export class CreateGroupComponent implements OnInit {
-  
+
+  groupId: string | null = null;
   members: Member[] = []; 
   groupName: string = '';
   groupType: string = 'Home';
@@ -22,8 +24,9 @@ export class CreateGroupComponent implements OnInit {
   searchResults: any[] = [];
   searchQuery: string = '';
   joinedByLink: boolean = false;
+  groupData : any;
 
-  constructor(private http: HttpClient, public router: Router) {}
+  constructor(private http: HttpClient, public router: Router,private route: ActivatedRoute,private dataService: DataService) {}
 
   ngOnInit(): void {
     const loggedInUser = sessionStorage.getItem('loggedInUser');
@@ -39,6 +42,23 @@ export class CreateGroupComponent implements OnInit {
         email: this.createdBy.email,
       });
     }
+    this.groupId = this.route.snapshot.paramMap.get('id');
+    if (this.groupId) {
+      // Fetch group details for editing
+      this.dataService.getGroupDetailById(this.groupId).subscribe(
+        (data) => {
+          this.groupData = data;
+          this.groupName = this.groupData[0].name;
+          this.groupType = this.groupData[0].type;
+          this.members = this.groupData[0].members;
+          console.log("groupdata",this.groupData)
+        },
+        (error) => {
+          console.error('Failed to fetch group details', error);
+        }
+      );
+    }
+
   }
 
   addInputBox(): void {
