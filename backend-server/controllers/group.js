@@ -320,7 +320,7 @@ const totalOwed = async(req, res) => {
     }
     let allNetBalances = [];
     for(let group of allGroups) {
-      if(group.netBalances){
+      if(group?.netBalances){
         let netBalance = group.netBalances;
         allNetBalances.push(netBalance);
       }
