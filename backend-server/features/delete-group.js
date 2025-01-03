@@ -1,6 +1,7 @@
 // groupService.js
 const { User } = require("../model/users");
 const { Group } = require("../model/group");  // Import the Group model
+const { client } = require('../data/redis-database');
 
 const deleteGroupService = async (members, groupId) => {
   try {
@@ -11,7 +12,7 @@ const deleteGroupService = async (members, groupId) => {
     // Update each user to remove the groupId from the groupIds array
     await Promise.all(
       memberEmails.map(async (email) => {
-        const findUser = await User.findOne({ email });
+        let findUser = await User.findOne({ email });
         if (findUser) {
           await User.updateOne(
             { email },  // Find the user by email
@@ -20,6 +21,9 @@ const deleteGroupService = async (members, groupId) => {
         }
       })
     );
+  const groupKey = `group:${groupId}`; // Redis key for the group
+  // Delete the group key
+  await client.del(groupKey);
 
     // Delete the group from the Group collection
     const result = await Group.deleteOne({ groupId });
