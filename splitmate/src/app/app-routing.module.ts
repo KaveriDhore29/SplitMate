@@ -13,6 +13,9 @@ import { AuthGuard } from './auth.guard';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { AlreadyLoggedInGuard } from './already-logged-in.guard';
 import { MyProfileComponent } from './my-profile/my-profile.component';
+import { ExpenseListComponent } from './all-expenses/all-expenses.component';
+import { EditGroupModalComponent } from './edit-group-modal/edit-group-modal.component';
+
 
 const routes: Routes = [
   {
@@ -38,11 +41,13 @@ const routes: Routes = [
       { path: '', redirectTo: 'main-dashboard', pathMatch: 'full' },
       { path: 'error', component: ErrorComponent },
       { path: 'main-dashboard', component: MainDashboardComponent },
+      { path: 'all-expenses', component: ExpenseListComponent },
       { path: 'friend-detail', component: FriendDetailsComponent },
       { path: 'group-detail', component: GroupDetailsComponent },
       { path: 'group-detail/:id', component: GroupDetailsComponent },
       { path: 'all-groups', component: MyGroupsComponent },
       { path: 'my-profile', component: MyProfileComponent },
+  { path: 'edit-group/:id', component: EditGroupModalComponent },
     ],
   },
   {

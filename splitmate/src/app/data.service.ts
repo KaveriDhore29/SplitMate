@@ -6,11 +6,12 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class DataService {
-  private apiUrl = 'http://localhost:3000/api';
+  private apiUrl = 'http://localhost:3000/api'; // API base URL
   currentUserEmail: any;
   private selectedGroupSource = new BehaviorSubject<any>(null);
 
   constructor(private http: HttpClient) {
+    // Load the logged-in user's email and name from session storage
     const loggedInUser = sessionStorage.getItem('loggedInUser');
     if (loggedInUser) {
       const userPayload = JSON.parse(loggedInUser);
@@ -23,10 +24,12 @@ export class DataService {
     console.log('Current User Email:', this.currentUserEmail);
   }
 
+  // Set the selected group in the BehaviorSubject
   setSelectedGroup(group: any) {
     this.selectedGroupSource.next(group);
   }
 
+  // Fetch the details of all groups the user is part of
   getGroupDetails(): Observable<any[]> {
     return this.http.post<any[]>(
       `${this.apiUrl}/get-group-details`,
@@ -37,6 +40,7 @@ export class DataService {
     );
   }
 
+  // Fetch details for a specific group by its ID
   getGroupDetailById(groupId: string): Observable<any> {
     const payload = {
       email: this.currentUserEmail.email,
@@ -45,13 +49,15 @@ export class DataService {
     return this.http.post<any>(`${this.apiUrl}/get-one-group-detail`, payload);
   }
 
-  addExpenseService(expenseData: any) {
+  // Add an expense for a group
+  addExpenseService(expenseData: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/simplify`, expenseData, {
       withCredentials: true,
     });
   }
 
-  addMembersToGroup(membersToAdd: any, groupId: any) {
+  // Add members to a group
+  addMembersToGroup(membersToAdd: any, groupId: any): Observable<any> {
     const payload = {
       members: membersToAdd,
       groupId: groupId,
@@ -61,31 +67,55 @@ export class DataService {
     });
   }
 
-  totalOwed(groupIds: any[]) {
+  // Fetch the total amount owed for specific groups
+  totalOwed(groupIds: any[]): Observable<any> {
     const payload = {
       email: this.currentUserEmail.email,
       groupIds: groupIds,
     };
-    console.log(JSON.stringify(payload),"totalowed data");
+    console.log(JSON.stringify(payload), "totalowed data");
     return this.http.post<any>(`${this.apiUrl}/totalOwed`, payload, {
       withCredentials: true,
     });
   }
 
+  // Delete a group by groupId and members
   deleteGroup(groupId: string, members: any[]): Observable<any> {
     const payload = { groupId, members };
     console.log(JSON.stringify(payload));
     return this.http.post<any>(`${this.apiUrl}/deleteGroup`, payload, {
-      withCredentials: true, 
+      withCredentials: true,
     });
   }
-  getGroupExpenses(groupId : string) : Observable<any> {
+
+  // Fetch group expenses based on the groupId
+  getGroupExpenses(groupId: string): Observable<any> {
     const payload = {
-     groupId: groupId,
-     currentUserEmail:  this.currentUserEmail.email
-    }
+      groupId: groupId,
+      currentUserEmail: this.currentUserEmail.email
+    };
     return this.http.post<any>(`${this.apiUrl}/get-group-expenses`, payload, {
-      withCredentials: true, 
-    }); 
+      withCredentials: true,
+    });
+  }
+
+  // Fetch expenses for multiple groups using groupIds
+  getExpensesForGroups(groupIds: string[]): Observable<any> {
+    const payload = {
+      groupIds: groupIds
+    };
+    return this.http.post<any>(`${this.apiUrl}/getAllExpense`, payload, {
+      withCredentials: true,
+    });
+  }
+
+  // Fetch chart data for specific groups
+  getChartData(groupIds: string[]): Observable<any> {
+    const payload = {
+      groupIds: groupIds
+    };
+    return this.http.post<any>(`${this.apiUrl}/getChartData`, payload, {
+      withCredentials: true,
+    });
   }
 }

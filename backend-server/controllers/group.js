@@ -241,6 +241,61 @@ const getAddMembersToGroup = async (req, res) => {
   }
 
 }
+const editGroup = async (req, res) => {
+  try {
+    const { groupId, groupName, groupType, members, transactions, netBalances } = req.body;
+    
+    // Validate inputs
+    if (!groupId || !groupName || !groupType) {
+      return res.status(400).json({ error: 'Group ID, group name, and group type are required' });
+    }
+
+    // Fetch the existing group from the database using the provided groupId
+    const group = await Group.findOne({ groupId });
+
+    if (!group) {
+      return res.status(404).json({ error: 'Group not found' });
+    }
+
+    // Merge the incoming data with the existing group data
+    group.name = groupName || group.name; // Update name if provided
+    group.type = groupType || group.type; // Update group type if provided
+
+    // Merge members - ensure that we don't add duplicate members
+    if (Array.isArray(members)) {
+      members.forEach((member) => {
+        const existingMember = group.members.find((m) => m.email === member.email);
+        if (!existingMember) {
+          group.members.push(member); // Add new members if not already in the group
+        }
+      });
+    }
+
+    // Merge transactions (if provided)
+    if (Array.isArray(transactions)) {
+      group.transactions = [...group.transactions, ...transactions]; // Add new transactions
+    }
+
+    // Merge netBalances (if provided)
+    if (Array.isArray(netBalances)) {
+      group.netBalances = [...group.netBalances, ...netBalances]; // Add new balances
+    }
+
+    // Save the updated group
+    await group.save();
+
+    // Respond with the updated group details
+    res.status(200).json({
+      success: true,
+      message: 'Group updated successfully!',
+      group: group,
+    });
+  } catch (error) {
+    console.error('Error updating group:', error.message || error);
+    res.status(500).json({ error: 'Error while updating group' });
+  }
+};
+
 
 const simplification = async (req, res, input) => {
   try {
@@ -504,7 +559,8 @@ const getGroupExpenses = async (req, res) => {
         date: transaction.expenseDate,                // Transaction date 
         title: transaction.title,                   // Expense title
         amount: parseFloat(transaction.amount),     // Total amount for the transaction
-        paidBy: transaction.paidBy,                             // Person who paid
+        paidBy: transaction.paidBy, 
+        paidByName: group.members.find(member => member.email === transaction.paidBy)?.username, // Username of the person who paid
         borrowed: borrowed                          // Amount borrowed (if any)
       };
  
@@ -521,10 +577,198 @@ const getGroupExpenses = async (req, res) => {
   }
 };
 
+// Controller to fetch all expenses for multiple groups
+const getAllExpenses = async (req, res) => {
+  try {
+    const { groupIds } = req.body;  // Extract groupIds from the request body
+
+    if (!Array.isArray(groupIds) || groupIds.length === 0) {
+      return res.status(400).json({ error: 'Group IDs are required' });
+    }
+
+    let allExpenses = [];
+
+    // Iterate over each group ID to fetch relevant expenses
+    for (const groupId of groupIds) {
+      const group = await Group.findOne({ groupId });
+
+      if (!group) {
+        continue; // Skip if group is not found
+      }
+
+      // Iterate over each transaction in the group's transactions
+      group.transactions.forEach(transaction => {
+        // Prepare the expense object based on the provided data structure
+        const transactionCurrency = transaction.transactions?.[0]?.currency || currency;
+        let expense = {
+          groupName: group.name,        // Group name
+          expenseDate: transaction.expenseDate,  // Transaction date
+          amount: {
+            value: transaction.amount // Total amount for the transaction
+          },
+          currency: transactionCurrency,
+          paidBy: transaction.paidBy,   // Person who paid
+          paidByName: group.members.find(member => member.email === transaction.paidBy)?.username, // Username of the person who paid
+          title: transaction.title,     // Expense title
+        };
+
+        // Add the processed expense to the list of all expenses
+        allExpenses.push(expense);
+      });
+    }
+
+    // Send the expenses back in the response
+    res.status(200).json({ expenses: allExpenses });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error fetching expenses for the groups' });
+  }
+};
+
+
+const getChartData = async (req, res) => {
+  try {
+    const { groupIds } = req.body; // Get the groupIds from the request body
+    if (!groupIds || !Array.isArray(groupIds) || groupIds.length === 0) {
+      return res.status(400).json({ error: 'Group IDs are required' });
+    }
+
+    // Initialize arrays and objects for aggregating data
+    let allNetBalances = [];
+    let transactionsData = [];
+    let memberData = [];
+    let groupExpenses = [];
+    let monthlyExpenses = {}; // To store the accumulated expenses by month/year
+    let categoryExpenses = {}; // To store expenses categorized by group type
+
+    // Fetch data for each groupId
+    for (const groupId of groupIds) {
+      // Get the group details from the DB, including transactions
+      const group = await Group.findOne({ groupId });
+
+      if (group) {
+        const groupType = group.type?.trim() || 'Uncategorized'; // Ensure group type is valid
+
+        // Process netBalances for the group
+        const netBalances = group.netBalances || [];
+        allNetBalances.push(...netBalances);
+
+        // Process transactions for the group
+        const transactions = group.transactions || [];
+        transactionsData.push(...transactions);
+
+        // Process transactions and calculate monthly spends
+        transactions.forEach(transaction => {
+          const expenseDate = new Date(transaction.expenseDate);
+
+          // Skip transactions with invalid dates
+          if (isNaN(expenseDate)) {
+            console.error('Invalid date:', transaction.expenseDate);
+            return;
+          }
+
+          const expenseAmount = parseFloat(transaction.amount);
+
+          // Calculate the monthYear for the transaction (MM/YYYY format)
+          const monthYear = `${expenseDate.getMonth() + 1}/${expenseDate.getFullYear()}`;
+
+          // Accumulate the total spend for each monthYear
+          if (!monthlyExpenses[monthYear]) {
+            monthlyExpenses[monthYear] = 0;
+          }
+          monthlyExpenses[monthYear] += expenseAmount;
+
+          // Accumulate the total spend for each category (group type)
+          if (!categoryExpenses[groupType]) {
+            categoryExpenses[groupType] = 0;
+          }
+          categoryExpenses[groupType] += expenseAmount;
+
+          // Prepare group expense data
+          groupExpenses.push({
+            transactionId: transaction.transactionId,
+            date: transaction.expenseDate,
+            title: transaction.title,
+            amount: expenseAmount,
+            paidBy: transaction.paidBy,
+            groupType: groupType, // Include the type for each transaction
+          });
+        });
+
+        // Prepare member data (initialize member balances)
+        group.members.forEach(member => {
+          memberData.push({
+            email: member.email,
+            username: member.username,
+            totalBalance: 0, // Will be updated later
+            owes: 0,
+            owed: 0,
+            isMember: true,
+          });
+        });
+      }
+    }
+
+    // Process the netBalances to calculate owed/owes balances for each member
+    const owedBalances = allNetBalances.reduce((acc, balance) => {
+      const person = balance.person;
+
+      // Initialize the balance data for each person
+      if (!acc[person]) {
+        acc[person] = { owes: 0, owed: 0 };
+      }
+
+      // If the balance is negative, the person owes money, otherwise they are owed money
+      if (balance.balance < 0) {
+        acc[person].owes += balance.balance; // Negative balance means they owe
+      } else {
+        acc[person].owed += balance.balance; // Positive balance means they are owed
+      }
+
+      return acc;
+    }, {});
+
+    // Update memberData with the calculated balances
+    memberData = memberData.map(member => {
+      const owedData = owedBalances[member.email] || { owes: 0, owed: 0 };
+      return {
+        ...member,
+        owes: owedData.owes,
+        owed: owedData.owed,
+        totalBalance: owedData.owes + owedData.owed, // Total balance is the sum of owes and owed
+      };
+    });
+
+    // Prepare the final chart data response
+    const chartData = {
+      groupExpenses, // Group-wise expense data
+      memberData, // Data for each member (owe/owed balances)
+      transactionsData, // All transaction data
+      totalOwed: memberData.reduce((sum, member) => sum + member.totalBalance, 0), // Total owed across all members
+      totalOwedByOthers: memberData.filter(member => member.owes < 0).reduce((sum, member) => sum + Math.abs(member.owes), 0), // Total owed by others
+      totalOwedToOthers: memberData.filter(member => member.owed > 0).reduce((sum, member) => sum + member.owed, 0), // Total owed to others
+      monthlyExpenses: Object.keys(monthlyExpenses).map(monthYear => ({
+        monthYear, // e.g., "1/2025"
+        totalSpend: monthlyExpenses[monthYear], // Total spend for that month
+      })),
+      categoryExpenses: Object.keys(categoryExpenses).map(category => ({
+        category, // Group type (e.g., "Food", "Travel")
+        totalSpend: categoryExpenses[category], // Total spend for that category
+      })),
+    };
+
+    // Return the chart data as the response
+    res.status(200).json(chartData);
+
+  } catch (error) {
+    console.error('Error fetching chart data:', error);
+    res.status(500).json({ error: 'Error fetching chart data' });
+  }
+};
 
 
 
 
-
-
-module.exports = { createGroup, addMembersToGroup, getGroupDetails, getOneGroupDetail, getAddMembersToGroup, simplification, totalOwed, grpTotalOwed, deleteGroup, grpBalance,getGroupExpenses };
+module.exports = { createGroup, addMembersToGroup, getGroupDetails, getOneGroupDetail, getAddMembersToGroup, 
+  simplification, totalOwed, grpTotalOwed, deleteGroup, grpBalance,getGroupExpenses,getAllExpenses,editGroup ,getChartData};

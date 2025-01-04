@@ -32,6 +32,7 @@ import { SettleUpComponent } from './settle-up/settle-up.component';
 import { MyGroupsComponent } from './my-groups/my-groups.component';
 import { MyProfileComponent } from './my-profile/my-profile.component';
 import { ExpenseDetailModalComponent } from './expense-detail-modal/expense-detail-modal.component';
+import { ExpenseListComponent } from './all-expenses/all-expenses.component';
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import { ExpenseDetailModalComponent } from './expense-detail-modal/expense-deta
     SettleUpComponent,
     MyGroupsComponent,
     MyProfileComponent,
-    ExpenseDetailModalComponent
+    ExpenseDetailModalComponent,
+    ExpenseListComponent
   ],
   imports: [
     BrowserModule,
