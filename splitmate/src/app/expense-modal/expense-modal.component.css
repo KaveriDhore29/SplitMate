@@ -135,12 +135,17 @@
   color: white;
 }
 .save-button{
-  background-color: #04AA6D;
+  background-color: #388164;
   color: white;
   border-radius: 6px;
   width: 40%;
   height: 40px;
-  border:none   
+  border:none   ;
+  &:disabled{
+    background-color: #388164;
+    color:white;
+    opacity: 0.8;
+  }
 }
 .save-button:hover{
   background-color: #017d50;
@@ -148,7 +153,7 @@
 
 .save-button:disabled {
   background-color: #A5D6A7; /* Lighter Green */
-  color: #BDBDBD; /* Gray */
+  color: #000; /* Gray */
   cursor: not-allowed; /* Change cursor to indicate it's disabled */
   opacity: 0.5; /* Optional: make button look faded */
 }

@@ -9,6 +9,7 @@ import { DataService } from '../data.service';
   styleUrls: ['./expense-modal.component.css']
 })
 export class ExpenseModalComponent implements OnInit {
+  
   @Input() membersNames: { name: string; email: string }[] = [];
   @Input() groupId!: string;
   @Output() closePopup = new EventEmitter<void>();
@@ -123,7 +124,7 @@ export class ExpenseModalComponent implements OnInit {
 
   addExpenseData(): void {
 
-   
+    this.isSaveDisabled = true;
     // Determine the members to use based on the split option
   let membersToUse: string[] = [];
   if (this.expense.splitBy === 'equally') {
@@ -175,8 +176,9 @@ export class ExpenseModalComponent implements OnInit {
     this.dataService.addExpenseService(expenseData).subscribe(
       response => {
         // console.log('Expense successfully added:', response);
-        this.isSaveDisabled = true;
+       
         alert('Expense added successfully!');
+        this.isSaveDisabled = false;
         this.onAddExpense.emit();
         this.closePopup.emit(); // Close the modal
         // console.log('Selected Split Option:', this.selectedSplitOption);
