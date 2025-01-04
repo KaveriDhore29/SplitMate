@@ -577,7 +577,6 @@ const getGroupExpenses = async (req, res) => {
   }
 };
 
-// Controller to fetch all expenses for multiple groups
 const getAllExpenses = async (req, res) => {
   try {
     const { groupIds } = req.body;  // Extract groupIds from the request body
@@ -587,6 +586,7 @@ const getAllExpenses = async (req, res) => {
     }
 
     let allExpenses = [];
+    const defaultCurrency = 'USD';  // Define a default currency (e.g., USD)
 
     // Iterate over each group ID to fetch relevant expenses
     for (const groupId of groupIds) {
@@ -598,8 +598,9 @@ const getAllExpenses = async (req, res) => {
 
       // Iterate over each transaction in the group's transactions
       group.transactions.forEach(transaction => {
-        // Prepare the expense object based on the provided data structure
-        const transactionCurrency = transaction.transactions?.[0]?.currency || currency;
+        // Get currency from the transaction or use defaultCurrency
+        const transactionCurrency = transaction.transactions?.[0]?.currency || defaultCurrency;
+        
         let expense = {
           groupName: group.name,        // Group name
           expenseDate: transaction.expenseDate,  // Transaction date
@@ -609,7 +610,9 @@ const getAllExpenses = async (req, res) => {
           currency: transactionCurrency,
           paidBy: transaction.paidBy,   // Person who paid
           paidByName: group.members.find(member => member.email === transaction.paidBy)?.username, // Username of the person who paid
-          title: transaction.title,     // Expense title
+          date: transaction.expenseDate,                // Transaction date 
+        title: transaction.title,                   // Expense title
+        
         };
 
         // Add the processed expense to the list of all expenses
@@ -625,6 +628,7 @@ const getAllExpenses = async (req, res) => {
     res.status(500).json({ error: 'Error fetching expenses for the groups' });
   }
 };
+
 
 
 const getChartData = async (req, res) => {
