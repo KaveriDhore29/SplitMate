@@ -7,20 +7,30 @@ import { DataService } from '../data.service';
   styleUrls: ['./all-expenses.component.css'],
 })
 export class ExpenseListComponent implements OnInit {
-  expenses: any[] = []; 
-  groupIds = ["61cda4df-8af8-49e7-9964-a8a6ae1cec91", "031cde3f-7843-4fe0-9188-3f2830ea06d3"]; // Example 
+  expenses: any[] = [];
+  groupIds: string[] = [];  // To store the groupIds dynamically
 
   constructor(private dataService: DataService) {}
 
   ngOnInit(): void {
-    // Call the service to get expenses for multiple groups
-    this.dataService.getExpensesForGroups(this.groupIds).subscribe(
-      (data) => {
-       
-        this.expenses = data.expenses;  
+    // Fetch group details which contains groupIds
+    this.dataService.getGroupDetails().subscribe(
+      (groupDetails: any[]) => {
+        // Extract the groupIds from the group details response
+        this.groupIds = groupDetails.map(group => group.groupId); 
+
+        // Now that we have the groupIds, fetch expenses for those groups
+        this.dataService.getAllExpense(this.groupIds).subscribe(
+          (data) => {
+            this.expenses = data.expenses;  // Set the expenses data
+          },
+          (error) => {
+            console.error('Error fetching expenses:', error);  // Handle error
+          }
+        );
       },
       (error) => {
-        console.error('Error fetching expenses:', error); 
+        console.error('Error fetching group details:', error);  // Handle error
       }
     );
   }

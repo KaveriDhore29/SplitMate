@@ -141,86 +141,70 @@
     <div *ngIf="activeTab === 'settle-up'" class="active-tab">
       <div class="tab-content">
         <div class="settle-up-heading">
-          <h2>  <i class="fa-solid fa-circle-info"></i> &nbsp; Select expense to settle up</h2>
+          <h2><i class="fa-solid fa-circle-info"></i>&nbsp; Select expense to settle up</h2>
         </div>
-      
-        <div class="borrowed-expenses">
-          <!-- Example list of borrowed expenses -->
-          <div *ngFor="let expense of borrowedExpenses" class="expense-item" (click)="openExpenseModal(expense)">
-            <div class="expense-info">
-              <span class="expense-title">{{ expense.title }}</span>
-               <span class="settle-up-with">Owed to: <b>Shravan Shetty</b></span>
-             <span>Amount: <span class="expense-amount">{{ expense.amount | currency }}</span></span>
+    
+        <div class="Borrowed-expenses">
+          <!-- List of Borrowed Expenses -->
+          <div *ngFor="let expense of borrowedExpenses" class="Expense-card">
+            <div class="Expense-header">
+              <span class="Owe-text">YOU OWE</span>
+              <span class="Person-name">Anuja</span>
             </div>
+            <div class="Expense-amount-box">
+              <span class="Amount">{{ expense.amount | currency }}</span>
+            </div>
+            <button class="settle-up-btn" (click)="openExpenseModal(expense)">Settle Up</button>
           </div>
         </div>
-      
+    
         <!-- Settle Up Modal -->
         <div *ngIf="selectedExpense" class="expense-modal">
           <div class="modal-content">
-         <span class="settle-heading">Record a payment</span><button class="close-btn" (click)="closeModal()">&#10006;</button>
-            <!-- <p><strong>Title:</strong> {{ selectedExpense.title }}</p>
-            <p><strong>Amount:</strong> {{ selectedExpense.amount | currency }}</p>
-            <p><strong>Date:</strong> {{ selectedExpense.date | date: 'MMM d, y' }}</p> -->
-
-
+            <span class="settle-heading">Record a payment</span>
+            <button class="close-btn" (click)="closeModal()">&#10006;</button>
+    
             <div class="paying-members">
               <div class="payment-info">
                 <div class="icon-container">
                   <i class="fa-solid fa-user"></i>&nbsp; &nbsp; &nbsp;
-                  <i class="fa-solid fa-money-bill-trend-up"></i> &nbsp; &nbsp; &nbsp;
+                  <i class="fa-solid fa-money-bill-trend-up"></i>&nbsp; &nbsp; &nbsp;
                   <i class="fa-solid fa-user"></i>
                 </div>
                 <div class="text-container">
-                  <div class="person-name"><b>Anuja</b></div> &nbsp;&nbsp;
-                  <div class="action-text">paid</div> &nbsp;&nbsp;
+                  <div class="person-name"><b>Anuja</b></div>&nbsp;&nbsp;
+                  <div class="action-text">paid</div>&nbsp;&nbsp;
                   <div class="person-name"><b>Kaveri</b></div>
                 </div>
               </div>
-              
             </div>
+    
             <div class="money-input">
-       
-              <select
-                class="currency"
-              >
+              <select class="currency">
                 <option *ngFor="let currency of currencyOptions" [value]="currency">
                   {{ currency }}
                 </option>
               </select>
-           
-              <input
-                class="amount"
-                type="number"
-            
-           
-              />
+              <input class="amount" type="number" />
             </div>
             <button class="settle-up-btn">Settle Payment</button>
           </div>
         </div>
       </div>
     </div>
-  
-   
-   </div>
- 
- 
-  </div>
-
-
-  <div class="overlay" *ngIf="showPopup || showAddmembersPopup || showSettleUpPopup || showAddmembersPopup"></div>
- 
-  <app-settle-up
- *ngIf="showSettleUpPopup"
-  (closeSettleUpPopup)="showSettleUpPopup = false"
-  (onSettleUp) = "loadGroupDetails()"
-   class="modal-container"
-   [groupDetails]="groupDetails"
-   [owedExpenses]="owedExpenses"
-   [groupId]="groupId">
- </app-settle-up>
- 
+    
+    <div class="overlay" *ngIf="showPopup || showAddmembersPopup || showSettleUpPopup || showAddmembersPopup"></div>
+    
+    <app-settle-up
+      *ngIf="showSettleUpPopup"
+      (closeSettleUpPopup)="showSettleUpPopup = false"
+      (onSettleUp)="loadGroupDetails()"
+      class="modal-container"
+      [groupDetails]="groupDetails"
+      [owedExpenses]="owedExpenses"
+      [groupId]="groupId">
+    </app-settle-up>
+    
   <app-edit-group-modal
    *ngIf="showAddmembersPopup"
    class="modal-container"

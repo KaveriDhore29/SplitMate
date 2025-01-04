@@ -109,6 +109,14 @@ export class DataService {
     });
   }
 
+  getAllExpense(groupIds: string[]): Observable<any> {
+    const payload = {
+      groupIds: groupIds
+    };
+    return this.http.post<any>(`${this.apiUrl}/getAllExpense`, payload, {
+      withCredentials: true,
+    });
+  }
   // Fetch chart data for specific groups
   getChartData(groupIds: string[]): Observable<any> {
     const payload = {

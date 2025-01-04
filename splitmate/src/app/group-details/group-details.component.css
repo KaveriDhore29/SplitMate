@@ -455,6 +455,127 @@
   margin-bottom: 5px;
 }
 
+.Borrowed-expenses {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 20px;
+  padding: 10px;
+}
+
+.Expense-card {
+  background: linear-gradient(145deg, #3a8b6b, #327658); /* Subtle gradient for depth */
+  border-radius: 15px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  width: 320px;
+  padding: 25px;
+  color: #ffffff; 
+  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Reduced transition time */
+  position: relative;
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */
+  align-items: center; /* Center-align all child elements */
+}
+
+.Expense-card:hover {
+  transform: translateY(-5px); /* Reduced vertical shift */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Softer shadow */
+}
+
+
+.Expense-header {
+  display: flex;
+  flex-direction: column; /* Stack "YOU OWE" and Person Name */
+  align-items: center;
+  text-align: center; /* Center-align text */
+  margin-bottom: 20px;
+}
+
+.Owe-text {
+  font-size: 14px;
+  font-weight: bold;
+  color: #ffd700;
+  margin-bottom: 5px; /* Add spacing below "YOU OWE" */
+}
+
+.Person-name {
+  font-size: 18px;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+/* Amount Box Styling */
+.Expense-amount-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent white for contrast */
+  border-radius: 10px;
+  padding: 15px;
+  margin: 20px 0;
+  width: 100%; /* Ensure it spans the card */
+}
+
+.Amount {
+  font-size: 28px;
+  font-weight: bold;
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5); /* Text shadow for emphasis */
+}
+
+/* Center-align Settle Up Button */
+.settle-up-btn {
+  display: inline-block;
+  background-color: #ffffff;
+  color: #388164;
+  border: none;
+  border-radius: 25px;
+  padding: 12px 25px;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+  margin-top: 20px; /* Add spacing from other elements */
+}
+
+.settle-up-btn:hover {
+  background-color: #388164;
+  color: #ffffff;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Stronger shadow on hover */
+  transform: translateY(-2px); /* Slight lift effect */
+}
+
+.settle-up-btn:active {
+  background-color: #2d6a50;
+}
+
+/* Add Decorative Elements for Visual Appeal */
+.Expense-card::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 60px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.Expense-card::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: -10px;
+  width: 100px;
+  height: 100px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 50%;
+  z-index: 1;
+}
 
 
 
