@@ -16,7 +16,8 @@ const { Group } = require('./model/group'); // Import Group model for group crea
 const { sendEmailToNewUser } = require('./features/send-email');
 const { redisDb } = require('./data/redis-database');
 const { v4: uuidv4 } = require('uuid'); // For generating a unique group ID
-const {  getOneGroupDetail, getGroupDetails, createGroup, getAddMembersToGroup, simplification, totalOwed, grpTotalOwed, deleteGroup, grpBalance,getGroupExpenses,getAllExpenses } = require('./controllers/group');
+const {  getOneGroupDetail, getGroupDetails, createGroup, getAddMembersToGroup, simplification, totalOwed, grpTotalOwed, deleteGroup, grpBalance,
+  getGroupExpenses,getAllExpenses,editGroup ,getChartData} = require('./controllers/group');
 const { justification } = require('./features/simplify-debts');
 
 const app = express();
@@ -85,8 +86,9 @@ app.post('/api/grpTotalOwed', grpTotalOwed);
 app.post('/api/grpBalance', grpBalance);
 app.post('/api/get-group-expenses', getGroupExpenses);
 app.post('/api/getAllExpense' ,getAllExpenses);
+app.post('/api/getChartData' ,getChartData);
 
-
+app.put('/api/group/edit', editGroup);
 
 // Global error handler
 app.use((err, req, res, next) => {
