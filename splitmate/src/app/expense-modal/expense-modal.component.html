@@ -139,7 +139,7 @@
       </div>
     </div>
         <!-- Save Button -->
-        <button type="button" (click)="addExpenseData()" class="save-button" [disabled]="isSaveDisabled">Split Expense</button>
+        <button type="button" (click)="addExpenseData()" class="save-button" [disabled]="isSaveDisabled || !expense.amount">Split Expense</button>
   </div>
 </div>
 

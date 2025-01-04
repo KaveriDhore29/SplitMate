@@ -30,10 +30,11 @@
 
 .group-name {
   margin: 0;
-  font-size: 24px;
+  font-size: 28px;
   font-weight: bold;
   text-align: left;
   color: black;
+  text-transform: capitalize;
 }
 
 .settings-icon {

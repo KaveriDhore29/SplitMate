@@ -393,7 +393,7 @@ const totalOwed = async(req, res) => {
     console.log('allNetBalances ',allNetBalances);
     for (const netBalance of allNetBalances) {
       for(const balance of netBalance) {
-        if(balance.person == email.email) {
+        if(balance.person == email) {
           myTotalBalance += balance.balance;
           if(balance.balance < 0) {
             owesBalance += balance.balance;
