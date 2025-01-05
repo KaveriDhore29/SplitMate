@@ -17,6 +17,7 @@ export class GroupDetailsComponent implements OnInit{
   showPopup: boolean = false;
   showSettleUpPopup = false;
   showAddmembersPopup: boolean = false;
+  responseOftotalOwed : any;
   groupIds = [];
   groupExpenses : any;
   groupExpensesArray : any;

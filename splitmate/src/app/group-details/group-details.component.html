@@ -92,7 +92,7 @@
               <td>{{ expense.date | date:'shortDate' }}</td> <!-- Assuming expense has a 'date' field -->
               <td>{{ expense.title }}</td>
               <td>{{ expense.amount }}</td>
-              <td>{{ expense.paidBy }}</td>
+              <td>{{ expense.paidBy === this.dataService.currentUserEmail.email ? 'You' : expense.paidByName ? expense.paidByName : expense.paidBy}}</td>
               <td>{{ expense.borrowed }}</td>
               <td></td>
               <td></td>
