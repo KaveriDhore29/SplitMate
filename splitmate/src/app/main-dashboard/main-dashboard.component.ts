@@ -52,9 +52,12 @@ export class MainDashboardComponent implements OnInit {
   }
 
   fetchExpensesData(): void {
-    this.dataService.getExpensesForGroups(this.groupIds).subscribe(
-      (expenseData: any) => {
-        this.expenseData = expenseData;
+   this.dataService.getGroupDetails().subscribe(
+      (groupDetails: any[]) => {
+        // Extract the groupIds from the group details response
+        this.groupIds = groupDetails.map(group => group.groupId); 
+
+
         this.createExpenseChart();
       },
       (error) => {

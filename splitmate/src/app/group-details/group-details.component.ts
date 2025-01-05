@@ -46,7 +46,93 @@ export class GroupDetailsComponent implements OnInit{
     { person: 'Person 5', action: 'joined the group', time: '5 days ago' },
     { person: 'Person 6', action: 'removed expense "Lunch"', time: '7 days ago' }
   ];
- 
+  expenses = [
+    {
+      date: new Date(),
+      title: 'Dinner',
+      amount: 1500,
+      paidBy: 'John Doe',
+      borrowed: 500
+    },
+    {
+      date: new Date(),
+      title: 'Groceries',
+      amount: 3000,
+      paidBy: 'Jane Smith',
+      borrowed: 1200
+    },
+    {
+      date: new Date(),
+      title: 'Groceries',
+      amount: 3000,
+      paidBy: 'Jane Smith',
+      borrowed: 1200
+    },
+    {
+      date: new Date(),
+      title: 'Groceries',
+      amount: 3000,
+      paidBy: 'Jane Smith',
+      borrowed: 1200
+    },
+    {
+      date: new Date(),
+      title: 'Groceries',
+      amount: 3000,
+      paidBy: 'Jane Smith',
+      borrowed: 1200
+    },
+    {
+      date: new Date(),
+      title: 'Groceries',
+      amount: 3000,
+      paidBy: 'Jane Smith',
+      borrowed: 1200
+    },
+    {
+      date: new Date(),
+      title: 'Groceries',
+      amount: 3000,
+      paidBy: 'Jane Smith',
+      borrowed: 1200
+    },
+    {
+      date: new Date(),
+      title: 'Groceries',
+      amount: 3000,
+      paidBy: 'Jane Smith',
+      borrowed: 1200
+    },
+    {
+      date: new Date(),
+      title: 'Groceries',
+      amount: 3000,
+      paidBy: 'Jane Smith',
+      borrowed: 1200
+    },
+    {
+      date: new Date(),
+      title: 'Groceries',
+      amount: 3000,
+      paidBy: 'Jane Smith',
+      borrowed: 1200
+    },
+    {
+      date: new Date(),
+      title: 'Groceries',
+      amount: 3000,
+      paidBy: 'Jane Smith',
+      borrowed: 1200
+    },
+    {
+      date: new Date(),
+      title: 'Groceries',
+      amount: 3000,
+      paidBy: 'Jane Smith',
+      borrowed: 1200
+    }
+  ];
+
   constructor(private route: ActivatedRoute, public dataService: DataService,private router:Router) { }
 
   ngOnInit(): void {
@@ -99,6 +185,16 @@ export class GroupDetailsComponent implements OnInit{
         console.log("expense",this.groupExpenses);
         this.groupExpensesArray = this.groupExpenses.expenses;
       }
+);
+
+this.dataService.grpTotalOwed(this.groupId).subscribe(
+  (owedData: any) => {
+    this.responseOftotalOwed = owedData;
+    console.log(this.responseOftotalOwed, "totalowed");
+  },
+  (error) => {
+    console.error("Error loading details from API:", error);
+  }
 );
   }
 

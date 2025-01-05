@@ -5,10 +5,11 @@ const { User } = require('../model/users');
 const { client } = require('../data/redis-database');
 const { addMembers } = require('../features/addMembers');
 const { simplifyDebts, mergeTransactions, mergeNetBalances, settle, replaceEmailsWithUsernames } = require('../features/simplify-debts');
-const { deleteGroupService } = require('../features/delete-group'); // Import the service layer
+// const { deleteGroupService } = require('../features/delete-group'); // Import the service layer
+const { deleteGroupService, calculateGroupBalance, insertGroupBalancesInDB, getGroupBalance, calculateOwesOwedAmount } = require('../features/groupService'); // Import the service layer
 
 // Controller to create a new group
-const createGroup = async (req, res) => {
+const createGroupOld = async (req, res) => {
     const { groupName, groupType } = req.body;
     let { members, joinedByLink } = req.body;
     const username = req.body.createdBy.username;
@@ -94,6 +95,121 @@ const createGroup = async (req, res) => {
         link,
       });
 
+    } catch (error) {
+      console.error('Error creating group:', error.message || error);  // Check for detailed error
+      res.status(500).json({ error: error.message || 'Server error while creating group' });
+    }
+  };
+
+  const createGroup = async (req, res) => {
+    const { groupName, groupType } = req.body;
+    let { members, joinedByLink } = req.body;
+    const username = req.body.createdBy.username;
+    const email = req.body.createdBy.email;
+    let groupId = req.body.groupId ? req.body.groupId : null;
+  
+    // Validate the group name, members, and group type
+    if (!groupName || !Array.isArray(members) || members.length === 0 || !groupType) {
+      return res.status(400).json({ error: 'Group name, members, and group type are required' });
+    }
+  
+    try {
+      // adding self only if not present in members
+      let obj = {
+        username,
+        email,
+        joinedByLink: false
+      }
+      let addSelf = true;
+      for (let i = 0; i < members.length; i++) {
+        if (members[i].email == email) {
+          addSelf = false;
+        }
+      }
+      if (addSelf) members.push(obj);
+  
+      // Generate a unique groupId
+      groupId = groupId == null ? uuidv4() : groupId;
+  
+      members = await addMembers(req, res, members, groupId);
+      // Add the groupId to userdatas concurrently
+      let groupIdsOfUser = [];
+      let id = [];
+      for (const member of members) {
+        // Update the user's groupIds in the database
+  
+        await User.updateOne({ email: member.email }, { $addToSet: { groupIds: groupId } });
+        // Initialize groupIdsOfUser as an empty array
+        // Retrieve existing groupIds from the cache
+        id = await client.get(`groupIds:${member.email}`);
+        groupIdsOfUser = []; // Reset groupIdsOfUser for each member
+        // Check if id exists and process it
+        if (id) {
+          try {
+            id = JSON.parse(id); // Parse the JSON string into an object
+            // Ensure id is an array before pushing into groupIdsOfUser
+            if (Array.isArray(id)) {
+              groupIdsOfUser.push(...id); // Spread the array into groupIdsOfUser
+            } else {
+              console.warn(`Expected array, got ${typeof id}:`, id);
+            }
+          } catch (err) {
+            console.error('Error parsing cached groupIds:', err);
+          }
+        }
+        // Add the new groupId to the array
+        // groupIdsOfUser.push(groupId);
+        if (!groupIdsOfUser.includes(groupId)) {
+          groupIdsOfUser.push(groupId);
+        }
+        // Update the cache with the new groupIds array
+        await client.set(`groupIds:${member.email}`, JSON.stringify(groupIdsOfUser));
+      }
+  
+      // await Promise.all(updatePromises); // Execute all updates concurrently
+  
+      // Create the new group
+      // const newGroup = await Group.create({
+      //   name: groupName,
+      //   members: members,
+      //   type: groupType,
+      //   groupId: groupId,
+      //   createdBy: email
+      // });
+  
+      //Create or Update group
+      const newGroup = await Group.findOneAndUpdate(
+        { groupId },
+        {
+          $set: {
+            name: groupName,
+            members: members,
+            type: groupType,
+            groupId: groupId,
+            createdBy: email
+          }
+        },
+        {
+          new: true,
+          upsert: true
+        }
+  
+      )
+      // set the group in redis cache
+      for (let member of members) {
+        await client.set(`group:${groupId}`, JSON.stringify(newGroup));
+      }
+  
+      const groupIdHash = groupId;
+      const link = `http://localhost:4200/dashboard/group-detail/${groupIdHash}`;
+      res.status(201).json({
+        success: true,
+        message: 'Group created successfully!',
+        group: newGroup,
+        groupIdHash,
+        link,
+      });
+  
     } catch (error) {
       console.error('Error creating group:', error.message || error);  // Check for detailed error
       res.status(500).json({ error: error.message || 'Server error while creating group' });
@@ -357,6 +473,8 @@ const simplification = async (req, res, input) => {
       { $set: { latestTransactions: latestTransactions } } // Update the transactions field
     );
 
+    let transactionArray = await calculateGroupBalance(groupId);
+    await insertGroupBalancesInDB(transactionArray, groupId);
 
     // Send the response
     res.status(200).json({ latestTransactions, getGroup: updateResult });
@@ -369,7 +487,7 @@ const simplification = async (req, res, input) => {
 
 
 // get total owed amount
-const totalOwed = async(req, res) => {
+const totalOwed_Old = async(req, res) => {
   const {email, groupIds} = req.body;
   console.log('groupIds ',groupIds);
   try {
@@ -393,7 +511,7 @@ const totalOwed = async(req, res) => {
     console.log('allNetBalances ',allNetBalances);
     for (const netBalance of allNetBalances) {
       for(const balance of netBalance) {
-        if(balance.person == email.email) {
+        if(balance.person == email) {
           myTotalBalance += balance.balance;
           if(balance.balance < 0) {
             owesBalance += balance.balance;
@@ -416,7 +534,7 @@ const totalOwed = async(req, res) => {
 }
 
 // get total owed amount
-const grpTotalOwed = async(req, res) => {
+const grpTotalOwed_Old = async(req, res) => {
   const {email, groupId} = req.body;
   console.log('groupIds ',groupId);
   try {
@@ -478,7 +596,7 @@ const deleteGroup = async (req, res) => {
 };
 
 // get total owed amount
-const grpBalance = async(req, res) => {
+const grpBalance_Old = async(req, res) => {
   const {groupId} = req.body;
   console.log('groupIds ',groupId);
   try {
@@ -517,6 +635,21 @@ const grpBalance = async(req, res) => {
     console.log(transactionArray);
     
     res.status(200).json({transactionArray});
+  } catch (error) {
+    console.error('Error finding total owed amount', error);
+    res.status(500).json({ error: 'Error in total owed amount' });
+  }
+}
+
+// get total owed amount
+const grpBalance = async (req, res) => {
+  const { groupId } = req.body;
+  console.log('groupIds ', groupId);
+  try {
+
+    let transactionArray = await getGroupBalance(groupId);
+
+    res.status(200).json({ transactionArray });
   } catch (error) {
     console.error('Error finding total owed amount', error);
     res.status(500).json({ error: 'Error in total owed amount' });
@@ -577,7 +710,6 @@ const getGroupExpenses = async (req, res) => {
   }
 };
 
-// Controller to fetch all expenses for multiple groups
 const getAllExpenses = async (req, res) => {
   try {
     const { groupIds } = req.body;  // Extract groupIds from the request body
@@ -587,6 +719,7 @@ const getAllExpenses = async (req, res) => {
     }
 
     let allExpenses = [];
+    const defaultCurrency = 'USD';  // Define a default currency (e.g., USD)
 
     // Iterate over each group ID to fetch relevant expenses
     for (const groupId of groupIds) {
@@ -598,8 +731,9 @@ const getAllExpenses = async (req, res) => {
 
       // Iterate over each transaction in the group's transactions
       group.transactions.forEach(transaction => {
-        // Prepare the expense object based on the provided data structure
-        const transactionCurrency = transaction.transactions?.[0]?.currency || currency;
+        // Get currency from the transaction or use defaultCurrency
+        const transactionCurrency = transaction.transactions?.[0]?.currency || defaultCurrency;
+        
         let expense = {
           groupName: group.name,        // Group name
           expenseDate: transaction.expenseDate,  // Transaction date
@@ -609,7 +743,9 @@ const getAllExpenses = async (req, res) => {
           currency: transactionCurrency,
           paidBy: transaction.paidBy,   // Person who paid
           paidByName: group.members.find(member => member.email === transaction.paidBy)?.username, // Username of the person who paid
-          title: transaction.title,     // Expense title
+          date: transaction.expenseDate,                // Transaction date 
+        title: transaction.title,                   // Expense title
+        
         };
 
         // Add the processed expense to the list of all expenses
@@ -625,6 +761,7 @@ const getAllExpenses = async (req, res) => {
     res.status(500).json({ error: 'Error fetching expenses for the groups' });
   }
 };
+
 
 
 const getChartData = async (req, res) => {
@@ -766,6 +903,67 @@ const getChartData = async (req, res) => {
     res.status(500).json({ error: 'Error fetching chart data' });
   }
 };
+
+const grpTotalOwed = async (req, res) => {
+  const { email, groupId } = req.body;
+  try {
+
+    let owesBalance = 0;
+    let owedBalance = 0;
+    let myTotalBalance = 0;
+
+    let arrBalances = await calculateOwesOwedAmount(groupId, email);
+
+    owesBalance = parseFloat(arrBalances.balanceYouOwe).toFixed(2);
+    owedBalance = parseFloat(arrBalances.balanceOwedToYou).toFixed(2);
+    myTotalBalance = parseFloat(arrBalances.myTotalBalance).toFixed(2)
+
+    console.log('owesBalance ', owesBalance);
+    console.log('owedBalance ', owedBalance);
+
+    let transactionArray = await calculateGroupBalance(groupId);
+    await insertGroupBalancesInDB(transactionArray, groupId);
+    
+    res.status(200).json({ myTotalBalance, owesBalance, owedBalance });
+  } catch (error) {
+    console.error('Error finding total owed amount', error);
+    res.status(500).json({ error: 'Error in total owed amount' });
+  }
+}
+
+// get total owed amount
+const totalOwed = async (req, res) => {
+  const { email, groupIds } = req.body;
+  console.log('groupIds ', groupIds);
+  try {
+
+
+    let owesBalance = 0;
+    let owedBalance = 0;
+    let myTotalBalance = 0;
+
+    for (let groupId of groupIds) {
+      let arrBalances = await calculateOwesOwedAmount(groupId, email);
+
+      owesBalance += arrBalances.balanceYouOwe
+      owedBalance += arrBalances.balanceOwedToYou
+      myTotalBalance += arrBalances.myTotalBalance
+
+      console.log('owesBalance ', owesBalance);
+      console.log('owedBalance ', owedBalance);
+      console.log('myTotalBalance ', myTotalBalance);
+    }
+    owesBalance = parseFloat(owesBalance).toFixed(2);
+    owedBalance = parseFloat(owedBalance).toFixed(2);
+    myTotalBalance = parseFloat(myTotalBalance).toFixed(2)
+    res.status(200).json({ myTotalBalance, owesBalance, owedBalance });
+
+  }
+  catch (error) {
+    console.error('Error finding total owed amount', error);
+    res.status(500).json({ error: 'Error in total owed amount' });
+  }
+}
 
 
 

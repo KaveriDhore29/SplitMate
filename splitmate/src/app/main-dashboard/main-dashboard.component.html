@@ -1,82 +1,42 @@
-<div class="container text-center">
-  <div class="row">
-      <div class="section section1" style="width: 40%;">
-          <h1 class="heading">Summary</h1>
-         <div class="row expense-table">
-           <div class="col">
-            <h1>{{responseOftotalOwed.owesBalance}}</h1>
-            <p>You owe</p>
-           </div>
-           <div class="col">
-            <h1>{{responseOftotalOwed.owedBalance}}</h1>
-            <p>Owed to you</p>
-           </div>
-           <div class="col">
-            <h1>{{responseOftotalOwed.myTotalBalance}}</h1>
-            <p>Total Expense</p>
-           </div>
-         </div>
-      </div>
-      <div class="section section1" style="width: 55%;">
-        <h1 class="heading">Monthly Spends</h1>
-        <canvas id="expenseChart"></canvas>  
-      </div>
-      
+<div class="container">
+  <!-- Top Cards Section -->
+  <div class="row top-cards">
+    <div class="col card">
+      <h2>You Owe</h2>
+      <h1>{{responseOftotalOwed.owesBalance}}</h1>
+    </div>
+    <div class="col card">
+      <h2>Owed to You</h2>
+      <h1>{{responseOftotalOwed.owedBalance}}</h1>
+    </div>
+    <div class="col card">
+      <h2>Total Expense</h2>
+      <h1>{{responseOftotalOwed.myTotalBalance}}</h1>
+    </div>
   </div>
-  <!-- <div class="row">
-      <div class="section">
-          <table class="table table-secondary table-striped">
-              <thead>
-                <tr>
-                  <th scope="col">You Owe</th>
-                  <th scope="col">You Owed</th>
-                  <th scope="col">Total Balances</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><b>$</b> 0.00</td>
-                  <td><b>$</b> 0.00</td>
-                  <td><b>$</b> 0.00</td>
-                </tr>
-              </tbody>
-            </table>
-      </div>
-  </div> -->
-  <div class="row">
-    <div class="section section1" style="width: 30%;height: 250px;">
-        <h1 class="heading">Category-Expenses chart</h1>
+
+  <!-- Charts Section -->
+  <div class="row charts">
+    <div class="col chart-section monthly-chart">
+      <h2>Monthly Spends</h2>
+      <canvas id="expenseChart"></canvas>
     </div>
-    <div class="section section1" style="width: 30%;">
-      <h1 class="heading">Expense trend chart</h1>
+    
+    <div class="col chart-section category-chart">
+      <h2>Category-Wise Expenses</h2>
+      <canvas id="categoryExpenseChart"></canvas>
     </div>
-    <div class="section section1" style="width: 30%;">
-      <h1 class="heading">List of groups</h1>
+  </div>
+
+  <!-- Friends and Groups Section -->
+  <div class="row bottom-cards">
+    <div class="col card">
+      <h2>List of Friends</h2>
+      <!-- Add friend list here -->
     </div>
+    <div class="col card">
+      <h2>List of Groups</h2>
+      <!-- Add group list here -->
+    </div>
+  </div>
 </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
