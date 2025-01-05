@@ -27,16 +27,16 @@
        <h2 class="summary-heading">Summary</h2>
        <div class="expense-table">
         <div class="balances">
-          <h3>$200</h3>
-          <p>You Owe</p>
-        </div>
-        <div class="balances">
-          <h3>$200</h3>
+          <h3>{{responseOftotalOwed.owesBalance}}</h3>
           <p>Owed to you</p>
         </div>
         <div class="balances">
-          <h3>$200</h3>
-          <p>Total Balances</p>
+          <h3>{{responseOftotalOwed.owedBalance}}</h3>
+          <p>You Owe</p>
+        </div>
+        <div class="balances">
+          <h3>{{responseOftotalOwed.myTotalBalance}}</h3>
+          <p>Total Expense</p>
         </div>
       </div>
      </div>

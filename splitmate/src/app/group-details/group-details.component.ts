@@ -131,6 +131,10 @@ export class GroupDetailsComponent implements OnInit{
     }
   ];
 
+  responseOftotalOwed:{myTotalBalance: number; owedBalance : number; owesBalance : number} = {  myTotalBalance: 0,
+    owedBalance: 0,
+    owesBalance: 0};
+
   constructor(private route: ActivatedRoute, public dataService: DataService,private router:Router) { }
 
   ngOnInit(): void {
@@ -181,6 +185,16 @@ export class GroupDetailsComponent implements OnInit{
         console.log("expense",this.groupExpenses);
         this.groupExpensesArray = this.groupExpenses.expenses;
       }
+);
+
+this.dataService.grpTotalOwed(this.groupId).subscribe(
+  (owedData: any) => {
+    this.responseOftotalOwed = owedData;
+    console.log(this.responseOftotalOwed, "totalowed");
+  },
+  (error) => {
+    console.error("Error loading details from API:", error);
+  }
 );
   }
 

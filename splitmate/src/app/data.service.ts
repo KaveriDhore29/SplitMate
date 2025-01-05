@@ -78,6 +78,17 @@ export class DataService {
       withCredentials: true,
     });
   }
+  
+  grpTotalOwed(groupId: any) {
+    const payload = {
+      email: this.currentUserEmail.email,
+      groupId: groupId,
+    };
+    console.log(JSON.stringify(payload),"grpTotalowed data");
+    return this.http.post<any>(`${this.apiUrl}/grpTotalOwed`, payload, {
+      withCredentials: true,
+    });
+  }
 
   // Delete a group by groupId and members
   deleteGroup(groupId: string, members: any[]): Observable<any> {

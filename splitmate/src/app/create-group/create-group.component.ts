@@ -157,6 +157,7 @@ export class CreateGroupComponent implements OnInit {
     const groupData = {
       groupName: this.groupName,
       groupType: this.groupType,
+      groupId: this.groupId,
       members: [
         ...this.members.map((member) => ({
           username: member.username,
