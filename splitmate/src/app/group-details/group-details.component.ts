@@ -12,9 +12,12 @@ export class GroupDetailsComponent implements OnInit{
   groupDetails: any;
   groupName : string ='';
   membersNames: any[] = [];
+  groupCreatedBy = {username : '',email:''};
+  groupCreatedAt : any;
   showPopup: boolean = false;
   showSettleUpPopup = false;
   showAddmembersPopup: boolean = false;
+  responseOftotalOwed : any;
   groupIds = [];
   groupExpenses : any;
   groupExpensesArray : any;
@@ -167,8 +170,10 @@ export class GroupDetailsComponent implements OnInit{
           name: member.username, 
           email: member.email
         }));
-        //  this.groupExpenses = this.groupDetails[0].transactions;
-        // this.transactions = this.groupDetails[0].latestTransactions;
+          this.groupCreatedBy = this.groupDetails[0].createdBy;
+          this.groupCreatedAt = this.groupDetails[0].createdAt;
+
+          console.log("details",  this.groupCreatedBy ,"[[",this.groupCreatedAt)
       },
       (error) => {
         console.error('Error fetching group details:', error);
@@ -181,6 +186,16 @@ export class GroupDetailsComponent implements OnInit{
         console.log("expense",this.groupExpenses);
         this.groupExpensesArray = this.groupExpenses.expenses;
       }
+);
+
+this.dataService.grpTotalOwed(this.groupId).subscribe(
+  (owedData: any) => {
+    this.responseOftotalOwed = owedData;
+    console.log(this.responseOftotalOwed, "totalowed");
+  },
+  (error) => {
+    console.error("Error loading details from API:", error);
+  }
 );
   }
 
@@ -197,7 +212,7 @@ export class GroupDetailsComponent implements OnInit{
   }
 
   deleteExpense(expense: any): void {
-    this.expenses = this.expenses.filter(e => e !== expense);
+
     this.selectedExpense = null; // Close modal after deletion
   }
 

@@ -24,6 +24,7 @@
     "angular-ng-autocomplete": "^2.0.12",
     "aos": "^2.3.4",
     "bootstrap": "^5.3.3",
+    "chart.js": "^4.4.7",
     "glightbox": "^3.3.0",
     "rxjs": "~7.5.0",
     "swiper": "^11.1.15",

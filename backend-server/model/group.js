@@ -20,7 +20,10 @@ const groupSchema = new mongoose.Schema({
   transactions: Array,
   netBalances: Object,
   latestTransactions: Array,
-  createdBy: String,
+  createdBy: { 
+    email: { type: String, required: true },
+    username: { type: String, required: true }
+}
 }, { timestamps: true });
 const Group = mongoose.model('Group', groupSchema);
 

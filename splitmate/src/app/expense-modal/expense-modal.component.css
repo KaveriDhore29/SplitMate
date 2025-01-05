@@ -11,11 +11,16 @@
   background-color: white;
   margin: 25%;
   z-index: 2;
-  border-radius: 10px; /* Rounded corners */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
   padding: 20px; /* Inner spacing */
-  overflow: auto;
+  overflow: scroll;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: #388164 #f1f1f1;
+  scrollbar-arrow-color: #388164;
 }
+
+
 
 .members-split-options{
   border: 1px solid black;
@@ -32,19 +37,19 @@
 }
 
 .form-heading{
-  background-color: #1ACC8D;
-  color: white;
-  text-align: center;
+  background-color: #f9f5f5;
+  color: #000000;
+  text-align: left;
   font-size: 1.5rem;
-  padding: 10px;
-  border-radius: 10px 10px 0 0; /* Rounded top corners */
-  font-weight: bold;
+  /* padding: 10px; */
+  /* border-radius: 10px 10px 0 0; */
+  /* font-weight: bold; */
 }
 
 .expense-title{
    text-align: left;
    margin-top:10px;
-   margin-bottom:20px;
+   margin-bottom:25px;
 }
 
 .expense-title input{
@@ -76,7 +81,7 @@
   width: 100%;
   padding: 10px;
   border: none;
-  border-bottom: 1px solid #0b8f64;
+  border-bottom: 1px solid #388164;
   background: transparent;
   color: black;
   font-size: 1rem;
@@ -87,7 +92,7 @@
   width: 20%;
   padding: 10px;
   border:none;
-  border-bottom: 1px solid #0b8f64;
+  border-bottom: 1px solid #388164;
   background: transparent;
   color: black;
   font-size: 1rem;
@@ -97,7 +102,7 @@
   width: 80%;
   padding: 11px;
   border:none;
-  border-bottom: 1px solid #0b8f64;
+  border-bottom: 1px solid #388164;
   background: transparent;
   color: black;
   font-size: 1rem;
@@ -107,7 +112,7 @@
   width: 75%;
   padding: 10px;
   border:none;
-  border-bottom: 1px solid #0b8f64;
+  border-bottom: 1px solid #388164;
   background: transparent;
   color: black;
   font-size: 1rem;
@@ -119,28 +124,33 @@
 .currency input:focus,
 .payer select:focus {
   outline: none;
-  box-shadow: 0 0 5px rgba(26, 204, 141, 0.7); /* Highlight on focus */
+  box-shadow: 0 0 2px #388164
 }
 
 .split-tabs{
   background-color: transparent;
-  color: #0b8f64;
-  border: 1px solid #0b8f64;
-  padding:2%;
+  color: #388164;
+  border: 1px solid #388164;
+  padding: 1% 2%;
   border-radius: 6px;
   margin: 1%;
 }
 .split-tabs:hover{
-  background-color: #0b8f64;
+  background-color: #388164;
   color: white;
 }
 .save-button{
-  background-color: #04AA6D;
+  background-color: #388164;
   color: white;
   border-radius: 6px;
   width: 40%;
   height: 40px;
-  border:none   
+  border:none   ;
+  &:disabled{
+    background-color: #388164;
+    color:white;
+    opacity: 0.8;
+  }
 }
 .save-button:hover{
   background-color: #017d50;
@@ -148,15 +158,15 @@
 
 .save-button:disabled {
   background-color: #A5D6A7; /* Lighter Green */
-  color: #BDBDBD; /* Gray */
+  color: #000; /* Gray */
   cursor: not-allowed; /* Change cursor to indicate it's disabled */
   opacity: 0.5; /* Optional: make button look faded */
 }
 
 .active-option {
-  background-color: #0b8f64;
+  background-color: #388164;
   color: #fff;
-  border-color: #0b8f64;
+  border:none;
 }
 .close-btn{
   position: absolute;
@@ -210,7 +220,7 @@
 }
 
 .eq-members{
-  text-align: left;
+  text-align: center;
  
 }
 .member-names{
@@ -257,7 +267,7 @@
 }
 
 .check-container input:checked ~ .checkmark {
-  background-color: #1acc8d;
+  background-color: #388164;
 }
 
 .checkmark:after {

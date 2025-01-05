@@ -1,0 +1,51 @@
+.expense-list {
+    margin: 20px;
+  }
+  
+  .expense-card {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .expense-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .expense-header:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .expense-icon {
+    font-size: 24px;
+    margin-right: 10px;
+    color: #4caf50;
+  }
+  
+  .expense-statement {
+    flex-grow: 1;
+  }
+  
+  .accordion-icon {
+    font-size: 16px;
+    margin-left: 10px;
+  }
+  
+  .expense-details {
+    padding: 15px;
+    background-color: #fff;
+    border-top: 1px solid #ddd;
+  }
+  
+  .expense-details p {
+    margin: 5px 0;
+  }
+  
