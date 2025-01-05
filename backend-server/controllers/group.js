@@ -13,7 +13,7 @@ const createGroup = async (req, res) => {
     let { members, joinedByLink } = req.body;
     const username = req.body.createdBy.username;
     const email = req.body.createdBy.email;
-
+    const createdBy = req.body.createdBy
     // Validate the group name, members, and group type
     if (!groupName || !Array.isArray(members) || members.length === 0 || !groupType) {
       return res.status(400).json({ error: 'Group name, members, and group type are required' });
@@ -76,7 +76,7 @@ const createGroup = async (req, res) => {
         members: members,
         type: groupType,
         groupId: groupId,
-        createdBy: email
+        createdBy: {email,username}
       });
 
       // set the group in redis cache

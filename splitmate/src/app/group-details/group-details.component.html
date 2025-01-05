@@ -6,7 +6,7 @@
         <div>
           <h1 class="group-name" *ngIf="groupName">{{ groupName }}</h1>
           <p>
-            Created on: <b>Dec 12, 2024</b> by <b>Kaveri Dhore</b>
+            Created on: <b>{{this.groupCreatedAt | date}}</b> by <b>{{this.groupCreatedBy.username}}</b>
           </p>
         </div>
   

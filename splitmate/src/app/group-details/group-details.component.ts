@@ -12,6 +12,8 @@ export class GroupDetailsComponent implements OnInit{
   groupDetails: any;
   groupName : string ='';
   membersNames: any[] = [];
+  groupCreatedBy = {username : '',email:''};
+  groupCreatedAt : any;
   showPopup: boolean = false;
   showSettleUpPopup = false;
   showAddmembersPopup: boolean = false;
@@ -44,93 +46,7 @@ export class GroupDetailsComponent implements OnInit{
     { person: 'Person 5', action: 'joined the group', time: '5 days ago' },
     { person: 'Person 6', action: 'removed expense "Lunch"', time: '7 days ago' }
   ];
-  expenses = [
-    {
-      date: new Date(),
-      title: 'Dinner',
-      amount: 1500,
-      paidBy: 'John Doe',
-      borrowed: 500
-    },
-    {
-      date: new Date(),
-      title: 'Groceries',
-      amount: 3000,
-      paidBy: 'Jane Smith',
-      borrowed: 1200
-    },
-    {
-      date: new Date(),
-      title: 'Groceries',
-      amount: 3000,
-      paidBy: 'Jane Smith',
-      borrowed: 1200
-    },
-    {
-      date: new Date(),
-      title: 'Groceries',
-      amount: 3000,
-      paidBy: 'Jane Smith',
-      borrowed: 1200
-    },
-    {
-      date: new Date(),
-      title: 'Groceries',
-      amount: 3000,
-      paidBy: 'Jane Smith',
-      borrowed: 1200
-    },
-    {
-      date: new Date(),
-      title: 'Groceries',
-      amount: 3000,
-      paidBy: 'Jane Smith',
-      borrowed: 1200
-    },
-    {
-      date: new Date(),
-      title: 'Groceries',
-      amount: 3000,
-      paidBy: 'Jane Smith',
-      borrowed: 1200
-    },
-    {
-      date: new Date(),
-      title: 'Groceries',
-      amount: 3000,
-      paidBy: 'Jane Smith',
-      borrowed: 1200
-    },
-    {
-      date: new Date(),
-      title: 'Groceries',
-      amount: 3000,
-      paidBy: 'Jane Smith',
-      borrowed: 1200
-    },
-    {
-      date: new Date(),
-      title: 'Groceries',
-      amount: 3000,
-      paidBy: 'Jane Smith',
-      borrowed: 1200
-    },
-    {
-      date: new Date(),
-      title: 'Groceries',
-      amount: 3000,
-      paidBy: 'Jane Smith',
-      borrowed: 1200
-    },
-    {
-      date: new Date(),
-      title: 'Groceries',
-      amount: 3000,
-      paidBy: 'Jane Smith',
-      borrowed: 1200
-    }
-  ];
-
+ 
   constructor(private route: ActivatedRoute, public dataService: DataService,private router:Router) { }
 
   ngOnInit(): void {
@@ -167,8 +83,10 @@ export class GroupDetailsComponent implements OnInit{
           name: member.username, 
           email: member.email
         }));
-        //  this.groupExpenses = this.groupDetails[0].transactions;
-        // this.transactions = this.groupDetails[0].latestTransactions;
+          this.groupCreatedBy = this.groupDetails[0].createdBy;
+          this.groupCreatedAt = this.groupDetails[0].createdAt;
+
+          console.log("details",  this.groupCreatedBy ,"[[",this.groupCreatedAt)
       },
       (error) => {
         console.error('Error fetching group details:', error);
@@ -197,7 +115,7 @@ export class GroupDetailsComponent implements OnInit{
   }
 
   deleteExpense(expense: any): void {
-    this.expenses = this.expenses.filter(e => e !== expense);
+
     this.selectedExpense = null; // Close modal after deletion
   }
 

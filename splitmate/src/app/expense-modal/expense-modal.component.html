@@ -56,8 +56,8 @@
       [ngClass]="{'active-option': selectedSplitOption === 'percentage'}">Percentage</button>
       <button (click)="onSplitOptionChange('shares')"  class="split-tabs"
       [ngClass]="{'active-option': selectedSplitOption === 'shares'}">Shares</button>
-      <button (click)="onSplitOptionChange('adjustments')"  class="split-tabs"
-      [ngClass]="{'active-option': selectedSplitOption === 'adjustments'}">Adjustments</button>
+      <!-- <button (click)="onSplitOptionChange('adjustments')"  class="split-tabs"
+      [ngClass]="{'active-option': selectedSplitOption === 'adjustments'}">Adjustments</button> -->
     </div>
 
    
@@ -124,7 +124,7 @@
     </div>
     
   
-    <div *ngIf="selectedSplitOption === 'adjustments'">
+    <!-- <div *ngIf="selectedSplitOption === 'adjustments'">
       <h3>Adjustments</h3>
       <div *ngFor="let member of membersNames" class="member-adjustment-row">
         <div class="member-details">
@@ -137,7 +137,7 @@
           />
         </div>
       </div>
-    </div>
+    </div> -->
         <!-- Save Button -->
         <button type="button" (click)="addExpenseData()" class="save-button" [disabled]="isSaveDisabled || !expense.amount">Split Expense</button>
   </div>
