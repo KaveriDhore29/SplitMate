@@ -79,6 +79,7 @@
           <input type="checkbox" [checked]="expense.selectedMembers.includes(member.email)" 
                  (change)="toggleMemberSelection(member.email, $event)" />
                  {{ member.name ? member.name : member.email }}
+                 <span *ngIf="member.email === this.dataService.currentUserEmail.email">(You)</span> 
           <span class="checkmark"></span>
         </label>
       </div>
@@ -90,6 +91,7 @@
       <div class="member-percentage-row" *ngFor="let member of membersNames">
         <div class="member-details">
           <span class="member-email">{{ member.name ? member.name : member.email }}</span>
+          <span *ngIf="member.email === this.dataService.currentUserEmail.email"> (You)</span> 
         </div>
         <div class="input-with-shares">
           <input
@@ -111,6 +113,7 @@
       <div *ngFor="let member of membersNames" class="member-share-row">
         <div class="member-details">
           <span>{{ member.name ? member.name : member.email }}</span>
+          <span *ngIf="member.email === this.dataService.currentUserEmail.email"> (You)</span> 
         </div>
         <div class="input-with-shares">
           <input
