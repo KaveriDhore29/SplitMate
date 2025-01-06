@@ -50,20 +50,29 @@
     
           <hr *ngIf="groupName">
 
-              <!-- Group Type -->
-              <div class="group-type" *ngIf="groupName">
-                <div class="group-type-heading">
-                  <h2>GROUP TYPE</h2>
-                </div>
-                <div class="group-type-dropdown">
-                  <select [(ngModel)]="groupType">
-                    <option>Home</option>
-                    <option>Office</option>
-                    <option>Trip</option>
-                    <option>Other</option>
-                  </select>
-                </div>
-              </div>
+            <!-- Group Type -->
+<div class="group-type" *ngIf="groupName">
+  <div class="group-type-heading">
+    <h2>GROUP TYPE</h2>
+  </div>
+  <div class="group-type-dropdown">
+    <select [(ngModel)]="groupType">
+      <option>Home</option>
+      <option>Office</option>
+      <option>Trip</option>
+      <option>Event</option>
+      <option>Family</option>
+      <option>Friends</option>
+      <option>Workshop</option>
+      <option>Conference</option>
+      <option>Meeting</option>
+      <option>Club</option>
+      <option>Team</option>
+      <option>Other</option>
+    </select>
+  </div>
+</div>
+
 
               <hr *ngIf="groupName">
 

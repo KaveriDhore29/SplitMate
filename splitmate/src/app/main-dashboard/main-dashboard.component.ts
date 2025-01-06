@@ -163,71 +163,78 @@ export class MainDashboardComponent implements OnInit {
     }
   }
 
-  // Function to create the Category-Wise Expense Pie Chart
-  createCategoryExpenseChart(): void {
-    if (this.categoryExpenseChart) {
-      this.categoryExpenseChart.destroy(); // Destroy existing chart
-    }
+ // Function to create the Category-Wise Expense Pie Chart
+createCategoryExpenseChart(): void {
+  if (this.categoryExpenseChart) {
+    this.categoryExpenseChart.destroy(); // Destroy existing chart
+  }
 
-    if (!this.chartData || !this.chartData.categoryExpenses || this.chartData.categoryExpenses.length === 0) {
-      console.warn('No category expense data available to plot.');
-      return;
-    }
+  if (!this.chartData || !this.chartData.categoryExpenses || this.chartData.categoryExpenses.length === 0) {
+    console.warn('No category expense data available to plot.');
+    return;
+  }
 
-    const categoryLabels = this.chartData.categoryExpenses.map((item: any) => item.category);
-    const categoryValues = this.chartData.categoryExpenses.map((item: any) => item.totalSpend);
+  const categoryLabels: string[] = this.chartData.categoryExpenses.map((item: any) => item.category);
+  const categoryValues: number[] = this.chartData.categoryExpenses.map((item: any) => item.totalSpend);
 
-    const ctx = document.getElementById('categoryExpenseChart') as HTMLCanvasElement;
-    if (ctx) {
-      this.categoryExpenseChart = new Chart(ctx, {
-        type: 'pie', // Use a pie chart for category-wise expenses
-        data: {
-          labels: categoryLabels,
-          datasets: [
-            {
-              label: 'Category-Wise Expenses',
-              data: categoryValues,
-              backgroundColor: [
-                'rgba(19, 163, 103, 0.6)',
-                'rgba(173, 238, 142, 0.6)',
-                'rgba(21, 122, 43, 0.6)',
-                'rgba(75, 192, 192, 0.6)',
-                'rgba(85, 233, 196, 0.6)',
-                'rgba(51, 228, 7, 0.8)',
-              ],
-              borderColor: [
-                'rgb(255, 99, 132)',
-                'rgb(54, 162, 235)',
-                'rgb(255, 206, 86)',
-                'rgb(75, 192, 192)',
-                'rgb(153, 102, 255)',
-                'rgb(255, 159, 64)',
-              ],
-              borderWidth: 1
+  // Define category colors explicitly
+  const categoryColors: { [key: string]: string } = {
+    'Home': '#2c6e55', // Deep Green
+    'Office': '#4dbf6e', // Light Green
+    'Trip': '#1e4d32', // Dark Green
+    'Event': '#a3bdb7', // Soft Grayish Green
+    'Family': '#009688', // Teal
+    'Friends': '#26a69a', // Vibrant Teal
+    'Workshop': '#80cbc4', // Muted Teal
+    'Conference': '#388164', // Primary Green
+    'Meeting': '#004d40', // Deep Teal Green
+    'Club': '#66bb6a', // Light Olive Green
+    'Team': '#00796b', // Dark Teal
+    'Other': '#9e9d24', // Olive Green
+  };
+
+  // Map the colors based on category labels
+  const categoryColorsArray: string[] = categoryLabels.map((label: string) => categoryColors[label] || '#b3b3b3'); // Default to gray if no match
+
+  const ctx = document.getElementById('categoryExpenseChart') as HTMLCanvasElement;
+  if (ctx) {
+    this.categoryExpenseChart = new Chart(ctx, {
+      type: 'pie', // Use a pie chart for category-wise expenses
+      data: {
+        labels: categoryLabels,
+        datasets: [
+          {
+            label: 'Category-Wise Expenses',
+            data: categoryValues,
+            backgroundColor: categoryColorsArray, // Use dynamic colors for each category
+            borderColor: categoryColorsArray.map((color: string) => color.replace('0.8', '1')), // Making border color more prominent
+            borderWidth: 2
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          title: {
+            display: true,
+            text: 'Category-Wise Expense Breakdown',
+            font: { size: 16 }
+          },
+          tooltip: {
+            callbacks: {
+              label: (context: any) => `$${context.raw}` // Display amount in tooltip
             }
-          ]
-        },
-        options: {
-          responsive: true,
-          plugins: {
-            title: {
-              display: true,
-              text: 'Category-Wise Expense Breakdown',
-              font: { size: 16 }
-            },
-            tooltip: {
-              callbacks: {
-                label: (context: any) => `$${context.raw}` // Display amount in tooltip
-              }
-            },
-            legend: {
-              position: 'top'
-            }
+          },
+          legend: {
+            position: 'top'
           }
         }
-      });
-    } else {
-      console.error('Canvas element not found. Ensure the template contains an element with id="categoryExpenseChart".');
-    }
+      }
+    });
+  } else {
+    console.error('Canvas element not found. Ensure the template contains an element with id="categoryExpenseChart".');
   }
+}
+
+  
 }

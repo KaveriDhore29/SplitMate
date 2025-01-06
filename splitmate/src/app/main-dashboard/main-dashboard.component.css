@@ -55,42 +55,8 @@ body {
 
 /* Chart Section Styling */
 .chart-section {
-  background-color: #ffffff;
-  color: #000;
-  flex: 1;
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  margin: 10px;
-  text-align: center;
-}
-
-.chart-section h2 {
-  font-size: 20px;
-  font-weight: 600;
-  color: #388164; /* Match primary theme */
-  margin-bottom: 15px;
-}
-
-/* Monthly Chart Specific Styling */
-.monthly-chart canvas {
-  width: 100% !important;
-  max-width: 600px;
-  height: 300px !important;
-  margin: 0 auto;
-}
-
-/* Category Chart Specific Styling */
-.category-chart canvas {
-  width: 100% !important;
-  max-width: 600px;
-  height: 300px !important;
-  margin: 0 auto;
-}
-
-/* Style for the pie chart container */
-.chart-section {
-  width: 100%;
+  width: 80%; /* Reduce width to make it more compact */
+  max-width: 600px; /* Set a maximum width to prevent stretching */
   margin: 20px 0;
   display: flex;
   flex-direction: column;
@@ -106,147 +72,10 @@ body {
   color: #333; /* Dark gray for the title */
 }
 
-/* Style for the canvas element */
-canvas {
-  max-width: 100% !important;
-  max-height: 400px; /* Ensure the height of the chart remains in a reasonable range */
-  border-radius: 10px; /* Add rounded corners for a sleek look */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for a professional feel */
-}
-
-/* Optional: Add styles to the tooltip for better readability */
-.chartjs-tooltip {
-  font-family: 'Arial', sans-serif;
-  font-size: 14px;
-  background-color: rgba(0, 0, 0, 0.7);
-  color: white;
-  border-radius: 5px;
-  padding: 8px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-/* Optional: Styling for the chart legend */
-.chartjs-legend {
-  display: flex;
-  justify-content: center;
-  margin-top: 15px;
-  font-size: 14px;
-  font-weight: 600;
-  color: #555;
-}
-
-/* Bottom Cards Section */
-.bottom-cards .card {
-  background: linear-gradient(135deg, #388164 0%, #4ca477 100%);
-  color: #ffffff;
-  flex: 1;
-  text-align: center;
-  padding: 20px;
-  margin: 0 10px;
-  border-radius: 15px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-}
-
-.bottom-cards .card:hover {
-  transform: translateY(-5px); /* Lift effect */
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
-}
-
-.bottom-cards .card h2 {
-  font-size: 18px;
-  font-weight: 600;
-  color: #ffffff;
-  margin-bottom: 10px;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .row {
-    flex-direction: column;
-    gap: 10px;
-  }/* General Body Styling */
-body {
-  margin: 0;
-  font-family: 'Arial', sans-serif;
-  background-color: #f9f9f9; /* Neutral background */
-  color: #000;
-}
-
-/* Container */
-.container {
-  width: 90%;
-  margin: auto;
-  padding: 20px;
-}
-
-/* Row Styling */
-.row {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  margin-bottom: 20px;
-  flex-wrap: wrap; /* Ensure responsiveness */
-}
-
-/* Top Cards Section */
-.top-cards .card {
-  background: linear-gradient(135deg, #388164 0%, #4ca477 100%);
-  color: #ffffff;
-  flex: 1;
-  text-align: center;
-  padding: 20px;
-  margin: 0 10px;
-  border-radius: 15px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-}
-
-.top-cards .card:hover {
-  transform: translateY(-5px); /* Lift effect */
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
-}
-
-.top-cards .card h2 {
-  font-size: 18px;
-  font-weight: 600;
-  color: #ffffff;
-  margin-bottom: 10px;
-}
-
-.top-cards .card h1 {
-  font-size: 30px;
-  font-weight: bold;
-  margin: 0;
-}
-
-/* Chart Section Styling */
-.chart-section {
-  background-color: #ffffff;
-  color: #000;
-  flex: 1;
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  margin: 10px;
-  text-align: center;
-  max-width: 600px; /* Limit the maximum width of the chart container */
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* Chart Section Header */
-.chart-section h2 {
-  font-size: 20px;
-  font-weight: 600;
-  color: #388164; /* Match primary theme */
-  margin-bottom: 15px;
-}
-
 /* Monthly Chart Specific Styling */
 .monthly-chart canvas {
   width: 100% !important;
-  height: 300px !important;
+  height: 300px !important; /* Increased height for the monthly chart */
   margin: 0 auto;
   max-width: 100% !important; /* Ensure chart doesn't exceed container width */
 }
@@ -254,27 +83,9 @@ body {
 /* Category Chart Specific Styling */
 .category-chart canvas {
   width: 100% !important;
-  height: 300px !important;
+  height: 400px !important; /* Increased height for the category chart */
   margin: 0 auto;
   max-width: 100% !important; /* Ensure chart doesn't exceed container width */
-}
-
-/* Style for the pie chart container */
-.chart-section {
-  width: 100%;
-  margin: 20px 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.chart-section h2 {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 15px;
-  text-align: center;
-  color: #333; /* Dark gray for the title */
 }
 
 /* Style for the canvas element */
@@ -338,17 +149,6 @@ canvas {
     flex-direction: column;
     gap: 10px;
   }
-
-  .card, .chart-section {
-    margin: 10px 0;
-  }
-
-  .monthly-chart canvas, .category-chart canvas {
-    max-width: 100%;
-    height: 250px !important;
-  }
-}
-
 
   .card, .chart-section {
     margin: 10px 0;
