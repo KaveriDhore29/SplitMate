@@ -177,9 +177,9 @@ const calculateOwesOwedAmount = async (groupId, email) => {
     }
 
     let group = await Group.findOne({ groupId });
-    group.transactions?.forEach(element => {
-      myTotalBalance += element.amount
-    })
+      group?.transactions?.forEach(element => {
+        myTotalBalance += element.amount
+      });
     let arrBalances = {
       balanceYouOwe,
       balanceOwedToYou,
