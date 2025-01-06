@@ -239,15 +239,15 @@ export class GroupDetailsComponent implements OnInit {
       }
     );
 
-    // this.dataService.grpBalance(this.groupId).subscribe(
-    //   (data: any) => {
-    //     this.groupSettlements = data;
-    //     console.log('Group Settlements:', this.groupSettlements);
-    //   },
-    //   (error) => {
-    //     console.error('Error loading details from API:', error);
-    //   }
-    // );
+    this.dataService.grpBalance(this.groupId).subscribe(
+      (data: any) => {
+        this.groupSettlements = data;
+        console.log('Group Settlements:', this.groupSettlements);
+      },
+      (error) => {
+        console.error('Error loading details from API:', error);
+      }
+    );
   }
 
   setActiveTab(tab: string) {
