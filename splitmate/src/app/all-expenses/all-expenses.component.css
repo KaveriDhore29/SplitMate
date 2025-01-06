@@ -1,41 +1,39 @@
-/* Container for the entire expense list */
+
 .expense-list {
   margin: 30px auto;
-  max-width: 900px; /* Increased max-width for a more spacious layout */
+  max-width: 900px; 
   padding: 25px;
   background-color: #f5f5f5;
   border-radius: 12px;
-  animation: slideInUp 0.8s ease-out; /* Smooth slide-in-up animation for the list */
+  animation: slideInUp 0.8s ease-out;
 }
 
-/* Expense card styling */
+/* Expense Card Styling */
 .expense-card {
   border: 1px solid #e1e1e1;
   border-radius: 10px;
-  margin-bottom: 18px; /* Slightly increased bottom margin */
+  margin-bottom: 18px; 
   overflow: hidden;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   background-color: #ffffff;
-  opacity: 0;  /* Initially hidden */
+  opacity: 0; 
   transform: translateY(20px); /* Start position (off-screen) */
-  animation: fadeInUp 0.8s ease-out forwards; /* Fade-in-up animation for each card */
-  animation-delay: var(--animation-delay); /* Delay for each card */
+  animation: fadeInUp 0.8s ease-out forwards; 
+  animation-delay: var(--animation-delay); 
 }
 
-/* Hover effect for cards */
 .expense-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
 }
 
-/* Header section of each expense */
 .expense-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 18px 20px;
-  background-color: #5adda9; /* Green primary color */
-  color: #fff;
+  background-color: #388164 !important; 
+  color: #ffffff !important;
   cursor: pointer;
   transition: background-color 0.3s ease;
   border-top-left-radius: 10px;
@@ -43,38 +41,37 @@
 }
 
 .expense-header:hover {
-  background-color: #317d54; /* Slightly darker green on hover */
+  background-color: #317d54 !important; 
 }
 
-/* Icon for the expense */
+
 .expense-icon {
   font-size: 24px;
   margin-right: 15px;
 }
 
-/* Expense statement text */
+
 .expense-statement {
   flex-grow: 1;
   font-size: 16px;
   font-weight: 500;
-  color: #ffffff;
   line-height: 1.5;
-  text-align: left; /* Ensuring text aligns properly */
+  text-align: left; 
 }
 
-/* Accordion icon for toggling */
+
 .accordion-icon {
   font-size: 18px;
   margin-left: 15px;
-  color: #ffffff;
+  color: #ffffff !important;
   transition: transform 0.3s ease;
 }
 
 .accordion-icon.fa-chevron-up {
-  transform: rotate(180deg); /* Rotate icon when open */
+  transform: rotate(180deg); 
 }
 
-/* Expense details section (visible when clicked) */
+
 .expense-details {
   padding: 18px;
   background-color: #fafafa;
@@ -84,44 +81,48 @@
   animation: fadeIn 0.3s ease-in-out;
 }
 
+
 .expense-details p {
   margin: 10px 0;
   font-size: 15px;
-  color: #333;
+  color: #333 !important;
 }
 
-/* Specific styles for different texts */
 .expense-details strong {
-  color: #388164; /* Matching the theme color */
+  color: #388164 !important; 
 }
 
-/* Add subtle animation effect when toggling the expense details */
-.expense-details {
-  animation: fadeIn 0.3s ease-in-out;
+.paid-by, .amount {
+  color: #ffd700 !important; 
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+
+.group-name {
+  color: #e74c3c !important; 
+  font-weight: bold;
 }
 
-/* Slide-in-up animation for the expense list */
+
+.expense-statement strong {
+  color: #333 !important;
+}
+
+.expense-details p strong {
+  color: #388164 !important; 
+}
+
+
 @keyframes slideInUp {
   from {
     opacity: 0;
-    transform: translateY(20px); /* Start from below */
+    transform: translateY(20px); 
   }
   to {
     opacity: 1;
-    transform: translateY(0); /* End at its normal position */
+    transform: translateY(0); 
   }
 }
 
-/* Slide-in-up animation for each expense card */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -133,7 +134,16 @@
   }
 }
 
-/* Responsiveness */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 @media (max-width: 768px) {
   .expense-list {
     padding: 15px;
@@ -151,23 +161,4 @@
   .accordion-icon {
     margin-top: 10px;
   }
-}
-
-/* Add styles for Paid By, Amount, and Group Name */
-.paid-by, .amount  {
-  color: #ffd700; /* Gold for Paid By and Amount */
-}
-
-.group-name {
-  color: #e74c3c; /* Soft red shade for Group Name */
-  font-weight: bold;
-}
-
-/* Ensure proper styling for various elements */
-.expense-statement strong {
-  color: #333;
-}
-
-.expense-details p strong {
-  color: #388164; /* Matching the theme color */
 }
