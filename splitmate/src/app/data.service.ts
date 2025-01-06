@@ -90,16 +90,16 @@ export class DataService {
     });
   }
 
-  grpBalance(groupId: any) {
-    const payload = {
-      groupId: groupId,
-      email: this.currentUserEmail.email
-    };
-    console.log(JSON.stringify(payload),"grpBalance data");
-    return this.http.post<any>(`${this.apiUrl}/grpBalance`, payload, {
-      withCredentials: true,
-    });
-  }
+  // grpBalance(groupId: any) {
+  //   const payload = {
+  //     groupId: groupId,
+  //     email: this.currentUserEmail.email
+  //   };
+  //   console.log(JSON.stringify(payload),"grpBalance data");
+  //   return this.http.post<any>(`${this.apiUrl}/grpBalance`, payload, {
+  //     withCredentials: true,
+  //   });
+  // }
 
 
   // Delete a group by groupId and members
@@ -150,7 +150,7 @@ export class DataService {
     });
   }
 
-  grpBalances(groupId:any) {
+  grpBalance(groupId:any) {
       const payload = {
         groupId: groupId,
         currentUserEmail: this.currentUserEmail.email
