@@ -1,51 +1,173 @@
+/* Container for the entire expense list */
 .expense-list {
-    margin: 20px;
+  margin: 30px auto;
+  max-width: 900px; /* Increased max-width for a more spacious layout */
+  padding: 25px;
+  background-color: #f5f5f5;
+  border-radius: 12px;
+  animation: slideInUp 0.8s ease-out; /* Smooth slide-in-up animation for the list */
+}
+
+/* Expense card styling */
+.expense-card {
+  border: 1px solid #e1e1e1;
+  border-radius: 10px;
+  margin-bottom: 18px; /* Slightly increased bottom margin */
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  opacity: 0;  /* Initially hidden */
+  transform: translateY(20px); /* Start position (off-screen) */
+  animation: fadeInUp 0.8s ease-out forwards; /* Fade-in-up animation for each card */
+  animation-delay: var(--animation-delay); /* Delay for each card */
+}
+
+/* Hover effect for cards */
+.expense-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* Header section of each expense */
+.expense-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px;
+  background-color: #5adda9; /* Green primary color */
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.expense-header:hover {
+  background-color: #317d54; /* Slightly darker green on hover */
+}
+
+/* Icon for the expense */
+.expense-icon {
+  font-size: 24px;
+  margin-right: 15px;
+}
+
+/* Expense statement text */
+.expense-statement {
+  flex-grow: 1;
+  font-size: 16px;
+  font-weight: 500;
+  color: #ffffff;
+  line-height: 1.5;
+  text-align: left; /* Ensuring text aligns properly */
+}
+
+/* Accordion icon for toggling */
+.accordion-icon {
+  font-size: 18px;
+  margin-left: 15px;
+  color: #ffffff;
+  transition: transform 0.3s ease;
+}
+
+.accordion-icon.fa-chevron-up {
+  transform: rotate(180deg); /* Rotate icon when open */
+}
+
+/* Expense details section (visible when clicked) */
+.expense-details {
+  padding: 18px;
+  background-color: #fafafa;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-top: 1px solid #e1e1e1;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.expense-details p {
+  margin: 10px 0;
+  font-size: 15px;
+  color: #333;
+}
+
+/* Specific styles for different texts */
+.expense-details strong {
+  color: #388164; /* Matching the theme color */
+}
+
+/* Add subtle animation effect when toggling the expense details */
+.expense-details {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
-  
-  .expense-card {
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    margin-bottom: 15px;
-    overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  to {
+    opacity: 1;
   }
-  
+}
+
+/* Slide-in-up animation for the expense list */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px); /* Start from below */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0); /* End at its normal position */
+  }
+}
+
+/* Slide-in-up animation for each expense card */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px); /* Start from below */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0); /* End at its normal position */
+  }
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .expense-list {
+    padding: 15px;
+  }
+
   .expense-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px;
-    background-color: #f9f9f9;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    flex-direction: column;
+    align-items: flex-start;
   }
-  
-  .expense-header:hover {
-    background-color: #f1f1f1;
-  }
-  
+
   .expense-icon {
-    font-size: 24px;
-    margin-right: 10px;
-    color: #4caf50;
+    margin-bottom: 10px;
   }
-  
-  .expense-statement {
-    flex-grow: 1;
-  }
-  
+
   .accordion-icon {
-    font-size: 16px;
-    margin-left: 10px;
+    margin-top: 10px;
   }
-  
-  .expense-details {
-    padding: 15px;
-    background-color: #fff;
-    border-top: 1px solid #ddd;
-  }
-  
-  .expense-details p {
-    margin: 5px 0;
-  }
-  
+}
+
+/* Add styles for Paid By, Amount, and Group Name */
+.paid-by, .amount  {
+  color: #ffd700; /* Gold for Paid By and Amount */
+}
+
+.group-name {
+  color: #e74c3c; /* Soft red shade for Group Name */
+  font-weight: bold;
+}
+
+/* Ensure proper styling for various elements */
+.expense-statement strong {
+  color: #333;
+}
+
+.expense-details p strong {
+  color: #388164; /* Matching the theme color */
+}

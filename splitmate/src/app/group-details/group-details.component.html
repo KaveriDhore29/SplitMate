@@ -146,13 +146,13 @@
     
         <div class="Borrowed-expenses">
           <!-- List of Borrowed Expenses -->
-          <div *ngFor="let expense of borrowedExpenses" class="Expense-card">
+          <div *ngFor="let expense of groupSettlements.transactionArray" class="Expense-card">
             <div class="Expense-header">
               <span class="Owe-text">YOU OWE</span>
-              <span class="Person-name">Anuja</span>
+              <span class="Person-name">{{expense.to}}</span>
             </div>
             <div class="Expense-amount-box">
-              <span class="Amount">{{ expense.amount | currency }}</span>
+              <span class="Amount">{{ expense.owesAmount | currency }}</span>
             </div>
             <button class="settle-up-btn" (click)="openExpenseModal(expense)">Settle Up</button>
           </div>
@@ -172,9 +172,9 @@
                   <i class="fa-solid fa-user"></i>
                 </div>
                 <div class="text-container">
-                  <div class="person-name"><b>Anuja</b></div>&nbsp;&nbsp;
+                  <div class="person-name"><b>{{selectedExpense.email}}</b></div>&nbsp;&nbsp;
                   <div class="action-text">paid</div>&nbsp;&nbsp;
-                  <div class="person-name"><b>Kaveri</b></div>
+                  <div class="person-name"><b>{{selectedExpense.to}}</b></div>
                 </div>
               </div>
             </div>
@@ -187,7 +187,7 @@
               </select>
               <input class="amount" type="number" />
             </div>
-            <button class="settle-up-btn">Settle Payment</button>
+            <button class="settle-up-btn" (click)="addExpenseData(selectedExpense)">Settle Payment</button>
           </div>
         </div>
       </div>
