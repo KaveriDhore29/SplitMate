@@ -1,86 +1,122 @@
+/* General Styling */
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Trirong', serif;
+}
+
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
+  padding: 10px 5%; /* Relative padding for responsiveness */
   background-color: #04AA6D;
   color: white;
-  font-family: 'Trirong',serif;
   margin-bottom: 2rem;
 }
-/* Branding area styling */
-.navbar-brand {
-  font-size: 20px;
-  font-weight: bold;
-  color:white
+
+/* Header Styling */
+#header_nav {
+  background-color: #EBEBEB;
 }
-#header_nav{
-background-color: #EBEBEB;
+
+.container-fluid {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1470px; /* Keeps it centered */
 }
-/* Profile area styling */
-.navbar-profile {
-  position: relative;
-  cursor: pointer;
+
+/* Logo Styling */
+.header .logo h1 {
+  color: #5BC5A7;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
 }
-/* Profile icon (circle) styling */
+
+.logo_span {
+  color: #008080;
+}
+
+/* Profile Area Styling */
 .profile-icon {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: auto;
-  height: 40px;
   background-color: white;
   color: #00684A;
-  font-size: 16px; /* Adjust icon size */
+  font-size: 16px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  cursor:pointer
+  cursor: pointer;
+  padding: 5px 10px;
+  margin-right: 65px;
+  border-radius: 10px;
 }
-.header .logo h1{
-  color: #5BC5A7;
+
+.current-user-name {
+  margin-left: 5px;
 }
-.current-user-name{
-  padding: 0.5rem;
-}
-/* Font Awesome icon styling */
-.fa {
-  font-size: 18px; /* Adjust font size */
-  padding: 0.5rem;
-}
-/* Dropdown menu styling */
+
 .dropdown-menu {
   position: absolute;
   top: 50px;
-  right: 0px;
+  right: 0;
   list-style: none;
   background-color: white;
+  display:block;
   border: 1px solid #ddd;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  display: block;
-  padding: 0.5rem;
-  color: #008080;
-  cursor: pointer;
+  padding: 0.5rem 0;
+  width: 150px; /* Fixed width for consistency */
 }
-/* Dropdown menu item styling */
+
 .dropdown-menu li {
   padding: 10px 20px;
-  cursor: pointer;
+  color: #008080;
+  text-align: left;
 }
-/* Dropdown hover effect */
+
 .dropdown-menu li:hover {
   color: #1ACC8D;
-}
-.logo_span{
-  color:#008080;
+  background-color: #f9f9f9;
 }
 
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .container-fluid {
+    flex-wrap: wrap; /* Allows wrapping for smaller screens */
+    padding: 0 10px;
+  }
 
+  .header .logo h1 {
+    font-size: 20px; /* Smaller font size */
+  }
 
+  .profile-icon {
+    font-size: 14px; /* Adjust size */
+    padding: 5px 8px;
+  }
 
+  .dropdown-menu {
+    width: 100px; /* Smaller dropdown */
+  }
+}
 
+@media (max-width: 480px) {
+  .container-fluid {
+    flex-direction: column;
+    align-items: center;
+  }
 
+  .header .logo {
+    margin-bottom: 10px;
+  }
 
-
-
-
-
-
+  .profile-icon {
+    font-size: 12px;
+    padding: 5px 6px;
+  }
+}

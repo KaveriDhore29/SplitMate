@@ -22,37 +22,54 @@
   </div>
   
   <div class="row">
-   <div class="col">
-     <div class="group-expense-summary">
-       <h2 class="summary-heading">Summary</h2>
-       <div class="expense-table">
-        <div class="balances">
-          <h3>{{responseOftotalOwed.owesBalance}}</h3>
-          <p>Owed to you</p>
-        </div>
-        <div class="balances">
-          <h3>{{responseOftotalOwed.owedBalance}}</h3>
-          <p>You Owe</p>
-        </div>
-        <div class="balances">
-          <h3>{{responseOftotalOwed.myTotalBalance}}</h3>
-          <p>Total Expense</p>
-        </div>
+    <div class="row top-cards">
+      <div class="col card">
+        <h2>You Owe</h2>
+        <h1>{{responseOftotalOwed.owesBalance}}</h1>
       </div>
-     </div>
-   </div>
-   <div class="col">
-    <div class="recent-updates">
-      <h2 class="summary-heading">Recent Updates</h2>
-      <div *ngFor="let update of updates" class="update-row">
-        <div class="update-info">
-          <strong>"{{ update.person }}"</strong> {{ update.action }} 
-          <span class="update-time">{{ update.time }}</span>
-        </div>
+      <div class="col card">
+        <h2>Owed to You</h2>
+        <h1>{{responseOftotalOwed.owedBalance}}</h1>
+      </div>
+      <div class="col card">
+        <h2>Total Expense</h2>
+        <h1>{{responseOftotalOwed.myTotalBalance}}</h1>
       </div>
     </div>
+  
     
-   </div>
+    </div>
+    
+    <div class="row">
+      <div class="col">
+        <div class="recent-updates">
+          <h2 class="summary-heading">Recent Updates</h2>
+          <div *ngFor="let update of updates" class="update-row">
+            <div class="update-info">
+              <strong>"{{ update.person }}"</strong> {{ update.action }} 
+              <span class="update-time">{{ update.time }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col">
+        <div class="members-of-group">
+          <h2 class="summary-heading">Members of the Group</h2>
+          <div>
+            <i class="material-icons" title="Add Members" (click)="showAddmembersPopup = true">group_add</i> &nbsp;
+            <!-- <i class="material-icons" title="Delete Group">delete</i> -->
+         
+          </div>
+          <div *ngIf="membersNames.length === 0">
+            <p>No members yet. Add members to the group!</p>
+          </div>
+          <div *ngFor="let member of membersNames" class="member-item">
+            <span>{{ member.name }}</span> <!-- Using 'name' to display the username -->
+          </div>
+        </div>
+      </div>
+      
   
  </div>
   <div class="row expense-summary-div">
@@ -160,13 +177,13 @@
     
         <div class="Borrowed-expenses">
           <!-- List of Borrowed Expenses -->
-          <div *ngFor="let expense of borrowedExpenses" class="Expense-card">
+          <div *ngFor="let expense of groupSettlements.transactionArray" class="Expense-card">
             <div class="Expense-header">
               <span class="Owe-text">YOU OWE</span>
-              <span class="Person-name">Anuja</span>
+              <span class="Person-name">{{expense.to}}</span>
             </div>
             <div class="Expense-amount-box">
-              <span class="Amount">{{ expense.amount | currency }}</span>
+              <span class="Amount">{{ expense.owesAmount | currency }}</span>
             </div>
             <button class="settle-up-btn" (click)="openExpenseModal(expense)">Settle Up</button>
           </div>
@@ -186,9 +203,9 @@
                   <i class="fa-solid fa-user"></i>
                 </div>
                 <div class="text-container">
-                  <div class="person-name"><b>Anuja</b></div>&nbsp;&nbsp;
+                  <div class="person-name"><b>{{selectedExpense.email}}</b></div>&nbsp;&nbsp;
                   <div class="action-text">paid</div>&nbsp;&nbsp;
-                  <div class="person-name"><b>Kaveri</b></div>
+                  <div class="person-name"><b>{{selectedExpense.to}}</b></div>
                 </div>
               </div>
             </div>
@@ -199,9 +216,9 @@
                   {{ currency }}
                 </option>
               </select>
-              <input class="amount" type="number" />
+              <input class="amount" type="number" [value]="selectedExpense.owesAmount" />
             </div>
-            <button class="settle-up-btn">Settle Payment</button>
+            <button class="settle-up-btn" (click)="addExpenseData(selectedExpense)">Settle Payment</button>
           </div>
         </div>
       </div>
