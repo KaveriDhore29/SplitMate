@@ -142,7 +142,7 @@ export class MainDashboardComponent implements OnInit {
             },
             tooltip: {
               callbacks: {
-                label: (context) => `$${context.raw}`
+                label: (context:any) => `$${context.raw}`
               }
             }
           },

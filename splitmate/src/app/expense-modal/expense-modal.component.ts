@@ -123,7 +123,10 @@ export class ExpenseModalComponent implements OnInit {
 
 
   addExpenseData(): void {
-
+  if(this.expense.title ==''&& this.expense.amount == ''){
+    alert('Please fill the details');
+    return;
+  }
     this.isSaveDisabled = true;
     // Determine the members to use based on the split option
   let membersToUse: string[] = [];

@@ -12,9 +12,12 @@ export class GroupDetailsComponent implements OnInit {
   groupDetails: any;
   groupName: string = '';
   membersNames: any[] = [];
+  groupCreatedBy = {username : '',email:''};
+  groupCreatedAt : any;
   showPopup: boolean = false;
   showSettleUpPopup = false;
   showAddmembersPopup: boolean = false;
+  // responseOftotalOwed : any;
   groupIds = [];
   groupExpenses: any;
   groupExpensesArray: any;
@@ -230,17 +233,11 @@ export class GroupDetailsComponent implements OnInit {
     },
   ];
 
-  responseOftotalOwed: {
-    myTotalBalance: number;
-    owedBalance: number;
-    owesBalance: number;
-  } = { myTotalBalance: 0, owedBalance: 0, owesBalance: 0 };
+  responseOftotalOwed:{myTotalBalance: number; owedBalance : number; owesBalance : number} = {  myTotalBalance: 0,
+    owedBalance: 0,
+    owesBalance: 0};
 
-  constructor(
-    private route: ActivatedRoute,
-    public dataService: DataService,
-    private router: Router
-  ) {}
+  constructor(private route: ActivatedRoute, public dataService: DataService,private router:Router) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
@@ -272,8 +269,10 @@ export class GroupDetailsComponent implements OnInit {
           name: member.username,
           email: member.email,
         }));
-        //  this.groupExpenses = this.groupDetails[0].transactions;
-        // this.transactions = this.groupDetails[0].latestTransactions;
+          this.groupCreatedBy = this.groupDetails[0].createdBy;
+          this.groupCreatedAt = this.groupDetails[0].createdAt;
+
+          console.log("details",  this.groupCreatedBy ,"[[",this.groupCreatedAt)
       },
       (error) => {
         console.error('Error fetching group details:', error);

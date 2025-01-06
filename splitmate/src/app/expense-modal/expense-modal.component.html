@@ -56,8 +56,8 @@
       [ngClass]="{'active-option': selectedSplitOption === 'percentage'}">Percentage</button>
       <button (click)="onSplitOptionChange('shares')"  class="split-tabs"
       [ngClass]="{'active-option': selectedSplitOption === 'shares'}">Shares</button>
-      <button (click)="onSplitOptionChange('adjustments')"  class="split-tabs"
-      [ngClass]="{'active-option': selectedSplitOption === 'adjustments'}">Adjustments</button>
+      <!-- <button (click)="onSplitOptionChange('adjustments')"  class="split-tabs"
+      [ngClass]="{'active-option': selectedSplitOption === 'adjustments'}">Adjustments</button> -->
     </div>
 
    
@@ -79,6 +79,7 @@
           <input type="checkbox" [checked]="expense.selectedMembers.includes(member.email)" 
                  (change)="toggleMemberSelection(member.email, $event)" />
                  {{ member.name ? member.name : member.email }}
+                 <span *ngIf="member.email === this.dataService.currentUserEmail.email">(You)</span> 
           <span class="checkmark"></span>
         </label>
       </div>
@@ -90,6 +91,7 @@
       <div class="member-percentage-row" *ngFor="let member of membersNames">
         <div class="member-details">
           <span class="member-email">{{ member.name ? member.name : member.email }}</span>
+          <span *ngIf="member.email === this.dataService.currentUserEmail.email"> (You)</span> 
         </div>
         <div class="input-with-shares">
           <input
@@ -111,6 +113,7 @@
       <div *ngFor="let member of membersNames" class="member-share-row">
         <div class="member-details">
           <span>{{ member.name ? member.name : member.email }}</span>
+          <span *ngIf="member.email === this.dataService.currentUserEmail.email"> (You)</span> 
         </div>
         <div class="input-with-shares">
           <input
@@ -124,7 +127,7 @@
     </div>
     
   
-    <div *ngIf="selectedSplitOption === 'adjustments'">
+    <!-- <div *ngIf="selectedSplitOption === 'adjustments'">
       <h3>Adjustments</h3>
       <div *ngFor="let member of membersNames" class="member-adjustment-row">
         <div class="member-details">
@@ -137,7 +140,7 @@
           />
         </div>
       </div>
-    </div>
+    </div> -->
         <!-- Save Button -->
         <button type="button" (click)="addExpenseData()" class="save-button" [disabled]="isSaveDisabled || !expense.amount">Split Expense</button>
   </div>
