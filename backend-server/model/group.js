@@ -1,5 +1,6 @@
 
 const mongoose = require('mongoose');
+const { type } = require('os');
 
 // const groupSchema = new mongoose.Schema({
 //   name: { type: String, required: true },
@@ -20,10 +21,10 @@ const groupSchema = new mongoose.Schema({
   transactions: Array,
   netBalances: Object,
   latestTransactions: Array,
-  createdBy: { 
-    email: { type: String, required: true },
-    username: { type: String, required: true }
-}
+  createdBy:{
+  email: { type: String , required: true },
+  username: { type: String , required: true }
+  }
 }, { timestamps: true });
 const Group = mongoose.model('Group', groupSchema);
 

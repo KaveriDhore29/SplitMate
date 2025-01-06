@@ -186,7 +186,7 @@ const createGroupOld = async (req, res) => {
             members: members,
             type: groupType,
             groupId: groupId,
-            createdBy: email
+            createdBy: {email,username}
           }
         },
         {
