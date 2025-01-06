@@ -159,3 +159,144 @@ canvas {
     height: 250px !important;
   }
 }
+
+/* General Styling */
+.row {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.col.card {
+  flex: 1;
+  background: #f5f5f5;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+  color: #333;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.col.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+  font-size: 1.6rem;
+  margin-bottom: 25px;
+  color: #388164;
+  font-weight: bold;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* Friend Cards */
+.friends-section .friend-card {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.friends-section .friend-card:hover {
+  background: #e8f5e9;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.friend-card .friend-icon {
+  font-size: 36px;
+  color: #e6db79;
+  margin-right: 15px;
+}
+
+.friend-details {
+  flex: 1;
+}
+
+.friend-details h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #333;
+  font-weight: bold;
+  text-align: left;
+}
+
+.friend-details p {
+  margin: 5px 0 0 0;
+  color: #666;
+  font-size: 0.95rem;
+  text-align: left;
+}
+
+/* Group Cards */
+.groups-section .group-card {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.groups-section .group-card:hover {
+  background: #e8f5e9;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.group-card .group-icon {
+  font-size: 36px;
+  color: #2c249c;
+  margin-right: 15px;
+}
+
+.group-details {
+  flex: 1;
+}
+
+.group-details h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #333;
+  font-weight: bold;
+}
+
+/* Additional Styling */
+.friend-card, .group-card {
+  border-left: 6px solid #388164; /* Accent border */
+}
+
+.friend-card .friend-details p, .group-card .group-details p {
+  font-style: italic;
+}
+
+.no-friends, .no-groups {
+  text-align: center;
+  color: #777;
+  font-size: 1rem;
+  margin-top: 20px;
+}
+
+.friend-icon, .group-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #388164;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  color: white;
+}
+
+.group-card .group-details h3 {
+  font-weight: normal;
+}
+
+

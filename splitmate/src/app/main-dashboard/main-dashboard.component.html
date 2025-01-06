@@ -28,15 +28,49 @@
     </div>
     
 
-  <!-- Friends and Groups Section -->
-  <div class="row bottom-cards">
-    <div class="col card">
-      <h2>List of Friends</h2>
-      <!-- Add friend list here -->
+<!-- Friends and Groups Section -->
+<div class="row bottom-cards">
+  <!-- Friends Section -->
+  <div class="col card friends-section">
+    <h2>List Of Friends</h2>
+    <div *ngIf="friendsList && friendsList.length > 0; else noFriends">
+      <div class="friend-card friend-details" *ngFor="let friend of friendsList">
+        <!-- Friend Icon -->
+        <div class="friend-icon">
+          <i class="fas fa-user-circle"></i> <!-- Font Awesome Example -->
+        </div>
+        <!-- Friend Details -->
+        <div class="friend-info">
+          <h3>{{ friend.username }}</h3>
+          <p>{{ friend.email }}</p>
+        </div>
+      </div>
     </div>
-    <div class="col card">
-      <h2>List of Groups</h2>
-      <!-- Add group list here -->
-    </div>
+    <ng-template #noFriends>
+      <p>No friends found. Join a group to connect with friends!</p>
+    </ng-template>
   </div>
+
+  <!-- Groups Section -->
+  <div class="col card groups-section">
+    <h2>Your Groups</h2>
+    <div *ngIf="groupDetails && groupDetails.length > 0; else noGroups">
+      <div class="group-card group-details" *ngFor="let group of groupDetails">
+        <!-- Group Icon -->
+        <div class="group-icon">
+          <i class="fas fa-users"></i> <!-- Font Awesome Example -->
+        </div>
+        <!-- Group Details -->
+        <div class="group-info">
+          <h3>{{ group.name }}</h3>
+        </div>
+      </div>
+    </div>
+    <ng-template #noGroups>
+      <p>{{ groupMessage }}</p>
+    </ng-template>
+  </div>
+</div>
+
+
 </div>

@@ -26,7 +26,8 @@ export class MainDashboardComponent implements OnInit {
   userProfile: any;
   groupMessage = "Currently, you're not part of any group. Join a group to start managing and splitting expenses with friends!";
   responseOftotalOwed = { myTotalBalance: 0, owedBalance: 0, owesBalance: 0 };
-  groupDetails: any;
+  groupDetails: any[] = [];
+  friendsList: any[] = [];
   groupIds: string[] = [];
   expenseData: any[] = [];
   chartData: any = {};
@@ -40,10 +41,18 @@ export class MainDashboardComponent implements OnInit {
 
     this.dataService.getGroupDetails().subscribe(
       (data: any[]) => {
-        this.groupDetails = data;
-        this.groupIds = this.groupDetails.map((group: any) => group.groupId);
+        this.groupDetails = data.map(group => ({
+          name: group.name,
+          groupId: group.groupId,
+          members: group.members
+        }));
 
-        // Fetch data for expenses and chart
+        this.groupIds = this.groupDetails.map(group => group.groupId);
+
+        // Extract unique friends list from group members
+        this.extractFriendsList();
+
+        // Fetch data for expenses and charts
         this.fetchExpensesData();
         this.fetchChartData();
         this.fetchTotalOwedData();
@@ -54,10 +63,25 @@ export class MainDashboardComponent implements OnInit {
     );
   }
 
+  extractFriendsList(): void {
+    const friendsMap = new Map<string, any>(); // Use Map to ensure unique entries by email
+  
+    this.groupDetails.forEach((group: any) => {
+      group.members.forEach((member: any) => {
+        // Exclude the current user based on their email
+        if (member.email !== this.userProfile.email) {
+          friendsMap.set(member.email, { username: member.username, email: member.email });
+        }
+      });
+    });
+  
+    this.friendsList = Array.from(friendsMap.values()); // Convert the Map back to an array
+  }
+  
+
   fetchExpensesData(): void {
     this.dataService.getGroupDetails().subscribe(
       (groupDetails: any[]) => {
-        // Extract the groupIds from the group details response
         this.groupIds = groupDetails.map(group => group.groupId);
         this.createExpenseChart(); // Call the bar chart creation after fetching the data
       },
@@ -91,7 +115,6 @@ export class MainDashboardComponent implements OnInit {
     );
   }
 
-  // Function to create the Monthly Expense Bar Chart
   createExpenseChart(): void {
     if (this.expenseChart) {
       this.expenseChart.destroy(); // Destroy existing chart
@@ -120,15 +143,15 @@ export class MainDashboardComponent implements OnInit {
     const ctx = document.getElementById('expenseChart') as HTMLCanvasElement;
     if (ctx) {
       this.expenseChart = new Chart(ctx, {
-        type: 'bar', // Use a bar chart for monthly expenses
+        type: 'bar',
         data: {
           labels: labels,
           datasets: [
             {
               label: 'Monthly Expenses ($)',
               data: data,
-              backgroundColor: 'rgba(16, 179, 51, 0.6)', // Bar color
-              borderColor: 'rgb(38, 133, 35)',       // Bar border color
+              backgroundColor: 'rgba(16, 179, 51, 0.6)',
+              borderColor: 'rgb(38, 133, 35)',
               borderWidth: 1
             }
           ]
@@ -163,78 +186,73 @@ export class MainDashboardComponent implements OnInit {
     }
   }
 
- // Function to create the Category-Wise Expense Pie Chart
-createCategoryExpenseChart(): void {
-  if (this.categoryExpenseChart) {
-    this.categoryExpenseChart.destroy(); // Destroy existing chart
-  }
+  createCategoryExpenseChart(): void {
+    if (this.categoryExpenseChart) {
+      this.categoryExpenseChart.destroy(); // Destroy existing chart
+    }
 
-  if (!this.chartData || !this.chartData.categoryExpenses || this.chartData.categoryExpenses.length === 0) {
-    console.warn('No category expense data available to plot.');
-    return;
-  }
+    if (!this.chartData || !this.chartData.categoryExpenses || this.chartData.categoryExpenses.length === 0) {
+      console.warn('No category expense data available to plot.');
+      return;
+    }
 
-  const categoryLabels: string[] = this.chartData.categoryExpenses.map((item: any) => item.category);
-  const categoryValues: number[] = this.chartData.categoryExpenses.map((item: any) => item.totalSpend);
+    const categoryLabels: string[] = this.chartData.categoryExpenses.map((item: any) => item.category);
+    const categoryValues: number[] = this.chartData.categoryExpenses.map((item: any) => item.totalSpend);
 
-  // Define category colors explicitly
-  const categoryColors: { [key: string]: string } = {
-    'Home': '#2c6e55', // Deep Green
-    'Office': '#4dbf6e', // Light Green
-    'Trip': '#1e4d32', // Dark Green
-    'Event': '#a3bdb7', // Soft Grayish Green
-    'Family': '#009688', // Teal
-    'Friends': '#26a69a', // Vibrant Teal
-    'Workshop': '#80cbc4', // Muted Teal
-    'Conference': '#388164', // Primary Green
-    'Meeting': '#004d40', // Deep Teal Green
-    'Club': '#66bb6a', // Light Olive Green
-    'Team': '#00796b', // Dark Teal
-    'Other': '#9e9d24', // Olive Green
-  };
+    const categoryColors: { [key: string]: string } = {
+      'Home': '#2c6e55',
+      'Office': '#4dbf6e',
+      'Trip': '#1e4d32',
+      'Event': '#a3bdb7',
+      'Family': '#009688',
+      'Friends': '#26a69a',
+      'Workshop': '#80cbc4',
+      'Conference': '#388164',
+      'Meeting': '#004d40',
+      'Club': '#66bb6a',
+      'Team': '#00796b',
+      'Other': '#9e9d24',
+    };
 
-  // Map the colors based on category labels
-  const categoryColorsArray: string[] = categoryLabels.map((label: string) => categoryColors[label] || '#b3b3b3'); // Default to gray if no match
+    const categoryColorsArray: string[] = categoryLabels.map((label: string) => categoryColors[label] || '#b3b3b3');
 
-  const ctx = document.getElementById('categoryExpenseChart') as HTMLCanvasElement;
-  if (ctx) {
-    this.categoryExpenseChart = new Chart(ctx, {
-      type: 'pie', // Use a pie chart for category-wise expenses
-      data: {
-        labels: categoryLabels,
-        datasets: [
-          {
-            label: 'Category-Wise Expenses',
-            data: categoryValues,
-            backgroundColor: categoryColorsArray, // Use dynamic colors for each category
-            borderColor: categoryColorsArray.map((color: string) => color.replace('0.8', '1')), // Making border color more prominent
-            borderWidth: 2
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          title: {
-            display: true,
-            text: 'Category-Wise Expense Breakdown',
-            font: { size: 16 }
-          },
-          tooltip: {
-            callbacks: {
-              label: (context: any) => `$${context.raw}` // Display amount in tooltip
+    const ctx = document.getElementById('categoryExpenseChart') as HTMLCanvasElement;
+    if (ctx) {
+      this.categoryExpenseChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: categoryLabels,
+          datasets: [
+            {
+              label: 'Category-Wise Expenses',
+              data: categoryValues,
+              backgroundColor: categoryColorsArray,
+              borderColor: categoryColorsArray.map((color: string) => color.replace('0.8', '1')),
+              borderWidth: 2
             }
-          },
-          legend: {
-            position: 'top'
+          ]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            title: {
+              display: true,
+              text: 'Category-Wise Expense Breakdown',
+              font: { size: 16 }
+            },
+            tooltip: {
+              callbacks: {
+                label: (context: any) => `$${context.raw}`
+              }
+            },
+            legend: {
+              position: 'top'
+            }
           }
         }
-      }
-    });
-  } else {
-    console.error('Canvas element not found. Ensure the template contains an element with id="categoryExpenseChart".');
+      });
+    } else {
+      console.error('Canvas element not found. Ensure the template contains an element with id="categoryExpenseChart".');
+    }
   }
-}
-
-  
 }
