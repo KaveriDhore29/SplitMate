@@ -9,6 +9,28 @@ body {
     line-height: 1.5;
 }
 
+.text-secondary-bold{
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.text-additional{
+    font-size: 16px;
+    margin:0.5rem;
+}
+
+.text-heading{
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.text-secondary-muted{
+    color: #7d7d7d;
+    font-size: 16px;
+}
+
+
+
 .main-body {
     padding: 15px;
 }
@@ -24,14 +46,11 @@ body {
     margin-bottom: 20px;
     background-color: #fff;
     border: 0 solid rgba(0, 0, 0, 0.125);
-    border-radius: 0.25rem;
-    transition: transform 0.3s, box-shadow 0.3s;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-}
 
 .card-body {
     flex: 1 1 auto;
@@ -40,7 +59,8 @@ body {
 }
 
 .mb-0 {
-    font-size: 16px;
+    font-size: 18px;
+    font-weight: bold;
 }
 
 .mb-3, .my-3 {
@@ -147,8 +167,8 @@ body {
     outline: none;
     border: none;
     color: #ffffff;
-    padding: 10px 20px;
-    font-size: 1.1em;
+    padding: 8px 12px;
+    font-size: 16px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -161,7 +181,7 @@ body {
 
 .btn-buynow .price {
     margin-right: 10px;
-    background: #333;
+    background: #000000;
     padding: 5px 10px;
     border-radius: 3px;
     color: #eee;
@@ -169,10 +189,21 @@ body {
 
 .btn-buynow .shopping-cart {
     margin-left: 10px;
-    background: #333;
+    background: #000000;
     padding: 5px 10px;
     border-radius: 3px;
     color: #eee;
+}
+
+.buy{
+        margin-left: 8px;
+
+}
+
+.nav-link{
+    font-size: 18px;
+    font-weight: bold;
+    color: #388164;
 }
 
 /* Responsive Design */
