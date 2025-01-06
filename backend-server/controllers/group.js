@@ -933,7 +933,7 @@ const grpTotalOwed = async (req, res) => {
 
     let transactionArray = await calculateGroupBalance(groupId);
     await insertGroupBalancesInDB(transactionArray, groupId);
-    res.status(200).json({ myTotalBalance, owesBalance, owedBalance });
+    res.status(200).json({ myTotalBalance, owedBalance, owesBalance });
   } catch (error) {
     console.error('Error finding total owed amount', error);
     res.status(500).json({ error: 'Error in total owed amount' });
