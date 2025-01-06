@@ -216,7 +216,7 @@
                   {{ currency }}
                 </option>
               </select>
-              <input class="amount" type="number" [value]="selectedExpense.owesAmount" />
+              <input class="amount" type="number" [(ngModel)]="selectedExpense.owesAmount" (input)="updateExpenseAmount($event)" />
             </div>
             <button class="settle-up-btn" (click)="addExpenseData(selectedExpense)">Settle Payment</button>
           </div>

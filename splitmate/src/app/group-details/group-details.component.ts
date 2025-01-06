@@ -116,6 +116,11 @@ export class GroupDetailsComponent implements OnInit {
   closeModal() {
     this.selectedExpense = null;
   }
+  
+  updateExpenseAmount(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    this.expense.amount = inputElement.value;
+  }
 
   updates = [
     {
