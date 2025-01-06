@@ -643,18 +643,28 @@ const grpBalance_Old = async(req, res) => {
 
 // get total owed amount
 const grpBalance = async (req, res) => {
-  const { groupId } = req.body;
+  const { groupId, email } = req.body
   console.log('groupIds ', groupId);
   try {
 
     let transactionArray = await getGroupBalance(groupId);
+
+    transactionArray = transactionArray.filter(element => (element.owesAmount > 0 && element.email == email)||(element.owesAmount < 0 && element.to == email));
+    transactionArray.forEach(element=>{
+      if(element.owesAmount < 0){
+        let temp = element.to;
+        element.to = element.email;
+        element.email = temp;
+        element.owesAmount *= -1;
+      }
+    });
 
     res.status(200).json({ transactionArray });
   } catch (error) {
     console.error('Error finding total owed amount', error);
     res.status(500).json({ error: 'Error in total owed amount' });
   }
-}
+  }
 
 const getGroupExpenses = async (req, res) => {
   try {
