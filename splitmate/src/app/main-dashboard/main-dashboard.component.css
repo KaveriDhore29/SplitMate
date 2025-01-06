@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@400;500;700&display=swap');
+
 /* General Body Styling */
 body {
   margin: 0;
@@ -184,6 +186,7 @@ canvas {
 }
 
 h2 {
+  font-family: 'Roboto', sans-serif;
   font-size: 1.6rem;
   margin-bottom: 25px;
   color: #388164;
@@ -225,6 +228,8 @@ h2 {
   color: #333;
   font-weight: bold;
   text-align: left;
+  font-family: 'Poppins', sans-serif;
+
 }
 
 .friend-details p {
@@ -232,6 +237,8 @@ h2 {
   color: #666;
   font-size: 0.95rem;
   text-align: left;
+  font-family: 'Roboto', sans-serif;
+
 }
 
 /* Group Cards */
@@ -298,5 +305,4 @@ h2 {
 .group-card .group-details h3 {
   font-weight: normal;
 }
-
 
