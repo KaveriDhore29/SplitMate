@@ -24,6 +24,7 @@ export class GroupDetailsComponent implements OnInit{
   activeTab: string = 'expenses'; 
   transactions :{from:'',to:'',amount:number;currency:''}[]=  [];
   owedExpenses :any[] = [];
+  grpBalances : any;
   currencyOptions = ['INR', 'USD', 'EUR', 'GBP'];
   borrowedExpenses = [
     { title: 'Dinner with friends', amount: 50, date: '2024-12-12' },
@@ -156,6 +157,12 @@ export class GroupDetailsComponent implements OnInit{
       }
     );
 
+     this.grpBalances = this.dataService.grpBalances(this.groupId).subscribe(
+        (data:any) => {
+            this.grpBalances = data;
+           console.log("grpBalances",this.grpBalances); 
+        }
+     );
    
   }
 
@@ -218,6 +225,10 @@ this.dataService.grpTotalOwed(this.groupId).subscribe(
 
   editGroup():void{
     this.router.navigate([`/create-group/${this.groupId}`]);
+  }
+
+  close(){
+   this.selectedExpense = '';
   }
 }
 

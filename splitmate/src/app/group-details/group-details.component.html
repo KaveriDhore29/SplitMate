@@ -107,7 +107,7 @@
     <div *ngIf="selectedExpense" class="modal-overlay">
       <div class="modal">
        <div class="modal-content">
-         
+        <button type="button" class="close-btn" (click)="close()">&#10006;</button>
           <!--  <div class="modal-header">
             <div class="header-left">
               <h3 class="expense-title">{{ selectedExpense.title }}</h3>
@@ -141,9 +141,15 @@
     
     <div *ngIf="activeTab === 'balances'" class="active-tab">
       <div class="tab-content">
-   
-        <h4>Group Balances Content</h4>
-        <p>Details for Group Balances... kon kisko kitna owe kr rha hai issi group mein</p>
+        <ul class="transaction-list">
+          <li *ngFor="let transaction of grpBalances.transactionArray" class="transaction-item">
+            <div class="transaction-details">
+              <strong>{{ transaction.email }} </strong> owes <strong>{{transaction.owesAmount}}</strong>
+              to <strong> {{ transaction.to }}</strong>
+             
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
     <div *ngIf="activeTab === 'settle-up'" class="active-tab">

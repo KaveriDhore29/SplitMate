@@ -73,7 +73,7 @@ export class DataService {
       email: this.currentUserEmail.email,
       groupIds: groupIds,
     };
-    console.log(JSON.stringify(payload), "totalowed data");
+    // console.log(JSON.stringify(payload), "totalowed data");
     return this.http.post<any>(`${this.apiUrl}/totalOwed`, payload, {
       withCredentials: true,
     });
@@ -137,4 +137,16 @@ export class DataService {
       withCredentials: true,
     });
   }
+
+  grpBalances(groupId:any) {
+      const payload = {
+        groupId: groupId,
+        currentUserEmail: this.currentUserEmail.email
+      }
+      return this.http.post<any>(`${this.apiUrl}/grpBalance`, payload, {
+        withCredentials: true,
+      });
+  }
+
+  
 }
