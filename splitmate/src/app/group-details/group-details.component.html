@@ -193,7 +193,7 @@
                   {{ currency }}
                 </option>
               </select>
-              <input class="amount" type="number" />
+              <input class="amount" type="number" [value]="selectedExpense.owesAmount" />
             </div>
             <button class="settle-up-btn" (click)="addExpenseData(selectedExpense)">Settle Payment</button>
           </div>

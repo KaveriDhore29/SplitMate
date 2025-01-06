@@ -2,17 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { DataService } from '../data.service';
-import { Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, BarController } from 'chart.js';
+import { Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, BarController, ArcElement, PieController } from 'chart.js';
 
-// Register the necessary components
+// Register all necessary components
 Chart.register(
   CategoryScale,
   LinearScale,
-  BarElement,  // Register the Bar Element
+  BarElement,  // Register the Bar Element for bar charts
   Title,
   Tooltip,
   Legend,
-  BarController // Register the Bar Controller
+  BarController, // Register the Bar Controller
+  ArcElement, // Register the Arc Element for pie charts
+  PieController // Register the Pie Controller for pie charts
 );
 
 @Component({
@@ -28,7 +30,8 @@ export class MainDashboardComponent implements OnInit {
   groupIds: string[] = [];
   expenseData: any[] = [];
   chartData: any = {};
-  private expenseChart: Chart | null = null; // Track the chart instance
+  private expenseChart: Chart | null = null; // Track the bar chart instance
+  private categoryExpenseChart: Chart | null = null; // Track the pie chart instance
 
   constructor(private router: Router, public authService: AuthService, public dataService: DataService) {}
 
@@ -52,13 +55,11 @@ export class MainDashboardComponent implements OnInit {
   }
 
   fetchExpensesData(): void {
-   this.dataService.getGroupDetails().subscribe(
+    this.dataService.getGroupDetails().subscribe(
       (groupDetails: any[]) => {
         // Extract the groupIds from the group details response
-        this.groupIds = groupDetails.map(group => group.groupId); 
-
-
-        this.createExpenseChart();
+        this.groupIds = groupDetails.map(group => group.groupId);
+        this.createExpenseChart(); // Call the bar chart creation after fetching the data
       },
       (error) => {
         console.error('Error fetching expenses data:', error);
@@ -70,7 +71,8 @@ export class MainDashboardComponent implements OnInit {
     this.dataService.getChartData(this.groupIds).subscribe(
       (chartData: any) => {
         this.chartData = chartData;
-        this.createExpenseChart();
+        this.createExpenseChart(); // Create the monthly expense bar chart
+        this.createCategoryExpenseChart(); // Create the category-wise expense pie chart
       },
       (error) => {
         console.error('Error fetching chart data:', error);
@@ -89,6 +91,7 @@ export class MainDashboardComponent implements OnInit {
     );
   }
 
+  // Function to create the Monthly Expense Bar Chart
   createExpenseChart(): void {
     if (this.expenseChart) {
       this.expenseChart.destroy(); // Destroy existing chart
@@ -117,7 +120,7 @@ export class MainDashboardComponent implements OnInit {
     const ctx = document.getElementById('expenseChart') as HTMLCanvasElement;
     if (ctx) {
       this.expenseChart = new Chart(ctx, {
-        type: 'bar', // Changed to 'bar' for a bar chart
+        type: 'bar', // Use a bar chart for monthly expenses
         data: {
           labels: labels,
           datasets: [
@@ -136,35 +139,95 @@ export class MainDashboardComponent implements OnInit {
             title: {
               display: true,
               text: 'Monthly Expense Breakdown',
-              font: {
-                size: 16
-              }
+              font: { size: 16 }
             },
             tooltip: {
               callbacks: {
-                label: (context:any) => `$${context.raw}`
+                label: (context: any) => `$${context.raw}`
               }
             }
           },
           scales: {
             x: {
-              title: {
-                display: true,
-                text: 'Month/Year'
-              }
+              title: { display: true, text: 'Month/Year' }
             },
             y: {
-              title: {
-                display: true,
-                text: 'Amount ($)'
-              },
-              beginAtZero: true // Ensure Y-axis starts at 0
+              title: { display: true, text: 'Amount ($)' },
+              beginAtZero: true
             }
           }
         }
       });
     } else {
       console.error('Canvas element not found. Ensure the template contains an element with id="expenseChart".');
+    }
+  }
+
+  // Function to create the Category-Wise Expense Pie Chart
+  createCategoryExpenseChart(): void {
+    if (this.categoryExpenseChart) {
+      this.categoryExpenseChart.destroy(); // Destroy existing chart
+    }
+
+    if (!this.chartData || !this.chartData.categoryExpenses || this.chartData.categoryExpenses.length === 0) {
+      console.warn('No category expense data available to plot.');
+      return;
+    }
+
+    const categoryLabels = this.chartData.categoryExpenses.map((item: any) => item.category);
+    const categoryValues = this.chartData.categoryExpenses.map((item: any) => item.totalSpend);
+
+    const ctx = document.getElementById('categoryExpenseChart') as HTMLCanvasElement;
+    if (ctx) {
+      this.categoryExpenseChart = new Chart(ctx, {
+        type: 'pie', // Use a pie chart for category-wise expenses
+        data: {
+          labels: categoryLabels,
+          datasets: [
+            {
+              label: 'Category-Wise Expenses',
+              data: categoryValues,
+              backgroundColor: [
+                'rgba(19, 163, 103, 0.6)',
+                'rgba(173, 238, 142, 0.6)',
+                'rgba(21, 122, 43, 0.6)',
+                'rgba(75, 192, 192, 0.6)',
+                'rgba(85, 233, 196, 0.6)',
+                'rgba(51, 228, 7, 0.8)',
+              ],
+              borderColor: [
+                'rgb(255, 99, 132)',
+                'rgb(54, 162, 235)',
+                'rgb(255, 206, 86)',
+                'rgb(75, 192, 192)',
+                'rgb(153, 102, 255)',
+                'rgb(255, 159, 64)',
+              ],
+              borderWidth: 1
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            title: {
+              display: true,
+              text: 'Category-Wise Expense Breakdown',
+              font: { size: 16 }
+            },
+            tooltip: {
+              callbacks: {
+                label: (context: any) => `$${context.raw}` // Display amount in tooltip
+              }
+            },
+            legend: {
+              position: 'top'
+            }
+          }
+        }
+      });
+    } else {
+      console.error('Canvas element not found. Ensure the template contains an element with id="categoryExpenseChart".');
     }
   }
 }
