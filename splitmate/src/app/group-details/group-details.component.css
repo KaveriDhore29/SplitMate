@@ -510,68 +510,141 @@
   z-index: 1000;
 }
 
+/* Modal Container */
 .modal-content {
-  background: #fff;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  width: 80%;
+  max-width: 600px;
   padding: 20px;
-  border-radius: 8px;
-  width: 500px;
-  max-width: 90%;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+  margin: auto;
+  animation: fadeIn 0.5s ease-in-out;
 }
 
-/* Modal Header */
+/* Close Button */
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #555;
+  transition: transform 0.2s ease-in-out;
+}
+
+.close-btn-expense{
+  width: 5%;
+  position: relative;
+  left: 103%;
+  top: -38px;
+  background-color: white;
+  /* border: none; */
+  font-size: 18px;
+  border: 1px solid black;
+}
+
+.close-btn:hover {
+  transform: scale(1.2);
+  color: #e74c3c;
+}
+
+/* Header Section */
 .modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 2px solid #f0f0f0;
   padding-bottom: 10px;
+  padding-top: 0;
+  margin-top: -5%;
 }
 
-.header-left h3 {
-  margin: 0;
-  font-size: 1.5rem;
+.expense-title {
+  font-size: 22px;
+  font-weight: bold;
+  color: #388164;
 }
 
-.header-left p {
-  margin: 0;
-  font-size: 1.2rem;
+.delete-icon {
+  font-size: 24px;
+  color: black;
+  cursor: pointer;
+  transition: transform 0.2s ease, color 0.3s ease;
+}
+
+.delete-icon:hover {
+  transform: scale(1.2);
+  color: #c0392b;
+}
+
+/* Expense Info Section */
+.expense-info {
+  margin-top: 20px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.expense-info strong {
   color: #555;
 }
 
-.header-right .delete-btn {
-  background: none;
-  border: none;
-  color: red;
-  cursor: pointer;
-}
-
-.header-right .material-icons {
-  font-size: 24px;
-}
-
-/* Modal Body */
-.modal-body {
+/* Members List Section */
+.members-list {
   margin-top: 20px;
 }
 
-.modal-body h4 {
-  margin-bottom: 5px;
-  font-size: 1.2rem;
+.members-list h3 {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
 }
 
-.modal-body p {
-  margin: 0 0 10px;
-}
-
-.modal-body ul {
+.members-list ul {
   list-style: none;
   padding: 0;
 }
 
-.modal-body li {
-  margin-bottom: 5px;
+.members-list li {
+  display: flex;
+  justify-content: space-between;
+  background: #f9f9f9;
+  border: 1px solid #f0f0f0;
+  padding: 10px 15px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  transition: transform 0.2s ease, background-color 0.3s ease;
 }
+
+.members-list li:hover {
+  transform: translateY(-2px);
+  background-color: #f0f8ff;
+}
+
+.members-list span {
+  font-size: 16px;
+  color: #555;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+
+
 
 .Borrowed-expenses {
   display: flex;

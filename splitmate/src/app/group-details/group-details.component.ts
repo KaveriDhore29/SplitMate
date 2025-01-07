@@ -54,6 +54,7 @@ export class GroupDetailsComponent implements OnInit {
 
   openExpenseModal(expense: any) {
     this.selectedExpense = expense;
+    // console.warn(this.selectedExpense,"selected exepsne");
   }
 
   addExpenseData(selectedExpense: any): void {

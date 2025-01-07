@@ -126,36 +126,37 @@
     </div>
     <div *ngIf="selectedExpense" class="modal-overlay">
       <div class="modal">
-       <div class="modal-content">
-        <button type="button" class="close-btn" (click)="close()">&#10006;</button>
-          <!--  <div class="modal-header">
-            <div class="header-left">
-              <h3 class="expense-title">{{ selectedExpense.title }}</h3>
-              <p class="expense-amount">{{ selectedExpense.amount | currency }}</p>
-            </div>
-            <div class="header-right">
-              <button class="delete-btn" (click)="deleteExpense(selectedExpense)">
-                <span class="material-icons">delete</span>
-              </button>
-            </div>
+        <div class="modal-content">
+          <button type="button" class="close-btn-expense" (click)="close()">&#10006;</button>
+          <div class="modal-header">
+            <h2 class="expense-title">{{selectedExpense.title | uppercase }}</h2>
+            <i class="material-icons delete-icon" (click)="deleteExpense(expense)">delete</i>
           </div>
+          <div class="expense-info">
+            <p><strong>Total Amount:</strong> ₹ 5000</p>
+            <p><strong>Expense Paid By:</strong> Jane Smith</p>
+            <p><strong>Added By:</strong> John Doe</p>
+            <p><strong>Added On:</strong> Jan 6, 2025</p>
+          </div>
+          <div class="members-list">
+            <h3>Members Who Owe:</h3>
+            <ul>
+              <li>
+                <span>Jane Smith</span>
+                <span>₹ 1200</span>
+              </li>
+              <li>
+                <span>Mike Johnson</span>
+                <span>₹ 1800</span>
+              </li>
+              <li>
+                <span>Emily Davis</span>
+                <span>₹ 2000</span>
+              </li>
+            </ul>
+          </div>
+        </div>
         
-          <div class="modal-body">
-            <div class="details-section">
-              <h4>Paid By</h4>
-              <p class="detail-value">{{ selectedExpense.paidByName }}</p>
-            </div>
-            <div class="details-section">
-              <h4>Owed By</h4>
-              <ul class="owed-list">
-                <li *ngFor="let owed of selectedExpense.owedBy">
-                  <span class="owed-name">{{ owed.name }}</span> - 
-                  <span class="owed-amount">{{ owed.amount | currency }}</span>
-                </li>
-              </ul>
-            </div>
-          </div>-->
-        </div> 
       </div>
     </div>
     
