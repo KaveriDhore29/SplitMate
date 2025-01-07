@@ -362,7 +362,7 @@
   flex-wrap: wrap;
   justify-content: space-between;
   border-bottom: 2px solid black;
-  padding-bottom: 1%;
+  /* padding-bottom: 1%; */
  
 }
 
@@ -378,7 +378,7 @@
     text-align: left;
     color: black;
     margin-left: 1%;
-    margin-top:1%;
+    /* margin-top:1%; */
     display: flex;
     align-items: center;
     gap: 5px;
@@ -390,7 +390,7 @@
   color: #388164;
   padding: 5px 1%;
   border-radius: 50px;
-  margin-top: 2%;
+  margin-top: 1%;
   margin-right: 2%;
   margin-bottom: 1%;
   font-weight: 700;
