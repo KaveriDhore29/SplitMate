@@ -130,13 +130,19 @@
           <button type="button" class="close-btn-expense" (click)="close()">&#10006;</button>
           <div class="modal-header">
             <h2 class="expense-title">{{selectedExpense.title | uppercase }}</h2>
+            <div class="expense-subheading">
+              <p class="expense-total"><strong>Added By: Jane Smith</strong></p>
+              <p class="expense-paid-by"><strong>On:</strong>Jan 6, 2021</p>
+           
+            </div>
+         
             <i class="material-icons delete-icon" (click)="deleteExpense(expense)">delete</i>
           </div>
           <div class="expense-info">
-            <p><strong>Total Amount:</strong> ₹ 5000</p>
-            <p><strong>Expense Paid By:</strong> Jane Smith</p>
-            <p><strong>Added By:</strong> John Doe</p>
-            <p><strong>Added On:</strong> Jan 6, 2025</p>
+          
+          
+            <p><strong>Paid By:</strong> John Doe</p>
+            <p><strong>Total Amount</strong> ₹ 5000</p>
           </div>
           <div class="members-list">
             <h3>Members Who Owe:</h3>

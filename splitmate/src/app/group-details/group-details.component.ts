@@ -192,12 +192,7 @@ export class GroupDetailsComponent implements OnInit {
       }
     );
 
-     this.grpBalances = this.dataService.grpBalance(this.groupId).subscribe(
-        (data:any) => {
-            this.grpBalances = data;
-           console.log("grpBalances",this.grpBalances); 
-        }
-     );
+    
    
   }
 
@@ -254,6 +249,13 @@ export class GroupDetailsComponent implements OnInit {
         console.error('Error loading details from API:', error);
       }
     );
+
+    this.grpBalances = this.dataService.grpBalance(this.groupId).subscribe(
+      (data:any) => {
+          this.grpBalances = data;
+         console.log("grpBalances",this.grpBalances); 
+      }
+   );
   }
 
   setActiveTab(tab: string) {
