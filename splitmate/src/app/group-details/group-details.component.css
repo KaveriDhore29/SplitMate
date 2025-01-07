@@ -55,13 +55,59 @@
 }
 
 .member-item {
-  margin-top: 10px;
   font-size: 1.2em;
+  width: 100%;
+  position: relative;
+    left: 31%;
 }
 
 .member-item span {
   font-weight: bold;
 }
+
+.members-container{
+  margin:-20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.member-card {
+  display: flex;
+  align-items: center;
+  width: 40%;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1%;
+}
+
+.member-avatar {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e6db79;
+  border-radius: 50%;
+}
+
+.avatar-icon {
+  font-size: 27px;
+  color: #388164;
+}
+
+.member-details {
+  flex-grow: 1;
+}
+
+.member-name {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+
 
 .row {
   /* border: 2px solid darkblue;
@@ -82,18 +128,20 @@
   padding: 10px; */
 }
 
-.header {
-  color: black;
-  padding: 10px;
-}
 
+.hero-section{
+  background: linear-gradient(135deg, #388164 0%, #4ca477 100%);
+    color: #ffffff;
+    border-radius: 15px;
+    padding: 2%;
+}
 .group-name {
   margin: 0;
-  font-size: 28px;
-  font-weight: bold;
-  text-align: left;
-  color: black;
-  text-transform: capitalize;
+  font-size: 30px;
+  font-weight: bolder;
+  text-align: center;
+  color: #e6db79;
+ margin-bottom: 5px;
 }
 
 .settings-icon {
@@ -115,7 +163,20 @@
   background-color: white;
   width: 100%;
   height: 20vh;
+  overflow: hidden;
 }
+
+.members-of-group{
+  background-color: white;
+  width: 100%;
+  height: 20vh;
+  overflow: scroll;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+  scrollbar-color: #388164 white;
+  scrollbar-arrow-color: #388164;
+}
+
 
 .update-info {
   text-align: left;

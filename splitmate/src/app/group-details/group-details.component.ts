@@ -31,6 +31,7 @@ export class GroupDetailsComponent implements OnInit {
     { title: 'Grocery shopping', amount: 30, date: '2024-12-08' },
   ];
   groupSettlements: any;
+  recentUpdates:any;
 
   selectedExpense: any = null;
   isSaveDisabled: boolean = false;

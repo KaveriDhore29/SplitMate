@@ -1,19 +1,19 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-12">
-      <div class="header d-flex justify-content-between align-items-center">
+      <div class="hero-section">
         
         <div>
-          <h1 class="group-name" *ngIf="groupName">{{ groupName }}</h1>
-          <p>
-            Created on: <b style="color: #388164;">{{this.groupCreatedAt | date}}</b> by <b style="color: #388164;">{{this.groupCreatedBy}}</b>
+          <h1 class="group-name" *ngIf="groupName">{{ groupName | uppercase }}</h1>
+          <p > 
+            Created on: <b>{{this.groupCreatedAt | date}}</b> by <b>{{this.groupCreatedBy}}</b>
           </p>
         </div>
   
       
         <div>
-          <i class="material-icons" title="Add Members" (click)="showAddmembersPopup = true">group_add</i> &nbsp;
-          <i class="material-icons" title="Edit Group" (click)="editGroup()">edit_square</i> &nbsp;
+          <!-- <i class="material-icons" title="Add Members" (click)="showAddmembersPopup = true">group_add</i> &nbsp;
+          <i class="material-icons" title="Edit Group" (click)="editGroup()">edit_square</i> &nbsp; -->
           <!-- <i class="material-icons" title="Delete Group">delete</i> -->
        
         </div>
@@ -56,17 +56,29 @@
       <div class="col">
         <div class="members-of-group">
           <h2 class="summary-heading">Members of the Group</h2>
-          <div>
-            <i class="material-icons" title="Add Members" (click)="showAddmembersPopup = true">group_add</i> &nbsp;
-            <!-- <i class="material-icons" title="Delete Group">delete</i> -->
-         
-          </div>
+            <i class="material-icons" title="Add Members" (click)="showAddmembersPopup = true" style="left: relative;
+            top: -40px;
+            position: relative;
+            left: 49%;
+            font-weight: bold;">group_add</i> &nbsp;
+        
           <div *ngIf="membersNames.length === 0">
             <p>No members yet. Add members to the group!</p>
           </div>
-          <div *ngFor="let member of membersNames" class="member-item">
-            <span>{{ member.name }}</span> <!-- Using 'name' to display the username -->
+          <div class="members-container">
+            <div *ngFor="let member of membersNames" class="member-item">
+              <div class="member-card">
+                <div class="member-avatar">
+                  <i class="material-icons avatar-icon">person</i>
+                </div>
+                <div class="member-details">
+                  <span class="member-name">{{ member.name }}</span>
+                </div>
+              </div>
+            </div>
           </div>
+          
+          
         </div>
       </div>
       
