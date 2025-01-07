@@ -68,3 +68,16 @@ section,
     border-color: transparent; /* Makes the cursor blink */
   }
 }
+
+
+/* Logo Styling */
+.header .logo h1 {
+  color: #5BC5A7;
+  font-size: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.logo_span {
+  color: #008080;
+}
