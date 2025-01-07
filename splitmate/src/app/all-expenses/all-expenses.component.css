@@ -92,13 +92,17 @@
   color: #388164 !important; 
 }
 
-.paid-by, .amount {
+.paid-by {
   color: #ffd700 !important; 
 }
 
+.expense-title{
+    color: #ffffff !important; 
+    font-weight: normal;
+}
 
 .group-name {
-  color: #e74c3c !important; 
+  color: #ffffff !important; 
   font-weight: bold;
 }
 

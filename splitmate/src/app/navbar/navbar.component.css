@@ -16,9 +16,18 @@ body {
   margin-bottom: 2rem;
 }
 
+.header {
+    background-color: rgba(255, 255, 255, 0);
+    color: var(--default-color);
+    background-color: var(--background-color);
+    padding: 25px 0;
+    transition: all 0.5s;
+    z-index: 997;
+}
+
 /* Header Styling */
 #header_nav {
-  background-color: #EBEBEB;
+  background-color: #ffff;
 }
 
 .container-fluid {
@@ -32,7 +41,7 @@ body {
 /* Logo Styling */
 .header .logo h1 {
   color: #5BC5A7;
-  font-size: 24px;
+  font-size: 30px;
   display: flex;
   align-items: center;
 }
@@ -46,18 +55,24 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: white;
-  color: #00684A;
-  font-size: 16px;
+  background-color: #489c73;
+  color: white;
+  font-size: 20px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   cursor: pointer;
-  padding: 5px 10px;
+  padding: 10px 10px;
   margin-right: 65px;
   border-radius: 10px;
 }
 
 .current-user-name {
   margin-left: 5px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+    font-weight: 600;
+    
+    color: #ffffff;
+    margin-bottom: 10px;
 }
 
 .dropdown-menu {

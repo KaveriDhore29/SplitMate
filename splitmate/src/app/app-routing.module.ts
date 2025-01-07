@@ -46,8 +46,9 @@ const routes: Routes = [
       { path: 'group-detail', component: GroupDetailsComponent },
       { path: 'group-detail/:id', component: GroupDetailsComponent },
       { path: 'all-groups', component: MyGroupsComponent },
+      { path: 'create-group', component: CreateGroupComponent },
       { path: 'my-profile', component: MyProfileComponent },
-  { path: 'edit-group/:id', component: EditGroupModalComponent },
+      { path: 'edit-group/:id', component: EditGroupModalComponent },
     ],
   },
   {

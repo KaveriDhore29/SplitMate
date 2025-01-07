@@ -3,9 +3,9 @@
     <div class="expense-header" (click)="toggleAccordion(expense.id)">
       <i class="fa-solid fa-receipt expense-icon"></i>
       <span class="expense-statement">
-        <strong>{{ expense.paidByName }}</strong> added <strong>{{ expense.title }}</strong>
-        in group <strong>{{ expense.groupName }}</strong> for
-        <strong>{{ expense.amount.value | currency: expense.currency }}</strong>
+        <strong><span class="paid-by">{{ expense.paidByName }}</span></strong> added <strong><span class="expense-title">{{ expense.title }}</span></strong>
+        in group <strong><span class="group-name"> {{expense.groupName }}</span></strong> for
+        <strong><span class="paid-by">{{expense.amount.value | currency: expense.currency }}</span> </strong>
       </span>
       <i
         class="fa-solid"

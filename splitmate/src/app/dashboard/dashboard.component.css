@@ -120,8 +120,15 @@ i{
 margin: 1rem;
 }
 
+.row-ui{
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -10px;
+}
 
-
+.col-10{
+  width: 83.33333333%;
+}
 
 
 

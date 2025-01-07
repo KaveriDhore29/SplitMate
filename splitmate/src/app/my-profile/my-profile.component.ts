@@ -12,6 +12,7 @@ export class MyProfileComponent implements OnInit {
 
   currentUser = '';
   email = '';
+  picture = ''; // To store user's profile image URL
   isLoggedIn = false;
 
   ngOnInit(): void {
@@ -21,12 +22,18 @@ export class MyProfileComponent implements OnInit {
     if (loggedInUser) {
       const userPayload = JSON.parse(loggedInUser);
       console.log(userPayload);
+
       this.currentUser = userPayload.name;
       this.email = userPayload.email;
+
+      // Check if a profile picture is available
+      this.picture =
+        userPayload.picture || this.getInitialsImage(this.currentUser);
     }
   }
 
-  getInitials(name: string): string {
+  // Generate an image with initials
+  getInitialsImage(name: string): string {
     const canvas = document.createElement('canvas');
     canvas.width = 300;
     canvas.height = 300;
@@ -41,7 +48,7 @@ export class MyProfileComponent implements OnInit {
     context.fillRect(0, 0, canvas.width, canvas.height);
 
     // Text properties
-    context.font = '64px Roboto, "Helvetica Neue", sans-serif'; // Adjust font size for better fit
+    context.font = '64px Roboto, "Helvetica Neue", sans-serif';
     context.fillStyle = 'black';
     context.textAlign = 'center';
     context.textBaseline = 'middle';
@@ -61,9 +68,6 @@ export class MyProfileComponent implements OnInit {
     // Draw initials at the center
     context.fillText(initials, centerX, centerY);
 
-    return canvas.toDataURL();
+    return canvas.toDataURL(); // Return the image as a data URL
   }
 }
-
-  
-
