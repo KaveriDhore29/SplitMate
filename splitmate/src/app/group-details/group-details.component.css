@@ -361,6 +361,14 @@
   display:flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  border-bottom: 2px solid black;
+  padding-bottom: 1%;
+ 
+}
+
+.expense-icon {
+  font-size: 30px; /* Set icon size */
+  margin-top: 10px;
 }
 
 .add-expense h2{
@@ -370,17 +378,22 @@
     text-align: left;
     color: black;
     margin-left: 1%;
-    margin-top:1%
+    margin-top:1%;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .add-expense-btn{
   background-color: transparent;
-  border: 1px solid #388164;
+  border: 2px solid #388164;
   color: #388164;
-  padding: 0px 1%;
+  padding: 5px 1%;
   border-radius: 50px;
-  margin-top:1%;
+  margin-top: 2%;
   margin-right: 2%;
+  margin-bottom: 1%;
+  font-weight: 700;
   &:hover{
     background-color: #388164;
     color: white;

@@ -6,7 +6,7 @@
         <div>
           <h1 class="group-name" *ngIf="groupName">{{ groupName }}</h1>
           <p>
-            Created on: <b style="color: #388164;">{{this.groupCreatedAt | date}}</b> by <b style="color: #388164;">{{this.groupCreatedBy.username}}</b>
+            Created on: <b style="color: #388164;">{{this.groupCreatedAt | date}}</b> by <b style="color: #388164;">{{this.groupCreatedBy}}</b>
           </p>
         </div>
   
@@ -90,7 +90,10 @@
     <div *ngIf="activeTab === 'expenses'" class="active-tab">
       <div class="tab-content">
        <div class="add-expense">
-        <h2 class="expense-heading">Expenses</h2>
+<h2 class="expense-heading">
+  <span><i class="material-icons expense-icon">bar_chart</i></span>
+  Expenses
+</h2>
         <button (click)="showPopup = true" class="add-expense-btn">+ Add Expense</button>
        </div>
        <div class="group-expenses">
