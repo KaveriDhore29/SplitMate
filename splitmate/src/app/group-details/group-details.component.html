@@ -12,10 +12,10 @@
   
       
         <div>
-          <!-- <i class="material-icons" title="Add Members" (click)="showAddmembersPopup = true">group_add</i> &nbsp;
-          <i class="material-icons" title="Edit Group" (click)="editGroup()">edit_square</i> &nbsp; -->
-          <!-- <i class="material-icons" title="Delete Group">delete</i> -->
-       
+          <i class="material-icons" style='    position: relative;
+          left: 49%;
+          top: -72px;'
+          title="Edit Group" (click)="editGroup()">edit</i> &nbsp; 
         </div>
       </div>
     </div>
@@ -25,11 +25,11 @@
     <div class="row top-cards">
       <div class="col card">
         <h2>You Owe</h2>
-        <h1>{{responseOftotalOwed.owesBalance}}</h1>
+        <h1>{{responseOftotalOwed.owedBalance}}</h1>
       </div>
       <div class="col card">
         <h2>Owed to You</h2>
-        <h1>{{responseOftotalOwed.owedBalance}}</h1>
+        <h1>{{responseOftotalOwed.owesBalance}}</h1>
       </div>
       <div class="col card">
         <h2>Total Expense</h2>
@@ -68,14 +68,19 @@
           <div class="members-container">
             <div *ngFor="let member of membersNames" class="member-item">
               <div class="member-card">
-                <div class="member-avatar">
-                  <i class="material-icons avatar-icon">person</i>
-                </div>
                 <div class="member-details">
-                  <span class="member-name">{{ member.name }}</span>
+                  <div class="member-info">
+                    <div class="member-avatar">
+                      <i class="material-icons avatar-icon">person</i>
+                    </div>
+                    <span class="member-name">{{ member.name }}</span>
+                    <span *ngIf="member.email === this.dataService.currentUserEmail.email">(You)</span> 
+                  </div>
                 </div>
+                <span class="member-role">{{ member.role }}</span>
               </div>
             </div>
+            
           </div>
           
           
@@ -87,28 +92,26 @@
   <div class="row expense-summary-div">
    <div class="col-12">
    
-    <ul class="nav nav-tabs">
+    <ul class="custom-tabs">
       <li class="nav-item">
-        <a class="nav-link" [class.active]="activeTab === 'expenses'" (click)="setActiveTab('expenses')">Group Expenses</a>
+        <a class="custom-tab" [class.active]="activeTab === 'expenses'" (click)="setActiveTab('expenses')">Group Expenses</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" [class.active]="activeTab === 'balances'" (click)="setActiveTab('balances')">Group Balances</a>
+        <a class="custom-tab" [class.active]="activeTab === 'balances'" (click)="setActiveTab('balances')">Group Balances</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" [class.active]="activeTab === 'settle-up'" (click)="setActiveTab('settle-up')">Settle Up</a>
+        <a class="custom-tab" [class.active]="activeTab === 'settle-up'" (click)="setActiveTab('settle-up')">Settle Up</a>
       </li>
     </ul>
  
     <div *ngIf="activeTab === 'expenses'" class="active-tab">
       <div class="tab-content">
-       <div class="add-expense">
-<h2 class="expense-heading">
-  <span><i class="material-icons expense-icon">bar_chart</i></span>
-  Expenses
-</h2>
-        <button (click)="showPopup = true" class="add-expense-btn">+ Add Expense</button>
-       </div>
+        <div class="add-expense">
+          <h2 class="expense-heading">List of Expenses</h2>
+          <button (click)="showPopup = true" class="add-expense-btn">+ Add Expense</button>
+        </div>
        <div class="group-expenses">
+        
         <table class="expenses">
           <thead>
             <tr>
@@ -117,20 +120,28 @@
               <th>Total Amount</th>
               <th>Paid By</th>
               <th>You Borrowed</th>
+              <th>Action</th>
             </tr>
           </thead>
-          <tbody>
-            <tr *ngFor="let expense of groupExpensesArray" (click)="openExpenseModal(expense)">
-              <td>{{ expense.date | date }}</td> 
-              <td>{{ expense.title }}</td>
-              <td>{{ expense.amount }}</td>
-              <td>{{ expense.paidBy === this.dataService.currentUserEmail.email ? 'You' : expense.paidByName ? expense.paidByName : expense.paidBy}}</td>
-              <td>{{ expense.borrowed }}</td>
-              <td></td>
-              <td></td>
-              <td></td>
+          <tbody *ngIf="groupExpensesArray.length > 0 else noExpenses">
+           
+            <tr *ngFor="let expense of groupExpensesArray">
+             
+              <td (click)="openExpenseModal(expense)">{{ expense.date | date }}</td> 
+              <td (click)="openExpenseModal(expense)">{{ expense.title | uppercase }}</td>
+              <td (click)="openExpenseModal(expense)">{{ expense.amount }}</td>
+              <td (click)="openExpenseModal(expense)">{{ expense.paidBy === this.dataService.currentUserEmail.email ? 'You' : expense.paidByName ? expense.paidByName : expense.paidBy}}</td>
+              <td (click)="openExpenseModal(expense)">{{ expense.borrowed }}</td>
+              <td><i class="material-icons" (click)="deleteExpense(expense)">delete</i></td>
             </tr>
           </tbody>
+          <ng-template #noExpenses>
+            <tr>
+              <td colspan="6" class="no-expenses-message">
+                No expense to track. Add an expense to start tracking your expenses.
+              </td>
+            </tr>
+          </ng-template>
         </table>
       </div>
       
@@ -145,10 +156,8 @@
             <div class="expense-subheading">
               <p class="expense-total"><strong>Added By: Jane Smith</strong></p>
               <p class="expense-paid-by"><strong>On:</strong>Jan 6, 2021</p>
-           
+
             </div>
-         
-            <i class="material-icons delete-icon" (click)="deleteExpense(expense)">delete</i>
           </div>
           <div class="expense-info">
           
@@ -180,32 +189,47 @@
     
     <div *ngIf="activeTab === 'balances'" class="active-tab">
       <div class="tab-content">
+        <div class="balances-heading">
+            <h1>Group Balances Overview</h1>
+        </div>
+        <div *ngIf="groupSettlements.transactionArray?.length==0" class="all-settled">
+          <p class="settled-message">Everything's squared away! No group balances left.</p>
+        </div>
         <ul class="transaction-list">
           <li *ngFor="let transaction of grpBalances.transactionArray" class="transaction-item">
             <div class="transaction-details">
-              <strong>"{{ transaction.email }}" </strong> owes <strong>{{transaction.owesAmount}}</strong>
-              to <strong> "{{ transaction.to }}"</strong>
-             
+              <span class="transaction-icon">
+                <i class="fa-solid fa-money-bill-1-wave"></i>
+              </span>
+              <div class="transaction-text">
+                <strong class="transaction-email">You</strong> owe
+                <strong class="transaction-amount">{{ transaction.owesAmount |  currency:'INR':'symbol' }}</strong>
+                to <strong class="transaction-to">"{{ transaction.to }}"</strong>
+              </div>
             </div>
           </li>
         </ul>
+        
       </div>
     </div>
     <div *ngIf="activeTab === 'settle-up'" class="active-tab">
       <div class="tab-content">
         <div class="settle-up-heading">
-          <h2><i class="fa-solid fa-circle-info"></i>&nbsp; Select expense to settle up</h2>
+          <h2>Expense Settlement </h2>
         </div>
     
         <div class="Borrowed-expenses">
           <!-- List of Borrowed Expenses -->
+          <div *ngIf="groupSettlements.transactionArray?.length==0" class="all-settled">
+            <p class="settled-message">Wohooo! You are all settled up with your expenses! No pending amounts.</p>
+          </div>
           <div *ngFor="let expense of groupSettlements.transactionArray" class="Expense-card">
             <div class="Expense-header">
               <span class="Owe-text">YOU OWE</span>
               <span class="Person-name">{{expense.to}}</span>
             </div>
             <div class="Expense-amount-box">
-              <span class="Amount">{{ expense.owesAmount | currency }}</span>
+              <span class="Amount">{{ expense.owesAmount |  currency:'INR':'symbol' }}</span>
             </div>
             <button class="settle-up-btn" (click)="openExpenseModal(expense)">Settle Up</button>
           </div>

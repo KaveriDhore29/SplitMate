@@ -17,6 +17,9 @@ export class GroupDetailsComponent implements OnInit {
   showPopup: boolean = false;
   showSettleUpPopup = false;
   showAddmembersPopup: boolean = false;
+ groupCreatorEmail :any;
+  groupDescription = 'This is a group for discussing tech topics.';
+  settingsMenuOpen = false;
   groupIds = [];
   groupExpenses : any;
   groupExpensesArray : any;
@@ -55,7 +58,16 @@ export class GroupDetailsComponent implements OnInit {
 
   openExpenseModal(expense: any) {
     this.selectedExpense = expense;
-    // console.warn(this.selectedExpense,"selected exepsne");
+     console.warn(this.selectedExpense,"selected exepsne");
+  }
+
+  toggleSettingsMenu() {
+    this.settingsMenuOpen = !this.settingsMenuOpen;
+  }
+
+  viewGroupDetails() {
+    console.log('View Group Details clicked');
+    // Implement navigation or modal logic
   }
 
   addExpenseData(selectedExpense: any): void {
@@ -148,23 +160,7 @@ export class GroupDetailsComponent implements OnInit {
     },
   ];
 
-  expenses = [
-    {
-      date: new Date(),
-      title: 'Dinner',
-      amount: 1500,
-      paidBy: 'John Doe',
-      borrowed: 500,
-    },
-    {
-      date: new Date(),
-      title: 'Groceries',
-      amount: 3000,
-      paidBy: 'Jane Smith',
-      borrowed: 1200,
-    },
-    // More expenses...
-  ];
+  expenses = [];
 
   responseOftotalOwed: { myTotalBalance: number; owedBalance: number; owesBalance: number } = {
     myTotalBalance: 0,
@@ -203,19 +199,21 @@ export class GroupDetailsComponent implements OnInit {
         this.groupDetails = data;
         console.log('Specific Group Detail by Id:', this.groupDetails);
         this.groupName = this.groupDetails[0].name;
-  
+        const groupCreatorEmail = this.groupDetails[0].createdBy.email;
         // Map members from the response to extract the username (or name)
         this.membersNames = this.groupDetails[0].members.map((member: any) => ({
           name: member.username, // Ensure to use the correct property here
           email: member.email,
+          role: member.email === groupCreatorEmail ? 'Admin' : 'Member' 
         }));
   
-        console.log('Mapped Members:', this.membersNames); // Check the mapped array
+        // console.log('Mapped Members:', this.membersNames); // Check the mapped array
   
         this.groupCreatedBy = this.groupDetails[0].createdBy.username;
         this.groupCreatedAt = this.groupDetails[0].createdAt;
+    
   
-        console.log('Group Created By:', this.groupCreatedBy, 'Created At:', this.groupCreatedAt);
+        // console.log('Group Created By:', this.groupCreatedBy, 'Created At:', this.groupCreatedAt);
       },
       (error) => {
         console.error('Error fetching group details:', error);
@@ -227,7 +225,7 @@ export class GroupDetailsComponent implements OnInit {
 
     this.groupExpenses = this.dataService.getGroupExpenses(this.groupId).subscribe((data: any[]) => {
       this.groupExpenses = data;
-      console.log('Group Expenses:', this.groupExpenses);
+      // console.log('Group Expenses for table:', this.groupExpenses);
       this.groupExpensesArray = this.groupExpenses.expenses;
     });
 
@@ -274,8 +272,15 @@ export class GroupDetailsComponent implements OnInit {
   }
 
   deleteExpense(expense: any): void {
-    this.expenses = this.expenses.filter((e) => e !== expense);
-    this.selectedExpense = null; // Close modal after deletion
+    const confirmDelete = confirm('Are you sure you want to delete the expense?');
+    if(!confirmDelete){
+        return;
+    }
+    else{
+      this.expenses = this.expenses.filter((e) => e !== expense);
+      this.selectedExpense = null; // Close modal after deletion
+    }
+   
   }
 
   editGroup(): void {

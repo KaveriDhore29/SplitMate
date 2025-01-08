@@ -13,7 +13,7 @@
 
 /* Top Cards Section */
 .top-cards .card {
-  background: linear-gradient(135deg, #388164 0%, #4ca477 100%);
+  background: linear-gradient(135deg, #e6db79 0%, #4ca477 100%);
   color: #ffffff;
   flex: 1;
   text-align: center;
@@ -55,77 +55,68 @@
 }
 
 .member-item {
-  font-size: 1.2em;
-  width: 100%;
-  position: relative;
-    left: 31%;
+  margin-bottom: 15px; /* Space between cards */
 }
 
-.member-item span {
-  font-weight: bold;
+.member-item {
+  margin-bottom: 15px; /* Space between cards */
 }
 
 .members-container{
-  margin:-20px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+  margin-top: -25px;
 }
 
 .member-card {
   display: flex;
   align-items: center;
-  width: 40%;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 1%;
+  justify-content: space-between; /* Space between the name/avatar and role */
+  background-color: #f9f9f9; /* Light background for the card */
+  border: 1px solid #ddd; /* Subtle border for separation */
+  border-radius: 8px; /* Rounded corners */
+  padding: 2px; /* Inner spacing */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Hover effect */
 }
 
-.member-avatar {
-  width: 30px;
-  height: 30px;
+.member-card:hover {
+  transform: translateY(-3px); /* Slight lift on hover */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+}
+
+.member-info {
   display: flex;
   align-items: center;
-  justify-content: center;
-  background-color: #e6db79;
-  border-radius: 50%;
+  gap: 10px; /* Space between avatar and name */
 }
 
-.avatar-icon {
-  font-size: 27px;
-  color: #388164;
-}
 
-.member-details {
-  flex-grow: 1;
-}
 
 .member-name {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
+  color: #333; /* Darker text for better readability */
 }
 
-
-
-.row {
-  /* border: 2px solid darkblue;
-  background-color: lightblue; */
-  /* margin: 10px 0; 
-  padding: 10px; */
+.member-role {
+  font-size: 12px;
+  color: #777; /* Subtle color for role text */
+  margin-left: auto; /* Push role to the far-right */
+}
+.member-avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%; /* Circular avatar */
+  background-color: #e6db79; /* Blue background for avatar */
+  color: white; /* White icon for contrast */
+  margin-right: 15px; /* Space between avatar and details */
 }
 
-/* .expense-summary-div{
-  background-color: white;
-  border-radius: 10px;
-  margin:10px
-} */
-
-.col, .col-12 {
-  /* border: 2px dashed green; */
-  /* margin: 5px;
-  padding: 10px; */
+.avatar-icon{
+  color: #388164;
+  font-size: 30px;
 }
 
 
@@ -133,15 +124,19 @@
   background: linear-gradient(135deg, #388164 0%, #4ca477 100%);
     color: #ffffff;
     border-radius: 15px;
-    padding: 2%;
+    padding: 0.5rem;
+    p{
+      font-size: 18px;
+    }
 }
 .group-name {
   margin: 0;
-  font-size: 30px;
+  font-size: 36px;
   font-weight: bolder;
   text-align: center;
   color: #e6db79;
  margin-bottom: 5px;
+ margin-top: 2%;
 }
 
 .settings-icon {
@@ -185,23 +180,20 @@
   margin-bottom: 1px;
 }
 
-.nav-tabs{
-  justify-content: center;
-  margin-top:2%
-}
 
-.nav-link.active{
-  border-radius: 0;
-}
+
 
 .settle-up-heading {
   border-bottom: 1px solid black;
-  text-align: left;
-  margin-bottom: 20px;
-  font-size: 24px;
+  text-align: center;
+
   h2{
     margin: 0;
-    padding: 1%;
+    padding-top: 2%;
+    padding-bottom: 1%;
+    font-size: 25px;
+    font-weight: bolder;
+    text-transform: uppercase;
   }
 }
 
@@ -296,9 +288,7 @@
 
 
 .active-tab{
-  border:1px solid white;
-  background-color: white;
-  color:black;
+ 
   overflow: scroll;
   overflow-x: hidden;
   scrollbar-width: thin;
@@ -374,19 +364,63 @@
 }
 
 .tab-content{
-  height:48vh
+  height:55vh;
+  background-color: white;
 }
 
-.nav-item{
-  background-color: #388164;
-  color: white;
-  margin:0 1%;
+
+/* Style the container for the custom tabs */
+.custom-tabs {
+  display: flex;
+  justify-content: flex-start; /* Align the tabs to the left */
+  font-family: 'Arial', sans-serif; /* Clean font */
+  margin-top: 3%;
+  margin-left: -30px;
+  margin-bottom: 11px;
+}
+
+/* Style each individual tab */
+.custom-tab {
+  font-size: 16px;
+  font-weight: 500; 
+  color: #388164; 
+  padding: 10px 30px; 
+  border: 1px solid #388164; 
   cursor: pointer; 
-  border: none;
+  transition: all 0.3s ease; 
+  text-transform: uppercase; 
+  font-weight: bolder;
+  margin-top: 2%;
 }
-.nav-link{
-  color: white;
+
+.nav-item
+{
+  list-style-type: none;
 }
+
+/* Hover effect */
+.custom-tab:hover {
+  background: linear-gradient(135deg, #388164 0%, #4ca477 100%); 
+  color: white; /* Keep text color white */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow effect on hover */
+}
+
+/* Active tab styling */
+.custom-tab.active {
+  background: linear-gradient(135deg, #388164 0%, #4ca477 100%);  /* Dark green for active tab */
+  font-weight: bold; /* Make active tab text bold */
+  color: white; /* Ensure active tab text is white */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Highlight active tab with shadow */
+}
+
+/* Optional: Responsive adjustments */
+@media (max-width: 768px) {
+  .custom-tab {
+    font-size: 14px; /* Smaller font size for mobile */
+    padding: 8px 20px; /* Adjust padding for smaller screens */
+  }
+}
+
 
 .expense-table {
   display: flex;
@@ -418,28 +452,22 @@
   color: white;
 }
 
-.add-expense{
-  display:flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  border-bottom: 2px solid black;
-  /* padding-bottom: 1%; */
- 
-}
+
+
 
 .expense-icon {
   font-size: 30px; /* Set icon size */
   margin-top: 10px;
 }
 
-.add-expense h2{
+/* .add-expense h2{
   margin: 0;
     font-size: 22px;
     font-weight: bold;
     text-align: left;
     color: black;
     margin-left: 1%;
-    /* margin-top:1%; */
+  margin-top:1%;
     display: flex;
     align-items: center;
     gap: 5px;
@@ -459,40 +487,152 @@
     background-color: #388164;
     color: white;
   }
+} */
+
+.add-expense {
+  position: relative;         /* Establish a relative positioning context */
+  display: flex;              /* Use flexbox for centering */
+  justify-content: center;    /* Center the heading horizontally */
+  align-items: center;        /* Center the heading vertically */
+  padding: 10px;              /* Add some padding */
+  border-bottom: 1px solid #ccc; /* Optional: Add a bottom border for separation */
+}
+
+.expense-heading {
+  margin: 0;                  /* Remove default margin */
+  font-size: 25px;
+  font-weight: bolder;
+  padding-top: 1%;
+  text-transform: uppercase;
+}
+
+.add-expense-btn {
+  position: absolute;         /* Position the button absolutely */
+  right: 10px;                /* Align the button to the right corner */
+  top: 50%;                   /* Align the button vertically */
+  transform: translateY(-50%); /* Center the button vertically */
+  padding: 10px 15px;         /* Adjust padding for the button */
+  background: linear-gradient(135deg, #388164 0%, #4ca477 100%);
+  border: 2px solid #388164;
+  color: #e6db79;         /* Rounded corners */
+  cursor: pointer;            /* Pointer cursor on hover */
+  border-radius: 50px;
+  font-weight: bold;
+}
+
+.add-expense-btn:hover {
+  &:hover{
+    background-color: transparent;
+  border: 2px solid #388164;
+  color: #e6db79;   
+  } /* Darker color on hover */
+}
+
+.balances-heading{
+border-bottom: 1px solid black;
+}
+
+.balances-heading h1{
+  font-size: 25px;
+    font-weight: bold;
+padding-top: 2%;
+text-transform: uppercase;
 }
 
 .group-expenses {
   display: flex;
   justify-content: center; /* Centers the content horizontally */
-  align-items: center;    /* Centers the content vertically (optional) */
-  margin: 1% 0%;         /* Adds spacing above and below the table */
-}
-.expenses{
-  border-collapse: collapse; /* Optional for better table styling */
-  width: 100%;                /* Adjust width as needed */
-  text-align: center; 
-  tr{
-    border-bottom: 1px solid black;
-    padding: 10%;
-  }
-}
-
-
-.transaction-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  cursor: pointer;
-}
-
-/* Individual list item styling */
-.transaction-item {
-  background: linear-gradient(145deg, #ffffff, #e6e6e6);
-  margin: 15px 0;
-  padding: 15px;
+  align-items: flex-start; /* Aligns the table to the top of the container */
   border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), inset 0 1px 4px rgba(255, 255, 255, 0.4);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+ 
+}
+
+.expenses {
+  border-collapse: separate; /* Keeps cell borders distinct */
+  border-spacing: 0; /* Removes gaps between cells */
+  width: 100%; /* Full width of the container */
+  background-color: #ffffff; /* Table background */
+  border-radius: 8px;
+  overflow: hidden; /* Ensures rounded corners apply */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Slight shadow for the table */
+ 
+}
+
+.expenses th {
+  color: #ffffff; /* White text for contrast */
+  text-transform: uppercase; /* Makes header text uppercase */
+  padding: 12px 16px; /* Spacing for header cells */
+  font-size: 15px;
+  font-weight: bolder;
+  text-align: center;
+}
+
+.expenses td {
+  padding: 12px 16px; /* Adds spacing for cells */
+  font-size: 15px;
+  font-weight: bold;
+  color: #333; /* Dark gray text for readability */
+  text-align: center;
+  vertical-align: middle; /* Aligns text vertically in the cell */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.expenses tr {
+  border-bottom: 1px solid #ddd; /* Subtle row divider */
+  transition: background-color 0.3s ease; /* Smooth hover effect */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.expenses tr:hover {
+ 
+  transform: scale(1.01); /* Slight zoom effect */
+  cursor: pointer; /* Changes cursor to pointer */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); /* Adds shadow on hover */
+}
+
+.expenses td i {
+  font-size: 20px; /* Icon size */
+  color: #e53935; /* Red for delete icon */
+  cursor: pointer;
+  transition: transform 0.2s ease, color 0.3s ease; /* Adds subtle animation */
+}
+
+.expenses td i:hover {
+  transform: scale(1.2); /* Slight zoom on hover */
+  color: #d32f2f; /* Darker red on hover */
+}
+
+.expenses th:first-child,
+.expenses td:first-child {
+  border-radius: 8px 0 0 0; /* Round top-left corner */
+}
+
+.expenses th:last-child,
+.expenses td:last-child {
+  border-radius: 0 8px 0 0; /* Round top-right corner */
+}
+
+.expenses tr:last-child td:first-child {
+  border-radius: 0 0 0 8px; /* Round bottom-left corner */
+}
+
+.expenses tr:last-child td:last-child {
+  border-radius: 0 0 8px 0; /* Round bottom-right corner */
+}
+
+
+.transaction-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(135deg, #388164 0%, #4ca477 100%);
+      margin: 15px 24px;
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), inset 0 1px 4px rgba(255, 255, 255, 0.4);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      color: white;
+      width: 90%;
 }
 
 .transaction-item:hover {
@@ -500,6 +640,55 @@
   box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
 }
 
+.transaction-details {
+  display: flex; /* Flex container for inner content */
+  align-items: center; /* Align icon and text vertically */
+  gap: 2px; /* Space between icon and text */
+  flex-grow: 1; /* Allow text to center properly */
+}
+
+.transaction-icon {
+  color: white;
+  font-size: 24px;
+  flex-shrink: 0; /* Prevent icon from resizing */
+}
+
+.transaction-text {
+  text-align: center; /* Center the text within the available space */
+  width: 100%; /* Use full width to enable centering */
+
+}
+
+.all-settled {
+  text-align: center;
+  padding: 20px;
+  background-color: #f0f9f0;
+  border: 1px solid #d4edd9;
+  border-radius: 8px;
+  margin: 20px 0;
+}
+
+.settled-message {
+  font-size: 18px;
+  color: #28a745; /* Green color */
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.no-expenses-message {
+  text-align: center;
+  padding: 20px;
+  font-size: 18px;
+  color: #28a745;
+  font-weight: bold;
+  background-color: #f0f9f0;
+  border: 1px solid #d4edd9;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+}
 
 
 /* Responsive design */
@@ -521,21 +710,25 @@
   border-bottom: 1px solid black;
   padding: 12px;
   text-align: center;
-  color: #388164  ;
-}
-.group-expenses td {
-  border-bottom: 1px solid black;
-  padding: 14px;
-  text-align: center;
-  cursor: pointer;
- 
+  color: #ffffff;
+  
 }
 
-.group-expenses tr{
-  &:hover{
-    background-color: #f9f5f1;
-  }
+.group-expenses thead{
+  background: linear-gradient(135deg, #388164 0%, #4ca477 100%);
+  
 }
+.group-expenses td {
+  padding: 20px;
+  margin-bottom: 10px;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+
+
+
+
 
 
 .modal-container {
@@ -631,17 +824,7 @@
   color: #388164;
 }
 
-.delete-icon {
-  font-size: 24px;
-  color: black;
-  cursor: pointer;
-  transition: transform 0.2s ease, color 0.3s ease;
-}
 
-.delete-icon:hover {
-  transform: scale(1.2);
-  color: #c0392b;
-}
 
 /* Expense Info Section */
 .expense-info {
@@ -715,6 +898,7 @@
   justify-content: center;
   margin-top: 20px;
   padding: 10px;
+ 
 }
 
 .Expense-card {
@@ -729,6 +913,7 @@
   display: flex;
   flex-direction: column; /* Stack elements vertically */
   align-items: center; /* Center-align all child elements */
+  cursor: pointer;
 }
 
 .Expense-card:hover {
