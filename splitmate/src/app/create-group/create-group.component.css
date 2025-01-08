@@ -231,3 +231,77 @@ input{
   background-color: #A5D6A7; /* Optional: Changes the highlight color when text is selected */
   color: #000; /* Optional: Changes the color of the selected text */
 }
+
+
+.form-heading h2 {
+  font-size: 28px;
+  color: #333;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Material Form Field Enhancements */
+.mat-form-field {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.mat-form-field input {
+  caret-color: #388164;
+}
+
+.mat-form-field input::placeholder {
+  color: #aaa;
+}
+
+.mat-chip {
+  background: #4caf50;
+  color: white;
+  font-size: 14px;
+  margin-right: 8px;
+}
+
+/* Add Member Button */
+.add-member-btn {
+  background-color: #388164;
+  color: white;
+  border-radius: 5px;
+  padding: 10px 15px;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.add-member-btn:hover {
+  background-color: #2e6d54;
+}
+
+/* Group Type Styles */
+.group-type-dropdown select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+/* Save Button */
+.save-btn {
+  background-color: #388164;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.save-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.save-btn:hover:not(:disabled) {
+  background-color: #2e6d54;
+}

@@ -10,7 +10,7 @@
 
       <!-- Right Side: Login Form -->
       <div class="col-md-6 login-container">
-        <div class="form-container">
+        <div class="form-container shadow">
           <div class="form-heading">
             <h2>Create a New Group</h2>
           </div>
@@ -21,14 +21,14 @@
             <input matInput id="group-name" [(ngModel)]="groupName" placeholder="Enter group name" />
           </mat-form-field>
 
-          <hr *ngIf="groupName">
+          <hr *ngIf="groupName" />
 
           <!-- Group Members -->
           <div class="group-members" *ngIf="groupName">
             <h3>Group Members</h3>
             <mat-chip-list #chipList aria-label="Group members">
               <mat-chip *ngFor="let member of members; let i = index" (removed)="removeMember(i)">
-                {{  member.username ? member.username : member.email }}
+                {{ member.username ? member.username : member.email }}
                 <mat-icon matChipRemove>cancel</mat-icon>
               </mat-chip>
 
@@ -39,53 +39,56 @@
                 (input)="onSearchUsername()"
                 [matAutocomplete]="auto"
               />
-              <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectMember($event.option.value)">
+              <mat-autocomplete
+                #auto="matAutocomplete"
+                (optionSelected)="selectMember($event.option.value)"
+              >
                 <mat-option *ngFor="let result of searchResults" [value]="result">
                   {{ result.username }} ({{ result.email }})
                 </mat-option>
               </mat-autocomplete>
             </mat-chip-list>
-            <button mat-raised-button color="primary" (click)="addNonExistentUser()">Add Member</button>
+            <button mat-raised-button color="primary" class="add-member-btn" (click)="addNonExistentUser()">
+              Add Member
+            </button>
           </div>
-    
-          <hr *ngIf="groupName">
 
-            <!-- Group Type -->
-<div class="group-type" *ngIf="groupName">
-  <div class="group-type-heading">
-    <h2>GROUP TYPE</h2>
-  </div>
-  <div class="group-type-dropdown">
-    <select [(ngModel)]="groupType">
-      <option>Home</option>
-      <option>Office</option>
-      <option>Trip</option>
-      <option>Event</option>
-      <option>Family</option>
-      <option>Friends</option>
-      <option>Workshop</option>
-      <option>Conference</option>
-      <option>Meeting</option>
-      <option>Club</option>
-      <option>Team</option>
-      <option>Other</option>
-    </select>
-  </div>
-</div>
+          <hr *ngIf="groupName" />
 
+          <!-- Group Type -->
+          <div class="group-type" *ngIf="groupName">
+            <h3>Group Type</h3>
+            <div class="group-type-dropdown">
+              <select [(ngModel)]="groupType" class="form-select">
+                <option>Home</option>
+                <option>Office</option>
+                <option>Trip</option>
+                <option>Event</option>
+                <option>Family</option>
+                <option>Friends</option>
+                <option>Workshop</option>
+                <option>Conference</option>
+                <option>Meeting</option>
+                <option>Club</option>
+                <option>Team</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
 
-              <hr *ngIf="groupName">
+          <hr *ngIf="groupName" />
 
-                <!-- Save Button -->
+          <!-- Save Button -->
           <div class="save-button">
-            <button class="save-btn" [disabled]="!groupName || members.length === 0" (click)="saveGroup()">
+            <button
+              class="save-btn"
+              [disabled]="!groupName || members.length === 0"
+              (click)="saveGroup()"
+            >
               Save
             </button>
           </div>
         </div>
-  <div class="preloader"></div>
-        <!-- Google Sign-In Button -->
-        <div id="google-signin-button" class="google-btn"></div>
       </div>
     </div>
   </div>
