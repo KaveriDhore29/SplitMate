@@ -305,3 +305,39 @@ input{
 .save-btn:hover:not(:disabled) {
   background-color: #2e6d54;
 }
+
+
+.group-members {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.input-with-button {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.input-with-button input {
+  flex-grow: 1;
+  margin-right: 10px; /* Add space between input and button */
+}
+
+.add-member-btn {
+  background-color: #388164;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 6px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.add-member-btn:hover {
+  background-color: #45a049;
+}
+
+.mat-chip-list {
+  width: 100%;
+}

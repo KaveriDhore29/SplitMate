@@ -16,42 +16,47 @@
           </div>
 
           <!-- Group Name -->
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Group Name</mat-label>
-            <input matInput id="group-name" [(ngModel)]="groupName" placeholder="Enter group name" />
-          </mat-form-field>
+        <mat-form-field appearance="outline" class="full-width mat-field-styled">
+  <mat-label><b>Group Name</b></mat-label>
+  <input matInput id="group-name" [(ngModel)]="groupName" placeholder="Enter group name" />
+</mat-form-field>
 
           <hr *ngIf="groupName" />
 
           <!-- Group Members -->
-          <div class="group-members" *ngIf="groupName">
-            <h3>Group Members</h3>
-            <mat-chip-list #chipList aria-label="Group members">
-              <mat-chip *ngFor="let member of members; let i = index" (removed)="removeMember(i)">
-                {{ member.username ? member.username : member.email }}
-                <mat-icon matChipRemove>cancel</mat-icon>
-              </mat-chip>
+         <!-- Group Members -->
+<div class="group-members" *ngIf="groupName">
+  <h3>Group Members</h3>
+  <mat-chip-list #chipList aria-label="Group members">
+    <mat-chip *ngFor="let member of members; let i = index" (removed)="removeMember(i)">
+      {{ member.username ? member.username : member.email }}
+      <mat-icon matChipRemove>cancel</mat-icon>
+    </mat-chip>
+  </mat-chip-list>
 
-              <input
-                matInput
-                placeholder="Search or add member"
-                [(ngModel)]="searchQuery"
-                (input)="onSearchUsername()"
-                [matAutocomplete]="auto"
-              />
-              <mat-autocomplete
-                #auto="matAutocomplete"
-                (optionSelected)="selectMember($event.option.value)"
-              >
-                <mat-option *ngFor="let result of searchResults" [value]="result">
-                  {{ result.username }} ({{ result.email }})
-                </mat-option>
-              </mat-autocomplete>
-            </mat-chip-list>
-            <button mat-raised-button color="primary" class="add-member-btn" (click)="addNonExistentUser()">
-              Add Member
-            </button>
-          </div>
+  <div class="input-with-button">
+    <input
+      matInput
+      placeholder="Search or add member"
+      [(ngModel)]="searchQuery"
+      (input)="onSearchUsername()"
+      [matAutocomplete]="auto"
+    />
+    <button mat-raised-button color="primary" class="add-member-btn" (click)="addNonExistentUser()">
+      Add
+    </button>
+  </div>
+
+  <mat-autocomplete
+    #auto="matAutocomplete"
+    (optionSelected)="selectMember($event.option.value)"
+  >
+    <mat-option *ngFor="let result of searchResults" [value]="result">
+      {{ result.username }} ({{ result.email }})
+    </mat-option>
+  </mat-autocomplete>
+</div>
+
 
           <hr *ngIf="groupName" />
 
