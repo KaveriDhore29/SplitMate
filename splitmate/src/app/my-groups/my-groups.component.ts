@@ -18,12 +18,37 @@ export class MyGroupsComponent implements OnInit {
   isOptionsMenuOpen = false;
   openGroupId: any;
 
+  isLoading: boolean = true; 
+
+
   constructor(
     private router: Router,
     public dataService: DataService,
     private route: ActivatedRoute,
     private http: HttpClient
   ) {}
+
+  // ngOnInit(): void {
+  //   this.currentGroupId = this.route.snapshot.paramMap.get('id')!;
+  //   this.groupDetails = this.dataService.getGroupDetails().subscribe(
+  //     (data: any[]) => {
+  //       this.groupDetails = data;
+  //       this.groupIds = this.groupDetails.map((group: any) => group.groupId);
+  //       this.groupDetails.forEach((group: any) => {
+  //         group.isOptionsMenuOpen = false;
+  //       });
+  //     },
+
+  //     (error) => {
+  //       console.error('Error fetching group details:', error);
+  //     }
+  //   );
+
+  //   this.dataService.totalOwed(this.groupIds).subscribe((data: any[]) => {
+  //     this.responseOftotalOwed = data;
+  //     console.log(this.responseOftotalOwed, 'totalowed');
+  //   });
+  // }
 
   ngOnInit(): void {
     this.currentGroupId = this.route.snapshot.paramMap.get('id')!;
@@ -34,10 +59,11 @@ export class MyGroupsComponent implements OnInit {
         this.groupDetails.forEach((group: any) => {
           group.isOptionsMenuOpen = false;
         });
+        this.isLoading = false; // Data is loaded, hide loader
       },
-
       (error) => {
         console.error('Error fetching group details:', error);
+        this.isLoading = false; // In case of error, hide loader
       }
     );
 

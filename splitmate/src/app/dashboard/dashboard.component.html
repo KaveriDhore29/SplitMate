@@ -1,6 +1,6 @@
 <app-navbar></app-navbar>
 <div class="container-fluid_dashboard text-center">
-  <div class="row-ui">
+  <div class="row-p">
     <div class="col-2 friends-container">
       <div class="section">
         <div class="links">
@@ -10,16 +10,15 @@
           <a [routerLink]="['/dashboard/all-expenses']" routerLinkActive="active" class="side-link">
             <i class="fa-solid fa-money-bill-trend-up"></i> All Expenses
           </a>
-          
-
           <a [routerLink]="['/dashboard/all-groups']" routerLinkActive="active" class="side-link">
             <i class="fa-solid fa-solid fa-users"></i> Groups
-            
-          </a>
-          
+                        <button class="btn btn-circle text-white" (click)="navigateToCreateGroup($event)" routerLinkActive="active" style="background-color: #388164;">+</button>
 
+          </a>
         </div>
       </div>
+
+      
       <!-- Groups Section -->
       <!-- <div class="section">
         <div class="d-header">

@@ -1,72 +1,42 @@
-<!-- <div class="row">
-  <div class="col-sm-4" *ngFor="let group of groupDetails">
-    <div class="card">
-      <figure class="card-image">
-        <img
-          src="https://images.unsplash.com/photo-1494253109108-2e30c049369b?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTYyNDcwMTUwOQ&ixlib=rb-1.2.1&q=85"
-          alt="An orange painted blue, cut in half laying on a blue background"
-        />
-      </figure>
-      <div class="card-header">
-        <a href="#">{{ group.name }}</a>
-      </div>
-    </div>
-  </div>
-</div> -->
+<div *ngIf="isLoading" class="loader-container">
+  <img src="../../assets/img/giphy.gif" alt="Loading..." class="loader-gif" />
+</div>
+<!-- Content that is shown when not loading -->
+<div *ngIf="!isLoading" class="container">
 
-
-<!-- <div class="row">
-  <div class="add-button-container">
-    <a [routerLink]="['/create-group/new']" routerLinkActive="active" class="add-link"><button class="add-button">Create Group</button></a>
-  </div>
-  <div class="col-sm-4" *ngFor="let group of groupDetails">
-    <div class="card">
-      <figure class="card-image">
-        <img
-          [src]="getInitials(group.name)"
-          alt="Initials for {{ group.name }}"
-        />
-      </figure>
-      <div class="card-header">
-        <a [routerLink]="['/dashboard/group-detail', group.groupId]"
-              routerLinkActive="active"
-              class="side-link group-side-link">{{ group.name }}</a>
-      </div>
-    </div>
-  </div>
-</div> -->
-
-<div class="container">
-  <div class="add-button-container">
-    <a [routerLink]="['/create-group/new']" routerLinkActive="active" class="add-link"><button class="add-button">Create Group</button></a>
-  </div>
   <div class="row">
     <div class="col-12 col-sm-6 col-md-4 col-lg-4" *ngFor="let group of groupDetails">
-      <div class="our-team" >
-        <div class="dots-menu"  (click)="toggleOptionsMenu(group)">
+      <div class="our-team">
+        <!-- Dots menu to show group options -->
+        <div class="dots-menu" (click)="toggleOptionsMenu(group)">
           <i class="material-icons">more_vert</i>
         </div>
+
+        <!-- Options menu with Edit and Delete buttons -->
         <div class="options-menu" *ngIf="group.isOptionsMenuOpen">
-          <button (click)="editGroup(group)"><i class="material-icons group-info-icons">edit</i>Edit Group Details</button>
-          <button (click)="deleteGroup(group)"><i class="material-icons group-info-icons">delete</i>Delete Group</button>
+          <button (click)="editGroup(group)">
+            <i class="material-icons group-info-icons">edit</i> Edit Group Details
+          </button>
+          <button (click)="deleteGroup(group)">
+            <i class="material-icons group-info-icons">delete</i> Delete Group
+          </button>
         </div>
-        <div  (click)="onGroupClick( group.groupId)">
-        <div class="picture">
-          <img [src]="getInitials(group.name)" alt="Initials for {{ group.name }}" />
+
+        <!-- Group Card (click to view details) -->
+        <div (click)="onGroupClick(group.groupId)">
+          <div class="picture">
+            <img [src]="getInitials(group.name)" alt="Initials for {{ group.name }}" />
+          </div>
+
+          <div class="team-content">
+            <h3 class="name">{{ group.name }}</h3>
+          </div>
+
+          <ul class="social">
+            Click to view expenses
+          </ul>
         </div>
-        <!-- <a
-        [routerLink]="['/dashboard/group-detail', group.groupId]"
-        routerLinkActive="active"
-        class="side-link group-side-link"> -->
-        <div class="team-content">
-          <h3 class="name">{{ group.name }}</h3>
-        </div>
-        <ul class="social">
-          Click to view expenses
-        </ul>
-      
-             <!-- </a> -->
-            </div>
+      </div>
     </div>
   </div>
 </div>
