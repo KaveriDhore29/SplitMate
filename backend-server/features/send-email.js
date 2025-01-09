@@ -1,6 +1,7 @@
 const nodemailer = require("nodemailer");
 
-const sendEmailToNewUser = async (email, groupId, groupName = '') => {
+const sendEmailToNewUser = async (req, res, email, groupId, groupName = '') => {
+    console.log('email', email);
     if (!email) {
         throw new Error("Email address is required");
     }

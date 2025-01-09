@@ -642,29 +642,7 @@ const grpBalance_Old = async(req, res) => {
 }
 
 // get total owed amount
-const grpBalance = async (req, res) => {
-  const { groupId, email } = req.body
-  console.log('groupIds ', groupId);
-  try {
 
-    let transactionArray = await getGroupBalance(groupId);
-
-    transactionArray = transactionArray.filter(element => (element.owesAmount > 0 && element.email == email)||(element.owesAmount < 0 && element.to == email));
-    transactionArray.forEach(element=>{
-      if(element.owesAmount < 0){
-        let temp = element.to;
-        element.to = element.email;
-        element.email = temp;
-        element.owesAmount *= -1;
-      }
-    });
-
-    res.status(200).json({ transactionArray });
-  } catch (error) {
-    console.error('Error finding total owed amount', error);
-    res.status(500).json({ error: 'Error in total owed amount' });
-  }
-  }
 
 const getGroupExpenses = async (req, res) => {
   try {
@@ -973,9 +951,103 @@ const totalOwed = async (req, res) => {
     res.status(500).json({ error: 'Error in total owed amount' });
   }
 }
+const getUserByEmail = async (email) => {
+  try {
+    console.log('Fetching user for email:', email);
+const user = await User.findOne({ email });
+console.log('Fetched user:', user);
+return user;
 
+  } catch (error) {
+    console.error('Error fetching user by email:', error);
+    return null;
+  }
+};
+const grpBalance = async (req, res) => {
+  const { groupId, email } = req.body
+  console.log('groupIds ', groupId);
+  try {
+    let lstUser = await User.find();
+    let transactionArray = await getGroupBalance(groupId);
 
+    transactionArray = transactionArray.filter(element => (element.owesAmount > 0 && element.email == email)||(element.owesAmount < 0 && element.to == email));
+    transactionArray.forEach(element=>{
+      if(element.owesAmount < 0){
+        let temp = element.to;
+        element.to = element.email;
+        element.email = temp;
+        element.owesAmount *= -1;
+      }
+    });
+
+    transactionArray.map(element=>{
+
+      let user =  lstUser.filter(user=>user.email == element.to);
+      if(user.length>0) element.to = user[0].username?user[0].username:user[0].name
+      user =  lstUser.filter(user=>user.email == element.email);
+      if(user.length>0) element.email = user[0].username?user[0].username:user[0].name
+    })
+    
+    res.status(200).json({ transactionArray });
+  } catch (error) {
+    console.error('Error finding total owed amount', error);
+    res.status(500).json({ error: 'Error in total owed amount' });
+  }
+  }
+
+  const deleteExpense = async (req, res) => {
+    const { groupId, transactionId } = req.body;
+  
+    if (!groupId || !transactionId) {
+      return res.status(400).json({ error: 'groupId and transactionId are required' });
+    }
+  
+    try {
+      // Fetch the group
+      const group = await Group.findOne({ groupId });
+      if (!group) {
+        return res.status(404).json({ error: 'Group not found' });
+      }
+  
+      // Find the transaction to delete
+      const transactionIndex = group.transactions.findIndex(
+        (tx) => tx.transactionId === transactionId
+      );
+      if (transactionIndex === -1) {
+        return res.status(404).json({ error: 'Transaction not found' });
+      }
+    
+      // Extract the transaction details
+      const transaction = group.transactions[transactionIndex];
+  
+      // Reverse the effect on "You owe / Owed to You"
+      await calculateOwesOwedAmount(groupId, transaction.netBalances);
+      await insertGroupBalancesInDB(await calculateGroupBalance(groupId), groupId);
+  
+      // Remove the transaction from the array
+      group.transactions.splice(transactionIndex, 1);
+  
+      // Recalculate the group balance after deletion
+      const transactionArray = await calculateGroupBalance(groupId);
+      await insertGroupBalancesInDB(transactionArray, groupId);
+  
+      // Save the updated group
+      await group.save();
+  
+      // Respond with success
+      res.status(200).json({
+        message: 'Expense deleted successfully',
+        updatedBalances: transactionArray,
+      });
+    } catch (error) {
+      console.error('Error in deleteExpense:', error);
+      res.status(500).json({ error: 'Error deleting expense' });
+    }
+  };
+  
+  module.exports = { deleteExpense };
+  
 
 
 module.exports = { createGroup, addMembersToGroup, getGroupDetails, getOneGroupDetail, getAddMembersToGroup, 
-  simplification, totalOwed, grpTotalOwed, deleteGroup, grpBalance,getGroupExpenses,getAllExpenses,editGroup ,getChartData};
+  simplification, totalOwed, grpTotalOwed, deleteGroup, grpBalance,getGroupExpenses,getAllExpenses,editGroup ,getChartData,deleteExpense};

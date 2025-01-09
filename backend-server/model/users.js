@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const schema = new mongoose.Schema({
   id_token: {
     type: String,
-    required: false, // Change to true if you need this field to be required
+    required: false,
   },
   username: {
     type: String,
@@ -12,14 +12,18 @@ const schema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
-    unique: true, // Ensures that email addresses are unique
-    match: [/^\S+@\S+\.\S+$/, 'Please enter a valid email address'], // Basic email validation
+    unique: true,
+    match: [/^\S+@\S+\.\S+$/, 'Please enter a valid email address'],
   },
   groupIds: {
     type: Array,
     required: false,
-  }
-}, { timestamps: true }); // Automatically add createdAt and updatedAt fields
+  },
+  profilePicture: { 
+    type: String,
+    required: false,
+  },
+}, { timestamps: true });
 
 const User = mongoose.model('userData', schema);
 
