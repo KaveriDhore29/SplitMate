@@ -1,20 +1,11 @@
 <div class="expense-list">
-  <div
-    *ngFor="let expense of expenses; let index = index"
-    class="expense-card"
-    [style.--animation-delay]="index * 0.2 + 's'"
-  >
+  <div *ngFor="let expense of expenses; let index = index" class="expense-card" [style.--animation-delay]="index * 0.2 + 's'">
     <div class="expense-header" (click)="toggleAccordion(expense.id)">
       <i class="fa-solid fa-receipt expense-icon"></i>
       <span class="expense-statement">
-        <strong><span class="paid-by">{{ expense.paidByName }}</span></strong>
-        added <strong><span class="expense-title">{{ expense.title }}</span></strong>
-        in group
-        <strong><span class="group-name">{{ expense.groupName }}</span></strong>
-        for
-        <strong><span class="paid-by">{{
-          expense.amount.value | currency: expense.currency
-        }}</span></strong>
+        <strong><span class="paid-by">{{ expense.paidByName }}</span></strong> added <strong><span class="expense-title">{{ expense.title }}</span></strong>
+        in group <strong><span class="group-name"> {{expense.groupName }}</span></strong> for
+        <strong><span class="paid-by">{{expense.amount.value | currency: expense.currency }}</span> </strong>
       </span>
       <i
         class="fa-solid"
@@ -27,9 +18,15 @@
       <p><strong>Description:</strong> {{ expense.title }}</p>
       <p><strong>Group:</strong> {{ expense.groupName }}</p>
       <p><strong>Date:</strong> {{ expense.expenseDate | date: 'medium' }}</p>
-      <p><strong>Amount:</strong> {{
-        expense.amount.value | currency: expense.amount.currency
-      }}</p>
+      <p><strong>Amount:</strong> {{ expense.amount.value | currency: expense.amount.currency }}</p>
     </div>
   </div>
+</div>
+
+<div *ngIf="!isLoading && expenses.length === 0" class="no-expenses">
+  No expenses to display.
+</div>
+
+<div *ngIf="isLoading" class="loader-container">
+  <img src="../../assets/img/giphy.gif" alt="Loading..." class="loader-gif" />
 </div>
