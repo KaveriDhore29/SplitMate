@@ -12,7 +12,7 @@
 
 .btn {
     z-index: 10;
-   width: 45px;
+   width: 29px;
     height: 20px;
     font-weight: bold;
     margin-left: 45px;
@@ -99,7 +99,7 @@
 }
 
 .btn:active {
- width: 45px;
+    width: 45px;
     height: 20px;
     font-weight: bold;
     margin-left: 45px;
