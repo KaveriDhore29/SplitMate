@@ -20,7 +20,7 @@ const {  getOneGroupDetail, getGroupDetails, createGroup, getAddMembersToGroup, 
   getGroupExpenses,getAllExpenses,editGroup ,getChartData,deleteExpense } = require('./controllers/group');
 const { justification } = require('./features/simplify-debts');
 const userRoutes = require('./routes/userRoutes');
-
+const {uploadProfilePicture} = require('./controllers/userController')
 const app = express();
 
 // to use node version 20.16.0
@@ -91,7 +91,7 @@ app.post('/api/getChartData' ,getChartData);
 app.post('/api/deleteExpense', deleteExpense);
 app.put('/api/group/edit', editGroup);
 
-app.use('/api', userRoutes); 
+app.post('/api/uploadProfilePicture', uploadProfilePicture); 
 
 // Global error handler
 app.use((err, req, res, next) => {

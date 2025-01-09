@@ -7,3 +7,4 @@ const router = express.Router();
 router.post('/uploadProfilePicture', uploadProfilePicture);
 
 module.exports = router;
+ 

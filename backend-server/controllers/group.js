@@ -1019,20 +1019,47 @@ const grpBalance = async (req, res) => {
     
       // Extract the transaction details
       const transaction = group.transactions[transactionIndex];
+
+      //removing from latest transactions
+      group.latestTransactions = group.latestTransactions.filter(trn => {
+        for (const elem of transaction.transactions) {
+          if (JSON.stringify(elem) === JSON.stringify(trn)) {
+            return false; // Exclude this `trn` from the result
+          }
+        }
+        return true; // Keep this `trn` in the result
+      });
+      
+
+    group.netBalances = group.netBalances.map(x => {
+      // Iterate over the transaction.netBalances and modify x.amount when a match is found
+      transaction.netBalances.forEach(y => {
+        if (y.person === x.person) {
+          x.balance -= y.balance; // Subtract amount from x.amount
+        }
+      });
+      return x; // Return the modified x object
+    });
+    
   
-      // Reverse the effect on "You owe / Owed to You"
-      await calculateOwesOwedAmount(groupId, transaction.netBalances);
-      await insertGroupBalancesInDB(await calculateGroupBalance(groupId), groupId);
+      // // Reverse the effect on "You owe / Owed to You"
+      // await calculateOwesOwedAmount(groupId, transaction.netBalances);
+      // await insertGroupBalancesInDB(await calculateGroupBalance(groupId), groupId);
   
       // Remove the transaction from the array
       group.transactions.splice(transactionIndex, 1);
-  
-      // Recalculate the group balance after deletion
-      const transactionArray = await calculateGroupBalance(groupId);
-      await insertGroupBalancesInDB(transactionArray, groupId);
+
+      await Group.updateOne(
+        { groupId: groupId },  // Match the group by groupId
+        { $set: { netBalances: group.netBalances  } }  // Replace netBalances with the updated array
+      );
   
       // Save the updated group
       await group.save();
+
+      // Recalculate the group balance after deletion
+      const transactionArray = await calculateGroupBalance(groupId);
+      await insertGroupBalancesInDB(transactionArray, groupId);
   
       // Respond with success
       res.status(200).json({
