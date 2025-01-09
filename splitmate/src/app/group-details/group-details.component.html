@@ -6,7 +6,7 @@
         <div>
           <h1 class="group-name" *ngIf="groupName">{{ groupName | uppercase }}</h1>
           <p > 
-            Created on: <b>{{this.groupCreatedAt | date}}</b> by <b>{{this.groupCreatedBy}}</b>
+            Created on: <b>{{this.groupCreatedAt | date}}</b> by <b>{{this.groupCreatedBy.username}}</b>
           </p>
         </div>
   
@@ -124,7 +124,7 @@
           </thead>
           <tbody *ngIf="groupExpensesArray.length > 0 else noExpenses">
            
-            <tr *ngFor="let expense of groupExpensesArray">
+            <tr *ngFor="let expense of groupExpensesArray" >
              
               <td (click)="openExpenseModal(expense)">{{ expense.date | date }}</td> 
               <td (click)="openExpenseModal(expense)">{{ expense.title | uppercase }}</td>
@@ -235,7 +235,7 @@
         </div>
     
         <!-- Settle Up Modal -->
-        <div *ngIf="selectedExpense" class="expense-modal">
+        <div *ngIf="selectedExpenseForSettleUp" class="expense-modal">
           <div class="modal-content">
             <span class="settle-heading">Record a payment</span>
             <button class="close-btn" (click)="closeModal()">&#10006;</button>

@@ -16,6 +16,7 @@ export class GroupDetailsComponent implements OnInit {
   groupCreatedAt: any;
   showPopup: boolean = false;
   showSettleUpPopup = false;
+  selectedExpenseForSettleUp : any;
   showAddmembersPopup: boolean = false;
   groupCreatorEmail: any;
   groupDescription = 'This is a group for discussing tech topics.';
@@ -56,7 +57,7 @@ export class GroupDetailsComponent implements OnInit {
       action: 'removed expense "Lunch"'
     },
   ];
-  recentUpdates: any;
+  
 
   isLoading: boolean = false;
 
@@ -201,7 +202,11 @@ loadGroupDetails(): void {
   this.dataService.getGroupDetailById(this.groupId).subscribe(
     (data) => {
       this.groupDetails = data;
+      console.log('Specific group detail by id:', this.groupDetails );
       this.groupName = this.groupDetails[0].name;
+      this.groupCreatedBy.username = this.groupDetails[0].createdBy.username;
+      this.groupCreatedBy.email = this.groupDetails[0].createdBy.email;
+      this.groupCreatedAt = this.groupDetails[0].createdAt;
       const groupCreatorEmail = this.groupDetails[0].createdBy.email;
 
       this.membersNames = this.groupDetails[0].members.map((member: any) => ({
@@ -304,8 +309,19 @@ loadGroupDetails(): void {
     if (!confirmDelete) {
       return;
     } else {
-      this.expenses = this.expenses.filter((e) => e !== expense);
-      this.selectedExpense = null; // Close modal after deletion
+      console.log(this.groupId,expense.transactionId);
+      this.dataService.deleteExpenseService(this.groupId,expense.transactionId).subscribe(
+
+        (data: any) => {
+         
+          this.expenses = this.expenses.filter((e) => e !== expense);
+          this.selectedExpense = null; // Close modal after deletion
+        },
+        (error) => {
+          console.error('Error loading details after delete from API:', error);
+        }
+      );
+     
     }
   }
 

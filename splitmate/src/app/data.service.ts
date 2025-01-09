@@ -151,6 +151,17 @@ export class DataService {
     });
   }
 
+
+  deleteExpenseService(groupId:any, transactionId: any){
+    const payload = {
+      groupId: groupId,
+      transactionId:transactionId
+    }
+    return this.http.post<any>(`${this.apiUrl}/deleteExpense`, payload, {
+      withCredentials: true,
+    });
+  }
+
   // grpBalance(groupId:any) {
   //     const payload = {
   //       groupId: groupId,
