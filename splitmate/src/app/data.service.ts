@@ -9,7 +9,7 @@ export class DataService {
   private apiUrl = 'http://localhost:3000/api'; // API base URL
   currentUserEmail: any;
   private selectedGroupSource = new BehaviorSubject<any>(null);
-  recentUpdatesService =[ { person: '', action: " " }] ;
+ currentUserGroupIds = [];
 
   constructor(private http: HttpClient) {
     // Load the logged-in user's email and name from session storage

@@ -33,6 +33,7 @@ export class DashboardComponent implements OnInit {
       (data: any[]) => {
         this.groupDetails = data;
         this.groupIds = this.groupDetails.map((group: any) => group.groupId);
+        this.dataService.currentUserGroupIds = this.groupDetails.map((group: any) => group.groupId);
         console.log('Group IDs:', this.groupIds);
         this.dataService.totalOwed(this.groupIds).subscribe((data: any[]) => {
           this.responseOftotalOwed = data;

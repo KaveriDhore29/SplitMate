@@ -38,27 +38,18 @@ export class GroupDetailsComponent implements OnInit {
   recentUpdates:any;
   updates = [
     {
-      person: 'Person 1',
-      action: "added expense 'Dinner'"
-    },
-    {
-      person: 'Person 2',
-      action: 'settled up with Person 4'
- 
-    },
-    {
-      person: 'Person 3',
-      action: "added expense 'Groceries'"
- 
-    },
-    { person: 'Person 5', action: 'joined the group' },
-    {
-      person: 'Person 6',
-      action: 'removed expense "Lunch"'
-    },
+      person1: ' ',
+      action: " ",
+      amount: '',
+      person2: ''
+    }
   ];
-  
-
+  membersWhoOwes = [{
+    person:'',
+    amount: 0,
+    currency:''
+  }
+]
   isLoading: boolean = false;
 
   selectedExpense: any = null;
@@ -86,6 +77,31 @@ export class GroupDetailsComponent implements OnInit {
   openExpenseModal(expense: any) {
     this.selectedExpense = expense;
     console.warn(this.selectedExpense, 'selected exepsne');
+    this.getGroupDetailByTransactionId(expense.transactionId);
+  }
+
+  getGroupDetailByTransactionId(transactionId: any) {
+ 
+    const transactionDetail = this.groupDetails[0].transactions.find((tr: any) => tr.transactionId === transactionId);
+  
+    if (transactionDetail) {
+    
+      this.membersWhoOwes = transactionDetail.netBalances.map((balance: any) => {
+        // Find the corresponding user based on the person email
+        const member = this.groupDetails[0].members.find((member: any) => member.email === balance.person);
+  
+        return {
+          person: member ? member.username : balance.person, // Return username or email if no username
+          amount: balance.balance,
+          currency: balance.currency
+        };
+      });
+  
+      
+      console.log(this.membersWhoOwes);
+    } else {
+      console.log("Transaction not found.");
+    }
   }
 
   toggleSettingsMenu() {
@@ -194,6 +210,10 @@ export class GroupDetailsComponent implements OnInit {
   });
 }
 
+abs(value: number): number {
+  return value < 0 ? -value : value;
+}
+
 loadGroupDetails(): void {
   this.isLoading = true; // Show loader
   let dataFetched = 0; // Track number of API calls completed
@@ -207,6 +227,15 @@ loadGroupDetails(): void {
       this.groupCreatedBy.username = this.groupDetails[0].createdBy.username;
       this.groupCreatedBy.email = this.groupDetails[0].createdBy.email;
       this.groupCreatedAt = this.groupDetails[0].createdAt;
+
+      this.updates = this.groupDetails[0].transactions.map((e:any)=>{
+        return {
+          person1: e.transactions[0].to,
+          action: e.title,
+          amount: e.amount,
+          person2: e.transactions[0].from
+        }
+      });
       const groupCreatorEmail = this.groupDetails[0].createdBy.email;
 
       this.membersNames = this.groupDetails[0].members.map((member: any) => ({

@@ -46,9 +46,13 @@
           <h2 class="summary-heading">Recent Updates</h2>
           <div *ngFor="let update of updates" class="update-row">
             <div class="update-info">
-              <strong>"{{ update.person }}"</strong> {{ update.action }} 
+              <strong>"{{ update.person1 }}"</strong>
+              {{ update.action === 'settlement' 
+                  ? 'settled up with ' + update.person2 + ' for ' + "\'"+ update.amount  + "\'"
+                  : 'paid expense  ' + update.action +" " + update.amount }}
             </div>
           </div>
+          
         </div>
       </div>
       
@@ -72,7 +76,7 @@
                     <div class="member-avatar">
                       <i class="material-icons avatar-icon">person</i>
                     </div>
-                    <span class="member-name">{{ member.name }}</span>
+                    <span class="member-name">{{ member.name ? member.name : member.email }}</span>
                     <span *ngIf="member.email === this.dataService.currentUserEmail.email">(You)</span> 
                   </div>
                 </div>
@@ -124,15 +128,19 @@
           </thead>
           <tbody *ngIf="groupExpensesArray.length > 0 else noExpenses">
            
-            <tr *ngFor="let expense of groupExpensesArray" >
-             
-              <td (click)="openExpenseModal(expense)">{{ expense.date | date }}</td> 
-              <td (click)="openExpenseModal(expense)">{{ expense.title | uppercase }}</td>
-              <td (click)="openExpenseModal(expense)">{{ expense.amount }}</td>
-              <td (click)="openExpenseModal(expense)">{{ expense.paidBy === this.dataService.currentUserEmail.email ? 'You' : expense.paidByName ? expense.paidByName : expense.paidBy}}</td>
-              <td (click)="openExpenseModal(expense)">{{ expense.borrowed }}</td>
-              <td><i class="material-icons" (click)="deleteExpense(expense)">delete</i></td>
-            </tr>
+            <ng-container *ngFor="let expense of groupExpensesArray">
+
+              <tr *ngIf="expense.title !== 'settlement'">
+                <td (click)="openExpenseModal(expense)">{{ expense.date | date }}</td> 
+                <td (click)="openExpenseModal(expense)">{{ expense.title | uppercase }}</td>
+                <td (click)="openExpenseModal(expense)">{{ expense.amount }}</td>
+                <td (click)="openExpenseModal(expense)">
+                  {{ expense.paidBy === this.dataService.currentUserEmail.email ? 'You' : expense.paidByName ? expense.paidByName : expense.paidBy }}
+                </td>
+                <td (click)="openExpenseModal(expense)">{{ expense.borrowed }}</td>
+                <td><i class="material-icons" (click)="deleteExpense(expense)">delete</i></td>
+              </tr>
+            </ng-container>
           </tbody>
           <ng-template #noExpenses>
             <tr>
@@ -151,38 +159,28 @@
         <div class="modal-content">
           <button type="button" class="close-btn-expense" (click)="close()">&#10006;</button>
           <div class="modal-header">
-            <h2 class="expense-title">{{selectedExpense.title | uppercase }}</h2>
-            <div class="expense-subheading">
-              <p class="expense-total"><strong>Added By: Jane Smith</strong></p>
-              <p class="expense-paid-by"><strong>On:</strong>Jan 6, 2021</p>
-
-            </div>
+            <h2 class="expense-title">{{ selectedExpense.title | uppercase }}</h2>
+            <!-- <div class="expense-subheading">
+              <p class="expense-total"><strong>Added By: {{ selectedExpense.createdBy.name }}</strong></p>
+              <p class="expense-paid-by"><strong>On:</strong> {{ selectedExpense.expenseDate | date: 'MMM d, yyyy' }}</p>
+            </div> -->
           </div>
           <div class="expense-info">
-          
-          
-            <p><strong>Paid By:</strong> John Doe</p>
-            <p><strong>Total Amount</strong> ₹ 5000</p>
+            <p><strong>Paid By:</strong> {{ selectedExpense.paidByName }}</p>
+            <p><strong>Total Amount</strong> ₹ {{ selectedExpense.amount }}</p>
           </div>
           <div class="members-list">
             <h3>Members Who Owe:</h3>
             <ul>
-              <li>
-                <span>Jane Smith</span>
-                <span>₹ 1200</span>
-              </li>
-              <li>
-                <span>Mike Johnson</span>
-                <span>₹ 1800</span>
-              </li>
-              <li>
-                <span>Emily Davis</span>
-                <span>₹ 2000</span>
-              </li>
+              <ng-container *ngFor="let member of membersWhoOwes">
+                <li *ngIf="member.amount < 0"> 
+                  <span>{{ member.person }}</span>
+                  <span>₹ {{ abs(member.amount) }}</span>
+               </li>
+              </ng-container>
             </ul>
           </div>
         </div>
-        
       </div>
     </div>
     
@@ -191,7 +189,7 @@
         <div class="balances-heading">
             <h1>Group Balances Overview</h1>
         </div>
-        <div *ngIf="groupSettlements.transactionArray?.length==0" class="all-settled">
+        <div *ngIf="grpBalances.transactionArray?.length==0" class="all-settled">
           <p class="settled-message">Everything's squared away! No group balances left.</p>
         </div>
         <ul class="transaction-list">
@@ -235,7 +233,7 @@
         </div>
     
         <!-- Settle Up Modal -->
-        <div *ngIf="selectedExpenseForSettleUp" class="expense-modal">
+        <div *ngIf="selectedExpense" class="expense-modal">
           <div class="modal-content">
             <span class="settle-heading">Record a payment</span>
             <button class="close-btn" (click)="closeModal()">&#10006;</button>

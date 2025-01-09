@@ -176,11 +176,14 @@
 .update-info {
   text-align: left;
   position: relative;
-  left: 20%;
+  left: 12%;
   margin-bottom: 1px;
 }
 
-
+.update-row{
+  position: relative;
+    left: -49px;
+}
 
 
 .settle-up-heading {
