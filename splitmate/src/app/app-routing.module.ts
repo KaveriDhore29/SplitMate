@@ -52,6 +52,11 @@ const routes: Routes = [
     ],
   },
   {
+    path: 'all-groups',
+    component: MyGroupsComponent,
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'create-group/new',
     component: CreateGroupComponent,
     canActivate: [AuthGuard],

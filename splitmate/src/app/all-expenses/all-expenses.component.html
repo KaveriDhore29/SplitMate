@@ -23,6 +23,9 @@
   </div>
 </div>
 
+<div *ngIf="!isLoading && expenses.length === 0" class="no-expenses">
+  No expenses to display.
+</div>
 
 <div *ngIf="isLoading" class="loader-container">
   <img src="../../assets/img/giphy.gif" alt="Loading..." class="loader-gif" />
