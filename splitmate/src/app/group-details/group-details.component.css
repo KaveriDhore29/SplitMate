@@ -533,12 +533,12 @@
 .add-expense-btn {
   position: absolute;         /* Position the button absolutely */
   right: 10px;                /* Align the button to the right corner */
-  top: 50%;                   /* Align the button vertically */
+  top: 53%;                   /* Align the button vertically */
   transform: translateY(-50%); /* Center the button vertically */
-  padding: 10px 15px;         /* Adjust padding for the button */
-  background: linear-gradient(135deg, #388164 0%, #4ca477 100%);
+  padding: 7px 13px;         /* Adjust padding for the button */
+  background-color: transparent;
   border: 2px solid #388164;
-  color: #e6db79;         /* Rounded corners */
+  color: #388164;        /* Rounded corners */
   cursor: pointer;            /* Pointer cursor on hover */
   border-radius: 50px;
   font-weight: bold;
@@ -546,9 +546,9 @@
 
 .add-expense-btn:hover {
   &:hover{
-    background-color: transparent;
+    background-color: #388164;
   border: 2px solid #388164;
-  color: #e6db79;   
+  color: white;   
   } /* Darker color on hover */
 }
 
