@@ -15,18 +15,25 @@ interface Member {
   styleUrls: ['./create-group.component.css'],
 })
 export class CreateGroupComponent implements OnInit {
-
   groupId: string | null = null;
-  members: Member[] = []; 
+  members: Member[] = [];
   groupName: string = '';
   groupType: string = 'Home';
-  createdBy: Member = { username: '', email: '' }; 
+  createdBy: Member = { username: '', email: '' };
   searchResults: any[] = [];
   searchQuery: string = '';
   joinedByLink: boolean = false;
-  groupData : any;
+  groupData: any;
+  showModal: boolean = false;
+  modalTitle: string = '';
+  modalMessage: string = '';
 
-  constructor(private http: HttpClient, public router: Router,private route: ActivatedRoute,private dataService: DataService) {}
+  constructor(
+    private http: HttpClient,
+    public router: Router,
+    private route: ActivatedRoute,
+    private dataService: DataService
+  ) {}
 
   ngOnInit(): void {
     const loggedInUser = sessionStorage.getItem('loggedInUser');
@@ -51,14 +58,13 @@ export class CreateGroupComponent implements OnInit {
           this.groupName = this.groupData[0].name;
           this.groupType = this.groupData[0].type;
           this.members = this.groupData[0].members;
-          console.log("groupdata",this.groupData)
+          console.log('groupdata', this.groupData);
         },
         (error) => {
           console.error('Failed to fetch group details', error);
         }
       );
     }
-
   }
 
   addInputBox(): void {
@@ -105,7 +111,7 @@ export class CreateGroupComponent implements OnInit {
     // Add the user if not already present and not the creator
     if (!existingMember && selectedUser.username !== this.createdBy.username) {
       this.members.push({
-        username: selectedUser.username || selectedUser.email ,
+        username: selectedUser.username || selectedUser.email,
         email: selectedUser.email,
       });
     }
@@ -124,19 +130,22 @@ export class CreateGroupComponent implements OnInit {
 
       if (!existingMember) {
         this.members.push({
-          username: this.searchQuery.trim(),// Using email as username since there's no username
-          email: this.searchQuery.trim(), 
+          username: this.searchQuery.trim(), // Using email as username since there's no username
+          email: this.searchQuery.trim(),
         });
-        alert(`Added ${this.searchQuery.trim()} as a new member.`);
+        this.openModal(
+          'Member Added',
+          `Added ${this.searchQuery.trim()} as a new member.`
+        );
       } else {
-        alert('This user is already added.');
+        this.openModal('Duplicate Member', 'This user is already added.');
       }
 
       // Clear the search field and results
       this.searchQuery = '';
       this.searchResults = [];
     } else {
-      alert('Please enter a username to add.');
+      this.openModal('Invalid Input', 'Please enter a username to add.');
     }
   }
 
@@ -150,7 +159,10 @@ export class CreateGroupComponent implements OnInit {
       !this.createdBy.username ||
       !this.createdBy.email
     ) {
-      alert('Please fill the required details');
+      this.openModal(
+        'Missing Information',
+        'Please fill the required details.'
+      );
       return;
     }
 
@@ -174,12 +186,18 @@ export class CreateGroupComponent implements OnInit {
       })
       .subscribe(
         (response) => {
-          alert('Group created successfully!');
+          this.openModal('Success', 'Group created successfully!');
           this.router.navigate(['dashboard/all-groups']);
         },
         (error) => {
-          console.error('Error creating group:', error);
+          this.openModal('Error', 'Failed to create group.');
         }
       );
+  }
+
+  openModal(title: string, message: string): void {
+    this.modalTitle = title;
+    this.modalMessage = message;
+    this.showModal = true; 
   }
 }
