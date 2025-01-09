@@ -47,9 +47,11 @@ export class GroupDetailsComponent implements OnInit {
   membersWhoOwes = [{
     person:'',
     amount: 0,
-    currency:''
+    currency:'',to:'',title:''
   }
 ]
+
+grpBalancesList :any;
   isLoading: boolean = false;
 
   selectedExpense: any = null;
@@ -102,6 +104,22 @@ export class GroupDetailsComponent implements OnInit {
     } else {
       console.log("Transaction not found.");
     }
+  }
+
+  getAllTransactions() {
+    console.log("In fn");
+    this.grpBalancesList = this.groupDetails[0].transactions.flatMap((transaction: any) => 
+      transaction.netBalances
+        .filter((balance: any) => balance.balance < 0) // Only include those who owe money
+        .map((balance: any) => ({
+          person: balance.person, // Email of the person who owes
+          amount: Math.abs(balance.balance), // Absolute value of the amount owed
+          to: transaction.paidBy, // Person who was paid
+          title: transaction.title // Title of the transaction
+        }))
+    );
+  
+    console.log(this.grpBalancesList,"list");
   }
 
   toggleSettingsMenu() {
@@ -206,8 +224,11 @@ export class GroupDetailsComponent implements OnInit {
     if (newGroupId) {
       this.groupId = newGroupId;
       this.loadGroupDetails();
+    
     }
+    this.getAllTransactions();
   });
+  
 }
 
 abs(value: number): number {

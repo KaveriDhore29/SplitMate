@@ -49,7 +49,7 @@
               <strong>"{{ update.person1 }}"</strong>
               {{ update.action === 'settlement' 
                   ? 'settled up with ' + update.person2 + ' for ' + "\'"+ update.amount  + "\'"
-                  : 'paid expense  ' + update.action +" " + update.amount }}
+                  : 'paid ' + update.amount +" for " + update.action }}
             </div>
           </div>
           
@@ -193,15 +193,16 @@
           <p class="settled-message">Everything's squared away! No group balances left.</p>
         </div>
         <ul class="transaction-list">
-          <li *ngFor="let transaction of grpBalances.transactionArray" class="transaction-item">
+          <li *ngFor="let member of grpBalancesList" class="transaction-item">
             <div class="transaction-details">
               <span class="transaction-icon">
                 <i class="fa-solid fa-money-bill-1-wave"></i>
               </span>
               <div class="transaction-text">
-                <strong class="transaction-email">You</strong> owe
-                <strong class="transaction-amount">{{ transaction.owesAmount |  currency:'INR':'symbol' }}</strong>
-                to <strong class="transaction-to">"{{ transaction.to }}"</strong>
+                <strong class="transaction-email">{{ member.person }}</strong> owes
+                <strong class="transaction-amount">{{ member.amount | currency: 'INR':'symbol' }}</strong>
+                to <strong class="transaction-to">{{ member.to }}</strong>
+                for <strong class="transaction-title">{{ member.title }}</strong>
               </div>
             </div>
           </li>
