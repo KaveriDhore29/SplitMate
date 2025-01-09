@@ -146,10 +146,12 @@
   width: 40%;
   height: 40px;
   border:none   ;
+  margin-top: 16%;
   &:disabled{
     background-color: #388164;
     color:white;
     opacity: 0.8;
+    margin-top: 16%;
   }
 }
 .save-button:hover{

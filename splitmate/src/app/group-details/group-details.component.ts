@@ -35,7 +35,27 @@ export class GroupDetailsComponent implements OnInit {
   ];
   groupSettlements: any;
   recentUpdates:any;
-
+  updates = [
+    {
+      person: 'Person 1',
+      action: "added expense 'Dinner'"
+    },
+    {
+      person: 'Person 2',
+      action: 'settled up with Person 4'
+ 
+    },
+    {
+      person: 'Person 3',
+      action: "added expense 'Groceries'"
+ 
+    },
+    { person: 'Person 5', action: 'joined the group' },
+    {
+      person: 'Person 6',
+      action: 'removed expense "Lunch"'
+    },
+  ];
   selectedExpense: any = null;
   isSaveDisabled: boolean = false;
   @Output() onAddExpense = new EventEmitter<void>();
@@ -136,29 +156,7 @@ export class GroupDetailsComponent implements OnInit {
     this.expense.amount = inputElement.value;
   }
 
-  updates = [
-    {
-      person: 'Person 1',
-      action: "added expense 'Dinner'",
-      time: '2 hours ago',
-    },
-    {
-      person: 'Person 2',
-      action: 'settled up with Person 4',
-      time: '1 day ago',
-    },
-    {
-      person: 'Person 3',
-      action: "added expense 'Groceries'",
-      time: '3 days ago',
-    },
-    { person: 'Person 5', action: 'joined the group', time: '5 days ago' },
-    {
-      person: 'Person 6',
-      action: 'removed expense "Lunch"',
-      time: '7 days ago',
-    },
-  ];
+  
 
   expenses = [];
 
