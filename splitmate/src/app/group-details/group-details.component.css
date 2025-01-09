@@ -92,13 +92,13 @@
 
 
 .member-name {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: bold;
   color: #333; /* Darker text for better readability */
 }
 
 .member-role {
-  font-size: 12px;
+  font-size: 14px;
   color: #777; /* Subtle color for role text */
   margin-left: auto; /* Push role to the far-right */
 }
@@ -180,11 +180,9 @@
 .update-info {
   text-align: left;
   position: relative;
-  left: 12%;
   margin-bottom: 1px;
-  font-size: 14px; /* Standard readable font size */
+  font-size: 17px; /* Standard readable font size */
   color: #333; /* Darker text for readability */
-  font-family: Arial, sans-serif;
   line-height: 1.5;
   word-wrap: break-word; 
 }
@@ -204,7 +202,7 @@
 }
 
 .update-row:hover {
-  transform: translateY(-2px); /* Slight lift on hover */
+  transform: translateY(-1px); /* Slight lift on hover */
 }
 
 .settle-up-heading {

@@ -46,10 +46,10 @@
           <h2 class="summary-heading">Recent Updates</h2>
           <div *ngFor="let update of updates" class="update-row">
             <div class="update-info">
-              <strong>"{{ update.person1 }}"</strong>
+             {{ update.person1 === dataService.currentUserEmail.email? 'You':update.person1 }}
               {{ update.action === 'settlement' 
-                  ? 'settled with ' + update.person2 + ' for ' + "\'"+ update.amount  + "\'"
-                  : 'paid ' + update.amount +" for " + update.action }}
+                  ? 'settled with ' + update.person2 + ' for ' + + update.amount  
+                  : 'paid ' + update.amount+" for " + update.action }}
             </div>
           </div>
           
