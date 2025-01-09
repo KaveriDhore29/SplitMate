@@ -122,6 +122,18 @@ grpBalancesList :any;
     console.log(this.grpBalancesList,"list");
   }
 
+  fetchGroupDetails() {
+    this.dataService.getGroupDetailById(this.groupId).subscribe(
+      (data: any) => {
+        this.groupDetails = data;
+        this.getAllTransactions(); // Call only after groupDetails is populated
+      },
+      (error: any) => {
+        console.error("Failed to fetch group details:", error);
+      }
+    );
+  }
+
   toggleSettingsMenu() {
     this.settingsMenuOpen = !this.settingsMenuOpen;
   }
@@ -224,9 +236,9 @@ grpBalancesList :any;
     if (newGroupId) {
       this.groupId = newGroupId;
       this.loadGroupDetails();
-    
+      this.fetchGroupDetails();
     }
-    this.getAllTransactions();
+  
   });
   
 }

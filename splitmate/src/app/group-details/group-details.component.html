@@ -48,7 +48,7 @@
             <div class="update-info">
               <strong>"{{ update.person1 }}"</strong>
               {{ update.action === 'settlement' 
-                  ? 'settled up with ' + update.person2 + ' for ' + "\'"+ update.amount  + "\'"
+                  ? 'settled with ' + update.person2 + ' for ' + "\'"+ update.amount  + "\'"
                   : 'paid ' + update.amount +" for " + update.action }}
             </div>
           </div>
@@ -237,7 +237,7 @@
         <div *ngIf="selectedExpense" class="expense-modal">
           <div class="modal-content">
             <span class="settle-heading">Record a payment</span>
-            <button class="close-btn" (click)="closeModal()">&#10006;</button>
+            <button class="close-btn9" (click)="closeModal()">&#10006;</button>
     
             <div class="paying-members">
               <div class="payment-info">
