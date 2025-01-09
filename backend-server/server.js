@@ -17,8 +17,9 @@ const { sendEmailToNewUser } = require('./features/send-email');
 const { redisDb } = require('./data/redis-database');
 const { v4: uuidv4 } = require('uuid'); // For generating a unique group ID
 const {  getOneGroupDetail, getGroupDetails, createGroup, getAddMembersToGroup, simplification, totalOwed, grpTotalOwed, deleteGroup, grpBalance,
-  getGroupExpenses,getAllExpenses,editGroup ,getChartData} = require('./controllers/group');
+  getGroupExpenses,getAllExpenses,editGroup ,getChartData,deleteExpense } = require('./controllers/group');
 const { justification } = require('./features/simplify-debts');
+const userRoutes = require('./routes/userRoutes');
 
 const app = express();
 
@@ -87,8 +88,10 @@ app.post('/api/grpBalance', grpBalance);
 app.post('/api/get-group-expenses', getGroupExpenses);
 app.post('/api/getAllExpense' ,getAllExpenses);
 app.post('/api/getChartData' ,getChartData);
-
+app.post('/api/deleteExpense', deleteExpense);
 app.put('/api/group/edit', editGroup);
+
+app.use('/api', userRoutes); 
 
 // Global error handler
 app.use((err, req, res, next) => {
