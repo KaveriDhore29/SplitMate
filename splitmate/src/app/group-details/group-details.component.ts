@@ -192,6 +192,8 @@ grpBalancesList :any;
         this.isSaveDisabled = false;
         this.onAddExpense.emit();
         this.closePopup.emit(); // Close the modal
+        this.loadGroupDetails();
+        this.fetchGroupDetails();
       },
       (error) => {
         console.error('Error adding expense:', error);
@@ -377,6 +379,8 @@ loadGroupDetails(): void {
         (data: any) => {
          
           this.expenses = this.expenses.filter((e) => e !== expense);
+          this.loadGroupDetails();
+          this.fetchGroupDetails();
           this.selectedExpense = null; // Close modal after deletion
         },
         (error) => {

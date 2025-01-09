@@ -189,24 +189,27 @@
         <div class="balances-heading">
             <h1>Group Balances Overview</h1>
         </div>
-        <div *ngIf="grpBalances.transactionArray?.length==0" class="all-settled">
+        <div *ngIf="grpBalancesList.length==0" class="all-settled">
           <p class="settled-message">Everything's squared away! No group balances left.</p>
         </div>
         <ul class="transaction-list">
-          <li *ngFor="let member of grpBalancesList" class="transaction-item">
-            <div class="transaction-details">
-              <span class="transaction-icon">
-                <i class="fa-solid fa-money-bill-1-wave"></i>
-              </span>
-              <div class="transaction-text">
-                <strong class="transaction-email">{{ member.person }}</strong> owes
-                <strong class="transaction-amount">{{ member.amount | currency: 'INR':'symbol' }}</strong>
-                to <strong class="transaction-to">{{ member.to }}</strong>
-                for <strong class="transaction-title">{{ member.title }}</strong>
+          <ng-container *ngFor="let member of grpBalancesList">
+            <li *ngIf="member.title !== 'settlement'" class="transaction-item">
+              <div class="transaction-details">
+                <span class="transaction-icon">
+                  <i class="fa-solid fa-money-bill-1-wave"></i>
+                </span>
+                <div class="transaction-text">
+                  <strong class="transaction-email">   {{ member.person === dataService.currentUserEmail.email ? 'You' : member.person }}</strong> owe
+                  <strong class="transaction-amount">{{ member.amount | currency: 'INR':'symbol' }}</strong>
+                  to <strong class="transaction-to">{{ member.to === dataService.currentUserEmail.email ? 'You' : member.to  }}</strong>
+                  for <strong class="transaction-title">{{ member.title }}</strong>
+                </div>
               </div>
-            </div>
-          </li>
+            </li>
+          </ng-container>
         </ul>
+        
         
       </div>
     </div>
