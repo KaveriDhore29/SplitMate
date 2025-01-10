@@ -53,7 +53,7 @@ export class DashboardComponent implements OnInit {
 
   navigateToCreateGroup(event: MouseEvent) {
     event.stopPropagation();
-        event.preventDefault();
-    this.router.navigate(['/create-group/new']);
+    event.preventDefault();
+    this.router.navigate(['create-group']);
   }
 }

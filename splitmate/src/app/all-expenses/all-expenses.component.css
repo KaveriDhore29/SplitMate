@@ -186,3 +186,13 @@
   height: 150px;
   border-radius: 50%; 
 }
+
+
+.no-expenses{
+  text-align: center;
+  padding: 20px;
+  background-color: #f0f9f0;
+  border: 1px solid #d4edd9;
+  border-radius: 8px;
+  margin: 20px 0;
+}

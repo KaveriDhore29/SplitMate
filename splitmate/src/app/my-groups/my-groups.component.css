@@ -367,3 +367,14 @@ h3{
 .row{
 	margin: 2rem;
 }
+
+.no-groups{
+	
+  text-align: center;
+  padding: 20px;
+  background-color: #f0f9f0;
+  border: 1px solid #d4edd9;
+  border-radius: 8px;
+  margin: 20px 0;
+
+}

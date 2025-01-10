@@ -52,20 +52,15 @@ const routes: Routes = [
     ],
   },
   {
-    path: 'all-groups',
-    component: MyGroupsComponent,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'create-group/new',
+    path: 'create-group',
     component: CreateGroupComponent,
     canActivate: [AuthGuard],
   },
-  {
-    path: 'create-group/:id',
-    component: CreateGroupComponent,
-    canActivate: [AuthGuard],
-  },
+  // {
+  //   path: 'create-group/:id',
+  //   component: CreateGroupComponent,
+  //   canActivate: [AuthGuard],
+  // },
   { path: '**', redirectTo: 'homepage' },
 ];
 

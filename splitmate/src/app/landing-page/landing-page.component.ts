@@ -19,7 +19,7 @@ export class LandingPageComponent implements OnInit {
 
   ngOnInit() {
     this.isLoading = true;
-    this.loadScripts();
+    // this.loadScripts();
     this.startTypewriterEffect();
     this.isLoading = false;
   }

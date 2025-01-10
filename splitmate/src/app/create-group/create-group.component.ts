@@ -133,19 +133,16 @@ export class CreateGroupComponent implements OnInit {
           username: this.searchQuery.trim(), // Using email as username since there's no username
           email: this.searchQuery.trim(),
         });
-        this.openModal(
-          'Member Added',
-          `Added ${this.searchQuery.trim()} as a new member.`
-        );
+        alert(`Added ${this.searchQuery.trim()} as a new member.`);
       } else {
-        this.openModal('Duplicate Member', 'This user is already added.');
+          alert('This user is already added.');
       }
 
       // Clear the search field and results
       this.searchQuery = '';
       this.searchResults = [];
     } else {
-      this.openModal('Invalid Input', 'Please enter a username to add.');
+       alert('Please enter a username to add.');
     }
   }
 
@@ -159,10 +156,7 @@ export class CreateGroupComponent implements OnInit {
       !this.createdBy.username ||
       !this.createdBy.email
     ) {
-      this.openModal(
-        'Missing Information',
-        'Please fill the required details.'
-      );
+      alert('Please fill the required details');
       return;
     }
 
@@ -184,15 +178,20 @@ export class CreateGroupComponent implements OnInit {
       .post('http://localhost:3000/api/create-group', groupData, {
         withCredentials: true,
       })
+
       .subscribe(
-        (response) => {
-          this.openModal('Success', 'Group created successfully!');
-          this.router.navigate(['dashboard/all-groups']);
-        },
-        (error) => {
-          this.openModal('Error', 'Failed to create group.');
+        // (response) => {
+        //     this.router.navigate(['dashboard','all-groups']);
+        // },
+        // (error) => {
+        //    console.error('Error creating group:', error);
+        // }
+        {
+          next: (response) => console.log(response),
+          error: (e) => console.error('Error creating group:', e),
         }
       );
+    this.router.navigate(['dashboard', 'all-groups']);
   }
 
   openModal(title: string, message: string): void {
