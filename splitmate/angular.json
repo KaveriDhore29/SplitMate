@@ -31,7 +31,8 @@
               "src/assets/vendor/swiper/swiper-bundle.min.css",
               "src/assets/vendor/aos/aos.css"
             ],
-            "scripts": ["src/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"]
+            "scripts": ["src/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"
+        ]
           },
           "configurations": {
             "production": {

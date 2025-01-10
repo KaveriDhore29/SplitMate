@@ -135,14 +135,14 @@ export class CreateGroupComponent implements OnInit {
         });
         alert(`Added ${this.searchQuery.trim()} as a new member.`);
       } else {
-          alert('This user is already added.');
+        alert('This user is already added.');
       }
 
       // Clear the search field and results
       this.searchQuery = '';
       this.searchResults = [];
     } else {
-       alert('Please enter a username to add.');
+      alert('Please enter a username to add.');
     }
   }
 
@@ -197,6 +197,8 @@ export class CreateGroupComponent implements OnInit {
   openModal(title: string, message: string): void {
     this.modalTitle = title;
     this.modalMessage = message;
-    this.showModal = true; 
+    this.showModal = true;
   }
+
+
 }

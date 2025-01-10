@@ -6,7 +6,15 @@
 <!-- Content that is shown when not loading -->
 <div *ngIf="!isLoading" class="container">
 
+  <div class="btn-container" style="display: flex;justify-content: end;">
+     <button  class="create-group-btn" (click)="navigateToCreateGroup($event)">
+        Add Group
+     </button>
+  </div>
+   
+
   <div class="row">
+
     <div class="col-12 col-sm-6 col-md-4 col-lg-4" *ngFor="let group of groupDetails">
       <div class="our-team">
         <!-- Dots menu to show group options -->
