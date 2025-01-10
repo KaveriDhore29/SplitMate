@@ -61,10 +61,21 @@
   /**
    * Preloader
    */
+  // const preloader = document.querySelector('#preloader');
+  // if (preloader) {
+  //   window.addEventListener('load', () => {
+  //     preloader.remove();
+  //   });
+  // }
+
   const preloader = document.querySelector('#preloader');
   if (preloader) {
+    preloader.style.display = "flex";
+
     window.addEventListener('load', () => {
-      preloader.remove();
+      setTimeout(() => {
+        preloader.style.display = "none";
+      }, 500); 
     });
   }
 

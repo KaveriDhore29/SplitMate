@@ -6,19 +6,22 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
 @Component({
   selector: 'app-landing-page',
   templateUrl: './landing-page.component.html',
-  styleUrls: ['./landing-page.component.css']
+  styleUrls: ['./landing-page.component.css'],
 })
 export class LandingPageComponent implements OnInit {
   constructor(private renderer: Renderer2) {}
 
   fullText: string = 'SplitMate ';
-  typewriterText: string = ''; 
-  typingSpeed: number = 100; 
+  typewriterText: string = '';
+  typingSpeed: number = 100;
 
+  isLoading: boolean = true;
 
   ngOnInit() {
+    this.isLoading = true;
     this.loadScripts();
     this.startTypewriterEffect();
+    this.isLoading = false;
   }
 
   startTypewriterEffect(): void {
@@ -28,7 +31,7 @@ export class LandingPageComponent implements OnInit {
         this.typewriterText += this.fullText[index];
         index++;
       } else {
-        clearInterval(interval); 
+        clearInterval(interval);
       }
     }, this.typingSpeed);
   }
@@ -41,10 +44,10 @@ export class LandingPageComponent implements OnInit {
       '/assets/vendor/glightbox/js/glightbox.min.js',
       '/assets/vendor/purecounter/purecounter_vanilla.js',
       '/assets/vendor/swiper/swiper-bundle.min.js',
-      '/assets/js/main.js'
+      '/assets/js/main.js',
     ];
 
-    scripts.forEach(script => {
+    scripts.forEach((script) => {
       const scriptElement = this.renderer.createElement('script');
       scriptElement.src = script;
       scriptElement.type = 'text/javascript';

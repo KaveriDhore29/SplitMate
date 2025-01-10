@@ -607,35 +607,31 @@ h6 {
 # Preloader
 --------------------------------------------------------------*/
 #preloader {
- position: fixed;
+  position: fixed;
   inset: 0;
   z-index: 999999;
-  overflow: hidden;
-  background: var(--background-color);
-  transition: all 0.6s ease-out; 
-
+  background: var(--background-color, #ffffff); /* Default white background */
+  display: flex;
+    width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
 }
 
- #preloader:before {
-  content: "";
-  position: fixed;
-  top: calc(50% - 30px);
-  left: calc(50% - 30px);
-  border: 6px solid #ffffff;
-  border-color: var(--accent-color) transparent var(--accent-color) transparent;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  animation: animate-preloader 1.5s linear infinite;
+.giphy-loader {
+  max-width: 150px;
+  max-height: 150px;
+  animation: fade-in 0.6s ease-in-out;
 }
 
-@keyframes animate-preloader {
+@keyframes fade-in {
   0% {
-    transform: rotate(0deg);
+    opacity: 0;
+    transform: scale(0.9);
   }
-
   100% {
-    transform: rotate(360deg);
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
