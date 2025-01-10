@@ -116,6 +116,21 @@
 }
 
 
+.expense-statement .amount {
+  color: #ffd700 !important; 
+  font-weight: bold;
+}
+
+.expense-details p .amount {
+  color: #ffd700 !important; 
+  font-weight: bold;
+}
+
+.expense-statement strong .amount,
+.expense-details strong .amount {
+  color: #ffd700 !important; 
+}
+
 @keyframes slideInUp {
   from {
     opacity: 0;
