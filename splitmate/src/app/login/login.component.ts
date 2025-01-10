@@ -9,40 +9,24 @@ declare var initializeGoogleSignIn: any;
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-  username: any ;
-  password: any ;
+  username: any;
+  password: any;
 
-  
-
-  constructor(private router: Router,private route: ActivatedRoute, private authService: AuthService, private http: HttpClient) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private authService: AuthService,
+    private http: HttpClient
+  ) {}
 
   ngOnInit() {
-    // initializeGoogleSignIn();
-    // this.route.queryParams.subscribe(params => {
-    //   const token = params['token'];
-    //   if (token) {
-    //     localStorage.setItem('authToken', token);
-    //     // Redirect if needed
-    //     this.router.navigate(['/dashboard']);
-    //   } else {
-    //     // If no token, handle as unauthenticated access
-    //     this.router.navigate(['/login']);
-    //   }
-    // });
-
-   
- 
+    
   }
 
-  ngAfterViewInit() : void{
+  ngAfterViewInit(): void {
     initializeGoogleSignIn();
   }
-
-
-
-
-
 }
