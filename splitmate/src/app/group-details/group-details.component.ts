@@ -189,11 +189,12 @@ grpBalancesList :any;
     this.dataService.addExpenseService(expenseData).subscribe(
       (response) => {
         alert('Expense added successfully!');
+        this.loadGroupDetails();
+        this.fetchGroupDetails();
         this.isSaveDisabled = false;
         this.onAddExpense.emit();
         this.closePopup.emit(); // Close the modal
-        this.loadGroupDetails();
-        this.fetchGroupDetails();
+        this.selectedExpense = null;
       },
       (error) => {
         console.error('Error adding expense:', error);

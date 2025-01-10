@@ -221,7 +221,7 @@
     
         <div class="Borrowed-expenses">
           <!-- List of Borrowed Expenses -->
-          <div *ngIf="groupSettlements.transactionArray?.length==0" class="all-settled">
+          <div *ngIf="grpBalances.transactionArray?.length==0" class="all-settled">
             <p class="settled-message">Wohooo! You are all settled up with your expenses! No pending amounts.</p>
           </div>
           <div *ngFor="let expense of groupSettlements.transactionArray" class="Expense-card">
