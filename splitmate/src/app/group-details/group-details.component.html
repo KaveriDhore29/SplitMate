@@ -48,8 +48,8 @@
             <div class="update-info">
              {{ update.person1 === dataService.currentUserEmail.email? 'You':update.person1 }}
               {{ update.action === 'settlement' 
-                  ? 'settled with ' + update.person2 + ' for ' + + update.amount  
-                  : 'paid ' + update.amount+" for " + update.action }}
+                  ? 'settled with ' + update.person2 + ' for ' + '₹' + update.amount  
+                  : 'paid  ₹' + update.amount+" for " + update.action }}
             </div>
           </div>
           
@@ -133,11 +133,11 @@
               <tr *ngIf="expense.title !== 'settlement'">
                 <td (click)="openExpenseModal(expense)">{{ expense.date | date }}</td> 
                 <td (click)="openExpenseModal(expense)">{{ expense.title | uppercase }}</td>
-                <td (click)="openExpenseModal(expense)">{{ expense.amount }}</td>
+                <td (click)="openExpenseModal(expense)">{{ expense.amount  | currency: 'INR':'symbol' }}</td>
                 <td (click)="openExpenseModal(expense)">
                   {{ expense.paidBy === this.dataService.currentUserEmail.email ? 'You' : expense.paidByName ? expense.paidByName : expense.paidBy }}
                 </td>
-                <td (click)="openExpenseModal(expense)">{{ expense.borrowed }}</td>
+                <td (click)="openExpenseModal(expense)">{{ expense.borrowed  | currency: 'INR':'symbol'}}</td>
                 <td><i class="material-icons" (click)="deleteExpense(expense)">delete</i></td>
               </tr>
             </ng-container>
