@@ -258,6 +258,7 @@ loadGroupDetails(): void {
   this.dataService.getGroupDetailById(this.groupId).subscribe(
     (data) => {
       this.groupDetails = data;
+      this.getAllTransactions(); 
       console.log('Specific group detail by id:', this.groupDetails );
       this.groupName = this.groupDetails[0].name;
       this.groupCreatedBy.username = this.groupDetails[0].createdBy.username;
