@@ -3,9 +3,17 @@
     <div class="expense-header" (click)="toggleAccordion(expense.id)">
       <i class="fa-solid fa-receipt expense-icon"></i>
       <span class="expense-statement">
-        <strong><span class="paid-by">{{ expense.paidByName }}</span></strong> added <strong><span class="expense-title">{{ expense.title }}</span></strong>
-        in group <strong><span class="group-name"> {{expense.groupName }}</span></strong> for
-        <strong><span class="paid-by">{{expense.amount.value | currency: expense.currency }}</span> </strong>
+        <ng-container *ngIf="expense.title === 'settlement'; else normalStatement">
+          <strong><span class="paid-by">{{ expense.paidByName }}</span></strong> <b>  Settled Up</b>
+          in group <strong><span class="group-name">{{ expense.groupName }}</span></strong> for
+          <strong><span class="amount">{{ expense.amount.value | currency: expense.currency }}</span></strong>
+        </ng-container>
+        <ng-template #normalStatement>
+          <strong><span class="paid-by">{{ expense.paidByName }}</span></strong> <b> Added </b>
+          <strong><span class="expense-title">{{ expense.title }}</span></strong>
+          in group <strong><span class="group-name">{{ expense.groupName }}</span></strong> for
+          <strong><span class="amount">{{ expense.amount.value | currency: expense.currency }}</span></strong>
+        </ng-template>
       </span>
       <i
         class="fa-solid"

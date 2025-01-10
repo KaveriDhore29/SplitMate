@@ -70,4 +70,53 @@ export class MyProfileComponent implements OnInit {
 
     return canvas.toDataURL(); // Return the image as a data URL
   }
+
+  // Trigger file input dialog
+  triggerFileInput(): void {
+    const fileInput = document.getElementById('fileInput') as HTMLInputElement;
+    fileInput.click();
+  }
+
+  // Handle the file select event
+  onFileSelect(event: any): void {
+    const file = event.target.files[0];
+
+    if (file) {
+      // Create a FormData object to send the file to the server
+      const formData = new FormData();
+      formData.append('profilePicture', file, file.name);
+
+      // Upload the file to the backend
+      this.uploadProfilePicture(formData);
+    }
+  }
+  onFileChange(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append('profilePicture', file, file.name);
+      this.authService.uploadProfilePicture(formData).subscribe(
+        (response) => {
+          console.log('File uploaded successfully', response);
+        },
+        (error) => {
+          console.error('Error uploading file', error);
+        }
+      );
+    }
+  }
+  
+  // Upload the profile picture to the backend
+  uploadProfilePicture(formData: FormData): void {
+    this.authService.uploadProfilePicture(formData).subscribe(
+      (response) => {
+        // On success, update the profile picture URL
+        console.log(response);
+        this.picture = response.imageUrl; // Assuming response contains the URL of the uploaded image
+      },
+      (error) => {
+        console.error('Error uploading profile picture', error);
+      }
+    );
+  }
 }
