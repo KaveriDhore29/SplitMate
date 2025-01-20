@@ -24,23 +24,23 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { MatIconModule } from '@angular/material/icon';
 import { ExpenseModalComponent } from './expense-modal/expense-modal.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
-import {MatCardModule} from '@angular/material/card';
-import {MatRadioModule} from '@angular/material/radio';
-import { EditGroupModalComponent } from './edit-group-modal/edit-group-modal.component'
+import { MatCardModule } from '@angular/material/card';
+import { MatRadioModule } from '@angular/material/radio';
+import { EditGroupModalComponent } from './edit-group-modal/edit-group-modal.component';
 import { AuthInterceptorInterceptor } from './auth-interceptor.interceptor';
 import { SettleUpComponent } from './settle-up/settle-up.component';
 import { MyGroupsComponent } from './my-groups/my-groups.component';
 import { MyProfileComponent } from './my-profile/my-profile.component';
 import { ExpenseDetailModalComponent } from './expense-detail-modal/expense-detail-modal.component';
 import { ExpenseListComponent } from './all-expenses/all-expenses.component';
-import { AlertModalComponent } from './alert-modal/alert-modal.component';
-
-
-
 
 @NgModule({
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorInterceptor, multi: true }
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorInterceptor,
+      multi: true,
+    },
   ],
   declarations: [
     AppComponent,
@@ -61,7 +61,7 @@ import { AlertModalComponent } from './alert-modal/alert-modal.component';
     MyProfileComponent,
     ExpenseDetailModalComponent,
     ExpenseListComponent,
-    AlertModalComponent
+
   ],
   imports: [
     BrowserModule,
@@ -76,9 +76,8 @@ import { AlertModalComponent } from './alert-modal/alert-modal.component';
     ReactiveFormsModule,
     MatIconModule,
     MatCardModule,
-    MatRadioModule
-
+    MatRadioModule,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
