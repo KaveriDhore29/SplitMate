@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MdbModalRef } from 'ng add mdb-angular-ui-kit';
+import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 
 @Component({
   selector: 'app-alert-modal',
