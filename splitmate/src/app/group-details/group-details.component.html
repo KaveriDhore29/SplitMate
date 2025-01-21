@@ -40,26 +40,32 @@
     
     </div>
     
-    <div class="row">
+  <div class="row">
       <div class="col">
         <div class="recent-updates">
-          <h2 class="summary-heading">Recent Updates</h2>
-          <div *ngFor="let update of updates" class="update-row">
-            <div class="update-info">
-             {{ update.person1 === dataService.currentUserEmail.email? 'You':update.person1 }}
-              {{ update.action === 'settlement' 
-                  ? 'settled with ' + update.person2 + ' for ' + '₹' + update.amount  
-                  : 'paid  ₹' + update.amount+" for " + update.action }}
+          <div class="sticky-header">
+            <h2 class="summary-heading">RECENT UPDATES</h2>
+          </div>
+          <div class="updates-container">
+            <div *ngFor="let update of updates" class="update-row">
+              <div class="update-info">
+                {{ update.person1 === dataService.currentUserEmail.email ? 'You' : update.person1 }}
+                {{ update.action === 'settlement' 
+                    ? 'settled with ' + update.person2 + ' for ₹' + update.amount  
+                    : 'paid ₹' + update.amount + ' for ' + update.action }}
+              </div>
             </div>
           </div>
-          
         </div>
       </div>
+
+
       
       <div class="col">
         <div class="members-of-group">
-          <h2 class="summary-heading">Members of the Group</h2>
-            <i class="material-icons" title="Add Members" (click)="showAddmembersPopup = true" style="left: relative;
+          <h2 class="summary-heading">GROUP MEMBERS</h2>
+            <i class="material-icons" title="Add Members" (click)="showAddmembersPopup = true" style="z-index: 10;
+            left: relative;
             top: -40px;
             position: relative;
             left: 49%;
@@ -89,7 +95,8 @@
           
         </div>
       </div>
-      
+
+
   
  </div>
   <div class="row expense-summary-div">
