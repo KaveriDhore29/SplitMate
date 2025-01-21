@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from '../data.service';
 
-import { AlertService } from '../alert';
-
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -27,8 +25,7 @@ export class DashboardComponent implements OnInit {
   constructor(
     private router: Router,
     public dataService: DataService,
-    private route: ActivatedRoute,
-    public alertService: AlertService
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {

@@ -86,7 +86,7 @@ export class CreateGroupComponent implements OnInit {
   fetchSearchResults(query: string): void {
     this.http
       .get<any[]>(
-        `https://api-hxibxy2qza-uc.a.run.app/api/search-users-by-username?query=${query}`
+        `http://localhost:3000/api/search-users-by-username?query=${query}`
       )
       .subscribe(
         (results) => {
@@ -199,6 +199,4 @@ export class CreateGroupComponent implements OnInit {
     this.modalMessage = message;
     this.showModal = true;
   }
-
-
 }
