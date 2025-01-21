@@ -10,7 +10,9 @@ declare var handleSignOut: any;
 })
 export class AuthService {
   isUserLoggedIn: string = '';
+  // apiUrl: string = 'https://api-hxibxy2qza-uc.a.run.app/api';  // Define the API base URL
   apiUrl: string = 'http://localhost:3000/api';  // Define the API base URL
+
 
   constructor(private router: Router, private http: HttpClient) {}  // Inject HttpClient
 

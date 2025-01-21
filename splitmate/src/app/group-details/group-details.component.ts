@@ -63,11 +63,12 @@ grpBalancesList :any;
     title: '',
     currency: 'INR',
     amount: '',
-    paidBy: this.dataService.currentUserEmail.email,
+    paidBy: '',
     equally: true,
     selectedMembers: [] as string[],
     splitBy: 'equally',
   };
+  
   groupMembersEmails: any;
   memberShares: { [email: string]: number } = {};
   memberPercentages: { [email: string]: number } = {};
@@ -75,6 +76,17 @@ grpBalancesList :any;
   memberExpense: [{ email: string; division: number }] = [
     { email: '', division: 1 },
   ];
+  resetExpense() {
+    this.expense = {
+      title: '',
+      currency: 'INR',
+      amount: '',
+      paidBy: '',
+      equally: true,
+      selectedMembers: [] as string[],
+      splitBy: 'equally',
+    };
+  }
 
   openExpenseModal(expense: any) {
     this.selectedExpense = expense;
@@ -122,6 +134,18 @@ grpBalancesList :any;
     console.log(this.grpBalancesList,"list");
   }
 
+  fetchGroupDetails_old() {
+    this.dataService.getGroupDetailById(this.groupId).subscribe(
+      (data: any) => {
+        this.groupDetails = data;
+        this.getAllTransactions(); // Call only after groupDetails is populated
+      },
+      (error: any) => {
+        console.error("Failed to fetch group details:", error);
+      }
+    );
+  }
+
   fetchGroupDetails() {
     this.dataService.getGroupDetailById(this.groupId).subscribe(
       (data: any) => {
@@ -145,9 +169,12 @@ grpBalancesList :any;
 
   addExpenseData(selectedExpense: any): void {
     this.isSaveDisabled = true;
+    this.resetExpense(); 
 
     this.expense.title = 'settlement';
     this.expense.amount = selectedExpense.owesAmount;
+    this.expense.paidBy = selectedExpense.email;
+    this.expense.selectedMembers = [];
     this.expense.selectedMembers.push(selectedExpense.to);
 
     let membersToUse: string[] = [];
@@ -266,6 +293,14 @@ loadGroupDetails(): void {
       this.groupCreatedAt = this.groupDetails[0].createdAt;
 
       this.updates = this.groupDetails[0].transactions.map((e:any)=>{
+        this.groupDetails[0].members.map((x:any) => {
+        if (x.email === e.transactions[0].to ) {
+          e.transactions[0].to = x.username;
+        }
+        else if(x.email === e.transactions[0].from){
+          e.transactions[0].from = x.username;
+        }
+      });
         return {
           person1: e.transactions[0].to,
           action: e.title,
@@ -350,6 +385,7 @@ loadGroupDetails(): void {
       .subscribe((data: any) => {
         this.grpBalances = data;
         console.log('grpBalances', this.grpBalances);
+        this.getAllTransactions()
       });
   }
 

@@ -18,8 +18,7 @@ export class MyGroupsComponent implements OnInit {
   isOptionsMenuOpen = false;
   openGroupId: any;
 
-  isLoading: boolean = true; 
-
+  isLoading: boolean = true;
 
   constructor(
     private router: Router,
@@ -192,6 +191,12 @@ export class MyGroupsComponent implements OnInit {
         console.error('Error deleting group from backend:', error);
       }
     );
+  }
+
+  navigateToCreateGroup(event: MouseEvent) {
+    event.stopPropagation();
+    event.preventDefault();
+    this.router.navigate(['create-group']);
   }
 
   // deleteGroup(group:any) {

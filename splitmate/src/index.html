@@ -81,7 +81,7 @@
   sessionStorage.setItem("loggedInUser", JSON.stringify(responsePayload));
   sessionStorage.setItem("IsLoggedIn", JSON.stringify(true));
   sessionStorage.setItem("authToken",response.credential);
-  fetch('http://localhost:3000/api/login', {
+  fetch('https://api-hxibxy2qza-uc.a.run.app/api/login', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     credentials: 'include',

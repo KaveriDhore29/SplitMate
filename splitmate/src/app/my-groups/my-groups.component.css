@@ -378,3 +378,21 @@ h3{
   margin: 20px 0;
 
 }
+
+.create-group-btn{
+    background-color: #489c73;
+    color: white;
+    width: 10%;
+    border: none;
+    margin-right: 35px;
+    font-size: 17px;
+    font-weight: bold;
+    border-radius: 10px;
+    padding: 1% 0;
+    cursor: pointer;
+  }
+
+  .btn-container{
+	display: flex;
+    justify-content: end;
+  }
