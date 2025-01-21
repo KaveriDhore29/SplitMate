@@ -3,12 +3,13 @@ import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { DataService } from '../data.service';
 import { Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, BarController, ArcElement, PieController } from 'chart.js';
+import { AlertService } from '../alert/alert.service';
 
 // Register all necessary components
 Chart.register(
   CategoryScale,
   LinearScale,
-  BarElement,  // Register the Bar Element for bar charts
+  BarElement, // Register the Bar Element for bar charts
   Title,
   Tooltip,
   Legend,
@@ -36,10 +37,15 @@ export class MainDashboardComponent implements OnInit {
   private categoryExpenseChart: Chart | null = null; // Track the pie chart instance
   isLoading: boolean = true;
 
+  options = {
+    autoClose: false,
+  };
+
   constructor(
     private router: Router,
     public authService: AuthService,
-    public dataService: DataService
+    public dataService: DataService,
+    public alertService: AlertService
   ) {}
 
   ngOnInit(): void {
@@ -91,7 +97,7 @@ export class MainDashboardComponent implements OnInit {
 
   fetchExpensesData(): void {
     this.isLoading = true;
-    
+
     this.dataService.getGroupDetails().subscribe(
       (groupDetails: any[]) => {
         this.groupIds = groupDetails.map((group) => group.groupId);
@@ -124,7 +130,7 @@ export class MainDashboardComponent implements OnInit {
 
   fetchTotalOwedData(): void {
     this.isLoading = true;
-    
+
     this.dataService.totalOwed(this.groupIds).subscribe(
       (owedData: any) => {
         this.responseOftotalOwed = owedData;
@@ -300,5 +306,10 @@ export class MainDashboardComponent implements OnInit {
         'Canvas element not found. Ensure the template contains an element with id="categoryExpenseChart".'
       );
     }
+  }
+
+  showSuccess(): void {
+    console.log('Button clicked - attempting to trigger alert');
+    this.alertService.success('Success', { id: 'alert-1' });
   }
 }

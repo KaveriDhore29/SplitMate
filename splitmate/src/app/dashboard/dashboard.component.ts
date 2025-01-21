@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from '../data.service';
 
-
-
+import { AlertService } from '../alert';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,11 +19,16 @@ export class DashboardComponent implements OnInit {
 
   isDrawerOpen: boolean = false;
   isDarkTheme: boolean = false; // For theme toggle, if needed
+  options = {
+    autoClose: false,
+    keepAfterRouteChange: false,
+  };
 
   constructor(
     private router: Router,
     public dataService: DataService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public alertService: AlertService
   ) {}
 
   ngOnInit(): void {
@@ -33,7 +37,9 @@ export class DashboardComponent implements OnInit {
       (data: any[]) => {
         this.groupDetails = data;
         this.groupIds = this.groupDetails.map((group: any) => group.groupId);
-        this.dataService.currentUserGroupIds = this.groupDetails.map((group: any) => group.groupId);
+        this.dataService.currentUserGroupIds = this.groupDetails.map(
+          (group: any) => group.groupId
+        );
         console.log('Group IDs:', this.groupIds);
         this.dataService.totalOwed(this.groupIds).subscribe((data: any[]) => {
           this.responseOftotalOwed = data;

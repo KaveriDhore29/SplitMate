@@ -10,7 +10,6 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { CreateGroupComponent } from './create-group/create-group.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // Imported FormsModule for ngModel
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http'; // Imported HttpClientModule for API calls
-
 // Angular Material Imports
 import { MatAutocompleteModule } from '@angular/material/autocomplete'; // For autocomplete
 import { MatInputModule } from '@angular/material/input'; // For material input fields
@@ -33,7 +32,7 @@ import { MyGroupsComponent } from './my-groups/my-groups.component';
 import { MyProfileComponent } from './my-profile/my-profile.component';
 import { ExpenseDetailModalComponent } from './expense-detail-modal/expense-detail-modal.component';
 import { ExpenseListComponent } from './all-expenses/all-expenses.component';
-import { AlertModalComponent } from './alert-modal/alert-modal.component';
+import { AlertComponent } from './alert/alert.component';
 
 @NgModule({
   providers: [
@@ -62,8 +61,7 @@ import { AlertModalComponent } from './alert-modal/alert-modal.component';
     MyProfileComponent,
     ExpenseDetailModalComponent,
     ExpenseListComponent,
-    AlertModalComponent,
-
+    AlertComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,8 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from '../data.service';
-import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
-import { AlertModalComponent } from '../alert-modal/alert-modal.component';
 
 @Component({
   selector: 'app-group-details',
@@ -18,7 +16,7 @@ export class GroupDetailsComponent implements OnInit {
   groupCreatedAt: any;
   showPopup: boolean = false;
   showSettleUpPopup = false;
-  selectedExpenseForSettleUp: any;
+  selectedExpenseForSettleUp : any;
   showAddmembersPopup: boolean = false;
   groupCreatorEmail: any;
   groupDescription = 'This is a group for discussing tech topics.';
@@ -31,33 +29,29 @@ export class GroupDetailsComponent implements OnInit {
   owedExpenses: any[] = [];
   grpBalances: any;
   currencyOptions = ['INR', 'USD', 'EUR', 'GBP'];
-  modalRef: MdbModalRef<AlertModalComponent> | null = null;
   borrowedExpenses = [
     { title: 'Dinner with friends', amount: 50, date: '2024-12-12' },
     { title: 'Concert ticket', amount: 80, date: '2024-12-10' },
     { title: 'Grocery shopping', amount: 30, date: '2024-12-08' },
   ];
   groupSettlements: any;
-  recentUpdates: any;
+  recentUpdates:any;
   updates = [
     {
       person1: ' ',
-      action: ' ',
+      action: " ",
       amount: '',
-      person2: '',
-    },
+      person2: ''
+    }
   ];
-  membersWhoOwes = [
-    {
-      person: '',
-      amount: 0,
-      currency: '',
-      to: '',
-      title: '',
-    },
-  ];
+  membersWhoOwes = [{
+    person:'',
+    amount: 0,
+    currency:'',to:'',title:''
+  }
+]
 
-  grpBalancesList: any;
+grpBalancesList :any;
   isLoading: boolean = false;
 
   selectedExpense: any = null;
@@ -89,47 +83,43 @@ export class GroupDetailsComponent implements OnInit {
   }
 
   getGroupDetailByTransactionId(transactionId: any) {
-    const transactionDetail = this.groupDetails[0].transactions.find(
-      (tr: any) => tr.transactionId === transactionId
-    );
-
+ 
+    const transactionDetail = this.groupDetails[0].transactions.find((tr: any) => tr.transactionId === transactionId);
+  
     if (transactionDetail) {
-      this.membersWhoOwes = transactionDetail.netBalances.map(
-        (balance: any) => {
-          // Find the corresponding user based on the person email
-          const member = this.groupDetails[0].members.find(
-            (member: any) => member.email === balance.person
-          );
-
-          return {
-            person: member ? member.username : balance.person, // Return username or email if no username
-            amount: balance.balance,
-            currency: balance.currency,
-          };
-        }
-      );
-
+    
+      this.membersWhoOwes = transactionDetail.netBalances.map((balance: any) => {
+        // Find the corresponding user based on the person email
+        const member = this.groupDetails[0].members.find((member: any) => member.email === balance.person);
+  
+        return {
+          person: member ? member.username : balance.person, // Return username or email if no username
+          amount: balance.balance,
+          currency: balance.currency
+        };
+      });
+  
+      
       console.log(this.membersWhoOwes);
     } else {
-      console.log('Transaction not found.');
+      console.log("Transaction not found.");
     }
   }
 
   getAllTransactions() {
-    console.log('In fn');
-    this.grpBalancesList = this.groupDetails[0].transactions.flatMap(
-      (transaction: any) =>
-        transaction.netBalances
-          .filter((balance: any) => balance.balance < 0) // Only include those who owe money
-          .map((balance: any) => ({
-            person: balance.person, // Email of the person who owes
-            amount: Math.abs(balance.balance), // Absolute value of the amount owed
-            to: transaction.paidBy, // Person who was paid
-            title: transaction.title, // Title of the transaction
-          }))
+    console.log("In fn");
+    this.grpBalancesList = this.groupDetails[0].transactions.flatMap((transaction: any) => 
+      transaction.netBalances
+        .filter((balance: any) => balance.balance < 0) // Only include those who owe money
+        .map((balance: any) => ({
+          person: balance.person, // Email of the person who owes
+          amount: Math.abs(balance.balance), // Absolute value of the amount owed
+          to: transaction.paidBy, // Person who was paid
+          title: transaction.title // Title of the transaction
+        }))
     );
-
-    console.log(this.grpBalancesList, 'list');
+  
+    console.log(this.grpBalancesList,"list");
   }
 
   fetchGroupDetails() {
@@ -139,7 +129,7 @@ export class GroupDetailsComponent implements OnInit {
         this.getAllTransactions(); // Call only after groupDetails is populated
       },
       (error: any) => {
-        console.error('Failed to fetch group details:', error);
+        console.error("Failed to fetch group details:", error);
       }
     );
   }
@@ -222,6 +212,8 @@ export class GroupDetailsComponent implements OnInit {
     this.expense.amount = inputElement.value;
   }
 
+  
+
   expenses = [];
 
   responseOftotalOwed: {
@@ -237,91 +229,93 @@ export class GroupDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     public dataService: DataService,
-    private router: Router,
-    private modalService: MdbModalService
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.isLoading = true; // Start loading indicator
-    this.route.paramMap.subscribe((params) => {
-      const newGroupId = params.get('id');
-      if (newGroupId) {
-        this.groupId = newGroupId;
-        this.loadGroupDetails();
-        this.fetchGroupDetails();
-      }
-    });
-  }
+  this.isLoading = true; // Start loading indicator
+  this.route.paramMap.subscribe((params) => {
+    const newGroupId = params.get('id');
+    if (newGroupId) {
+      this.groupId = newGroupId;
+      this.loadGroupDetails();
+      this.fetchGroupDetails();
+    }
+  
+  });
+  
+}
 
-  abs(value: number): number {
-    return value < 0 ? -value : value;
-  }
+abs(value: number): number {
+  return value < 0 ? -value : value;
+}
 
-  loadGroupDetails(): void {
-    this.isLoading = true; // Show loader
-    let dataFetched = 0; // Track number of API calls completed
-    const totalApiCalls = 3; // Total API calls needed
+loadGroupDetails(): void {
+  this.isLoading = true; // Show loader
+  let dataFetched = 0; // Track number of API calls completed
+  const totalApiCalls = 3; // Total API calls needed
 
-    this.dataService.getGroupDetailById(this.groupId).subscribe(
-      (data) => {
-        this.groupDetails = data;
-        this.getAllTransactions();
-        console.log('Specific group detail by id:', this.groupDetails);
-        this.groupName = this.groupDetails[0].name;
-        this.groupCreatedBy.username = this.groupDetails[0].createdBy.username;
-        this.groupCreatedBy.email = this.groupDetails[0].createdBy.email;
-        this.groupCreatedAt = this.groupDetails[0].createdAt;
+  this.dataService.getGroupDetailById(this.groupId).subscribe(
+    (data) => {
+      this.groupDetails = data;
+      this.getAllTransactions(); 
+      console.log('Specific group detail by id:', this.groupDetails );
+      this.groupName = this.groupDetails[0].name;
+      this.groupCreatedBy.username = this.groupDetails[0].createdBy.username;
+      this.groupCreatedBy.email = this.groupDetails[0].createdBy.email;
+      this.groupCreatedAt = this.groupDetails[0].createdAt;
 
-        this.updates = this.groupDetails[0].transactions.map((e: any) => {
-          return {
-            person1: e.transactions[0].to,
-            action: e.title,
-            amount: e.amount,
-            person2: e.transactions[0].from,
-          };
-        });
-        const groupCreatorEmail = this.groupDetails[0].createdBy.email;
+      this.updates = this.groupDetails[0].transactions.map((e:any)=>{
+        return {
+          person1: e.transactions[0].to,
+          action: e.title,
+          amount: e.amount,
+          person2: e.transactions[0].from
+        }
+      });
+      const groupCreatorEmail = this.groupDetails[0].createdBy.email;
 
-        this.membersNames = this.groupDetails[0].members.map((member: any) => ({
-          name: member.username,
-          email: member.email,
-          role: member.email === groupCreatorEmail ? 'Admin' : 'Member',
-        }));
+      this.membersNames = this.groupDetails[0].members.map((member: any) => ({
+        name: member.username,
+        email: member.email,
+        role: member.email === groupCreatorEmail ? 'Admin' : 'Member',
+      }));
 
-        dataFetched++;
-        if (dataFetched === totalApiCalls) this.isLoading = false; // Hide loader
-      },
-      (error) => {
-        console.error('Error fetching group details:', error);
-        this.isLoading = false; // Hide loader on error
-      }
-    );
+      dataFetched++;
+      if (dataFetched === totalApiCalls) this.isLoading = false; // Hide loader
+    },
+    (error) => {
+      console.error('Error fetching group details:', error);
+      this.isLoading = false; // Hide loader on error
+    }
+  );
 
-    this.dataService.grpTotalOwed(this.groupId).subscribe(
-      (owedData: any) => {
-        this.responseOftotalOwed = owedData;
-        console.log('Total Owed Data:', this.responseOftotalOwed);
-        dataFetched++;
-        if (dataFetched === totalApiCalls) this.isLoading = false; // Hide loader
-      },
-      (error) => {
-        console.error('Error loading details from API:', error);
-        this.isLoading = false; // Hide loader on error
-      }
-    );
+  this.dataService.grpTotalOwed(this.groupId).subscribe(
+    (owedData: any) => {
+      this.responseOftotalOwed = owedData;
+      console.log('Total Owed Data:', this.responseOftotalOwed);
+      dataFetched++;
+      if (dataFetched === totalApiCalls) this.isLoading = false; // Hide loader
+    },
+    (error) => {
+      console.error('Error loading details from API:', error);
+      this.isLoading = false; // Hide loader on error
+    }
+  );
 
-    this.dataService.grpBalance(this.groupId).subscribe(
-      (data: any) => {
-        this.groupSettlements = data;
-        console.log('Group Settlements:', this.groupSettlements);
-        dataFetched++;
-        if (dataFetched === totalApiCalls) this.isLoading = false; // Hide loader
-      },
-      (error) => {
-        console.error('Error loading details from API:', error);
-        this.isLoading = false; // Hide loader on error
-      }
-    );
+  this.dataService.grpBalance(this.groupId).subscribe(
+    (data: any) => {
+      this.groupSettlements = data;
+      console.log('Group Settlements:', this.groupSettlements);
+      dataFetched++;
+      if (dataFetched === totalApiCalls) this.isLoading = false; // Hide loader
+    },
+    (error) => {
+      console.error('Error loading details from API:', error);
+      this.isLoading = false; // Hide loader on error
+    }
+  );
+
 
     this.groupExpenses = this.dataService
       .getGroupExpenses(this.groupId)
@@ -381,23 +375,21 @@ export class GroupDetailsComponent implements OnInit {
     if (!confirmDelete) {
       return;
     } else {
-      console.log(this.groupId, expense.transactionId);
-      this.dataService
-        .deleteExpenseService(this.groupId, expense.transactionId)
-        .subscribe(
-          (data: any) => {
-            this.expenses = this.expenses.filter((e) => e !== expense);
-            this.loadGroupDetails();
-            this.fetchGroupDetails();
-            this.selectedExpense = null; // Close modal after deletion
-          },
-          (error) => {
-            console.error(
-              'Error loading details after delete from API:',
-              error
-            );
-          }
-        );
+      console.log(this.groupId,expense.transactionId);
+      this.dataService.deleteExpenseService(this.groupId,expense.transactionId).subscribe(
+
+        (data: any) => {
+         
+          this.expenses = this.expenses.filter((e) => e !== expense);
+          this.loadGroupDetails();
+          this.fetchGroupDetails();
+          this.selectedExpense = null; // Close modal after deletion
+        },
+        (error) => {
+          console.error('Error loading details after delete from API:', error);
+        }
+      );
+     
     }
   }
 
@@ -423,11 +415,5 @@ export class GroupDetailsComponent implements OnInit {
         console.error('Error fetching group details:', error);
       }
     );
-  }
-
-  openModal() {
-    this.modalRef = this.modalService.open(AlertModalComponent, {
-      data: { title: 'Custom title' },
-    });
   }
 }
