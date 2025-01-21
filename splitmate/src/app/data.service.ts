@@ -6,7 +6,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class DataService {
-  private apiUrl = 'http://localhost:3000/api'; // API base URL
+  // private apiUrl = 'https://api-hxibxy2qza-uc.a.run.app/api'; // API base URL
+  private apiUrl = 'http://localhost:3000/api';
   currentUserEmail: any;
   private selectedGroupSource = new BehaviorSubject<any>(null);
  currentUserGroupIds = [];

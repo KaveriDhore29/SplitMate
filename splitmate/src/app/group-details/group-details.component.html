@@ -199,21 +199,25 @@
         <div class="balances-heading">
             <h1>Group Balances Overview</h1>
         </div>
-        <div *ngIf="grpBalancesList.length==0" class="all-settled">
+        <div *ngIf="grpBalances.length==0" class="all-settled">
           <p class="settled-message">Everything's squared away! No group balances left.</p>
         </div>
         <ul class="transaction-list">
-          <ng-container *ngFor="let member of grpBalancesList">
+          <ng-container *ngFor="let member of groupSettlements.transactionArray">
             <li *ngIf="member.title !== 'settlement'" class="transaction-item">
               <div class="transaction-details">
                 <span class="transaction-icon">
                   <i class="fa-solid fa-money-bill-1-wave"></i>
                 </span>
                 <div class="transaction-text">
-                  <strong class="transaction-email">   {{ member.person === dataService.currentUserEmail.email ? 'You' : member.person }}</strong> owe
+                  <!-- <strong class="transaction-email">   {{ member.person === dataService.currentUserEmail.email ? 'You' : member.person }}</strong> owe
                   <strong class="transaction-amount">{{ member.amount | currency: 'INR':'symbol' }}</strong>
                   to <strong class="transaction-to">{{ member.to === dataService.currentUserEmail.email ? 'You' : member.to  }}</strong>
-                  for <strong class="transaction-title">{{ member.title }}</strong>
+                  for <strong class="transaction-title">{{ member.title }}</strong> -->
+
+                  <strong class="transaction-email">   {{member.email === dataService.currentUserEmail.email ? 'You' : member.from_username && member.from_username!==''?member.from_username:member.email}}</strong> owe
+                  <strong class="transaction-amount">{{ member.owesAmount | currency: 'INR':'symbol' }}</strong>
+                  to <strong class="transaction-to">{{ member.email === dataService.currentUserEmail.email ? 'You' : member.to_username && member.to_username!==''?member.to_username:member.email}}</strong>
                 </div>
               </div>
             </li>
@@ -236,8 +240,8 @@
           </div>
           <div *ngFor="let expense of groupSettlements.transactionArray" class="Expense-card">
             <div class="Expense-header">
-              <span class="Owe-text">YOU OWE</span>
-              <span class="Person-name">{{expense.to}}</span>
+              <span class="Owe-text">{{expense.from_username && expense.from_username!==''?expense.from_username:expense.email}} Owes</span>
+              <span class="Person-name">{{expense.to_username && expense.to_username!==''?expense.to_username:expense.to}}</span>
             </div>
             <div class="Expense-amount-box">
               <span class="Amount">{{ expense.owesAmount |  currency:'INR':'symbol' }}</span>
@@ -260,9 +264,9 @@
                   <i class="fa-solid fa-user"></i>
                 </div>
                 <div class="text-container">
-                  <div class="person-name"><b>{{selectedExpense.email}}</b></div>&nbsp;&nbsp;
-                  <div class="action-text">paid</div>&nbsp;&nbsp;
-                  <div class="person-name"><b>{{selectedExpense.to}}</b></div>
+                  <div class="person-name"><b>{{selectedExpense.from_username && selectedExpense.from_username!==''?selectedExpense.from_username:selectedExpense.email}}</b></div>&nbsp;&nbsp;
+                  <div class="action-text">paying</div>&nbsp;&nbsp;
+                  <div class="person-name"><b>{{selectedExpense.to_username && selectedExpense.to_username!==''?selectedExpense.to_username:selectedExpense.to}}</b></div>
                 </div>
               </div>
             </div>
