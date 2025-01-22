@@ -16,7 +16,7 @@ export class AlertService {
 
   // convenience methods
   success(message: string, options?: AlertOptions) {
-    console.log('alert clicked');
+    // console.log('alert clicked');
     this.alert(new Alert({ ...options, type: AlertType.Success, message }));
   }
 

@@ -1,44 +1,49 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../data.service';
-
+import { AlertService } from '../alert/alert.service';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-expense-modal',
   templateUrl: './expense-modal.component.html',
-  styleUrls: ['./expense-modal.component.css']
+  styleUrls: ['./expense-modal.component.css'],
 })
 export class ExpenseModalComponent implements OnInit {
-  
   @Input() membersNames: { name: string; email: string }[] = [];
   @Input() groupId!: string;
   @Output() closePopup = new EventEmitter<void>();
   selectedSplitOption: string = 'equally';
-  @Input() groupDetails !: any;
+  @Input() groupDetails!: any;
   isSaveDisabled: boolean = false;
   @Output() onAddExpense = new EventEmitter<void>();
-  groupMembersEmails : any;
+  groupMembersEmails: any;
 
   currencyOptions = ['INR', 'USD', 'EUR', 'GBP'];
 
-
-  
   expense = {
     title: '',
     currency: 'INR',
     amount: '',
-    paidBy: this.dataService.currentUserEmail.email, 
-    equally: true, 
+    paidBy: this.dataService.currentUserEmail.email,
+    equally: true,
     selectedMembers: [] as string[],
-    splitBy:'equally'
+    splitBy: 'equally',
   };
 
   memberShares: { [email: string]: number } = {};
   memberPercentages: { [email: string]: number } = {};
 
-  memberExpense : [{email:string,divison:number}] = [{email:'',divison:1}];
+  memberExpense: [{ email: string; divison: number }] = [
+    { email: '', divison: 1 },
+  ];
 
-  constructor(private route: ActivatedRoute, public dataService: DataService) {}
+  constructor(
+    private route: ActivatedRoute,
+    public dataService: DataService,
+    public alertService: AlertService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.groupId = this.route.snapshot.paramMap.get('id')!;
@@ -49,10 +54,11 @@ export class ExpenseModalComponent implements OnInit {
       (data) => {
         this.groupDetails = data;
         console.log('Specific Group Detail by Id:', this.groupDetails);
-        this.groupMembersEmails = this.groupDetails[0].members.map((member:any) => {
-          return member.email;
-        }
-      );
+        this.groupMembersEmails = this.groupDetails[0].members.map(
+          (member: any) => {
+            return member.email;
+          }
+        );
       },
       (error) => {
         console.error('Error fetching group details:', error);
@@ -60,15 +66,13 @@ export class ExpenseModalComponent implements OnInit {
     );
   }
 
-
-
   toggleMemberSelection(memberEmail: string, event: Event): void {
     const isChecked = (event.target as HTMLInputElement).checked;
     if (isChecked) {
       this.expense.selectedMembers.push(memberEmail);
     } else {
       this.expense.selectedMembers = this.expense.selectedMembers.filter(
-        email => email !== memberEmail
+        (email) => email !== memberEmail
       );
     }
   }
@@ -77,129 +81,149 @@ export class ExpenseModalComponent implements OnInit {
     this.selectedSplitOption = option; // Set the selected split option
     this.expense.splitBy = option; // Store the selected split option in expense data
     this.expense.selectedMembers = []; // Reset selected members for each option
-    
+
     // Initialize shares or percentage fields when needed
     if (option === 'percentage') {
       this.initializePercentageFields();
     } else if (option === 'shares') {
       this.initializeSharesFields();
-    }else if (option === 'equally') {
+    } else if (option === 'equally') {
       this.selectAllMembers(); // Select all members when "Equally" is clicked
     }
   }
 
   selectAllMembers(): void {
-    this.expense.selectedMembers = this.membersNames.map(member => member.email); // Select all members
+    this.expense.selectedMembers = this.membersNames.map(
+      (member) => member.email
+    ); // Select all members
   }
 
   isAllSelected(): boolean {
-    return this.membersNames.every(member => this.expense.selectedMembers.includes(member.email));
+    return this.membersNames.every((member) =>
+      this.expense.selectedMembers.includes(member.email)
+    );
   }
 
   toggleSelectAll(event: Event): void {
     const isChecked = (event.target as HTMLInputElement).checked;
     if (isChecked) {
-      this.expense.selectedMembers = this.membersNames.map(member => member.email);
+      this.expense.selectedMembers = this.membersNames.map(
+        (member) => member.email
+      );
     } else {
       this.expense.selectedMembers = [];
     }
   }
 
-
   initializePercentageFields(): void {
     this.memberPercentages = {};
-    this.membersNames.forEach(member => {
-      this.memberPercentages[member.email] = 0; 
+    this.membersNames.forEach((member) => {
+      this.memberPercentages[member.email] = 0;
     });
   }
-  
+
   initializeSharesFields(): void {
     this.memberShares = {};
-    this.membersNames.forEach(member => {
-      this.memberShares[member.email] = 0; 
+    this.membersNames.forEach((member) => {
+      this.memberShares[member.email] = 0;
     });
   }
-  
-
 
   addExpenseData(): void {
-  if(this.expense.title ==''&& this.expense.amount == ''){
-    alert('Please fill the details');
-    return;
-  }
+    if (this.expense.title == '' && this.expense.amount == '') {
+      // alert('Please fill the details');
+      this.alertService.warn(`Please fill the details`, {
+        id: 'alert-1',
+        autoClose: true,
+      });
+      this.cdr.detectChanges();
+      return;
+    }
     this.isSaveDisabled = true;
     // Determine the members to use based on the split option
-  let membersToUse: string[] = [];
-  if (this.expense.splitBy === 'equally') {
-    membersToUse = this.expense.selectedMembers || [];
-  } else {
-    membersToUse = this.groupMembersEmails || []; // Assume all members are stored in `this.groupMembers`
-  }
-
-  // Create member data
-  let memberData = membersToUse.map(memberEmail => {
-    let division = 1; // Default division for 'equally'
-    if (this.expense.splitBy === 'shares') {
-      division = this.memberShares[memberEmail] || 0; // Use the share value from input
-    } else if (this.expense.splitBy === 'percentage') {
-      division = this.memberPercentages[memberEmail] || 0; // Use the percentage value from input
+    let membersToUse: string[] = [];
+    if (this.expense.splitBy === 'equally') {
+      membersToUse = this.expense.selectedMembers || [];
+    } else {
+      membersToUse = this.groupMembersEmails || []; // Assume all members are stored in `this.groupMembers`
     }
 
-    return {
-      person: memberEmail,
-      division: division
-    };
-  });
-    
+    // Create member data
+    let memberData = membersToUse.map((memberEmail) => {
+      let division = 1; // Default division for 'equally'
+      if (this.expense.splitBy === 'shares') {
+        division = this.memberShares[memberEmail] || 0; // Use the share value from input
+      } else if (this.expense.splitBy === 'percentage') {
+        division = this.memberPercentages[memberEmail] || 0; // Use the percentage value from input
+      }
+
+      return {
+        person: memberEmail,
+        division: division,
+      };
+    });
+
     //  console.log('Constructed Member Data:', memberData);
-    
+
     if (
       this.expense.splitBy === 'percentage' &&
       Object.values(this.memberPercentages).reduce((a, b) => a + b, 0) !== 100
     ) {
-      alert('Total percentage must equal 100.');
+      // alert('Total percentage must equal 100.');
+      this.alertService.warn(`Total percentage must equal 100`, {
+        id: 'alert-1',
+        autoClose: true,
+      });
+      this.cdr.detectChanges();
       return;
     }
-  
+
     const expenseData = {
       paidBy: this.expense.paidBy,
       paidByName: this.membersNames.find(
-        member => member.email === this.expense.paidBy
+        (member) => member.email === this.expense.paidBy
       )?.name, // Get the name of the payer
       members: memberData,
       amount: { value: this.expense.amount, currency: this.expense.currency },
       simplifyCurrency: this.expense.currency,
-      splitBy: this.expense.splitBy, 
+      splitBy: this.expense.splitBy,
       title: this.expense.title,
       groupId: this.groupId,
       groupName: this.groupDetails[0]?.name || 'Unknown Group',
-      createdBy : this.dataService.currentUserEmail ,
-      expenseDate: new Date(),    //expense created by current user
+      createdBy: this.dataService.currentUserEmail,
+      expenseDate: new Date(), //expense created by current user
     };
-  
+
     console.log('Expense Data:', expenseData);
-  
+
     // Call the service API to add the expense
     this.dataService.addExpenseService(expenseData).subscribe(
-      response => {
+      (response) => {
         // console.log('Expense successfully added:', response);
-       
-        alert('Expense added successfully!');
+
+        // alert('Expense added successfully!');
+        this.alertService.success(`Expense added successfully!`, {
+          id: 'alert-1',
+          autoClose: true,
+        });
+        this.cdr.detectChanges();
         this.isSaveDisabled = false;
         this.onAddExpense.emit();
         this.closePopup.emit(); // Close the modal
         // console.log('Selected Split Option:', this.selectedSplitOption);
         // console.log('Member Shares:', this.memberShares);
         // console.log('Member Percentages:', this.memberPercentages);
-
       },
-      error => {
+      (error) => {
         console.error('Error adding expense:', error);
-        alert('Failed to add expense. Please try again.');
+        // alert('Failed to add expense. Please try again.');
+        this.alertService.error(`Failed to add expense. Please try again.`, {
+          id: 'alert-1',
+          autoClose: true,
+        });
       }
     );
   }
-  
 
   closeSplitOptions(): void {
     this.selectedSplitOption = '';

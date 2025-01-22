@@ -146,17 +146,23 @@
   width: 40%;
   height: 40px;
   border:none   ;
-  margin-top: 16%;
+  margin-top: 6%;
   &:disabled{
     background-color: #388164;
     color:white;
     opacity: 0.8;
-    margin-top: 16%;
+    margin-top: 6%;
   }
 }
 .save-button:hover{
   background-color: #017d50;
 }
+
+.select-all{
+    color: #017d50;
+    background-color: beige;
+    font-weight: bolder;
+  }
 
 .save-button:disabled {
   background-color: #A5D6A7; /* Lighter Green */

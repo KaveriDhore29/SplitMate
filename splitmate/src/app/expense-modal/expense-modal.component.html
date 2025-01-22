@@ -1,8 +1,12 @@
+
 <div class="container">
   
 <div class="popup">
   <button type="button" class="close-btn" (click)="close()">&#10006;</button>
   <div class="heading">
+
+    <alert></alert>
+ 
     <h2 class="form-heading">Add Expense</h2></div>
   <form>
     <!-- Expense Title -->
@@ -70,7 +74,7 @@
       <h3>Split Equally</h3>
       <label class="select-all check-container">
         <input type="checkbox" [checked]="isAllSelected()" (change)="toggleSelectAll($event)" />
-        Select All
+        <b class="select-all">Select All</b>
         <span class="checkmark"></span>
       </label>
   

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from '../data.service';
+import { AlertService } from '../alert/alert.service';
 
 // Define the member type
 interface Member {
@@ -28,11 +29,16 @@ export class CreateGroupComponent implements OnInit {
   modalTitle: string = '';
   modalMessage: string = '';
 
+  options = {
+    autoClose: false,
+  };
+
   constructor(
     private http: HttpClient,
     public router: Router,
     private route: ActivatedRoute,
-    private dataService: DataService
+    private dataService: DataService,
+    public alertService: AlertService
   ) {}
 
   ngOnInit(): void {
@@ -133,16 +139,28 @@ export class CreateGroupComponent implements OnInit {
           username: this.searchQuery.trim(), // Using email as username since there's no username
           email: this.searchQuery.trim(),
         });
-        alert(`Added ${this.searchQuery.trim()} as a new member.`);
+        // alert(`Added ${this.searchQuery.trim()} as a new member.`);
+        this.alertService.success(
+          `Added ${this.searchQuery.trim()} as a new member.`,
+          { id: 'alert-1', autoClose: true }
+        );
       } else {
-        alert('This user is already added.');
+        // alert('This user is already added.');
+        this.alertService.error(`This user is already added.`, {
+          id: 'alert-1',
+          autoClose: true
+        });
       }
 
       // Clear the search field and results
       this.searchQuery = '';
       this.searchResults = [];
     } else {
-      alert('Please enter a username to add.');
+      // alert('Please enter a username to add.');
+      this.alertService.warn(`Please enter a username to add.`, {
+        id: 'alert-1',
+        autoClose: true,
+      });
     }
   }
 
@@ -156,7 +174,11 @@ export class CreateGroupComponent implements OnInit {
       !this.createdBy.username ||
       !this.createdBy.email
     ) {
-      alert('Please fill the required details');
+      // alert('Please fill the required details');
+      this.alertService.warn(`Please fill the required details`, {
+        id: 'alert-1',
+        autoClose: true,
+      });
       return;
     }
 
@@ -175,7 +197,7 @@ export class CreateGroupComponent implements OnInit {
     };
 
     this.http
-      .post('https://api-hxibxy2qza-uc.a.run.app/api/create-group', groupData, {
+      .post('http://localhost:3000/api/create-group', groupData, {
         withCredentials: true,
       })
 
@@ -198,5 +220,10 @@ export class CreateGroupComponent implements OnInit {
     this.modalTitle = title;
     this.modalMessage = message;
     this.showModal = true;
+  }
+
+  showSuccess(): void {
+    console.log('Button clicked - attempting to trigger alert');
+    this.alertService.success('Success', { id: 'alert-1' });
   }
 }
