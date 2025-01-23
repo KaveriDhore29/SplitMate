@@ -109,7 +109,7 @@ export class EditGroupModalComponent {
   fetchSearchResults(query: string): void {
     this.http
       .get<any[]>(
-        `http://localhost:3000/api/search-users-by-username?query=${query}`
+        `https://split-mate-1.vercel.app/api/search-users-by-username?query=${query}`
       )
       .subscribe(
         (results) => {

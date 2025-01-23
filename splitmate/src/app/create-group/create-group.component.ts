@@ -92,7 +92,7 @@ export class CreateGroupComponent implements OnInit {
   fetchSearchResults(query: string): void {
     this.http
       .get<any[]>(
-        `http://localhost:3000/api/search-users-by-username?query=${query}`
+        `https://split-mate-1.vercel.app/api/search-users-by-username?query=${query}`
       )
       .subscribe(
         (results) => {
@@ -197,7 +197,7 @@ export class CreateGroupComponent implements OnInit {
     };
 
     this.http
-      .post('http://localhost:3000/api/create-group', groupData, {
+      .post('https://split-mate-1.vercel.app/api/create-group', groupData, {
         withCredentials: true,
       })
 

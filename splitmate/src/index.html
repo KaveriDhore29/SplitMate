@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Splitmate</title>
+  <title>SettleX</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -81,7 +81,7 @@
   sessionStorage.setItem("loggedInUser", JSON.stringify(responsePayload));
   sessionStorage.setItem("IsLoggedIn", JSON.stringify(true));
   sessionStorage.setItem("authToken",response.credential);
-  fetch('http://localhost:3000/api/login', {
+  fetch('https://split-mate-1.vercel.app/api/login', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     credentials: 'include',

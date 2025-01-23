@@ -3,7 +3,7 @@
 /* General Body Styling */
 body {
   margin: 0;
-  font-family: 'Arial', sans-serif;
+  font-family: 'Fauna One', serif;
   background-color: #f9f9f9; /* Neutral background */
   color: #000;
 }
@@ -101,7 +101,7 @@ canvas {
 
 /* Optional: Add styles to the tooltip for better readability */
 .chartjs-tooltip {
-  font-family: 'Arial', sans-serif;
+  font-family: 'Fauna One', serif;
   font-size: 14px;
   background-color: rgba(0, 0, 0, 0.7);
   color: white;
@@ -186,7 +186,7 @@ canvas {
 }
 
 h2 {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Fauna One', serif;
   font-size: 1.6rem;
   margin-bottom: 25px;
   color: #388164;
@@ -228,7 +228,7 @@ h2 {
   color: #333;
   font-weight: bold;
   text-align: left;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Fauna One', serif;
 
 }
 
@@ -237,7 +237,7 @@ h2 {
   color: #666;
   font-size: 0.95rem;
   text-align: left;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Fauna One', serif;
 
 }
 

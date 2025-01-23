@@ -11,9 +11,9 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
 export class LandingPageComponent implements OnInit {
   constructor(private renderer: Renderer2) {}
 
-  fullText: string = 'SplitMate ';
+  fullText: string = 'pense ';
   typewriterText: string = '';
-  typingSpeed: number = 100;
+  typingSpeed: number = 300;
 
   isLoading: boolean = true;
 

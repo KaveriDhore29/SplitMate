@@ -3,7 +3,7 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Trirong', serif;
+  font-family: 'Fauna One', serif;
 }
 
 .navbar {
@@ -67,7 +67,7 @@ body {
 
 .current-user-name {
   margin-left: 5px;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Fauna One', serif;
   font-size: 20px;
     font-weight: 600;
     color: #ffffff;

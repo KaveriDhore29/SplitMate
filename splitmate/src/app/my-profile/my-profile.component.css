@@ -4,7 +4,7 @@ body {
     color: #1a202c;
     text-align: left;
     background-color: #f7fafc;
-    font-family: 'Arial', sans-serif;
+    font-family: 'Fauna One', serif;
     font-size: 16px;
     line-height: 1.5;
 }
@@ -113,7 +113,7 @@ body {
 }
 
 #container .product-details h1 {
-    font-family: 'Bebas Neue', cursive;
+    font-family: 'Fauna One', serif;
     font-size: 30px;
     color: #344055;
     margin: 0 0 10px 0;
@@ -142,7 +142,7 @@ body {
 }
 
 #container .product-details > p {
-    font-family: 'EB Garamond', serif;
+    font-family: 'Fauna One', serif;
     text-align: center;
     font-size: 18px;
     color: #7d7d7d;

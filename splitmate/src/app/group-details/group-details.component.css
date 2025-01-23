@@ -415,7 +415,7 @@
 .custom-tabs {
   display: flex;
   justify-content: flex-start; /* Align the tabs to the left */
-  font-family: 'Arial', sans-serif; /* Clean font */
+  font-family: 'Fauna One', serif; /* Clean font */
   margin-top: 3%;
   margin-left: -30px;
   margin-bottom: 11px;

@@ -22,7 +22,7 @@ const sendEmailToNewUser = async (req, res, email, groupId, groupName = '') => {
         to: email,
         from: "rahul5555br@gmail.com",
         subject: "Join this Splitwise group",
-        text: `You have been added to the Splitmate Group ${groupName}.
+        text: `You have been added to the SettleX Group ${groupName}.
             Kindly register on the link below to join the Group:
             ${newLink}`,
     };

@@ -11,16 +11,15 @@ declare var handleSignOut: any;
 export class AuthService {
   isUserLoggedIn: string = '';
   // apiUrl: string = 'https://api-hxibxy2qza-uc.a.run.app/api';  // Define the API base URL
-  apiUrl: string = 'http://localhost:3000/api';  // Define the API base URL
+  apiUrl: string = 'https://split-mate-1.vercel.app'; // Define the API base URL
 
-
-  constructor(private router: Router, private http: HttpClient) {}  // Inject HttpClient
+  constructor(private router: Router, private http: HttpClient) {} // Inject HttpClient
 
   // Check if the user is logged in
   checkUserLogin(): boolean {
     this.isUserLoggedIn = sessionStorage.getItem('IsLoggedIn') || '';
 
-    return this.isUserLoggedIn === 'true'; 
+    return this.isUserLoggedIn === 'true';
   }
 
   // Handle sign-out functionality
@@ -40,6 +39,6 @@ export class AuthService {
 
   // Method to upload profile picture
   uploadProfilePicture(formData: FormData): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/uploadProfilePicture`, formData); 
+    return this.http.post<any>(`${this.apiUrl}/uploadProfilePicture`, formData);
   }
 }
