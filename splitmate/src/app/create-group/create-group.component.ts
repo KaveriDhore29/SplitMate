@@ -64,7 +64,7 @@ export class CreateGroupComponent implements OnInit {
           this.groupName = this.groupData[0].name;
           this.groupType = this.groupData[0].type;
           this.members = this.groupData[0].members;
-          console.log('groupdata', this.groupData);
+          // console.log('groupdata', this.groupData);
         },
         (error) => {
           console.error('Failed to fetch group details', error);
@@ -223,7 +223,7 @@ export class CreateGroupComponent implements OnInit {
   }
 
   showSuccess(): void {
-    console.log('Button clicked - attempting to trigger alert');
+    // console.log('Button clicked - attempting to trigger alert');
     this.alertService.success('Success', { id: 'alert-1' });
   }
 }

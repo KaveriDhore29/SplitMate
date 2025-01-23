@@ -68,12 +68,12 @@ export class ExpenseListComponent implements OnInit {
   toggleAccordion(id: number): void {
     this.expenses = this.expenses.map((expense) => {
       const isToggled = expense.id === id ? !expense.open : false;
-      console.log(`Expense ID: ${expense.id}, Open: ${isToggled}`);
+      // console.log(`Expense ID: ${expense.id}, Open: ${isToggled}`);
       return {
         ...expense,
         open: isToggled,  
       };
     });
-    console.log('Updated Expenses:', this.expenses);
+    // console.log('Updated Expenses:', this.expenses);
   }
 }

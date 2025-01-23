@@ -309,7 +309,7 @@ export class MainDashboardComponent implements OnInit {
   }
 
   showSuccess(): void {
-    console.log('Button clicked - attempting to trigger alert');
+    // console.log('Button clicked - attempting to trigger alert');
     this.alertService.success('Success', { id: 'alert-1' });
   }
 }

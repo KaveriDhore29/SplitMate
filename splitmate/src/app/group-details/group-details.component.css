@@ -49,16 +49,18 @@
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+
+.rsamount{
+  color: #388164;
+}
+
 .summary-heading {
   font-size: 1.5em;
   margin-bottom: 10px;
   color: #e6db79;
-
   margin-left: -15px;
   margin-right: -15px;
-
-
-  position: sticky; /* Fixes the header */
+  position: relative; /* Fixes the header */
   top: 0; /* Sticks the header to the top */
   background-color:#3d8a69; /* Background for the header */
   text-align: center; /* Centers the text */

@@ -23,7 +23,7 @@ export class DataService {
       };
     }
 
-    console.log('Current User Email:', this.currentUserEmail);
+    // console.log('Current User Email:', this.currentUserEmail);
   }
 
   // Set the selected group in the BehaviorSubject
@@ -86,7 +86,7 @@ export class DataService {
       email: this.currentUserEmail.email,
       groupId: groupId,
     };
-    console.log(JSON.stringify(payload), 'grpTotalowed data');
+    // console.log(JSON.stringify(payload), 'grpTotalowed data');
     return this.http.post<any>(`${this.apiUrl}/grpTotalOwed`, payload, {
       withCredentials: true,
     });
@@ -97,7 +97,7 @@ export class DataService {
       groupId: groupId,
       email: this.currentUserEmail.email,
     };
-    console.log(JSON.stringify(payload), 'grpBalance data');
+    // console.log(JSON.stringify(payload), 'grpBalance data');
     return this.http.post<any>(`${this.apiUrl}/grpBalance`, payload, {
       withCredentials: true,
     });
@@ -106,7 +106,7 @@ export class DataService {
   // Delete a group by groupId and members
   deleteGroup(groupId: string, members: any[]): Observable<any> {
     const payload = { groupId, members };
-    console.log(JSON.stringify(payload));
+    // console.log(JSON.stringify(payload));
     return this.http.post<any>(`${this.apiUrl}/deleteGroup`, payload, {
       withCredentials: true,
     });

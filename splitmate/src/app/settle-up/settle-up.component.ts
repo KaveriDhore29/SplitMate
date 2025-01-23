@@ -30,7 +30,7 @@ export class SettleUpComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.owedExpenses);
+    // console.log(this.owedExpenses);
   }
 
   close() {

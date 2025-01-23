@@ -21,7 +21,7 @@ export class MyProfileComponent implements OnInit {
     const loggedInUser = sessionStorage.getItem('loggedInUser');
     if (loggedInUser) {
       const userPayload = JSON.parse(loggedInUser);
-      console.log(userPayload);
+      // console.log(userPayload);
 
       this.currentUser = userPayload.name;
       this.email = userPayload.email;
@@ -97,7 +97,7 @@ export class MyProfileComponent implements OnInit {
       formData.append('profilePicture', file, file.name);
       this.authService.uploadProfilePicture(formData).subscribe(
         (response) => {
-          console.log('File uploaded successfully', response);
+          // console.log('File uploaded successfully', response);
         },
         (error) => {
           console.error('Error uploading file', error);
@@ -111,7 +111,7 @@ export class MyProfileComponent implements OnInit {
     this.authService.uploadProfilePicture(formData).subscribe(
       (response) => {
         // On success, update the profile picture URL
-        console.log(response);
+        // console.log(response);
         this.picture = response.imageUrl; // Assuming response contains the URL of the uploaded image
       },
       (error) => {

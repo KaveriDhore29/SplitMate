@@ -13,7 +13,7 @@ export class LandingPageComponent implements OnInit {
 
   fullText: string = 'pense ';
   typewriterText: string = '';
-  typingSpeed: number = 300;
+  typingSpeed: number = 500;
 
   isLoading: boolean = true;
 

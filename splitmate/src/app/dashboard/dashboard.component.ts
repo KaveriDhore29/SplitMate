@@ -37,10 +37,10 @@ export class DashboardComponent implements OnInit {
         this.dataService.currentUserGroupIds = this.groupDetails.map(
           (group: any) => group.groupId
         );
-        console.log('Group IDs:', this.groupIds);
+        // console.log('Group IDs:', this.groupIds);
         this.dataService.totalOwed(this.groupIds).subscribe((data: any[]) => {
           this.responseOftotalOwed = data;
-          console.log(this.responseOftotalOwed, 'totalowed');
+          // console.log(this.responseOftotalOwed, 'totalowed');
         });
       },
       (error) => {

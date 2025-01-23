@@ -36,7 +36,7 @@ export class NavbarComponent implements OnInit {
   }
 
   signOut() {
-    console.log('Sign-Out Clicked in navbar');
+    // console.log('Sign-Out Clicked in navbar');
     this.authService.handleSignOut();
   }
 

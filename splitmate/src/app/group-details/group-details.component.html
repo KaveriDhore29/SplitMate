@@ -52,12 +52,20 @@
           </div>
           <div class="updates-container">
             <div *ngFor="let update of updates" class="update-row">
-              <div class="update-info">
+             <div class="update-info">
+              <b>
                 {{ update.person1 === dataService.currentUserEmail.email ? 'You' : update.person1 }}
-                {{ update.action === 'settlement' 
-                    ? 'settled with ' + update.person2 + ' for ₹' + update.amount  
-                    : 'paid ₹' + update.amount + ' for ' + update.action }}
-              </div>
+              </b>
+              {{ update.action === 'settlement' 
+                ? 'settled with ' 
+                : 'paid ' }}
+              <span class="rsamount">
+               <b>₹{{ update.amount }}</b> 
+              </span>
+              {{ update.action === 'settlement' 
+                ? ' ' + update.person2 
+                : ' for ' + update.action }}
+            </div>
             </div>
           </div>
         </div>
@@ -68,12 +76,12 @@
       <div class="col">
         <div class="members-of-group">
           <h2 class="summary-heading">GROUP MEMBERS</h2>
-            <i class="material-icons" title="Add Members" (click)="showAddmembersPopup = true" style="z-index: 10;
+            <!-- <i class="material-icons" title="Add Members" (click)="showAddmembersPopup = true" style="z-index: 1000;
             left: relative;
-            top: -40px;
-            position: relative;
-            left: 49%;
-            font-weight: bold;">group_add</i> &nbsp;
+            top: 15px;
+            position: absolute;
+            left: 90%;
+            font-weight: bold;">group_add</i> &nbsp; -->
         
           <div *ngIf="membersNames.length === 0">
             <p>No members yet. Add members to the group!</p>

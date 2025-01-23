@@ -68,7 +68,7 @@ export class MyGroupsComponent implements OnInit {
 
     this.dataService.totalOwed(this.groupIds).subscribe((data: any[]) => {
       this.responseOftotalOwed = data;
-      console.log(this.responseOftotalOwed, 'totalowed');
+      // console.log(this.responseOftotalOwed, 'totalowed');
     });
   }
 
@@ -131,7 +131,7 @@ export class MyGroupsComponent implements OnInit {
   }
 
   showGroupDetails(group: any): void {
-    console.log('Group Details:', group);
+    // console.log('Group Details:', group);
   }
 
   toggleOptionsMenu(group: any): void {
@@ -152,7 +152,7 @@ export class MyGroupsComponent implements OnInit {
   }
 
   editGroup(group: any) {
-    console.log('Edit Group Details clicked', group);
+    // console.log('Edit Group Details clicked', group);
     this.router.navigate([`create-group/${group.groupId}`]);
   }
 
@@ -166,13 +166,13 @@ export class MyGroupsComponent implements OnInit {
     }
 
     if (!members || members.length === 0) {
-      console.log('No members provided for deletion.');
+      // console.log('No members provided for deletion.');
       return;
     }
 
     this.dataService.deleteGroup(groupId, members).subscribe(
       (response) => {
-        console.log('API Response:', response);
+        // console.log('API Response:', response);
 
         if (response.success) {
           // Remove the deleted group from the frontend
@@ -181,7 +181,7 @@ export class MyGroupsComponent implements OnInit {
           );
           if (index !== -1) {
             this.groupDetails.splice(index, 1);
-            console.log('Deleted Group from frontend:', group);
+            // console.log('Deleted Group from frontend:', group);
           }
         } else {
           console.error('Backend responded with failure:', response.message);
