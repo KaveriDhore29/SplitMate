@@ -194,7 +194,7 @@ export class ExpenseModalComponent implements OnInit {
       expenseDate: new Date(), //expense created by current user
     };
 
-    console.log('Expense Data:', expenseData);
+    // console.log('Expense Data:', expenseData);
 
     // Call the service API to add the expense
     this.dataService.addExpenseService(expenseData).subscribe(

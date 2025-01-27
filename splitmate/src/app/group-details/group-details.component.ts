@@ -303,7 +303,12 @@ export class GroupDetailsComponent implements OnInit {
     // Call the service API to add the expense
     this.dataService.addExpenseService(expenseData).subscribe(
       (response) => {
-        alert('Expense added successfully!');
+        // alert('Expense added successfully!');
+        this.alertService.success('Expense added successfully!', {
+          id: 'alert-1',
+          autoClose: true,
+        });
+        this.cdr.detectChanges();
         this.loadGroupDetails();
         this.fetchGroupDetails();
         this.isSaveDisabled = false;
